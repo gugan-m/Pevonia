@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomImageView" customModule="HiDOCTOR" customModuleProvider="target">
+            <connections>
+                <outlet property="imagePinchScrollVw" destination="E9R-W8-heD" id="hUA-My-LnC"/>
+                <outlet property="imageVw" destination="gDp-ue-K6P" id="r44-Tu-1wj"/>
+                <outlet property="parentView" destination="iN0-l3-epB" id="0lj-ka-wnr"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9R-W8-heD">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gDp-ue-K6P">
+                            <rect key="frame" x="10" y="10" width="355" height="647"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="gDp-ue-K6P" firstAttribute="top" secondItem="E9R-W8-heD" secondAttribute="top" constant="10" id="LiG-yL-EUZ"/>
+                        <constraint firstItem="gDp-ue-K6P" firstAttribute="leading" secondItem="E9R-W8-heD" secondAttribute="leading" constant="10" id="Woc-M4-k2c"/>
+                        <constraint firstAttribute="trailing" secondItem="gDp-ue-K6P" secondAttribute="trailing" constant="10" id="YP4-ym-dDZ"/>
+                        <constraint firstItem="gDp-ue-K6P" firstAttribute="centerY" secondItem="E9R-W8-heD" secondAttribute="centerY" id="bfd-qe-3hu"/>
+                        <constraint firstAttribute="bottom" secondItem="gDp-ue-K6P" secondAttribute="bottom" constant="10" id="gjH-94-6yk"/>
+                        <constraint firstItem="gDp-ue-K6P" firstAttribute="centerX" secondItem="E9R-W8-heD" secondAttribute="centerX" id="sgE-6s-iF2"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="E9R-W8-heD" secondAttribute="trailing" id="BJa-MG-CSq"/>
+                <constraint firstItem="E9R-W8-heD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZHj-Ov-ZTr"/>
+                <constraint firstAttribute="bottom" secondItem="E9R-W8-heD" secondAttribute="bottom" id="fq7-na-kDe"/>
+                <constraint firstItem="E9R-W8-heD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jro-2W-FlO"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

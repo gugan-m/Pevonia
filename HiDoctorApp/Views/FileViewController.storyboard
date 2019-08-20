@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image View Controller-->
+        <scene sceneID="nzW-Gv-nX2">
+            <objects>
+                <viewController storyboardIdentifier="ImageViewVcID" id="MZT-mi-Nwa" customClass="ImageViewController" customModule="HiDOCTOR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nF1-Ce-UDx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTP-4b-uc2">
+                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTJ-Xt-kpi">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OSh-6s-nhM">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7f-Ml-WBI">
+                                                <rect key="frame" x="260" y="10" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="5ES-9e-Ugr"/>
+                                                    <constraint firstAttribute="height" constant="50" id="ngW-5c-uby"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="8" minY="-8" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" image="icon-reject"/>
+                                                <connections>
+                                                    <action selector="closeBtnAction:" destination="MZT-mi-Nwa" eventType="touchUpInside" id="1dE-Hy-InT"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="i7f-Ml-WBI" secondAttribute="trailing" constant="10" id="RhF-R4-Ekm"/>
+                                            <constraint firstItem="OSh-6s-nhM" firstAttribute="top" secondItem="RTJ-Xt-kpi" secondAttribute="top" id="Ynp-wv-aUc"/>
+                                            <constraint firstItem="i7f-Ml-WBI" firstAttribute="top" secondItem="RTJ-Xt-kpi" secondAttribute="top" constant="10" id="aUb-wo-GXy"/>
+                                            <constraint firstAttribute="bottom" secondItem="OSh-6s-nhM" secondAttribute="bottom" id="fe4-oL-zdL"/>
+                                            <constraint firstAttribute="trailing" secondItem="OSh-6s-nhM" secondAttribute="trailing" id="hEz-Ap-fAj"/>
+                                            <constraint firstItem="OSh-6s-nhM" firstAttribute="leading" secondItem="RTJ-Xt-kpi" secondAttribute="leading" id="uGc-0O-Ra3"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="RTJ-Xt-kpi" secondAttribute="bottom" id="A2O-bY-RHi"/>
+                                    <constraint firstItem="RTJ-Xt-kpi" firstAttribute="top" secondItem="OTP-4b-uc2" secondAttribute="top" id="K1P-yp-DfU"/>
+                                    <constraint firstAttribute="trailing" secondItem="RTJ-Xt-kpi" secondAttribute="trailing" id="ZPc-5h-QiY"/>
+                                    <constraint firstItem="RTJ-Xt-kpi" firstAttribute="centerY" secondItem="OTP-4b-uc2" secondAttribute="centerY" id="cX3-jk-rnu"/>
+                                    <constraint firstItem="RTJ-Xt-kpi" firstAttribute="centerX" secondItem="OTP-4b-uc2" secondAttribute="centerX" id="gRm-Vt-uEH"/>
+                                    <constraint firstItem="RTJ-Xt-kpi" firstAttribute="leading" secondItem="OTP-4b-uc2" secondAttribute="leading" id="klW-JA-Aeb"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OTP-4b-uc2" firstAttribute="leading" secondItem="R9J-gH-hji" secondAttribute="leading" id="TDy-Hj-NmD"/>
+                            <constraint firstItem="R9J-gH-hji" firstAttribute="bottom" secondItem="OTP-4b-uc2" secondAttribute="bottom" id="gnG-dP-p2D"/>
+                            <constraint firstItem="OTP-4b-uc2" firstAttribute="top" secondItem="R9J-gH-hji" secondAttribute="top" id="nqL-xX-sHL"/>
+                            <constraint firstItem="R9J-gH-hji" firstAttribute="trailing" secondItem="OTP-4b-uc2" secondAttribute="trailing" id="q1q-SV-gMh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R9J-gH-hji"/>
+                    </view>
+                    <connections>
+                        <outlet property="profilePicImageView" destination="OSh-6s-nhM" id="Mck-wB-zYS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kUZ-an-xYc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="146" y="76"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon-reject" width="24" height="24"/>
+    </resources>
+</document>

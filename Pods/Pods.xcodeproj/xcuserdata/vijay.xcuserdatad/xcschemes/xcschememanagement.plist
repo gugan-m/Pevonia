@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>GRDB.swift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>JTAppleCalendar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-HiDoctorApp.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Zip.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>A53A18AA668CDD8D7DC68333AE808B54</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF0221E8569B7BE65F7BA0CBD282D370</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E3D41EAC0DCABD7828745948F9F5B7D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E88C2C638130B92D1AEC805631C29FAF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

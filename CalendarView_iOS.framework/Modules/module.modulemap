@@ -1,0 +1,11 @@
+framework module CalendarView_iOS {
+  umbrella header "CalendarView_iOS.h"
+
+  export *
+  module * { export * }
+}
+
+module CalendarView_iOS.Swift {
+    header "CalendarView_iOS-Swift.h"
+    requires objc
+}

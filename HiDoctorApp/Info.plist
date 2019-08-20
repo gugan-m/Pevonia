@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Pevonia Intl</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.26</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>prefs</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>38</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>7204a98599c8825124d85c143858de323881ebcf</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Pevonia Intl needs access to your camera, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the camera.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Pevonia Intl needs your location, so that Doctor’s location can be saved to your Doctor Master. Please tap on “Allow” to capture the location</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Pevonia Intl needs permission to write photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pevonia Intl needs access to your photos, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the photos/camera roll. </string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-UI-Display-Black.otf</string>
+		<string>SF-UI-Display-Bold.otf</string>
+		<string>SF-UI-Display-Heavy.otf</string>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Medium.otf</string>
+		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Display-Semibold.otf</string>
+		<string>SF-UI-Display-Thin.otf</string>
+		<string>SF-UI-Display-Ultralight.otf</string>
+		<string>SF-UI-Text-Bold.otf</string>
+		<string>SF-UI-Text-BoldItalic.otf</string>
+		<string>SF-UI-Text-Heavy.otf</string>
+		<string>SF-UI-Text-HeavyItalic.otf</string>
+		<string>SF-UI-Text-Light.otf</string>
+		<string>SF-UI-Text-LightItalic.otf</string>
+		<string>SF-UI-Text-Medium.otf</string>
+		<string>SF-UI-Text-MediumItalic.otf</string>
+		<string>SF-UI-Text-Regular.otf</string>
+		<string>SF-UI-Text-RegularItalic.otf</string>
+		<string>SF-UI-Text-Semibold.otf</string>
+		<string>SF-UI-Text-SemiboldItalic.otf</string>
+		<string>SF-UI-Text-Ultrathin.otf</string>
+		<string>SF-UI-Text-UltrathinItalic.otf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+	<false/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

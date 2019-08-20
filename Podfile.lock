@@ -1,0 +1,54 @@
+PODS:
+  - Charts (3.0.5):
+    - Charts/Core (= 3.0.5)
+  - Charts/Core (3.0.5)
+  - Crashlytics (3.10.0):
+    - Fabric (~> 1.7.3)
+  - Fabric (1.7.3)
+  - GoogleMaps (2.6.0):
+    - GoogleMaps/Maps (= 2.6.0)
+  - GoogleMaps/Base (2.6.0)
+  - GoogleMaps/Maps (2.6.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.6.0):
+    - GoogleMaps/Base (= 2.6.0)
+  - GRDB.swift (2.8.0)
+  - IQKeyboardManagerSwift (5.0.7)
+  - JTAppleCalendar (7.1.5)
+  - Zip (0.8.0)
+
+DEPENDENCIES:
+  - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
+  - Crashlytics
+  - Fabric
+  - GoogleMaps
+  - GooglePlaces
+  - GRDB.swift
+  - IQKeyboardManagerSwift
+  - JTAppleCalendar
+  - Zip (~> 0.7)
+
+EXTERNAL SOURCES:
+  Charts:
+    :branch: master
+    :git: https://github.com/danielgindi/Charts.git
+
+CHECKOUT OPTIONS:
+  Charts:
+    :commit: ae43f31a3727582edb6dc913c187825f03e90280
+    :git: https://github.com/danielgindi/Charts.git
+
+SPEC CHECKSUMS:
+  Charts: 8a244acbb5054c54c1a54c3e82516f3aee30e68d
+  Crashlytics: a989ef242b66605577a425733797f810bd2725eb
+  Fabric: bb495bb9a7a7677c6d03a1f8b83d95bc49b47e41
+  GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
+  GooglePlaces: f6ddf33b75cef69e888907d9947c57198ed845f3
+  GRDB.swift: 7456b5a8503d150ec0ef6aaf5ade45996565a779
+  IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
+  JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
+  Zip: bb7d8370de00e50699633d91e03f2ec84f1ee437
+
+PODFILE CHECKSUM: 338289baddd99c1fac92966438dc4984f50136c9
+
+COCOAPODS: 1.4.0

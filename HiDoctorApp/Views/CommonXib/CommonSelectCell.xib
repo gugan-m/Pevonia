@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LockReleaseCell" id="A7S-pA-9nP" customClass="LockReleaseTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A7S-pA-9nP" id="EVf-qd-WFR">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEq-BB-Kvh" userLabel="Wrapper View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBN-YS-PMR" userLabel="Selection View">
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="49"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-radio-unselected" translatesAutoresizingMaskIntoConstraints="NO" id="sJg-vd-KbD" userLabel="Selection Image View">
+                                        <rect key="frame" x="8" y="12.5" width="24" height="24"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="sJg-vd-KbD" firstAttribute="centerY" secondItem="XBN-YS-PMR" secondAttribute="centerY" id="N2Q-eb-XhS"/>
+                                    <constraint firstItem="sJg-vd-KbD" firstAttribute="centerX" secondItem="XBN-YS-PMR" secondAttribute="centerX" id="beZ-zA-XCI"/>
+                                    <constraint firstAttribute="width" constant="40" id="uoV-nQ-Hvz"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xz0-d0-M4a" userLabel="Data View">
+                                <rect key="frame" x="40" y="0.0" width="335" height="49"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdg-JF-JAR" userLabel="Lock Date Label">
+                                        <rect key="frame" x="8" y="4" width="319" height="17"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vit-eM-kZ6" userLabel="Actual Date Label">
+                                        <rect key="frame" x="8" y="25" width="319" height="14.5"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                                        <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="vit-eM-kZ6" firstAttribute="leading" secondItem="Jdg-JF-JAR" secondAttribute="leading" id="BxY-y4-2ic"/>
+                                    <constraint firstItem="vit-eM-kZ6" firstAttribute="trailing" secondItem="Jdg-JF-JAR" secondAttribute="trailing" id="J8J-C1-9ir"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jdg-JF-JAR" secondAttribute="trailing" constant="8" id="MA6-zI-kVj"/>
+                                    <constraint firstItem="Jdg-JF-JAR" firstAttribute="top" secondItem="Xz0-d0-M4a" secondAttribute="top" constant="4" id="TpI-Nt-xXw"/>
+                                    <constraint firstItem="vit-eM-kZ6" firstAttribute="top" secondItem="Jdg-JF-JAR" secondAttribute="bottom" constant="4" id="hXC-il-n7Z"/>
+                                    <constraint firstItem="Jdg-JF-JAR" firstAttribute="leading" secondItem="Xz0-d0-M4a" secondAttribute="leading" constant="8" id="mcg-YS-imK"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Af9-y4-nRh" userLabel="Bottom Border View">
+                                <rect key="frame" x="48" y="49" width="327" height="1"/>
+                                <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="CPr-jW-nG3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Xz0-d0-M4a" firstAttribute="leading" secondItem="XBN-YS-PMR" secondAttribute="trailing" id="90E-UY-kJ4"/>
+                            <constraint firstItem="Af9-y4-nRh" firstAttribute="leading" secondItem="Jdg-JF-JAR" secondAttribute="leading" id="91p-20-5aQ"/>
+                            <constraint firstItem="Xz0-d0-M4a" firstAttribute="top" secondItem="xEq-BB-Kvh" secondAttribute="top" id="Mag-l1-Nmx"/>
+                            <constraint firstItem="XBN-YS-PMR" firstAttribute="bottom" secondItem="Af9-y4-nRh" secondAttribute="top" id="a1J-PE-3FN"/>
+                            <constraint firstAttribute="bottom" secondItem="Af9-y4-nRh" secondAttribute="bottom" id="e7T-ib-hbK"/>
+                            <constraint firstItem="XBN-YS-PMR" firstAttribute="leading" secondItem="xEq-BB-Kvh" secondAttribute="leading" id="fXR-LE-3jH"/>
+                            <constraint firstItem="Xz0-d0-M4a" firstAttribute="bottom" secondItem="Af9-y4-nRh" secondAttribute="top" id="ieb-xM-DKQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Af9-y4-nRh" secondAttribute="trailing" id="ifI-qN-XNM"/>
+                            <constraint firstAttribute="trailing" secondItem="Xz0-d0-M4a" secondAttribute="trailing" id="s9X-lY-16i"/>
+                            <constraint firstItem="XBN-YS-PMR" firstAttribute="top" secondItem="xEq-BB-Kvh" secondAttribute="top" id="swG-oI-Mrj"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="xEq-BB-Kvh" firstAttribute="top" secondItem="EVf-qd-WFR" secondAttribute="top" id="FRJ-rk-YXd"/>
+                    <constraint firstItem="xEq-BB-Kvh" firstAttribute="leading" secondItem="EVf-qd-WFR" secondAttribute="leading" id="W3d-Vu-ehD"/>
+                    <constraint firstAttribute="bottom" secondItem="xEq-BB-Kvh" secondAttribute="bottom" id="XT0-Sk-79s"/>
+                    <constraint firstAttribute="trailing" secondItem="xEq-BB-Kvh" secondAttribute="trailing" id="lgf-ZY-nqn"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="actualDateLabel" destination="vit-eM-kZ6" id="PxN-VK-EXi"/>
+                <outlet property="dataView" destination="Xz0-d0-M4a" id="mEy-9f-GZ8"/>
+                <outlet property="lockDateLabel" destination="Jdg-JF-JAR" id="h7h-kq-JbL"/>
+                <outlet property="selectionImageView" destination="sJg-vd-KbD" id="HZW-Rb-hc5"/>
+                <outlet property="selectionView" destination="XBN-YS-PMR" id="VyB-Uv-Rn4"/>
+                <outlet property="selectionViewWidthConstraint" destination="uoV-nQ-Hvz" id="bOH-nI-z9T"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon-radio-unselected" width="24" height="24"/>
+    </resources>
+</document>

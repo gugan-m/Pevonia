@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+        <array key="SF-UI-Text-Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doctorVisitDetailCell" rowHeight="49" id="aCO-v9-mvZ" customClass="DoctorVisitDetailCell" customModule="HiDOCTOR" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="264" height="49"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aCO-v9-mvZ" id="FGA-aZ-rGX">
+                <rect key="frame" x="0.0" y="0.0" width="264" height="48.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6kW-XO-Ywo">
+                        <rect key="frame" x="40" y="0.0" width="216" height="1"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvf-th-cTy">
+                        <rect key="frame" x="40" y="11" width="216" height="0.0"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6D4-JF-LQQ">
+                        <rect key="frame" x="40" y="31" width="216" height="0.0"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pq-bZ-L1i">
+                        <rect key="frame" x="40" y="41" width="216" height="0.0"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="7pq-bZ-L1i" secondAttribute="bottom" id="3Uy-vE-hEE"/>
+                    <constraint firstItem="6kW-XO-Ywo" firstAttribute="leading" secondItem="FGA-aZ-rGX" secondAttribute="leading" constant="40" id="3lc-F1-gp5"/>
+                    <constraint firstItem="6D4-JF-LQQ" firstAttribute="top" secondItem="uvf-th-cTy" secondAttribute="bottom" constant="20" id="BOr-lU-NMD"/>
+                    <constraint firstItem="uvf-th-cTy" firstAttribute="top" secondItem="6kW-XO-Ywo" secondAttribute="bottom" constant="10" id="Oaq-h3-ujC"/>
+                    <constraint firstAttribute="trailing" secondItem="uvf-th-cTy" secondAttribute="trailing" constant="8" id="Rt6-So-NNP"/>
+                    <constraint firstItem="7pq-bZ-L1i" firstAttribute="top" secondItem="6D4-JF-LQQ" secondAttribute="bottom" constant="10" id="V1S-mw-Ywp"/>
+                    <constraint firstItem="6D4-JF-LQQ" firstAttribute="leading" secondItem="FGA-aZ-rGX" secondAttribute="leading" constant="40" id="eAS-re-rOa"/>
+                    <constraint firstAttribute="trailing" secondItem="6D4-JF-LQQ" secondAttribute="trailing" constant="8" id="eFX-X3-TBE"/>
+                    <constraint firstItem="7pq-bZ-L1i" firstAttribute="leading" secondItem="FGA-aZ-rGX" secondAttribute="leading" constant="40" id="gjk-ln-uYA"/>
+                    <constraint firstItem="6kW-XO-Ywo" firstAttribute="top" secondItem="FGA-aZ-rGX" secondAttribute="top" id="gpV-2Z-u7A"/>
+                    <constraint firstAttribute="trailing" secondItem="6kW-XO-Ywo" secondAttribute="trailing" constant="8" id="i4H-GN-CGL"/>
+                    <constraint firstItem="uvf-th-cTy" firstAttribute="leading" secondItem="FGA-aZ-rGX" secondAttribute="leading" constant="40" id="kUi-2q-Z6o"/>
+                    <constraint firstAttribute="trailing" secondItem="7pq-bZ-L1i" secondAttribute="trailing" constant="8" id="xRJ-V2-ddA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="remarks" destination="6D4-JF-LQQ" id="27m-WI-FJT"/>
+                <outlet property="remarkslabel" destination="7pq-bZ-L1i" id="u1T-34-rMZ"/>
+                <outlet property="visitMode" destination="6kW-XO-Ywo" id="Ud2-wZ-q71"/>
+                <outlet property="visitModeLabel" destination="uvf-th-cTy" id="iwS-Q8-1il"/>
+            </connections>
+            <point key="canvasLocation" x="94" y="54.5"/>
+        </tableViewCell>
+    </objects>
+</document>

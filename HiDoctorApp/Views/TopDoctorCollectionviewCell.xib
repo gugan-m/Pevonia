@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+        <array key="SF-UI-Text-Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TopDoctorCollectionviewCell" id="gTV-IL-0wX" customClass="TopDoctorCollectionviewCell" customModule="HiDOCTOR" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="190" height="138"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="190" height="138"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" image="icon-thumbnail-image" translatesAutoresizingMaskIntoConstraints="NO" id="Z9h-lg-l0d">
+                        <rect key="frame" x="0.0" y="3" width="190" height="102"/>
+                        <color key="backgroundColor" red="0.79400300946192026" green="0.82129935880067295" blue="0.82963501789409255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWA-2m-NWp">
+                        <rect key="frame" x="0.0" y="65" width="190" height="40"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="ZYe-P3-G04"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>
+                        <color key="textColor" red="0.073201082040000004" green="0.5" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00 : 00 mins" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0WY-Ue-XRw">
+                        <rect key="frame" x="114" y="110" width="71" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="6t9-MN-WiJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="Z9h-lg-l0d" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="7k0-0C-GBF"/>
+                <constraint firstAttribute="bottom" secondItem="0WY-Ue-XRw" secondAttribute="bottom" constant="10" id="I01-nk-35p"/>
+                <constraint firstAttribute="trailing" secondItem="Z9h-lg-l0d" secondAttribute="trailing" id="Twi-Os-IAQ"/>
+                <constraint firstItem="0WY-Ue-XRw" firstAttribute="top" secondItem="iWA-2m-NWp" secondAttribute="bottom" constant="5" id="Z8e-vc-dGa"/>
+                <constraint firstItem="Z9h-lg-l0d" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cuA-Cr-mhw"/>
+                <constraint firstItem="iWA-2m-NWp" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qyl-xx-o0c"/>
+                <constraint firstAttribute="trailing" secondItem="iWA-2m-NWp" secondAttribute="trailing" id="r3I-uh-s1k"/>
+                <constraint firstItem="0WY-Ue-XRw" firstAttribute="top" secondItem="Z9h-lg-l0d" secondAttribute="bottom" constant="5" id="rT1-DI-7D8"/>
+                <constraint firstAttribute="trailing" secondItem="0WY-Ue-XRw" secondAttribute="trailing" constant="5" id="wyT-hN-Gyh"/>
+            </constraints>
+            <size key="customSize" width="150" height="138"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="iWA-2m-NWp" id="JBq-6H-XH6"/>
+                <outlet property="durationLabel" destination="0WY-Ue-XRw" id="aqc-cB-4Lb"/>
+                <outlet property="imgVw" destination="Z9h-lg-l0d" id="SVF-5N-J5c"/>
+            </connections>
+            <point key="canvasLocation" x="125" y="126"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="icon-thumbnail-image" width="101" height="76"/>
+    </resources>
+</document>
