@@ -225,7 +225,7 @@ class AssetMenuListViewController: UIViewController,UITableViewDelegate,UITableV
                 }
                 else
                 {
-                    showToastView(toastText: "Selected assets cannot be downloaded")
+                    showToastView(toastText: "Selected resources cannot be downloaded")
                     sender.setOn(false, animated: true)
                     reloadIndex()
                 }

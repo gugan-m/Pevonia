@@ -414,10 +414,10 @@ class ShowHourlyReportViewController: UIViewController, UITableViewDelegate, UIT
         let localArea = checkNullAndNilValueForString(stringData: objDoctorVisit.Local_Area)
         let regionName = checkNullAndNilValueForString(stringData: objDoctorVisit.Doctor_Region_Name)
         
-        if (mdlNumber != EMPTY)
-        {
-            detailText = mdlNumber
-        }
+//        if (mdlNumber != EMPTY)
+//        {
+//            detailText = mdlNumber
+//        }
         
         if (detailText != EMPTY && spltyName != EMPTY)
         {

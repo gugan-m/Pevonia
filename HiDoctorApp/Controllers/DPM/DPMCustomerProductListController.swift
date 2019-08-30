@@ -12,7 +12,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyStateLbl: UILabel!
-    
     @IBOutlet weak var searchBar : UISearchBar!
     
     
@@ -21,8 +20,8 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
     var mappingRegionCode: String!
     var selectedType:String!
     var selectedMode: String!
-    var customerToProd = "Customer product mapping"
-    var productToCust = "Product customer mapping"
+    var customerToProd = "Partner product mapping"
+    var productToCust = "Product partner mapping"
     var customerList: [CustomerMasterModel] = []
     var detailedProductList: [DetailProductMaster] = []
     var selectedMCValue: MCAllDetailsModel!
@@ -39,10 +38,8 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
         searchBar.delegate = self
         
         // Do any additional setup after loading the view.
-        
-        
     }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.contentOffset = CGPoint(x: 0, y: 0)
     }
@@ -139,12 +136,12 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
             }
             if let custSpeciality = customerObj.Speciality_Name
             {
-                displayStr += custSpeciality + " | "
+                displayStr += custSpeciality //+ " | "
             }
-            if let custMDL = customerObj.MDL_Number
-            {
-                displayStr += custMDL
-            }
+//            if let custMDL = customerObj.MDL_Number
+//            {
+//                displayStr += custMDL
+//            }
             
             cell.title.text = displayStr
             if customerObj.isViewEnable

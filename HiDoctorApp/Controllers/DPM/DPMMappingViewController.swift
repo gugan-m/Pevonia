@@ -107,12 +107,12 @@ class DPMMappingViewController: UIViewController,UITableViewDelegate,UITableView
             }
             if let custSpeciality = customerObj.Speciality_Name
             {
-                displayStr += custSpeciality + " | "
+                displayStr += custSpeciality //+ " | "
             }
-            if let custMDL = customerObj.MDL_Number
-            {
-                displayStr += custMDL
-            }
+//            if let custMDL = customerObj.MDL_Number
+//            {
+//                displayStr += custMDL
+//            }
             
             cell.title.text = displayStr
             cell.selectedImg.tintColor = UIColor.blue

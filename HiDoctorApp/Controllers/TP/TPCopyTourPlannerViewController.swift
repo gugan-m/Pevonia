@@ -70,12 +70,12 @@ class TPCopyTourPlannerViewController: UIViewController,UITableViewDataSource,UI
             }
             else
             {
-                showToastView(toastText: "This feature is not applicable for this Accompanist")
+                showToastView(toastText: "This feature is not applicable for this Rise Along")
             }
         }
         else
         {
-            self.emptyStateLbl.text = "No TP available"
+            self.emptyStateLbl.text = "No PR available"
             showEmptyStateView()
         }
     }
@@ -192,7 +192,7 @@ class TPCopyTourPlannerViewController: UIViewController,UITableViewDataSource,UI
                     }
                 else
                     {
-                        self.emptyStateLbl.text = "No TP available"
+                        self.emptyStateLbl.text = "No PR available"
                         self.showEmptyStateView()
                     }
             }
@@ -208,7 +208,7 @@ class TPCopyTourPlannerViewController: UIViewController,UITableViewDataSource,UI
         }
         else
         {
-            emptyStateLbl.text = "No TP available"
+            emptyStateLbl.text = "No PR available"
             self.showEmptyStateView()
         }
         }
@@ -236,7 +236,7 @@ class TPCopyTourPlannerViewController: UIViewController,UITableViewDataSource,UI
            bottomView.isHidden = true
         }
         
-        showCustomActivityIndicatorView(loadingText: "Loading Accompanist data..")
+        showCustomActivityIndicatorView(loadingText: "Loading Ride Along data..")
         
     }
     private func addCustomBackButtonToNavigationBar()

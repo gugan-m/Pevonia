@@ -20,7 +20,7 @@ class DeleteDCRViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         super.viewDidLoad()
         self.tableView.estimatedRowHeight = 500
-        self.title = "Delete DCR"
+        self.title = "Delete DVR"
         addCustomBackButtonToNavigationBar()
         addFilterButtonToNavigationBar()
         
@@ -94,7 +94,7 @@ class DeleteDCRViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func deleteSelectedDCR(obj : DCRHeaderModel)
     {
-        let alertMessage = "This action will delete this DCR \(convertDateIntoString(date: obj.DCR_Actual_Date)) - \(getDCRActivityName(dcrFlag : obj.Flag)) permanently. Do you want to continue?"
+        let alertMessage = "This action will delete this DVR \(convertDateIntoString(date: obj.DCR_Actual_Date)) - \(getDCRActivityName(dcrFlag : obj.Flag)) permanently. Do you want to continue?"
         
         let alertViewController = UIAlertController(title: infoTitle, message:alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -146,7 +146,7 @@ class DeleteDCRViewController: UIViewController, UITableViewDelegate, UITableVie
                 if apiResponseObj.Status == 1 && apiResponseObj.Count == 0
                 {
                     BL_DeleteDCR.sharedInstance.deleteDCR(dcrHeaderObj: obj)
-                    showToastView(toastText: "Selected DCR has been deleted successfully")
+                    showToastView(toastText: "Selected DVR has been deleted successfully")
                     DBHelper.sharedInstance.deleteFromTable(tableName: Hourly_Report_Visit)
                     DBHelper.sharedInstance.deleteLeaveAttachmentDCR(dcrDate: convertDateIntoServerStringFormat(date: obj.DCR_Actual_Date))
                     self.setDeleteDCRList()
@@ -165,7 +165,7 @@ class DeleteDCRViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func showResponseErrorMessage(message : String)
     {
-        let alertMessage : String  =  "You cannot delete processed DCR. So please request you to contact HO to delete the same.\n\n Click 'Ok' to exit."
+        let alertMessage : String  =  "You cannot delete processed DVR. So please request you to contact HO to delete the same.\n\n Click 'Ok' to exit."
         
         AlertView.showAlertView(title: alertTitle, message: alertMessage, viewController: self)
     }

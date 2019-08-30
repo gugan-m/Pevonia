@@ -231,11 +231,14 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 
                 if customerMasterModel.Hospital_Account_Number != ""
                 {
-                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                     detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
                 else
                 {
-                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                    detailText = String(format: "%@ | %@ | %@ | %@", strHospitalName!,
+                    customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
             }
             else
@@ -685,7 +688,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                                 }
                                 else
                                 {
-                                    AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                                    AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
                                 }
                             }
                             else
@@ -739,7 +742,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                         }
                     }
                     let userObj = getUserModelObj()
-                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails(doctorName: self.flexiDoctorName, specialityName: self.flexiSpecialityName, visitTime: visittime, visitMode: visitmode, pobAmount: 0.0, remarks: EMPTY, regionCode: userObj?.Region_Code, viewController: self, businessStatusId: 0, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY,Punch_Start_Time: punch_start, Punch_Status: punch_status, Punch_Offset: punch_timeoffset, Punch_TimeZone: punch_timezone, Punch_UTC_DateTime: punch_UTC)
+                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails(doctorName: self.flexiDoctorName, specialityName: self.flexiSpecialityName, visitTime: stringFromDate(date1: getDateFromString(dateString: punch_start!)), visitMode: visitmode, pobAmount: 0.0, remarks: EMPTY, regionCode: userObj?.Region_Code, viewController: self, businessStatusId: 0, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY,Punch_Start_Time: punch_start, Punch_Status: punch_status, Punch_Offset: punch_timeoffset, Punch_TimeZone: punch_timezone, Punch_UTC_DateTime: punch_UTC)
                     self.skipDoctor(index:index)
                 }
                 else
@@ -806,7 +809,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                         
                         
                     }
-                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails(customerCode: DCRModel.sharedInstance.customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: 0.0, remarks: EMPTY, regionCode: customerMasterModel.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: defaultBusineessStatusId, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY, Punch_Start_Time: punch_start, Punch_Status: punch_status, Punch_Offset: punch_timeoffset, Punch_TimeZone: punch_timezone, Punch_UTC_DateTime: punch_UTC)
+                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails(customerCode: DCRModel.sharedInstance.customerCode, visitTime: stringFromDate(date1: getDateFromString(dateString: punch_start!)), visitMode: visitmode, pobAmount: 0.0, remarks: EMPTY, regionCode: customerMasterModel.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: defaultBusineessStatusId, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY, Punch_Start_Time: punch_start, Punch_Status: punch_status, Punch_Offset: punch_timeoffset, Punch_TimeZone: punch_timezone, Punch_UTC_DateTime: punch_UTC)
                     
                     self.skipDoctor(index:index)
                     
@@ -866,7 +869,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                                     else
                                     {
                                         removeCustomActivityView()
-                                        AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                                        AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
                                     }
                                 }
                                 else
@@ -1217,7 +1220,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                     cell.cardView.clipsToBounds = false
                     
                     cell.accompEmptyStateView.isHidden = false
-                    cell.accompEmptyLbl.text = "No accompanists available"
+                    cell.accompEmptyLbl.text = "No Ride Along available"
                     
                     if cell.parentTableView != nil
                     {
@@ -1385,18 +1388,15 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 cell.buttonViewHeight.constant = 0
                 cell.moreViewHeightConstraint.constant = 0
             }
-            
             cell.btmSepView.isHidden = true
             cell.leftButton.isHidden = true
             cell.rightButton.isHidden = true
         }
-        
         cell.sectionCoverButton.tag = rowIndex
         cell.leftButton.tag = rowIndex
         cell.rightButton.tag = rowIndex
         cell.emptyStateAddButton.tag = rowIndex
         cell.emptyStateSkipButton.tag = rowIndex
-        
         return cell
     }
     
@@ -1537,11 +1537,12 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
         if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" )
         {
             
-            let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + doctorobj.Doctor_Name
+            let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
             //let indexpath = sender.tag
             let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
             
-            alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in _ = self.navigationController?.popViewController(animated: false)
+            alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                //_ = self.navigationController?.popViewController(animated: false)
                 alertViewController.dismiss(animated: true, completion: nil)
             }))
             
@@ -1594,14 +1595,15 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
             let doctorobj = BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList[0]
             if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" )
             {
-                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + doctorobj.Doctor_Name
+                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
                 //let indexpath = sender.tag
                 let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: {
                     
                     alertAction in
-                    _ = self.navigationController?.popViewController(animated: false)
+                    
+                    //_ = self.navigationController?.popViewController(animated: false)
                     alertViewController.dismiss(animated: true, completion: nil)
                 }))
                 
@@ -1821,7 +1823,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
             }
             else
             {
-                AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
             }
         }
         

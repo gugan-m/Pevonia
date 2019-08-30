@@ -62,7 +62,8 @@ class LandingAlertsDetailViewController: UIViewController,UITableViewDelegate,UI
         let doctorData = self.doctorList[indexPath.row]
         cell.doctorName.text = doctorData.Customer_Name
         let strHospitalName = checkNullAndNilValueForString(stringData: doctorData.Hospital_Name!) as? String
-        cell.doctorDetail.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, doctorData.MDL_Number!, doctorData.Speciality_Name!, doctorData.Category_Name!, doctorData.Region_Name!)
+//        cell.doctorDetail.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, doctorData.MDL_Number!, doctorData.Speciality_Name!, doctorData.Category_Name!, doctorData.Region_Name!)
+        cell.doctorDetail.text = String(format: "%@ | %@ | %@ | %@", strHospitalName!, doctorData.Speciality_Name!, doctorData.Category_Name!, doctorData.Region_Name!)
         let date: Date!
         
         if (isAnniversary)

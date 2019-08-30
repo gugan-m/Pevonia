@@ -185,7 +185,7 @@ class DCRRejectViewController: UIViewController,UITableViewDelegate, UITableView
         resignResponsder()
         if dateTxtField.text?.count == 0
         {
-            AlertView.showAlertView(title: alertTitle, message: "Please select DCR date", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please select DVR date", viewController: self)
         }
         else
         {
@@ -244,7 +244,7 @@ class DCRRejectViewController: UIViewController,UITableViewDelegate, UITableView
                     }
                     else
                     {
-                        toastText = "Unable to fetch DCR approval data"
+                        toastText = "Unable to fetch DVR approval data"
                     }
                     
                     showToastView(toastText: toastText)
@@ -294,7 +294,7 @@ class DCRRejectViewController: UIViewController,UITableViewDelegate, UITableView
     
     func setEmptyStateLblTxt()
     {
-        self.emptyStateLbl.text = "No approved DCR(s) found."
+        self.emptyStateLbl.text = "No approved DVR(s) found."
     }
 
     func hideContentView()

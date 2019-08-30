@@ -387,9 +387,9 @@ class ModifyFollowUpsListViewController: UIViewController,UITableViewDelegate,UI
                 }
                 if obj.DoctorMDLNumber != EMPTY
                 {
-                    mdl = obj.DoctorMDLNumber
+                   // mdl = obj.DoctorMDLNumber
                 }
-                let tasksText = "\(speciality) | \(mdl)"
+                let tasksText = "\(speciality)" // | \(mdl)"
                 let dict = ["Tasks":obj.DoctorName,"DCR_Code":tasksText]
                 let dcrFollowUpObj = DCRFollowUpModel(dict: dict as NSDictionary)
                 chemistDayRCPA.append(dcrFollowUpObj)

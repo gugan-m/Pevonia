@@ -104,7 +104,7 @@ class ApprovalPendingMonthListViewController: UIViewController,UITableViewDelega
                         
                         if emptyStateText == ""
                         {
-                            emptyStateText = "Unable to fetch DCR approval data."
+                            emptyStateText = "Unable to fetch DVR approval data."
                         }
                         if type == 2
                         {
@@ -301,7 +301,6 @@ class ApprovalPendingMonthListViewController: UIViewController,UITableViewDelega
         var month : Int = 0
         var year : String = ""
         
-
         if menuId == MenuIDs.TP_Approval.rawValue
         {
             month = (dict.object(forKey: "TP_Month") as? Int)!
@@ -331,7 +330,6 @@ class ApprovalPendingMonthListViewController: UIViewController,UITableViewDelega
             }
         }
         
-        
         let monthName = BL_Approval.sharedInstance.getMonthNameByNumber(monthNumber: month)
         
         var monthCount : String = ""
@@ -348,11 +346,8 @@ class ApprovalPendingMonthListViewController: UIViewController,UITableViewDelega
         cell.monthNameLbl.text = "\(monthName) \(year)"
         cell.monthCountLbl.text = monthCount
         cell.monthCountLbl.layer.cornerRadius = 15
-        
         return cell
     }
-    
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
@@ -393,7 +388,4 @@ class ApprovalPendingMonthListViewController: UIViewController,UITableViewDelega
             AlertView.showNoInternetAlert()
         }
     }
-    
-
-    
 }

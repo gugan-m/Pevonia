@@ -671,7 +671,9 @@ class BL_TPCalendar: NSObject
     {
         let doctorObjModel = BL_TPCalendar.sharedInstance.getTPDoctorData()[index]
         let strHospitalName = checkNullAndNilValueForString(stringData: doctorObjModel.Hospital_Name!) as? String
-        let str = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName! , doctorObjModel.MDL_Number!, doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
+//        let str = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName! , doctorObjModel.MDL_Number!, doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
+        let str = String(format: "%@ | %@ | %@ | %@", strHospitalName!, doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
+
         let titleLabelHeight: CGFloat = getTextSize(text: str, fontName: fontRegular, fontSize: 14, constrainedWidth: (SCREEN_WIDTH - (49 + 8))).height
         let singleCellHeight:CGFloat = 45.0
         let totalHeight:CGFloat = (singleCellHeight + titleLabelHeight) //* cellCount

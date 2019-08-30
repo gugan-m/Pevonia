@@ -199,8 +199,5 @@ open class CalendarDayCell: UICollectionViewCell {
         case .bevel(let radius):
             self.bgView.layer.cornerRadius = radius
         }
-        
-        
     }
-    
 }

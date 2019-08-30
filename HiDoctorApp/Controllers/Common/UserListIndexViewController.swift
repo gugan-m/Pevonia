@@ -173,7 +173,7 @@ class UserListIndexViewController: UIViewController,UITableViewDelegate,UITableV
             }
             else
             {
-                AlertView.showAlertView(title: infoTitle, message: "You can download 4 accompanist at a time. After downloading selected list, Choose again and download", viewController: self)
+                AlertView.showAlertView(title: infoTitle, message: "You can download 4 Ride ALong at a time. After downloading selected list, Choose again and download", viewController: self)
             }
         }
         else
@@ -261,11 +261,11 @@ class UserListIndexViewController: UIViewController,UITableViewDelegate,UITableV
         
         if type == 1
         {
-            emptyStateTxt = "No Accompanists Found"
+            emptyStateTxt = "No Ride Along Found"
         }
         else
         {
-           emptyStateTxt = "No accompanists found. Clear your search and try again."
+           emptyStateTxt = "No Ride Along found. Clear your search and try again."
         }
         self.emptyStateLbl.text = emptyStateTxt
     }
@@ -526,7 +526,7 @@ class UserListIndexViewController: UIViewController,UITableViewDelegate,UITableV
                 }
             if filteredArray.count > 0
             {
-                errorMessage = "Selected accomapanist already exist"
+                errorMessage = "Selected Ride Along already exist"
             }
         }
         return errorMessage
@@ -540,7 +540,7 @@ class UserListIndexViewController: UIViewController,UITableViewDelegate,UITableV
         let totalCount = downloadAccompanistCount + userSelectedListCount
         if totalCount > 12
         {
-            errorMessage = "You are already downloaded 12 Accomapanist,If you want to download selected accompanist.Delete any other accomapanist from Accompanist menu."
+            errorMessage = "You are already downloaded 12 Ride Along,If you want to download selected Ride Along. Delete any other accomapanist from Ride Along menu."
         }
         return errorMessage
     }

@@ -55,7 +55,12 @@ class BL_DCR_Leave: NSObject
     {
         let startDateString = convertDateIntoServerStringFormat(date: startDate)
         let endDateString = convertDateIntoServerStringFormat(date: endDate)
-        
+    
+        let appVersion = getCurrentAppVersion()
+        let versionData = appVersion.components(separatedBy: "(")
+        let versionName = versionData[0]
+        let versionCode = versionData[1].components(separatedBy: ")")[0]
+
         var leaveData : NSMutableArray = []
         var insertData : [String : Any] = [:]
         let attachmentList = Bl_Attachment.sharedInstance.getDCRLeaveAttachmentDetails()
@@ -68,7 +73,7 @@ class BL_DCR_Leave: NSObject
             
         }
         
-        let postData: [String : Any] = ["DCR_Status": 1, "End_Date": endDateString, "Leave_Type_Code": leaveTypeCode, "Leave_Type_Name": leaveTypeName, "Reason": leaveReason, "Start_Date": startDateString, "versionCode": "38", "versionName": "2.26", "lstLeaveAttachments": leaveData]
+        let postData: [String : Any] = ["DCR_Status": 1, "End_Date": endDateString, "Leave_Type_Code": leaveTypeCode, "Leave_Type_Name": leaveTypeName, "Reason": leaveReason, "Start_Date": startDateString, "versionCode": versionCode, "versionName": versionName, "lstLeaveAttachments": leaveData]
         
         let arrayData: NSArray = [postData]
         

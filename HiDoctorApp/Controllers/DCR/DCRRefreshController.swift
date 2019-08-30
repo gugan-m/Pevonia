@@ -32,7 +32,7 @@ class DCRRefreshController: UIViewController, DCRRefreshDelegate
     {
         super.viewDidLoad()
 
-        self.navigationItem.title = "DCR Refresh"
+        self.navigationItem.title = "DVR Refresh"
         BL_Upload_DCR.sharedInstance.isFromDCRUpload = false
         
         if refreshMode == DCRRefreshMode.MERGE_DRAFT_AND_UNAPPROVED_DATA
@@ -66,7 +66,7 @@ class DCRRefreshController: UIViewController, DCRRefreshDelegate
                 
                 if apiResponseObj.list.count > 0
                 {
-                    showCustomActivityIndicatorView(loadingText: "Refreshing DCR data")
+                    showCustomActivityIndicatorView(loadingText: "Refreshing DVR data")
                     BL_DCR_Refresh.sharedInstance.dcrRefreshAPICall(refreshMode: self.refreshMode, endDate: self.endDate)
                     BL_DCR_Refresh.sharedInstance.delegate = self
                     BL_PrepareMyDevice.sharedInstance.getbussinessStatusPotential()

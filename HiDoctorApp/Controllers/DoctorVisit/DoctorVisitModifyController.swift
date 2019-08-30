@@ -124,12 +124,15 @@ class DoctorVisitModifyController: UIViewController, UITableViewDelegate, UITabl
         
         if model.Doctor_Code == EMPTY
         {
-            detailText = String(format: "MDL NO: | %@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
+//            detailText = String(format: "MDL NO: | %@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
+            detailText = String(format: "%@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
         }
+//        }
         else
         {
             let strHospitalName = checkNullAndNilValueForString(stringData: model.Hospital_Name) as? String
-            detailText = String(format: "%@ | %@ | %@ | %@ | %@",strHospitalName!, model.MDL_Number!, model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
+//            detailText = String(format: "%@ | %@ | %@ | %@ | %@",strHospitalName!, model.MDL_Number!, model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
+            detailText = String(format: "%@ | %@ | %@ | %@", strHospitalName!,model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
             
             if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
             {
@@ -167,12 +170,14 @@ class DoctorVisitModifyController: UIViewController, UITableViewDelegate, UITabl
             
             if model.Doctor_Code == EMPTY
             {
-                detailText = String(format: "MDL NO: | %@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
+//                detailText = String(format: "MDL NO: | %@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
+                detailText = String(format: "%@ | %@", model.Speciality_Name, model.Doctor_Region_Name!)
             }
             else
             {
                 let strHospitalName = checkNullAndNilValueForString(stringData: model.Hospital_Name) as? String
-                detailText = String(format: "%@ | %@ | %@ | %@ | %@", ccmNumberPrefix + strHospitalName!, model.MDL_Number!, model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
+//                detailText = String(format: "%@ | %@ | %@ | %@ | %@", ccmNumberPrefix + strHospitalName!, model.MDL_Number!, model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
+                detailText = String(format: "%@ | %@ | %@ | %@", ccmNumberPrefix + strHospitalName!, model.Speciality_Name, model.Category_Name!, model.Doctor_Region_Name!)
                 
                 if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                 {
@@ -240,7 +245,8 @@ class DoctorVisitModifyController: UIViewController, UITableViewDelegate, UITabl
                 
                 if model.MDL_Number != EMPTY && model.MDL_Number != nil
                 {
-                    detailText = String(format: "%@ | %@ ",model.MDL_Number!, model.Doctor_Region_Name!)
+//                    detailText = String(format: "%@ | %@ ",model.MDL_Number!, model.Doctor_Region_Name!)
+                     detailText = String(format: "%@ ",model.Doctor_Region_Name!)
                 }
                 else
                 {

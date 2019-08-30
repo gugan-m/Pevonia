@@ -352,7 +352,7 @@ class LoginViewController: UIViewController
     
     private func showMultiLoginAlert(userDict: NSDictionary, companyDict: NSDictionary)
     {
-        let alertMessage =  "It seems that you have already logged in with one or more other devices. \n\n Please upload all your pending DCRs and TPs before login from this device. \n\n Tap 'PROCEED' to clear logins on other devices and login only on this device. \n\n Tap 'CANCEL' to cancel login."
+        let alertMessage =  "It seems that you have already logged in with one or more other devices. \n\n Please upload all your pending DVRs and PRs before login from this device. \n\n Tap 'PROCEED' to clear logins on other devices and login only on this device. \n\n Tap 'CANCEL' to cancel login."
         
         let alertViewController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         

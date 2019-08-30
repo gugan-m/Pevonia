@@ -1053,7 +1053,7 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         
         ViewTPButton.addTarget(self, action: #selector(self.ViewTPButtonClicked), for: UIControlEvents.touchUpInside)
         ViewTPButton.titleLabel?.font = UIFont(name: fontSemiBold, size: 15.0)
-        ViewTPButton.setTitle("View TP", for: .normal)
+        ViewTPButton.setTitle("View PR", for: .normal)
         
         ViewTPButton.sizeToFit()
         
@@ -1070,7 +1070,7 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         }
         else
         {
-            showToastView(toastText: "No TP(s) available")
+            showToastView(toastText: "No PR(s) available")
         }
     }
     

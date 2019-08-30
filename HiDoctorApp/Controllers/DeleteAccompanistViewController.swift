@@ -20,7 +20,7 @@ class DeleteAccompanistViewController: UIViewController,UITableViewDelegate,UITa
         super.viewDidLoad()
         self.getAccompanistList()
         addBackButtonView()
-        self.navigationItem.title = "Remove Accomapanist data"
+        self.navigationItem.title = "Remove Ride Along data"
         self.tableView.estimatedRowHeight = 500
     }
 

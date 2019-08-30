@@ -611,7 +611,7 @@ class BL_AssetModel: NSObject
                 analyticsObj.Punch_Status = 2
                 analyticsObj.Punch_UTC_DateTime =  punchutc
                 analyticsObj.Punch_TimeZone = localTimeZoneName
-                analyticsObj.Punch_Offset = String(getCurrentTimeZone())
+                analyticsObj.Punch_Offset = getOffset()
                 analyticsObj.Punch_End_Time = punchout
             }
             else
@@ -621,7 +621,7 @@ class BL_AssetModel: NSObject
             analyticsObj.Punch_Status = 1
             analyticsObj.Punch_UTC_DateTime =  getUTCDateForPunch()
             analyticsObj.Punch_TimeZone = localTimeZoneName
-            analyticsObj.Punch_Offset = String(getCurrentTimeZone())
+            analyticsObj.Punch_Offset = getOffset()
             }
         }
         if customerObj != nil && analyticsObj.Is_Preview != 1

@@ -16,20 +16,14 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     @IBOutlet weak var leaveReason: UITextField!
     @IBOutlet weak var toDatelbl: UITextField!
     @IBOutlet weak var fromDateLbl: UITextField!
-    
     @IBOutlet weak var tableviewAttachmentList: UITableView!
-    
-    
    // @IBOutlet weak var enterAttachments: UITextView!
-    
     @IBOutlet weak var selectLeaveType: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
-    
     @IBOutlet weak var viewEmptyAttachment: UIView!
     @IBOutlet weak var frameView: CornerRadiusWithShadowView!
     @IBOutlet weak var submitbtn: UIButton!
-    
     @IBOutlet weak var btnAdd: UIButton!
     @IBOutlet weak var btnModify: UIButton!
     
@@ -539,7 +533,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave is ready to submit in Applied/Approved status. Once submit you can not edit your DCR.\n\n Press 'OK' to submit DCR.\n OR \n Press 'Cancel."
+        let alertMessage =  "Your Offline Leave is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
        
         alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -583,7 +577,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline leave is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my DCR' option from the home screen to submit your applied leave."
+        let alertMessage =  "Your Offline leave is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my DVR' option from the home screen to submit your applied leave."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in

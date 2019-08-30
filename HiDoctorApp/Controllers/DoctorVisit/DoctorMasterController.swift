@@ -127,7 +127,15 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         {
             if checkRegionCode?.Region_Code == regionCode
             {
-                doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getTPDoctorsForSelectedDate()!
+                if(isFromAttendance)
+                {
+                    doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: regionCode)!
+                }
+                else
+                {
+                    doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getTPDoctorsForSelectedDate()!
+                }
+                
             }
             else
             {
@@ -455,7 +463,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         //        }
         if (showOrganisation == PrivilegeValues.YES.rawValue)
         {
-            if model.Hospital_Account_Number != ""
+            if model.Hospital_Account_Number != "" || model.Hospital_Name != ""
             {
                 var hospitalDetails = String(format: "%@ | %@", model.Hospital_Name!, model.Hospital_Account_Number!)
                 
@@ -474,7 +482,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
                 let attString1 = NSMutableAttributedString.init(string: detailText)
-                let blueFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 135/250, green: 206/250, blue: 250/250, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
+                let blueFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0/250, green: 191/250, blue: 255/250, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
                 let attString2 = NSMutableAttributedString(string: hospitalDetails, attributes: blueFontAttributes)
                 
                 attString3.append(attString2)
@@ -585,13 +593,14 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         
         if (showOrganisation == PrivilegeValues.YES.rawValue)
         {
-            if model.Hospital_Account_Number != ""
+            if model.Hospital_Account_Number != "" || model.Hospital_Name != ""
             {
                 var hospitalDetails = String(format: "%@ | %@", model.Hospital_Name!, model.Hospital_Account_Number!)
                 
                 var detailText : String = ""
                 
-                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+            //   detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                 
                 if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                 {
@@ -604,20 +613,20 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
                 let attString1 = NSMutableAttributedString.init(string: detailText)
-                let blueFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 135/250, green: 206/250, blue: 250/250, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
+                let blueFontAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 0/250, green: 191/250, blue: 255/250, alpha: 1.0), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0)]
                 let attString2 = NSMutableAttributedString(string: hospitalDetails, attributes: blueFontAttributes)
                 
                 attString3.append(attString2)
                 attString3.append(attString1)
             }
-                
             else
             {
                 //  var hospitalDetails = String(format: "%@", model.Hospital_Name!)
                 
                 var detailText : String = ""
                 
-                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+               // detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+               detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                 
                 if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                 {
@@ -641,7 +650,8 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         {
             var detailText : String = ""
             
-            detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//            detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+            detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
             
             if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
             {
@@ -661,7 +671,6 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             attString3.append(attString1)
             
         }
-        
         
         cell.doctorDetail.attributedText = attString3
         
@@ -762,7 +771,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         vc.punch_status = 1
         vc.punch_UTC = getUTCDateForPunch()
         vc.punch_timezone = localTimeZoneName
-        vc.punch_timeoffset = String(getCurrentTimeZone())
+        vc.punch_timeoffset = getOffset()
         DCRModel.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: userCurrentList[indexPath.section].userList[indexPath.row].Customer_Code)
         DCRModel.sharedInstance.customerRegionCode = userCurrentList[indexPath.section].userList[indexPath.row].Region_Code
         //            DCRModel.sharedInstance.customerId = currentList[indexPath.row].Customer_Id
@@ -794,7 +803,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             if(model != nil && model.count > 0)
             {
                 let doctorobj : DCRDoctorVisitModel = model[0]
-                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + doctorobj.Doctor_Name
+                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
                 //let indexpath = sender.tag
                 let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                 
@@ -818,7 +827,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 if doctorCheck == 0
                 {
                     let currentLocation = getCurrentLocaiton()
-                    let initialAlert = "Punch-in time for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
+                    let initialAlert = "Punch-in time for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
                     //let indexpath = sender.tag
                     let alertViewController = UIAlertController(title: "Punch In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                     
@@ -1200,7 +1209,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             else if selectedIndex == 2
             {
                 emptyStateImage.image = UIImage(named: "icon-stepper-cycle")
-                text = "Compaign planner data not available"
+                text = "Beat/Patch data not available"
             }
             self.searchBarHeightConst.constant = 0
         }

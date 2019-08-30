@@ -184,7 +184,7 @@ class AttendanceInnerTableViewCell: UITableViewCell,UITableViewDataSource,UITabl
             mdlNumber = NOT_APPLICABLE
         }
         
-        doctorDetails = "MDL NO : \(mdlNumber)"
+     //   doctorDetails = "MDL NO : \(mdlNumber)"
         
         let HospitalName : String = checkNullAndNilValueForString(stringData: dict.object(forKey: "Hospital_Name") as? String)
         if HospitalName != ""

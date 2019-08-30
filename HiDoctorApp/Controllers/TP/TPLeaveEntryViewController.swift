@@ -376,7 +376,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your TP.\n\n Press 'OK' to submit TP.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -403,7 +403,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmUpdateLeaveAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your TP.\n\n Press 'OK' to submit TP.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -431,7 +431,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively,you can use 'TP Upload'option from the TP calendar screen to submit your applied Leave."
+        let alertMessage =  "Your Offline Leave Application is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Leave."
         
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)

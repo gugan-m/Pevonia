@@ -12,7 +12,7 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
 {
     
     
-    var date: String = "" 
+    var date: String = ""
     
     @IBOutlet weak var segmentedcontrol: UISegmentedControl!
     
@@ -78,12 +78,12 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     func pickerdone()
     {
-    
+        
         toolBar.barStyle = UIBarStyle.default
         toolBar.isTranslucent = true
         toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
         toolBar.sizeToFit()
-    
+        
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.plain, target: self, action: #selector(NotesListViewController.doneBtnClicked))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.cancelClick))
@@ -95,7 +95,7 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         self.tableView.reloadData()
     }
-        private func addTimePicker()
+    private func addTimePicker()
     {
         let timePicker = UIDatePicker()
         let locale = NSLocale(localeIdentifier: "en_US")
@@ -137,15 +137,15 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
         let dict: NSDictionary = [:]
         if(checkInternetConnectivity())
         {
-        showCustomActivityIndicatorView(loadingText: "changing status")
-        WebServiceHelper.sharedInstance.updatestatustask(postData:dict as! [String : Any],id: noteid, taskid: value, date: self.selecteddate) { (apiObj) in
-            if(apiObj.Status == SERVER_SUCCESS_CODE)
-            {
-                removeCustomActivityView()
-                self.Taskslistapi(selecteddate: self.date)
-                self.tableView.reloadData()
+            showCustomActivityIndicatorView(loadingText: "changing status")
+            WebServiceHelper.sharedInstance.updatestatustask(postData:dict as! [String : Any],id: noteid, taskid: value, date: self.selecteddate) { (apiObj) in
+                if(apiObj.Status == SERVER_SUCCESS_CODE)
+                {
+                    removeCustomActivityView()
+                    self.Taskslistapi(selecteddate: self.date)
+                    self.tableView.reloadData()
+                }
             }
-        }
         }
         else
         {
@@ -211,7 +211,7 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
                     {
                         self.noteslist = []
                         
-                       // self.emptytext.text = "No Notes Available"
+                        // self.emptytext.text = "No Notes Available"
                         //self.emptytext.isHidden = false
                         self.sectioncountnote = 0
                         self.tableView.reloadData()
@@ -266,7 +266,7 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(isnotes)
         {
-        return self.sectioncountnote
+            return self.sectioncountnote
         }
         else
         {
@@ -288,8 +288,8 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
             self.isnotes = false
             if(self.tasklist.count < 1)
             {
-            self.emptytext.text = "No Tasks Available"
-            self.emptytext.isHidden = false
+                self.emptytext.text = "No Tasks Available"
+                self.emptytext.isHidden = false
             }
             self.selectedseg = 1
             self.tableView.reloadData()
@@ -312,71 +312,71 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = tableView.dequeueReusableCell(withIdentifier: NotesCellVcID, for: indexPath) as! NotesViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NotesCellVcID, for: indexPath) as! NotesViewCell
         
         if(istask)
         {
             if (tasklist.count > 0)
             {
-            let model = self.tasklist[indexPath.row] as! NSDictionary
-           
-            cell.Title.text = "\(model.value(forKey: "Title") as! String)"
-            cell.dateview.isHidden = false
-            cell.statusview.isHidden = false
-            cell.duedatellbl.isHidden = false
-            cell.statuslbl.isHidden = false
-        let task = model.value(forKey: "lstTasks") as! NSArray
-        let temp = task[0] as! NSDictionary
-        //cell.Date.text = "Created Date: " + "\(temp.value(forKey: "Created_DateTime") as! String)"
-        
-        cell.Description.text = "\(temp.value(forKey: "Tasks_Description") as! String)"
-        cell.date.text = model.value(forKey: "Task_Due_Date") as! String
-            if(model.value(forKey: "Task_Status")  != nil)
-            {
-        cell.status.setTitle(model.value(forKey: "Task_Status") as! String, for: .normal)
-            }
-            else{
-                cell.status.setTitle("open", for: .normal)
-            }
-           // cell.status.set = pickerView
-        cell.date.inputView = toTimePicker
-            //cell.status.i = toolBar
-        cell.date.isEnabled = false
-            cell.closebtn.isHidden = true
-            cell.statusinput.inputView = pickerView
-            cell.statusinput.inputAccessoryView = toolBar
-            cell.statusinput.tintColor = .clear
-//            let but = cell.viewWithTag(1) as! UIButton
-//            //but.setTitle("MODIFY", for: .normal)
-//            but.addTarget(self, action: #selector(delete(sender:)), for: .touchUpInside)
-//            self.index = indexPath.row
-            let but = cell.viewWithTag(2) as! UIButton
-            //but.setTitle("MODIFY", for: .normal)
-            but.addTarget(self, action: #selector(updatestatus(sender:)), for: .touchUpInside)
+                let model = self.tasklist[indexPath.row] as! NSDictionary
+                
+                cell.Title.text = "\(model.value(forKey: "Title") as! String)"
+                cell.dateview.isHidden = false
+                cell.statusview.isHidden = false
+                cell.duedatellbl.isHidden = false
+                cell.statuslbl.isHidden = false
+                let task = model.value(forKey: "lstTasks") as! NSArray
+                let temp = task[0] as! NSDictionary
+                //cell.Date.text = "Created Date: " + "\(temp.value(forKey: "Created_DateTime") as! String)"
+                
+                cell.Description.text = "\(temp.value(forKey: "Tasks_Description") as! String)"
+                cell.date.text = model.value(forKey: "Task_Due_Date") as! String
+                if(model.value(forKey: "Task_Status")  != nil)
+                {
+                    cell.status.setTitle(model.value(forKey: "Task_Status") as! String, for: .normal)
+                }
+                else{
+                    cell.status.setTitle("open", for: .normal)
+                }
+                // cell.status.set = pickerView
+                cell.date.inputView = toTimePicker
+                //cell.status.i = toolBar
+                cell.date.isEnabled = false
+                cell.closebtn.isHidden = true
+                cell.statusinput.inputView = pickerView
+                cell.statusinput.inputAccessoryView = toolBar
+                cell.statusinput.tintColor = .clear
+                //            let but = cell.viewWithTag(1) as! UIButton
+                //            //but.setTitle("MODIFY", for: .normal)
+                //            but.addTarget(self, action: #selector(delete(sender:)), for: .touchUpInside)
+                //            self.index = indexPath.row
+                let but = cell.viewWithTag(2) as! UIButton
+                //but.setTitle("MODIFY", for: .normal)
+                but.addTarget(self, action: #selector(updatestatus(sender:)), for: .touchUpInside)
             }
         }
         else
         {
             if (noteslist.count > 0)
             {
-            let model = self.noteslist[indexPath.row] as! NSDictionary
-            cell.closebtn.isHidden = false
-            cell.Title.text = "\(model.value(forKey: "Title") as! String)"
-            let task = model.value(forKey: "lstNotes") as! NSArray
-            let temp = task[0] as! NSDictionary
-            //cell.Date.text = "Created Date: " + "\(temp.value(forKey: "Created_DateTime") as! String)"
-            
-            cell.Description.text = "\(temp.value(forKey: "Notes_Description") as! String)"
-//            cell.date.text = model.value(forKey: "Note_Actual_Date") as! String
-//            cell.status.text = model.value(forKey: "Task_Status") as! String
-            cell.dateview.isHidden = true
-            cell.statusview.isHidden = true
-            cell.duedatellbl.isHidden = true
-            cell.statuslbl.isHidden = true
-            let but = cell.viewWithTag(1) as! UIButton
-            //but.setTitle("MODIFY", for: .normal)
-            but.addTarget(self, action: #selector(delete(sender:)), for: .touchUpInside)
-            //self.index = indexPath.row
+                let model = self.noteslist[indexPath.row] as! NSDictionary
+                cell.closebtn.isHidden = false
+                cell.Title.text = "\(model.value(forKey: "Title") as! String)"
+                let task = model.value(forKey: "lstNotes") as! NSArray
+                let temp = task[0] as! NSDictionary
+                //cell.Date.text = "Created Date: " + "\(temp.value(forKey: "Created_DateTime") as! String)"
+                
+                cell.Description.text = "\(temp.value(forKey: "Notes_Description") as! String)"
+                //            cell.date.text = model.value(forKey: "Note_Actual_Date") as! String
+                //            cell.status.text = model.value(forKey: "Task_Status") as! String
+                cell.dateview.isHidden = true
+                cell.statusview.isHidden = true
+                cell.duedatellbl.isHidden = true
+                cell.statuslbl.isHidden = true
+                let but = cell.viewWithTag(1) as! UIButton
+                //but.setTitle("MODIFY", for: .normal)
+                but.addTarget(self, action: #selector(delete(sender:)), for: .touchUpInside)
+                //self.index = indexPath.row
             }
         }
         return cell
@@ -409,11 +409,11 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         if(isnotes)
         {
-           return 60
+            return 60
         }
         else
         {
-        return 100
+            return 100
         }
     }
     @objc func updatestatus(sender:UIButton)
@@ -444,16 +444,17 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         if(checkInternetConnectivity())
         {
-        let model = noteslist[index] as! NSDictionary
-        let noteid = model.value(forKey:"Note_HeaderId") as! Int
-        let dict: NSDictionary = [:]
-        WebServiceHelper.sharedInstance.deletenotes(postData:dict as! [String : Any],id: noteid, date: self.selecteddate) { (apiObj) in
-            if(apiObj.Status == SERVER_SUCCESS_CODE)
-            {
-                self.noteslistapi(selecteddate: self.date)
-                self.tableView.reloadData()
+            let model = noteslist[index] as! NSDictionary
+            let noteid = model.value(forKey:"Note_HeaderId") as! Int
+            let dict: NSDictionary = [:]
+            WebServiceHelper.sharedInstance.deletenotes(postData:dict as! [String : Any],id: noteid, date: self.selecteddate) { (apiObj) in
+                if(apiObj.Status == SERVER_SUCCESS_CODE)
+                {
+                    //showToastViewWithShortTime(toastText: "Note deleted successfully")
+                    self.noteslistapi(selecteddate: self.date)
+                    self.tableView.reloadData()
+                }
             }
-        }
         }
         else
         {

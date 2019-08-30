@@ -40,11 +40,11 @@ class BL_DoctorList: NSObject
             var reportObject = DoctorListModel()
             if(isEdit)
             {
-                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Hospital Details", "Other Information"][index]
+                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Organization Details", "Other Information"][index]
             }
             else
             {
-                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Hospital Details", "Other Information","Marketing Campaign Products","Products Mapped"][index]
+                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Organization Details", "Other Information","Marketing Campaign Products","Products Mapped"][index]
             }
             reportObject.sectionType = DoctorListSectionHeader.init(rawValue: index)!
             doctorDataList.append(reportObject)
@@ -89,15 +89,15 @@ class BL_DoctorList: NSObject
             
             // Specialty
             dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = "Speciality"
+            dataListObj.headerTitle = "Position"
             dataListObj.value = doctorDetailObj!.Speciality_Name
             doctorOfficialList.append(dataListObj)
             
-            // MDL Number
-            dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = ccmNumberCaption
-            dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
-            doctorOfficialList.append(dataListObj)
+//            // MDL Number
+//            dataListObj = DoctorDataListModel()
+//            dataListObj.headerTitle = ccmNumberCaption
+//            dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
+//            doctorOfficialList.append(dataListObj)
             
             // Category
             dataListObj = DoctorDataListModel()
@@ -343,7 +343,7 @@ class BL_DoctorList: NSObject
             // MDL Number
             dataListObj = DoctorDataListModel()
             dataListObj.headerTitle = ccmNumberCaption
-            dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
+           // dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
             dataListObj.isEditable = true
             dataListObj.isMandatory = true
             dataListObj.controlType = controlValues.Text
@@ -593,7 +593,7 @@ class BL_DoctorList: NSObject
                     self.saveCallBack(doctorDict: array!.firstObject as! NSDictionary)
                 }
             }
-            
+
             completion(objApiResponse.Status)
         }
     }

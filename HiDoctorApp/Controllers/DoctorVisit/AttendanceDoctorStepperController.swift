@@ -10,9 +10,6 @@ import UIKit
 
 class AttendanceDoctorStepperController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
-    
-    
-    
     @IBOutlet weak var contentViewHeightConst: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerView: UIView!
@@ -43,8 +40,6 @@ class AttendanceDoctorStepperController: UIViewController, UITableViewDelegate, 
         hideEDetailingButon()
         addBackButtonView()
         setDefaults()
-        
-
         // Do any additional setup after loading the view.
     }
     
@@ -564,11 +559,13 @@ class AttendanceDoctorStepperController: UIViewController, UITableViewDelegate, 
                 
                 if customerMasterModel.Hospital_Account_Number != ""
                 {
-                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
                 else
                 {
-                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                    detailText = String(format: "%@ | %@ | %@ | %@", strHospitalName!,customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
             }
            

@@ -1,17 +1,17 @@
 import UIKit
 import Foundation
 
-
 //MARK:- Production Configuration Keys
  //let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
-let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
+//let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
 let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
-//let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+// use this url for production but not for live.
+let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 
 //MARK:- Development issue email
 //let supportEmail : String = "support@swaas.net"
@@ -20,7 +20,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 let supportEmail : String = "support@swaas.net"
 
 //MARK:- App Name
-let appName = "HiDOCTOR"
+let appName = "Pevonia Intl"
 
 //MARK:- Screen Measurements
 var SCREEN_WIDTH =  UIScreen.main.bounds.size.width
@@ -529,8 +529,8 @@ let wsCustomerSpeciality = "CustomerSpeciality/"
 let wsCustomerCategory = "CustomerCategory/"
 
 //MARK:- Story
-let storyPendingAssetDownloadAlert: String = "Some of the assets are yet to download."
-let storyProgressAssetDownloadAlert: String = "Some of the assets are downloading. Please wait.."
+let storyPendingAssetDownloadAlert: String = "Some of the resources are yet to download."
+let storyProgressAssetDownloadAlert: String = "Some of the resources are downloading. Please wait.."
 
 enum customerEntityInt : Int
 {
@@ -894,10 +894,10 @@ var appCp: String = "Beat/Patch Name"
 let activityConfigErrorMsg : String = "You are not allowed to enter more than one activity"
 let seqValidPrefixErrorMsg : String = "You have missed dcr entry for the date"
 let seqValidSuffixErrorMsg : String = "Please fill and proceed."
-let seqDCRStatusValidPrefixErrorMsg : String = "You have drafted/unapproved dcr entry for the date"
+let seqDCRStatusValidPrefixErrorMsg : String = "You have drafted/unapproved dvr entry for the date"
 let seqDCRStatusValidSuffixErrorMsg : String = "Please submit and proceed."
-let lockDcrErrorMsg : String = "Your DCR date is locked"
-let addDCRErrorMsg: String = "Not allowed to enter DCR before your joining date"
+let lockDcrErrorMsg : String = "Your DVR date is locked"
+let addDCRErrorMsg: String = "Not allowed to enter DVR before your joining date"
 
 // MARK: - DCR Upload status messages
 let pendingStatus : String = "Pending"
@@ -907,9 +907,9 @@ let progressStatus : String = "IN PROGRESS"
 let failedStatus : String = "FAILED"
 let completedStatus : String = "COMPLETED"
 let retryStatus : String = "RETRY"
-let refreshStatus : String = "REFRESHING DCR"
-let dcrUploadSeqValMsg : String = "You have Draft or unapproved DCR for previous dates. Please complete that DCR first. Tap on PROCEED button to refreh DCR"
-let dcrRefreshErrorMsg : String = "All your Server(main site) data as on date will get downloaded into app. By proceeding.. if any Draft/Applied offline DCRs(not uploaded), then those DCRs will be removed from app. Click Proceed to continue OR click Cancel."
+let refreshStatus : String = "REFRESHING DVR"
+let dcrUploadSeqValMsg : String = "You have Draft or unapproved DVR for previous dates. Please complete that DVR first. Tap on PROCEED button to refreh DVR"
+let dcrRefreshErrorMsg : String = "All your Server(main site) data as on date will get downloaded into app. By proceeding.. if any Draft/Applied offline DVRs(not uploaded), then those DVRs will be removed from app. Click Proceed to continue OR click Cancel."
 
 //MARK:- Add travel details error messages
 let fromPlaceErrorMsg : String = "Please fill the From place"
@@ -937,8 +937,8 @@ let accompMissedPrefixErrorMsg : String = "You are missed to select the 'Accompa
 let accompMissedSuffixErrorMsg : String = ". Please select any one of the options"
 
 //MARK:- DCR Doctor visit asset details
-let assetName: String = "Asset name: "
-let assetType: String = "Asset type: "
+let assetName: String = "Resource name: "
+let assetType: String = "Resource type: "
 let viewedPages: String = "Viewed pages: "
 let uniquePages: String = "Unique pages: "
 let viewedDuration: String = "Viewed duration: "
@@ -948,8 +948,8 @@ let defaultTagCount = 4
 
 //MARK:- EDetailing Message
 
-let assetDownloadMessage = "Downloading Asset(s)"
-let htmlDownloadMessage = "Selected asset can be viewed in offline only"
+let assetDownloadMessage = "Downloading Resource(s)"
+let htmlDownloadMessage = "Selected resource can be viewed in offline only"
 let ratingSelectMessage = "Please give rating for the asset"
 
 //MARK:- Maximum length
@@ -998,7 +998,7 @@ let docTypeId = "com.microsoft.word.doc"
 let docxTypeId = "org.openxmlformats.wordprocessingml.document"
 
 //MARK:- Dashboard
-let assetsEmptyMsg = "No Asset's found"
+let assetsEmptyMsg = "No Resource found"
 let doctorsEmptyMsg = "No Doctor's found"
 
 //MARK:- Tour Planner
@@ -1007,7 +1007,7 @@ let meetingTime = "Meeting Time"
 let workCategory = "Work Category"
 let workPlace = "Work Place"
 let yetToPlan = "Yet to plan"
-let noTourAvailable = "No Tour planner is available for this day. Tap + to add an entry"
+let noTourAvailable = "No Partner routing is available for this day. Tap + to add an entry"
 let weekendOff = "Weekend Off"
 let tpDraftYetToApplied = "Draft - Yet to be applied"
 let tpApplied = "Applied"
@@ -1066,13 +1066,13 @@ let ccmNumberPrefix = ""
 let others = "Others"
 
 //MARK:- eDetailing Assets
-let assetInternetDropOffMsg : String = "Unable to download assets now. Please check your network"
-let assetDownloadFailedMsg : String = "Some of the assets downloaded failed. Please try again"
+let assetInternetDropOffMsg : String = "Unable to download resource now. Please check your network"
+let assetDownloadFailedMsg : String = "Some of the resource downloaded failed. Please try again"
 var uploadAnalyticsDuringDCRRefresh: Bool = false
 var navigateToAttachmentUpload: Bool = false
 
 //MARK:- Asset analytics
-let assetAnalyticsInternetDropOffMsg : String = "Unable to upload asset analytics now. Please check your network"
+let assetAnalyticsInternetDropOffMsg : String = "Unable to upload resource analytics now. Please check your network"
 let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload customer feedback analytics now. Please check your network"
 let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload doctor visit feedback analytics now. Please check your network"
 
@@ -1160,7 +1160,6 @@ enum PrivilegeNames: String
     case CAN_CHECK_MASTER_DATA_DOWNLOAD_IN_DAYS = "CAN_CHECK_MASTER_DATA_DOWNLOAD_IN_DAYS"
     case SHOW_DETAILED_PRODUCTS_WITH_TAGS = "SHOW_DETAILED_PRODUCTS_WITH_TAGS"
     case CAN_PLAY_ASSETS_IN_SEQUENCE = "CAN_PLAY_ASSETS_IN_SEQUENCE"
-    
     case DCR_STOCKIEST_VISIT_TIME = "DCR_STOCKIEST_VISIT_TIME"
     case LEAVE_POLICY = "LEAVE_POLICY"
     case IS_DCR_PUNCH_IN_OUT_ENABLED = "IS_DCR_PUNCH_IN_OUT_ENABLED"
@@ -1346,11 +1345,10 @@ enum TPCellColor
         case .draftedBgColor: return UIColor(red: 169.0/255.0, green: 169.0/255.0, blue: 169.0/255.0, alpha: 1.0)
         case .appliedBgColor: return UIColor(red: 96.0/255.0, green: 119.0/255.0, blue: 247.0/255.0, alpha: 1.0)
         case .approvedBgColor: return UIColor(red: 0.0/255.0, green: 105.0/255.0, blue: 92.0/255.0, alpha: 1.0)
-            
-            
         }
     }
 }
+
 enum MessageReadColor{
     case messageReadBgColor
     case messageUnReadBgColor
@@ -1409,8 +1407,8 @@ enum TPActivityName : String
 
 enum TPMoreName : String
 {
-    case refresh = "TP Refresh"
-    case upload = "TP Upload"
+    case refresh = "PR Refresh"
+    case upload = "PR Upload"
 }
 
 enum DCRActivity : Int
@@ -1508,6 +1506,7 @@ enum MenuIDs: Int
     case MyDocument = 33
     case traveltrackingreport = 34
     case QuickNotes = 35
+    //case QuickNotes = 36
 }
 
 
@@ -2023,20 +2022,20 @@ struct Display_Messages
 {
     struct DCR_Inheritance_Messages
     {
-        static let ACCOMPANIST_MANDATORY_ERROR_MESSAGE: String = "You have opted for DCR inheritance and you have not entered any accompanists in this DCR. Please add all the accompanists that you have worked and then try again"
-        static let ACCOMPANIST_OPTIONAL_ERROR_MESSAGE: String = "You have opted for DCR inheritance and you have not entered any accompanists in this DCR.\n\nStill do you want to add \(appDoctorPlural) without adding any accompanists?\n\n Tap on YES button to add \(appDoctorPlural) and proceed further"
-        static let INTERNET_MANDATORY_ERROR_MESSAGE: String = "You have opted for DCR inheritance. But you are not connected internet.\n\n Tap on GO TO SETTINGS button and enable the internet connection"
-        static let INTERNET_OPTIONAL_ERROR_MESSAGE: String = "You have opted for DCR inheritance. But you are not connected internet.\n\n Still do you want to add \(appDoctorPlural) without downloading accompanists' DCR?\n\nTap on YES button to add \(appDoctorPlural) and proceed further"
-        static let API_CALL_LOADING_MESSAGE: String = "Downloading DCR of selected accompanists. Please wait..."
-        static let ALL_ACCOMPANIST_INDEPENDENT_ERROR_MESSAGE: String = "All the accompanists are maked as independent call. Hence unable to inherit any DCR \(appDoctorPlural) of selected accompanist(s)"
-        static let API_CALL_SUCCESS_MESSAGE: String = "DCR \(appDoctor) visit details inherited successfully"
-        static let NEW_ACCOMPANIST_ADD_MESSAGE: String = "Since you have opted for DCR inheritance, all the \(appDoctor) visit of this DCR will be marked as 'Independent Call' with this accompanist name"
-        static let ADD_DOCTOR_RESTRICTION_MESSAGE: String = "You can't add any \(appDoctor) of this accompanist. You can do only DCR inheritance"
-        static let ACCOMPANIST_DATA_MANDATORY_ERROR_MESSAGE: String = "The @ACC_USERS data are not downloaded. Please download the accompanists' data and proceed further"
-        static let ACCOMPANIST_VALIDATION_ERROR_MESSAGE: String = "@ACC_USER has entered DCR and marked you as accompanist in \(appDoctor) visits. Hence you can't mark this accompanist for independent call"
-        static let ACCOMPANIST_VALIDATION_USER_OFFLINE_MESSAGE: String = "You are offline. Please turn on internet, hence system can validate the chosen accompanist DCR for DCR inheritance"
-        static let ACCOMPANIST_VALIDATION_API_ERROR_MESSAGE: String = "Sorry. Unable to validate the accompanists. Please try again later."
-        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as accompanist. But you have not inherited any of the Doctor."
+        static let ACCOMPANIST_MANDATORY_ERROR_MESSAGE: String = "You have opted for DVR inheritance and you have not entered any Ride Along in this DVR. Please add all the Ride Along that you have worked and then try again"
+        static let ACCOMPANIST_OPTIONAL_ERROR_MESSAGE: String = "You have opted for DVR inheritance and you have not entered any Ride Along in this DVR.\n\nStill do you want to add \(appDoctorPlural) without adding any Ride Along?\n\n Tap on YES button to add \(appDoctorPlural) and proceed further"
+        static let INTERNET_MANDATORY_ERROR_MESSAGE: String = "You have opted for DVR inheritance. But you are not connected internet.\n\n Tap on GO TO SETTINGS button and enable the internet connection"
+        static let INTERNET_OPTIONAL_ERROR_MESSAGE: String = "You have opted for DVR inheritance. But you are not connected internet.\n\n Still do you want to add \(appDoctorPlural) without downloading Ride Along' DVR?\n\nTap on YES button to add \(appDoctorPlural) and proceed further"
+        static let API_CALL_LOADING_MESSAGE: String = "Downloading DVR of selected Ride Along. Please wait..."
+        static let ALL_ACCOMPANIST_INDEPENDENT_ERROR_MESSAGE: String = "All the Ride Along are maked as independent call. Hence unable to inherit any DVR \(appDoctorPlural) of selected Ride Along(s)"
+        static let API_CALL_SUCCESS_MESSAGE: String = "DVR \(appDoctor) visit details inherited successfully"
+        static let NEW_ACCOMPANIST_ADD_MESSAGE: String = "Since you have opted for DVR inheritance, all the \(appDoctor) visit of this DVR will be marked as 'Independent Call' with this Ride Along name"
+        static let ADD_DOCTOR_RESTRICTION_MESSAGE: String = "You can't add any \(appDoctor) of this accompanist. You can do only DVR inheritance"
+        static let ACCOMPANIST_DATA_MANDATORY_ERROR_MESSAGE: String = "The @ACC_USERS data are not downloaded. Please download the Ride Along's data and proceed further"
+        static let ACCOMPANIST_VALIDATION_ERROR_MESSAGE: String = "@ACC_USER has entered DVR and marked you as Ride Along in \(appDoctor) visits. Hence you can't mark this Ride Along for independent call"
+        static let ACCOMPANIST_VALIDATION_USER_OFFLINE_MESSAGE: String = "You are offline. Please turn on internet, hence system can validate the chosen Ride Along DVR for DVR inheritance"
+        static let ACCOMPANIST_VALIDATION_API_ERROR_MESSAGE: String = "Sorry. Unable to validate the Ride Along. Please try again later."
+        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as Ride Along. But you have not inherited any of the Doctor."
         static let APP_FORCE_UPDATE_MESSAGE: String = "New version is available in app store. Please download and try again."
     }
     
@@ -2056,7 +2055,7 @@ struct Display_Messages
     
     struct LOGIN_DATA_DOWNLOAD
     {
-       static let DATA_DOWNLOAD_ALERT: String = "Since HiDoctor SFA is a CRM tool, the app needs to download all the Customer related data, travel plan details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
+       static let DATA_DOWNLOAD_ALERT: String = "Since Pevonia Intl SFA is a CRM tool, the app needs to download all the partner related data, partner routing details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
     }
     
     struct Landing_Alert_Message

@@ -22,7 +22,7 @@ class IntermediateAccompanistListViewController: UIViewController,UITableViewDel
     {
         super.viewDidLoad()
         
-        accompanistHeaderLbl.text = "Following list shows your colleague names who have frequently accompanied you during \(appDoctor) visits. Select them to download their \(appDoctor) details to enter your DCRs without internet."
+        accompanistHeaderLbl.text = "Following list shows your colleague names who have frequently accompanied you during \(appDoctor) visits. Select them to download their \(appDoctor) details to enter your DVRs without internet."
         
         getAccompanistList()
     }
@@ -113,7 +113,7 @@ class IntermediateAccompanistListViewController: UIViewController,UITableViewDel
             else
             {
                 accompanistObj.isSelected  = false
-                AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four accompanists only", viewController: self)
+                AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four Ride Along only", viewController: self)
             }
         }
         else

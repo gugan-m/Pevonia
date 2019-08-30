@@ -11,10 +11,6 @@ import JTAppleCalendar
 
 class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource, UITableViewDelegate, UITableViewDataSource
 {
-    
-    
-   
-    
     @IBOutlet weak var monthLabel: UILabel!
     @IBOutlet weak var pickerTextfield: TextField!
     @IBOutlet weak var addBtn: UIButton!
@@ -399,7 +395,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
         else
         {
-            let alertViewController = UIAlertController(title: alertTitle, message: "Not allowed to enter TP before your joining Date.", preferredStyle: UIAlertControllerStyle.alert)
+            let alertViewController = UIAlertController(title: alertTitle, message: "Not allowed to enter PR before your joining Date.", preferredStyle: UIAlertControllerStyle.alert)
             
             alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
                 alertViewController.dismiss(animated: true, completion: nil)
@@ -454,7 +450,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func tpDeleteAction(_ sender: Any)
     {
-        let alertViewController = UIAlertController(title: alertTitle, message: "Do you want to delete the TP ?", preferredStyle: UIAlertControllerStyle.alert)
+        let alertViewController = UIAlertController(title: alertTitle, message: "Do you want to delete the PR ?", preferredStyle: UIAlertControllerStyle.alert)
         alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
             alertViewController.dismiss(animated: true, completion: nil)
         }))

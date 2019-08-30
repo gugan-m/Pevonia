@@ -69,6 +69,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
     var objBusinessStatus_Dir: BusinessStatusModel?
     
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -96,6 +97,8 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
         showAlertCaptureLocationCount = 0
         if ( BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate() && !isFromAttendance)
         {
+            //self.visitTimeTxtField.isEnabled = false
+            //self.visitTimeTxtField.alpha = 0.5
             var intime = "N/A"
             var outtime = "N/A"
             if (isComingFromModifyPage)
@@ -117,11 +120,11 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             {
                 if (self.modifyDoctorVisitObj != nil)
                 {
-                if(self.modifyDoctorVisitObj.Punch_Start_Time != "" &&
-                    self.modifyDoctorVisitObj.Punch_Start_Time != nil)
-                {
-                intime = stringFromDate(date1: getDateFromString(dateString: self.modifyDoctorVisitObj.Punch_Start_Time!))
-                }
+                    if(self.modifyDoctorVisitObj.Punch_Start_Time != "" &&
+                        self.modifyDoctorVisitObj.Punch_Start_Time != nil)
+                    {
+                        intime = stringFromDate(date1: getDateFromString(dateString: self.modifyDoctorVisitObj.Punch_Start_Time!))
+                    }
                 }
                 else
                 {
@@ -130,6 +133,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                         intime = stringFromDate(date1: getDateFromString(dateString: time))
                     }
                 }
+                self.visitTimeTxtField.text = stringFromDate(date1: getDateFromString(dateString: time))
             }
             self.punchintime.text = "Punch In: \(intime)"
             self.punchouttime.text = "Punch Out: \(outtime)"
@@ -268,7 +272,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
         }
         else
         {
-            if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() 
+            if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled()
             {
                 //            self.visitModeHgtConst.constant = 0
                 //            self.visitTimePobHgtConst.constant = 50
@@ -797,7 +801,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                     }
                     
                     BL_DCR_Doctor_Visit.sharedInstance.saveFlexiAttendanceDoctorVisitDetails(doctorName: customerMasterObj.Customer_Name, specialityName: customerMasterObj.Speciality_Name, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: customerMasterObj.Region_Code, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignCode:checkNullAndNilValueForString(stringData: self.campaignCode),campaignName:self.campaignName)
-                        DCRModel.sharedInstance.customerCode = ""
+                    DCRModel.sharedInstance.customerCode = ""
                     _ = self.navigationController?.popViewController(animated: false)
                 }
                 else
@@ -867,7 +871,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                         }
                     })
                 }
-              
+                
                 
             }
             else
@@ -889,21 +893,15 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                     
                 }
                 
-//                let doctorVisits = DBHelper.sharedInstance.getEdetailingModified(drcCustomerCode: DCRModel.sharedInstance.customerCode, regionCode: getRegionCode())
+                //                let doctorVisits = DBHelper.sharedInstance.getEdetailingModified(drcCustomerCode: DCRModel.sharedInstance.customerCode, regionCode: getRegionCode())
                 
                 if  customerCode == ""
                 {
-                    var isCurrentDate: Bool = false
+                    
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateStyle = .short
                     
-                    if dateFormatter.string(from: DCRModel.sharedInstance.dcrDate) == dateFormatter.string(from: Date())
-                        
-                        //if DCRModel.sharedInstance.dcrDate == Date()
-                    {
-                        isCurrentDate = true
-                    }
-                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
                     {
                         let postData: NSMutableArray = []
                         let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": EMPTY,"Doctor_Name":self.doctorName,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.specialityName,"Category_Code": EMPTY,"MDL_Number":EMPTY,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + visitTime,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
@@ -948,7 +946,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                             }
                         })
                     }
-                        else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate)
+                    else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
                     {
                         
                         var visittime = ""
@@ -977,7 +975,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                             }
                         }
                         var localTimeZoneName: String { return TimeZone.current.identifier }
-                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: doctorName, specialityName: specialityName, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: getStringFromDateforPunch(date: getCurrentDateAndTime()), Punch_Status: 1, Punch_Offset: getCurrentTimeZone(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
+                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: doctorName, specialityName: specialityName, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
                         insertDCRDoctorAccompanists()
                         _ = self.navigationController?.popViewController(animated: false)
                     }
@@ -991,18 +989,9 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                 }
                 else
                 {
-                    var isCurrentDate: Bool = false
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .short
                     
-                    if dateFormatter.string(from: DCRModel.sharedInstance.dcrDate) == dateFormatter.string(from: Date())
-                        
-                        //if DCRModel.sharedInstance.dcrDate == Date()
-                    {
-                        isCurrentDate = true
-                    }
                     
-                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
                     {
                         let postData: NSMutableArray = []
                         let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":customerMasterObj.Customer_Name,"regionCode":customerMasterObj.Region_Code,"Speciality_Name":customerMasterObj.Speciality_Name,"Category_Code":customerMasterObj.Category_Code ?? EMPTY,"MDL_Number":customerMasterObj.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + visitTime,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":customerMasterObj.Region_Code,"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
@@ -1045,7 +1034,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                             }
                         })
                     }
-                    else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate)
+                    else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
                     {
                         
                         
@@ -1074,12 +1063,12 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                                 visitmode = ""
                             }
                         }
-        
+                        
                         var localTimeZoneName: String { return TimeZone.current.identifier }
-                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks: remarksText, regionCode: customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: getStringFromDateforPunch(date: getCurrentDateAndTime()), Punch_Status: 1, Punch_Offset: getCurrentTimeZone(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
+                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks: remarksText, regionCode: customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
                         insertDCRDoctorAccompanists()
-                    _ = self.navigationController?.popViewController(animated: false)
-                  }
+                        _ = self.navigationController?.popViewController(animated: false)
+                    }
                     else
                     {
                         BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: visitTime, visitMode: visitMode, pobAmount: pobAmt, remarks: remarksText,regionCode: customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: campaignName, campaignCode: self.campaignCode)
@@ -1091,7 +1080,6 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             }
         }
     }
-    
     func insertDCRDoctorAccompanists()
     {
         
@@ -1652,27 +1640,27 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             }
             else
             {
-                 if DCRModel.sharedInstance.customerCode != nil
-                 {
-                
-                obj = DBHelper.sharedInstance.getbusinessstatus1(customercode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode, entity_type: 1)
-                if (obj != nil)
+                if DCRModel.sharedInstance.customerCode != nil
                 {
-                    // statusId = obj!.Business_Status_Id!
-                    //statusName = obj!.Business_Status_Name!
-                    self.businessStatusLabel.text = obj?.Business_Status_Name
-                    objBusinessStatus?.Status_Name = obj?.Business_Status_Name
-                    objBusinessStatus?.Business_Status_ID = obj?.Business_Status_Id
-                    let dic = ["Business_Status_Id" : obj?.Business_Status_Id ?? 0,"Status_Name" : obj?.Business_Status_Name ?? EMPTY] as [String : Any]
-                    objBusinessStatus_Dir = BusinessStatusModel(dict : dic as NSDictionary)
                     
+                    obj = DBHelper.sharedInstance.getbusinessstatus1(customercode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode, entity_type: 1)
+                    if (obj != nil)
+                    {
+                        // statusId = obj!.Business_Status_Id!
+                        //statusName = obj!.Business_Status_Name!
+                        self.businessStatusLabel.text = obj?.Business_Status_Name
+                        objBusinessStatus?.Status_Name = obj?.Business_Status_Name
+                        objBusinessStatus?.Business_Status_ID = obj?.Business_Status_Id
+                        let dic = ["Business_Status_Id" : obj?.Business_Status_Id ?? 0,"Status_Name" : obj?.Business_Status_Name ?? EMPTY] as [String : Any]
+                        objBusinessStatus_Dir = BusinessStatusModel(dict : dic as NSDictionary)
+                        
+                    }
+                    else
+                    {
+                        self.businessStatusLabel.text = defaultBusinessStatusName
+                        objBusinessStatus = nil
+                    }
                 }
-                else
-                {
-                    self.businessStatusLabel.text = defaultBusinessStatusName
-                    objBusinessStatus = nil
-                }
-            }
             }
         }
         else
@@ -1780,54 +1768,54 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
     {
         if DCRModel.sharedInstance.customerCode != nil && DCRModel.sharedInstance.customerCode != ""
         {
-        let campaignHeaderList = DBHelper.sharedInstance.getMCListForDoctor(dcrActualDate: DCRModel.sharedInstance.dcrDateString, doctorCode: DCRModel.sharedInstance.customerCode, doctorRegionCode: DCRModel.sharedInstance.customerRegionCode)
-        if campaignHeaderList.count > 0
-        {
-            campaignViewHeightConstraint.constant = 65
-            canpaignView.isHidden = false
-            campaignLabel.isHidden = false
-        }
-        else
-        {
-            campaignViewHeightConstraint.constant = 0
-            canpaignView.isHidden = true
-            campaignLabel.isHidden = true
-        }
-        self.campaignLabel.text = defaultCampaignName
-        if isFromAttendance
-        {
-            if (modifyAttendanceDoctorVisitObj != nil)
+            let campaignHeaderList = DBHelper.sharedInstance.getMCListForDoctor(dcrActualDate: DCRModel.sharedInstance.dcrDateString, doctorCode: DCRModel.sharedInstance.customerCode, doctorRegionCode: DCRModel.sharedInstance.customerRegionCode)
+            if campaignHeaderList.count > 0
             {
-                if (modifyAttendanceDoctorVisitObj.Campaign_Code != defaultCampaignName)
+                campaignViewHeightConstraint.constant = 65
+                canpaignView.isHidden = false
+                campaignLabel.isHidden = false
+            }
+            else
+            {
+                campaignViewHeightConstraint.constant = 0
+                canpaignView.isHidden = true
+                campaignLabel.isHidden = true
+            }
+            self.campaignLabel.text = defaultCampaignName
+            if isFromAttendance
+            {
+                if (modifyAttendanceDoctorVisitObj != nil)
                 {
-                    self.campaignCode = modifyAttendanceDoctorVisitObj!.Campaign_Code!
-                    self.campaignName = modifyAttendanceDoctorVisitObj!.Campaign_Name!
-                    if self.campaignName != EMPTY
+                    if (modifyAttendanceDoctorVisitObj.Campaign_Code != defaultCampaignName)
                     {
-                        self.campaignLabel.text = self.campaignName
-                        campaignViewHeightConstraint.constant = 65
-                        canpaignView.isHidden = false
-                        campaignLabel.isHidden = false
+                        self.campaignCode = modifyAttendanceDoctorVisitObj!.Campaign_Code!
+                        self.campaignName = modifyAttendanceDoctorVisitObj!.Campaign_Name!
+                        if self.campaignName != EMPTY
+                        {
+                            self.campaignLabel.text = self.campaignName
+                            campaignViewHeightConstraint.constant = 65
+                            canpaignView.isHidden = false
+                            campaignLabel.isHidden = false
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            if (modifyDoctorVisitObj != nil)
+            else
             {
-                if (modifyDoctorVisitObj.Campaign_Code != defaultCampaignName)
+                if (modifyDoctorVisitObj != nil)
                 {
-                    self.campaignCode = modifyDoctorVisitObj!.Campaign_Code!
-                    self.campaignName = modifyDoctorVisitObj!.Campaign_Name!
-                    // self.campaignLabel.text = self.campaignName
-                    if self.campaignName != EMPTY
+                    if (modifyDoctorVisitObj.Campaign_Code != defaultCampaignName)
                     {
-                        self.campaignLabel.text = self.campaignName
+                        self.campaignCode = modifyDoctorVisitObj!.Campaign_Code!
+                        self.campaignName = modifyDoctorVisitObj!.Campaign_Name!
+                        // self.campaignLabel.text = self.campaignName
+                        if self.campaignName != EMPTY
+                        {
+                            self.campaignLabel.text = self.campaignName
+                        }
                     }
                 }
             }
-        }
         }
     }
     
@@ -1843,11 +1831,11 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             self.objBusinessStatus = selectedStatus
             if isFromAttendance
             {
-//                if (self.modifyAttendanceDoctorVisitObj != nil)
-//                {
-//                    self.modifyAttendanceDoctorVisitObj.Business_Status_ID = self.objBusinessStatus!.Business_Status_ID!
-//                    self.modifyAttendanceDoctorVisitObj.Business_Status_Name = self.objBusinessStatus!.Status_Name!
-//                }
+                //                if (self.modifyAttendanceDoctorVisitObj != nil)
+                //                {
+                //                    self.modifyAttendanceDoctorVisitObj.Business_Status_ID = self.objBusinessStatus!.Business_Status_ID!
+                //                    self.modifyAttendanceDoctorVisitObj.Business_Status_Name = self.objBusinessStatus!.Status_Name!
+                //                }
                 let dic = ["Business_Status_Id" : selectedStatus.Business_Status_ID ?? 0,
                            "Status_Name" : selectedStatus.Status_Name ?? EMPTY] as [String : Any]
                 objBusinessStatus_Dir = BusinessStatusModel(dict : dic as NSDictionary)

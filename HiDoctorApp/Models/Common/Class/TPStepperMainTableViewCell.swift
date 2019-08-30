@@ -218,7 +218,8 @@ class TPStepperMainTableViewCell: UITableViewCell ,UITableViewDelegate, UITableV
             }
             
             // cell.visitTimeLabel.text = doctorObj.Visit_Mode
-            cell.line1Text.text = doctorObj.Hospital_Name! + " | " + "MDL NO: " + doctorObj.MDL_Number! + " | " + (doctorObj.Speciality_Name)!
+         //   cell.line1Text.text = doctorObj.Hospital_Name! + " | " + "MDL NO: " + doctorObj.MDL_Number! + " | " + (doctorObj.Speciality_Name)!
+              cell.line1Text.text = doctorObj.Hospital_Name! + " | " + (doctorObj.Speciality_Name)!
             
             var line2Text: String = ""
             

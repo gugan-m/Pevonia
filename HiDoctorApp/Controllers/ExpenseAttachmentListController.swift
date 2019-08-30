@@ -53,7 +53,6 @@ class ExpenseAttachmentListController: UIViewController,UITableViewDataSource,UI
                         for expenseObj in getAttachExpenseList
                         {
                             let expenseData = ExpenseAttachmentList()
-                            
                             expenseData.File_Name = checkNullAndNilValueForString(stringData: expenseObj.value(forKey: "File_Name") as? String)
                             expenseData.Claim_Code = checkNullAndNilValueForString(stringData:expenseObj.value(forKey: "Claim_Code") as? String)
                             expenseData.Image_File_Path = checkNullAndNilValueForString(stringData:expenseObj.value(forKey: "Image_File_Path") as? String)

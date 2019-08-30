@@ -24,7 +24,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     var inProgressFlag : Bool = false
     var retryFlag : Bool = false
     var index : Int = 0
-    var uploadLoaderText = "Uploading TP Details"
+    var uploadLoaderText = "Uploading PR Details"
     var selectedMonth: Int!
     var selectedYear: Int!
     var userDetails: UserModel!
@@ -135,7 +135,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 if (isLessthanHidoctorStartDate(dateToCompare: uploadObj.TP_Date!))
                 {
-                    cell.statusLabel.text = "Not allowed to enter TP before your joining Date."
+                    cell.statusLabel.text = "Not allowed to enter PR before your joining Date."
                     cell.statusLabel.textColor = UIColor.red
                     cell.cellBgView.backgroundColor = UIColor.lightGray
                 }
@@ -361,7 +361,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                         else
                         {
                             removeCustomActivityView()
-                            let alertMessage =  "No tp found."
+                            let alertMessage =  "No PR found."
                             
                             let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                             
@@ -441,7 +441,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
             else
             {
                 removeCustomActivityView()
-                let alertMessage =  "Cannot upload before HiDoctor start date TP(s)."
+                let alertMessage =  "Cannot upload before Pevonia Intl start date PR(s)."
                 
                 let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                 
@@ -459,7 +459,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     private func refreshTp()//if(before hidoctor start date exist
     {
         removeCustomActivityView()
-        showCustomActivityIndicatorView(loadingText: "Refreshing TP")
+        showCustomActivityIndicatorView(loadingText: "Refreshing PR")
         
         BL_TPRefresh.sharedInstance.refreshTourPlanner(month: self.selectedMonth, year: self.selectedYear, completion: { (status) in
             removeCustomActivityView()
@@ -520,12 +520,12 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
             if(isHidoctorLastDate)
             {
                 removeCustomActivityView()
-                let alertMessage =  "Cannot upload before HiDoctor start date TP(s)."
+                let alertMessage =  "Cannot upload before Pevonia Intl start date PR(s)."
                 
                 let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
-                    showCustomActivityIndicatorView(loadingText: "Refreshing TP")
+                    showCustomActivityIndicatorView(loadingText: "Refreshing PR")
                     BL_TPUpload.sharedInstance.checkTPLock(month: self.selectedMonth, year: self.selectedYear, completion: { (objApiResponse) in
 //                        if(objApiResponse.Status == SERVER_SUCCESS_CODE)
 //                        {
@@ -576,7 +576,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         BL_TPUpload.sharedInstance.checkTPLock(month: self.selectedMonth, year: self.selectedYear, completion: { (objApiResponse) in
             
             removeCustomActivityView()
-            showCustomActivityIndicatorView(loadingText: "Refreshing TP")
+            showCustomActivityIndicatorView(loadingText: "Refreshing PR")
             
             BL_TPRefresh.sharedInstance.refreshTourPlanner(month: self.selectedMonth, year: self.selectedYear, completion: { (status) in
                 removeCustomActivityView()

@@ -61,7 +61,7 @@ class ComplaintCustomerListViewController: UIViewController,UITableViewDelegate,
         else
         {
             self.tableView.isHidden = true
-            self.emptyStateLbl.text = "No \(title) data available.Please download the data through manage accompanist screen."
+            self.emptyStateLbl.text = "No \(title) data available.Please download the data through manage Ride Along screen."
         }
     }
     

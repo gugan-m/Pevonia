@@ -203,7 +203,7 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
             }
             else if(obj.controlType == controlValues.Picker)
             {
-                if(obj.headerTitle == "Speciality")
+                if(obj.headerTitle == "Position")
                 {
                     cell.editTxtField.inputView = pickerView
                 }
@@ -261,7 +261,6 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
                     cell1.outerView.layer.mask = shapeLayerBottom
                 }
             }
-            
             return cell1
         }
     }
@@ -418,7 +417,7 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
                     {
                         errorMsg = doValidations(objDoctorDataListModel: data, validationType: Constants.Validation_Type.Alphabet_And_Space, minLength: 3, maxLength: 100)
                     }
-                    else if (fieldName == "Speciality")
+                    else if (fieldName == "Position")
                     {
                         if (data.isMandatory && (data.newValue == EMPTY || data.newValue == specialityDefaults))
                         {

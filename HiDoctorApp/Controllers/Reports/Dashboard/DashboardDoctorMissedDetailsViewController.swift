@@ -247,8 +247,8 @@ class DashboardDoctorMissedDetailsViewController: UIViewController, UISearchBarD
         let MDLNo = dictObj.MDL_Number
         let speciality = dictObj.Speciality_Name
         let category = dictObj.Category_Name
-        
-        userListCell.userId.text = MDLNo! + " | " + speciality! + " | " + category!
+     //   userListCell.userId.text = MDLNo! + " | " + speciality! + " | " + category!
+        userListCell.userId.text = speciality! + " | " + category!
         userListCell.userDesignation.text = dictObj.Region_Name
         
         return userListCell

@@ -333,7 +333,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
             if doctorCheck == 0
             {
                 let currentLocation = getCurrentLocaiton()
-                let initialAlert = "Punch-in time for " + BL_DoctorList.sharedInstance.doctorTitle + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + BL_DoctorList.sharedInstance.doctorTitle
+                let initialAlert = "Punch-in time for " + BL_DoctorList.sharedInstance.doctorTitle + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + BL_DoctorList.sharedInstance.doctorTitle
                 //let indexpath = sender.tag
                 let alertViewController = UIAlertController(title: "Punch In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                 
@@ -547,6 +547,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
 //                    getAppDelegate().allocateRootViewController(sbName: Constants.StoaryBoardNames.AssetsListSb, vcName: AssetParentVCID)
 //                }
 //            }
+            self.deleteShowList()
               getAppDelegate().allocateRootViewController(sbName: Constants.StoaryBoardNames.AssetsListSb, vcName: AssetParentVCID)
         }
     }

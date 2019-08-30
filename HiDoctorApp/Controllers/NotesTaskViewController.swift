@@ -394,7 +394,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         titletext.layer.cornerRadius = 10.0
         titletext.layer.borderWidth = 1.0
         titletext.layer.borderColor = UIColor.gray.cgColor
-        
+        adddoc.setTitle("Tag " + appDoctorPlural, for: .normal)
         //duedatelabel.isEnabled = false
         
         //statuslabel.isEnabled = false
@@ -731,9 +731,6 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         return 25
     }
     
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 80)
     }
@@ -857,6 +854,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 if apiObj.Status == SERVER_SUCCESS_CODE
                 {
                     removeCustomActivityView()
+                    showToastViewWithShortTime(toastText: "Notes created successfully")
                     self.navigationController?.popViewController(animated: true)
                 }
                 else
@@ -877,6 +875,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 if apiObj.Status == SERVER_SUCCESS_CODE
                 {
                     removeCustomActivityView()
+                    showToastViewWithShortTime(toastText: "Task created successfully")
                     self.navigationController?.popViewController(animated: true)
                 }
                 else
@@ -896,6 +895,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 if apiObj.Status == SERVER_SUCCESS_CODE
                 {
                     removeCustomActivityView()
+                    showToastViewWithShortTime(toastText: "Notes edited successfully")
                     self.navigationController?.popViewController(animated: true)
                 }
                 else
@@ -916,6 +916,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                 if apiObj.Status == SERVER_SUCCESS_CODE
                 {
                     removeCustomActivityView()
+                    showToastViewWithShortTime(toastText: "Task edited successfully")
                     self.navigationController?.popViewController(animated: true)
                 }
                 else

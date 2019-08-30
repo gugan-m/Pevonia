@@ -306,9 +306,7 @@ class GeoReportDateViewController: UIViewController,SetSelectedAccompanist,UIPic
                                             self.showAlertView(title: infoTitle, message: "No \(appDoctor)/\(appChemist)/\(appStockiest) visits available for this date")
                                         }
                                     }
-                                    
-                                    
-                                    
+                                
                                     BL_HourlyReport.sharedInstance.getGeoDCRHeaderDetails(userObj: self.selectedAccompanistObj,  status: self.statusString, completion: { (objApiResponse3) in
                                         if (objApiResponse3.Status == SERVER_SUCCESS_CODE)
                                         {

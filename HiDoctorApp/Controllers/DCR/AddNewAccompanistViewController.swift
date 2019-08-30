@@ -18,9 +18,9 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     @IBOutlet weak var fromTxtField: UITextField!
     @IBOutlet weak var switchBtn: UISwitch!
     @IBOutlet weak var saveBtn : UIButton!
-    
     @IBOutlet weak var selectAccompanitsBtnAction: UIButton!
     @IBOutlet weak var accompanitsView: UIView!
+    
     var fromTimePicker = UIDatePicker()
     var toTimePicker = UIDatePicker()
     var modifyAccompanistObj : DCRAccompanistModel?
@@ -44,6 +44,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     {
         self.setAccompanistDetails()
     }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -83,9 +84,9 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     
     private func validateAccompanistDetails()
     {
-        if self.accompanistNameLbl.text == "Select Accompanist"
+        if self.accompanistNameLbl.text == "Select Ride Along"
         {
-            showAlertView(message: "Please select accompanist")
+            showAlertView(message: "Please select Ride Along")
         }
         else
         {
@@ -99,7 +100,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
         {
             if self.isIndePendent == "1"
             {
-                let errorMsg  = "All the \(appDoctor) visit of this DCR will be marked as 'Accompanied Call' with this accompanist name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
+                let errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with this Ride Along name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
                 let alertViewController = UIAlertController(title: infoTitle, message: errorMsg, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -149,7 +150,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
             var errorMsg: String = EMPTY
             var isOnlyForDoctor: String = self.isIndePendent
             
-            errorMsg  = "All the \(appDoctor) visit of this DCR will be marked as 'Accompanied Call' with this accompanist name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
+            errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with this Ride Along name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
             
             if (BL_DCR_Doctor_Visit.sharedInstance.isDCRInheritanceEnabled())
             {
@@ -354,11 +355,11 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     
     func setAccompanistDetails()
     {
-        var accompanistName : String = "Select Accompanist"
+        var accompanistName : String = "Select Ride Along"
         var startTime : String = ""
         var endTime : String = ""
         var isSelected : Bool = false
-        var navigationTitle = "Add New Accompanist"
+        var navigationTitle = "Add New Ride Along"
         var saveBtnTitle : String = "SUBMIT"
         
         self.accompanitsView.alpha = 1.0
@@ -367,7 +368,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
         
         if modifyAccompanistObj != nil && isComingFromModifyPage
         {
-            navigationTitle = "Edit Accompanist"
+            navigationTitle = "Edit Ride Along"
             saveBtnTitle = "SAVE"
             self.accompanitsView.alpha = 0.5
             self.selectAccompanitsBtnAction.isUserInteractionEnabled = false

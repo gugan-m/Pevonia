@@ -138,7 +138,6 @@ class LeaveApprovalViewController: UIViewController, UITableViewDelegate, UITabl
                     AlertView.showAlertView(title: errorTitle, message: apiResponseObject.Message)
                 }
             }
-            
         }
         else
         {
@@ -233,10 +232,8 @@ class LeaveApprovalViewController: UIViewController, UITableViewDelegate, UITabl
     {
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
         tableviewLeaveApproval.addSubview(refreshControl)
-        
     }
     
     func endRefresh()

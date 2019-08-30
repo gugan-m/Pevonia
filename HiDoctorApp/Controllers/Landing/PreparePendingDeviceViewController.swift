@@ -476,7 +476,7 @@ class PreparePendingDeviceViewController: UIViewController
     
     private func showMultiLoginAlert()
     {
-        let alertMessage =  "It seems that you have already logged in with one or more other devices. \n\n Please upload all your pending DCRs and TPs before using this device. \n\n Tap 'PROCEED' to clear logins on other devices and use only this device. \n\n Tap 'CANCEL' to cancel."
+        let alertMessage =  "It seems that you have already logged in with one or more other devices. \n\n Please upload all your pending DVRs and PRs before using this device. \n\n Tap 'PROCEED' to clear logins on other devices and use only this device. \n\n Tap 'CANCEL' to cancel."
         
         let alertViewController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         

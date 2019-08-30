@@ -53,8 +53,6 @@ class NotesKnowYourCalendar: UIViewController{
         todayRoundView.layer.cornerRadius = 12.5
         todayRoundView.layer.masksToBounds = true
         todayRoundView.backgroundColor = UIColor(red: 255/255, green: 204/255, blue: 0/255, alpha: 1.0)
-        
-        
     }
     
     override func didReceiveMemoryWarning() {

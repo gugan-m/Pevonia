@@ -43,30 +43,26 @@ class BL_MenuAccess: NSObject
             if (objMenu.Menu_Id == MenuIDs.DCR_Approval.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Activity.rawValue
-                objMenu.Menu_Name = "Daily Call Report"
+                objMenu.Menu_Name = "Daily Visit Report"
             }
             else if (objMenu.Menu_Id == MenuIDs.DCR_Leave_Approval.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Activity.rawValue
             }
-            
-            
             else if (objMenu.Menu_Id == MenuIDs.Approval.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Activity.rawValue
                 objMenu.Menu_Name = "Reject Report"
             }
-                
-                
             else if (objMenu.Menu_Id == MenuIDs.TP_Approval.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Plan.rawValue
-                objMenu.Menu_Name =  "Tour Planner"
+                objMenu.Menu_Name =  "Partner Routing"
             }
             else if (objMenu.Menu_Id == MenuIDs.DCR_Lock_Release.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Plan.rawValue
-                objMenu.Menu_Name = "DCR Lock Release"
+                objMenu.Menu_Name = "DVR Lock Release"
             }
             else if (objMenu.Menu_Id == MenuIDs.DoctorApproval.rawValue)
             {
@@ -81,13 +77,13 @@ class BL_MenuAccess: NSObject
             else if (objMenu.Menu_Id == MenuIDs.DCR_ActivityLock_Release.rawValue)
             {
                 objMenu.Section_Name = MenuSectionName.Plan.rawValue
-                objMenu.Menu_Name = "DCR Activity Lock Release"
+                objMenu.Menu_Name = "DVR Activity Lock Release"
             }
             else if (objMenu.Menu_Id == MenuIDs.TP_Freeze_Lock.rawValue)
             {
                 objMenu.Count = -99
                 objMenu.Section_Name = MenuSectionName.Plan.rawValue
-                objMenu.Menu_Name = "TP Freeze Release"
+                objMenu.Menu_Name = "PR Freeze Release"
             }
         }
         

@@ -610,21 +610,20 @@ class BL_Dashboard: NSObject
         }
         else if (entityId == Constants.DashboardEntityIDs.My_DCR_Pending_For_Approval)
         {
-            entityName = "Pending DCR Approval"
+            entityName = "Pending DVR Approval"
         }
         else if (entityId == Constants.DashboardEntityIDs.My_TP_Pending_For_Approval)
         {
-            entityName = "Pending TP Approval"
+            entityName = "Pending PR Approval"
         }
         else if (entityId == Constants.DashboardEntityIDs.Team_DCR_Pending_For_Approval)
         {
-            entityName = "Pending DCR Approval"
+            entityName = "Pending DVR Approval"
         }
         else if (entityId == Constants.DashboardEntityIDs.Team_TP_Pending_For_Approval)
         {
-            entityName = "Pending TP Approval"
+            entityName = "Pending PR Approval"
         }
-        
         return entityName
     }
     
@@ -632,7 +631,6 @@ class BL_Dashboard: NSObject
     {
         var entityValue: String = EMPTY
         let entityId = objDashboardDetails.Entity_Id
-        
         if (entityId == Constants.DashboardEntityIDs.Doctor_Call_Avg || entityId == Constants.DashboardEntityIDs.Chemist_Call_Avg)
         {
             if (objDashboardDetails.Current_Month_Value > 0)
@@ -667,15 +665,14 @@ class BL_Dashboard: NSObject
                 }
                 else if (entityId == Constants.DashboardEntityIDs.My_DCR_Pending_For_Approval || entityId == Constants.DashboardEntityIDs.Team_DCR_Pending_For_Approval)
                 {
-                    entityValue = "No Pending DCR Approval"
+                    entityValue = "No Pending DVR Approval"
                 }
                 else if (entityId == Constants.DashboardEntityIDs.My_TP_Pending_For_Approval || entityId == Constants.DashboardEntityIDs.Team_TP_Pending_For_Approval)
                 {
-                    entityValue = "No Pending TP Approval"
+                    entityValue = "No Pending PR Approval"
                 }
             }
         }
-        
         return entityValue
     }
     
@@ -720,11 +717,11 @@ class BL_Dashboard: NSObject
                 }
                 else if (entityId == Constants.DashboardEntityIDs.My_DCR_Pending_For_Approval || entityId == Constants.DashboardEntityIDs.Team_DCR_Pending_For_Approval)
                 {
-                    entityValue = "No Pending DCR Approval"
+                    entityValue = "No Pending DVR Approval"
                 }
                 else if (entityId == Constants.DashboardEntityIDs.My_TP_Pending_For_Approval || entityId == Constants.DashboardEntityIDs.Team_TP_Pending_For_Approval)
                 {
-                    entityValue = "No Pending TP Approval"
+                    entityValue = "No Pending PR Approval"
                 }
             }
         }

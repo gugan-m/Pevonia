@@ -52,7 +52,6 @@ class TPRefreshViewController: UIViewController,UIPickerViewDelegate,UIPickerVie
         self.pickerView.frame.size.height = timePickerHeight
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
-        
     }
     
     @objc func pickerDoneBtnAction()
@@ -129,11 +128,11 @@ class TPRefreshViewController: UIViewController,UIPickerViewDelegate,UIPickerVie
                         
                         if status == SERVER_SUCCESS_CODE
                         {
-                            showToastView(toastText: " TP refreshed Successfully")
+                            showToastView(toastText: "PR refreshed Successfully")
                         }
                         else
                         {
-                            showToastView(toastText: "Unable to refresh TP details")
+                            showToastView(toastText: "Unable to refresh PR details")
                         }
                     }
                 }
@@ -158,6 +157,6 @@ class TPRefreshViewController: UIViewController,UIPickerViewDelegate,UIPickerVie
     
     func showActivityIndicator()
     {
-        showCustomActivityIndicatorView(loadingText: "Refreshing TP Data")
+        showCustomActivityIndicatorView(loadingText: "Refreshing PR Data")
     }
 }

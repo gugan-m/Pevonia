@@ -115,7 +115,9 @@ class TPCopyTourPlanMainTableViewCell: UITableViewCell,UITableViewDelegate,UITab
             let docObjModel = docObjList[indexPath.row]
             cell.doctorNameLbl.text = docObjModel.doctor_Name
             let strHospitalName = checkNullAndNilValueForString(stringData: docObjModel.Hospital_Name!) as? String
-            cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!,docObjModel.mdl, docObjModel.doctorSpeciality, docObjModel.category_Name, docObjModel.region_Name)
+//            cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!,docObjModel.mdl, docObjModel.doctorSpeciality, docObjModel.category_Name, docObjModel.region_Name)
+            cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@", strHospitalName!, docObjModel.doctorSpeciality, docObjModel.category_Name, docObjModel.region_Name)
+
             return cell
         }
     }

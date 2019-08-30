@@ -902,7 +902,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         let mdlNumber = checkNullAndNilValueForString(stringData: dict.object(forKey: "MDL_Number") as? String)
         if mdlNumber != ""
         {
-            doctorDetails = "MDL NO : \(mdlNumber)"
+           // doctorDetails = "MDL NO : \(mdlNumber)"
         }
         
         let hospitalName : String = checkNullAndNilValueForString(stringData: dict.object(forKey: "Hospital_Name") as? String)
@@ -1006,9 +1006,6 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
             self.convertedStockistToHourlyReport = convertToHourlyReport1(stockistDatas: approvalDataList[5].dataList)
         }
     }
-    
- 
-    
     
     func convertToHourlyReport(doctorDatas : NSArray)->[HourlyReportDoctorVisitModel]
     {
@@ -1408,7 +1405,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         switch sectionType
         {
         case SectionHeaderType.Accompanists.rawValue:
-            showToastView(toastText: "Problem in getting Accompanist Details")
+            showToastView(toastText: "Problem in getting Ride Along Details")
             
         case SectionHeaderType.WorkPlace.rawValue:
             showToastView(toastText: "Problem in getting WorkPlace Details")
@@ -1667,7 +1664,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         
         ViewTPButton.addTarget(self, action: #selector(self.ViewTPButtonClicked), for: UIControlEvents.touchUpInside)
         ViewTPButton.titleLabel?.font = UIFont(name: fontSemiBold, size: 15.0)
-        ViewTPButton.setTitle("View TP", for: .normal)
+        ViewTPButton.setTitle("View PR", for: .normal)
         
         ViewTPButton.sizeToFit()
         
@@ -1684,7 +1681,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         }
         else
         {
-            showToastView(toastText: "No TP(s) available")
+            showToastView(toastText: "No PR(s) available")
         }
     }
     

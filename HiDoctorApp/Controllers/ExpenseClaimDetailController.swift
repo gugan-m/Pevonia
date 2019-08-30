@@ -14,18 +14,14 @@ class ExpenseClaimDetailController: UIViewController,UITableViewDelegate,UITable
 
     @IBOutlet weak var emptyStateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var employeeName: UILabel!
     @IBOutlet weak var employeeDetail: UILabel!
     @IBOutlet weak var FromToLbl: UILabel!
     @IBOutlet weak var levelDetail: UILabel!
-    
     @IBOutlet weak var approveBut: UIButton!
     @IBOutlet weak var unApproveBut: UIButton!
     
-    
-    
-   var claimCode = String()
+    var claimCode = String()
     var userCode = String()
     var fromDate = String()
     var toDate = String()
@@ -78,6 +74,7 @@ class ExpenseClaimDetailController: UIViewController,UITableViewDelegate,UITable
 
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.expenseDetailList = BL_ExpenseClaim.sharedInstance.expenseDetailSectionList
@@ -387,7 +384,7 @@ class ExpenseClaimDetailController: UIViewController,UITableViewDelegate,UITable
                                 otherDetails.append(otherDetailObj)
 
                                 otherDetailObj = ExpenseClaimDetail()
-                                otherDetailObj.title = "DCR + Addl Deduction"
+                                otherDetailObj.title = "DVR + Addl Deduction"
                                 
                                 var totalDed = Float()
                                 if let expenseAmount = (section3[0] as AnyObject).value(forKey: "Total_Deduction") as? Float
@@ -422,7 +419,7 @@ class ExpenseClaimDetailController: UIViewController,UITableViewDelegate,UITable
 
                                 //section 3 append
                                  expenseDetailobj = ExpenseDetailSectionList()
-                                expenseDetailobj.sectioTitle = "DCR Claim Details"
+                                expenseDetailobj.sectioTitle = "DVR Claim Details"
                                 expenseDetailobj.emptyMessage = ""
                                 expenseDetailobj.isSectionVisible = true
                                 expenseDetailobj.rowCount = otherDetails.count

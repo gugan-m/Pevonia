@@ -36,12 +36,12 @@ class DashboardAssetDetails: UIViewController, UITableViewDelegate, UITableViewD
 
         if isDetailed == true
         {
-            mainTitle.text = "Detailed Assets"
+            mainTitle.text = "Detailed Resources"
             entityType = 3
         }
         else
         {
-            mainTitle.text = "Non-Detailed Assets"
+            mainTitle.text = "Non-Detailed Resources"
             entityType = 4
         }
         countLbl.text = "\(count!)"
@@ -86,11 +86,11 @@ class DashboardAssetDetails: UIViewController, UITableViewDelegate, UITableViewD
                     {
                         if self.isDetailed == true
                         {
-                            self.setEmptyState(assetList: [], emptyStateMsg: "No assets have been detailed..")
+                            self.setEmptyState(assetList: [], emptyStateMsg: "No resources have been detailed..")
                         }
                         else
                         {
-                            self.setEmptyState(assetList: [], emptyStateMsg: "All assets have been detailed..")
+                            self.setEmptyState(assetList: [], emptyStateMsg: "All resources have been detailed..")
                         }
                     }
                 }

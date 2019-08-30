@@ -191,7 +191,8 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
                 
                 cell.doctorNameLbl.text = doctorObjModel.Doctor_Name
                 let strHospitalName = checkNullAndNilValueForString(stringData: doctorObjModel.Hospital_Name!) as? String
-                cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName! , doctorObjModel.MDL_Number!, doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
+//                cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName! , doctorObjModel.MDL_Number!, doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
+                cell.doctorDetailsLbl.text = String(format: "%@ | %@ | %@ | %@", strHospitalName! ,doctorObjModel.Speciality_Name, doctorObjModel.Category_Name!, doctorObjModel.Doctor_Region_Name!)
                 
                 return cell
             }

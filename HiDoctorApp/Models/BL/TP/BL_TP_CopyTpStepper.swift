@@ -22,7 +22,7 @@ class BL_TP_CopyTpStepper: NSObject {
     func getTourPlanDetails()
     {
         let callObj:TPCopyStepperModel = TPCopyStepperModel()
-        callObj.sectionTitle = "Tour Plan Details"
+        callObj.sectionTitle = "Partner Routing Details"
         callObj.sectionIconName = "icon-stepper-work-area"
         callObj.recordCount = self.tourPlanHeaderAcc.count
         print(callObj.recordCount)
@@ -247,7 +247,8 @@ class BL_TP_CopyTpStepper: NSObject {
         {
         let doctorObjModel = BL_TP_CopyTpStepper.sharedInstance.tourPlannerDoctorDetailsAcc[selectedIndex]
             let strHospitalName = checkNullAndNilValueForString(stringData: doctorObjModel.Hospital_Name!) as? String
-            let str = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, doctorObjModel.mdl, doctorObjModel.doctorSpeciality, doctorObjModel.category_Name, doctorObjModel.doctor_Region_Code)
+//            let str = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, doctorObjModel.mdl, doctorObjModel.doctorSpeciality, doctorObjModel.category_Name, doctorObjModel.doctor_Region_Code)
+            let str = String(format: "%@ | %@ | %@ | %@", strHospitalName!, doctorObjModel.doctorSpeciality, doctorObjModel.category_Name, doctorObjModel.doctor_Region_Code)
         let titleLabelHeight: CGFloat = getTextSize(text: str, fontName: fontRegular, fontSize: 14, constrainedWidth: (SCREEN_WIDTH - (49 + 8))).height
         let singleCellHeight:CGFloat = 48.0
         totalHeight = (singleCellHeight + titleLabelHeight)

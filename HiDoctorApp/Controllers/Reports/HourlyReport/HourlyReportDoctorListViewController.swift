@@ -239,11 +239,11 @@ class HourlyReportDoctorListViewController: UIViewController,UITableViewDelegate
         
         if type == 0
         {
-            emptyStateTxt = "No Accompanists Found"
+            emptyStateTxt = "No Ride Along Found"
         }
         else
         {
-            emptyStateTxt = "No accompanists found. Clear your search and try again."
+            emptyStateTxt = "No Ride Along found. Clear your search and try again."
         }
         self.emptyStateLbl.text = emptyStateTxt
     }

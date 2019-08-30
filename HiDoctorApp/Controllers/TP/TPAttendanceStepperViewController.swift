@@ -219,7 +219,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit in Applied status. Once submit you can not edit your TP.\n\n Press 'OK' to submit TP.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Attendance is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -246,7 +246,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\nClick 'Later' to submit later\n\nAlternatively,you can use 'TP Upload'option from the TP calendar screen to submit your applied Attendance."
+        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Attendance."
         
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)

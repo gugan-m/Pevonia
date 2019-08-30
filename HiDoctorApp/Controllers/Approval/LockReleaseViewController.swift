@@ -209,7 +209,7 @@ class LockReleaseViewController: UIViewController, UITableViewDataSource, UITabl
                 else
                 {
                    
-                    setEmptyStateTitle(message:"No TPFreeze lock found")
+                    setEmptyStateTitle(message:"No PRFreeze lock found")
                     emptyStateView.isHidden = false
                     self.tableView.isHidden = true
                 }
@@ -1002,7 +1002,7 @@ class LockReleaseViewController: UIViewController, UITableViewDataSource, UITabl
     }
     private func showUnlockConfirmationAlert(lockReleaseList: [LockReleaseResponseModel])
     {
-        let alertViewController = UIAlertController (title: "Confirm", message: "Do you want to unlock DCR lock?", preferredStyle: .alert)
+        let alertViewController = UIAlertController (title: "Confirm", message: "Do you want to unlock DVR lock?", preferredStyle: .alert)
         
         alertViewController.addAction(UIAlertAction(title: cancel, style: UIAlertActionStyle.cancel, handler: nil))
         
@@ -1182,7 +1182,7 @@ class LockReleaseViewController: UIViewController, UITableViewDataSource, UITabl
             var categoryNamwe = String()
             if let mdlNum = objdoctorData.MDL_Number
             {
-                MDLNum = mdlNum
+               // MDLNum = mdlNum
             }
             
             if let speciality = objdoctorData.Speciality_Name
@@ -1208,7 +1208,8 @@ class LockReleaseViewController: UIViewController, UITableViewDataSource, UITabl
                     categoryNamwe = "\(category)"
                 }
             }
-            cell.actualDateLabel.text = MDLNum + specialityName + categoryNamwe
+           // cell.actualDateLabel.text = MDLNum + specialityName + categoryNamwe
+            cell.actualDateLabel.text = specialityName + categoryNamwe
             
             if (!editMode)
             {
@@ -1491,8 +1492,7 @@ class LockReleaseViewController: UIViewController, UITableViewDataSource, UITabl
             {
                 mdlNum = (obj.MDL_Number).lowercased()
             }
-            if (empName.contains(lowerCaseText)) || (empCode.contains(lowerCaseText)) || (speciality.contains(lowerCaseText)) || (category.contains(lowerCaseText) || (mdlNum.contains(lowerCaseText)))
-            {
+            if (empName.contains(lowerCaseText)) || (empCode.contains(lowerCaseText)) || (speciality.contains(lowerCaseText)) || (category.contains(lowerCaseText)) {
                 return true
             }
             self.searchView.isHidden = false

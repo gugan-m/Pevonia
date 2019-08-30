@@ -349,7 +349,7 @@ class BL_DCRCalendar: NSObject
                                 }
                                 else
                                 {
-                                tpPreFillAlert.append("One of the Selected Accompanist Region is inactive")
+                                tpPreFillAlert.append("One of the Selected Ride Along Region is inactive")
                                 }
                                 insertData = false
                             }
@@ -1484,7 +1484,7 @@ class BL_DCRCalendar: NSObject
         
         if (availableDCRCount >= allowedDCRCount)
         {
-            return "You have some pending DCR(s) to be uploaded/submit. Please complete those DCR(s) before entering new DCR"
+            return "You have some pending DVR(s) to be uploaded/submit. Please complete those DVR(s) before entering new DVR"
         }
         else
         {
@@ -1615,16 +1615,16 @@ class BL_DCRCalendar: NSObject
                 
                 if (tpList.count > 0)
                 {
-                    completion("TP data downloaded successfully")
+                    completion("PR data downloaded successfully")
                 }
                 else
                 {
-                    completion("No approved TP found")
+                    completion("No approved PR found")
                 }
             }
             else
             {
-                completion("Unable to download TP data")
+                completion("Unable to download PR data")
             }
         }
     }
@@ -1641,16 +1641,16 @@ class BL_DCRCalendar: NSObject
                 
                 if (tpList.count > 0)
                 {
-                    completion("TP data downloaded successfully")
+                    completion("PR data downloaded successfully")
                 }
                 else
                 {
-                    completion("No approved TP found")
+                    completion("No approved PR found")
                 }
             }
             else
             {
-                completion("Unable to download TP data")
+                completion("Unable to download PR data")
             }
         }
     }
@@ -1708,15 +1708,15 @@ class BL_DCRCalendar: NSObject
         
         if (oldUserName == VACANT || oldUserName == NOT_ASSIGNED) && (newUserName != VACANT && newUserName != NOT_ASSIGNED)
         {
-            message = "During the TP creation, \(regionName) was VACANT and \(newUserName) has been assigned to this region recently. However, this call is marked as an independent call. You may modify it."
+            message = "During the PR creation, \(regionName) was VACANT and \(newUserName) has been assigned to this region recently. However, this call is marked as an independent call. You may modify it."
         }
         else if (oldUserName != VACANT && oldUserName != NOT_ASSIGNED) && (newUserName == VACANT || newUserName == NOT_ASSIGNED)
         {
-            message = "During the TP creation, \(oldUserName) was assigned to \(regionName) region. As of now, it is VACANT. Hence, it is assumed that you are using this region only for \(appDoctor) visits (i.e. Independent Call)."
+            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) region. As of now, it is VACANT. Hence, it is assumed that you are using this region only for \(appDoctor) visits (i.e. Independent Call)."
         }
         else if (oldUserName != VACANT && oldUserName != NOT_ASSIGNED) && (newUserName != VACANT && newUserName != NOT_ASSIGNED)
         {
-            message = "During the TP creation, \(oldUserName) was assigned to \(regionName) region. However, \(newUserName) has been assigned to this region recently. Hence, it is assumed that you are accompanying \(newUserName) for this \(appDoctor) visits."
+            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) region. However, \(newUserName) has been assigned to this region recently. Hence, it is assumed that you are accompanying \(newUserName) for this \(appDoctor) visits."
         }
         
         return message

@@ -14,6 +14,7 @@ class AboutUsViewController: UIViewController {
     @IBOutlet weak var versionLbl: UILabel!
     @IBOutlet weak var companyEmail: UITextView!
     @IBOutlet weak var mobileNo: UITextView!
+   
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -32,8 +33,8 @@ class AboutUsViewController: UIViewController {
          self.versionLbl.text = "Version : v\(getCurrentAppVersion())"
          self.title = "About Us"
         setLinkToCompanyUrlTxtView()
-        self.setCompanyNumber()
-        setCompanyEmail()
+       // self.setCompanyNumber()
+       // setCompanyEmail()
     }
     
     func setLinkToCompanyUrlTxtView()
@@ -44,7 +45,6 @@ class AboutUsViewController: UIViewController {
         self.companyUrl.textContainer.lineFragmentPadding = 0
         self.companyUrl.dataDetectorTypes = UIDataDetectorTypes.all
         let hyperlinkColor = UIColor(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
-
         self.companyUrl.linkTextAttributes = [NSAttributedStringKey.underlineStyle.rawValue : NSUnderlineStyle.styleSingle.rawValue,NSAttributedStringKey.foregroundColor.rawValue : hyperlinkColor ]
     }
     

@@ -135,7 +135,7 @@ class BL_TPStepper: NSObject
     
     private func getCopyTPHeight() -> CGFloat
     {
-        let messageText = "More than one accompanist has planned joint visit on this day. Do you want to copy his \(PEV_TOUR_PLAN)?"
+        let messageText = "More than one \(PEV_ACCOMPANIST) has planned joint visit on this day. Do you want to copy his \(PEV_TOUR_PLAN)?"
         let getheight = getTextSize(text: messageText, fontName: fontRegular, fontSize: 13, constrainedWidth: SCREEN_WIDTH-120).height
         let calculateHeihgt = 50 - getheight
         
@@ -478,7 +478,7 @@ class BL_TPStepper: NSObject
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD ACCOMPANIST"
+        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
         
         self.accompanistList = []
         self.objTPHeader = BL_TPCalendar.sharedInstance.getTPData(date: TPModel.sharedInstance.tpDateString)
@@ -938,7 +938,7 @@ class BL_TPStepper: NSObject
         {
             if (self.accompanistList.count == 0)
             {
-                errorMessage = "Please choose at least one accompanist"
+                errorMessage = "Please choose at least one Ride Along"
                 return errorMessage
             }
         }
@@ -951,7 +951,7 @@ class BL_TPStepper: NSObject
             
             if (filteredArray.count == 0)
             {
-                errorMessage = objTPAccompanist.userObj.Employee_name! + " is an invalid accompanist"
+                errorMessage = objTPAccompanist.userObj.Employee_name! + " is an invalid Ride Along"
                 return errorMessage
             }
         }
@@ -962,7 +962,7 @@ class BL_TPStepper: NSObject
         {
             if (self.accompanistList.count > maximumAccompanistCount)
             {
-                errorMessage = "You can choose maximum of \(maximumAccompanistCount) accompanists only in a TP"
+                errorMessage = "You can choose maximum of \(maximumAccompanistCount) Ride Along only in a PR"
                 return errorMessage
             }
         }
@@ -1055,7 +1055,7 @@ class BL_TPStepper: NSObject
                 
                 if (filtered.count == 0)
                 {
-                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your region or any of the accompanist region"
+                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your region or any of the Ride Along region"
                     break
                 }
             }

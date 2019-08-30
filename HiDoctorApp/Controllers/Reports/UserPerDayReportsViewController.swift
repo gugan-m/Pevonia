@@ -54,7 +54,7 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
 
         let tpList = BL_Reports.sharedInstance.getTpList()
         userPerDayList = getSortedAppliedList(list: convertTpHeaderToCommonModel(list : tpList))
-            self.emptyStateLbl.text = "No offline and Online TP(s) are available"
+            self.emptyStateLbl.text = "No offline and Online PR(s) are available"
         checkEmpty(list: userPerDayList)
         }
         else
@@ -67,7 +67,7 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
                     if apiResponseObj.Status == SERVER_SUCCESS_CODE
                     {
                        self.userPerDayList = self.getSortedAppliedList(list: self.convertTPHeaderToCommonModel(list: apiResponseObj.list))
-                       self.emptyStateLbl.text = "No TP(s) are available"
+                       self.emptyStateLbl.text = "No PR(s) are available"
                        self.checkEmpty(list: self.userPerDayList)
                     }
                     else
@@ -92,7 +92,7 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
         if isMine
         {
             userPerDayList = getSortedAppliedList(list: convertDCRHeaderToCommonModel(list: BL_Reports.sharedInstance.getAppliedDCRs()))
-            self.emptyStateLbl.text = "No offline and Online DCR(s) are available"
+            self.emptyStateLbl.text = "No offline and Online DVR(s) are available"
             checkEmpty(list: userPerDayList)
         }
         else
@@ -105,7 +105,7 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
                     if apiResponseObj.Status == SERVER_SUCCESS_CODE
                     {
                         self.userPerDayList = self.getSortedAppliedList(list: self.convertDcrToCommonHeaderModel(list: apiResponseObj.list))
-                        self.emptyStateLbl.text = "No DCR(s) are available"
+                        self.emptyStateLbl.text = "No DVR(s) are available"
                         self.checkEmpty(list: self.userPerDayList)
                     }
                     else

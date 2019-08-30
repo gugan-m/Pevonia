@@ -9,6 +9,7 @@
 import UIKit
 
 class TPTravelDetailsViewController: UIViewController , UITextFieldDelegate, UIPickerViewDelegate {
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var fromPlaceField: UITextField!
@@ -16,7 +17,6 @@ class TPTravelDetailsViewController: UIViewController , UITextFieldDelegate, UIP
     @IBOutlet weak var travelModeLabel: UILabel!
     @IBOutlet weak var travelModeField: UITextField!
     @IBOutlet weak var fromPlacebtn: UIButton!
-    
     
     var pickerView: UIPickerView!
     var selectedRow: Int = 0
@@ -43,11 +43,7 @@ class TPTravelDetailsViewController: UIViewController , UITextFieldDelegate, UIP
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setDefaults()
-        
-        // Do any additional setup after loading the view.
-        
     }
     
     override func didReceiveMemoryWarning() {

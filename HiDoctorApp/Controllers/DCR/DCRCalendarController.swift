@@ -159,7 +159,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     private func loadCalendar()
     {
         BL_DCRCalendar.sharedInstance.getCalendarModel()
-        selectedDate = getServerFormattedDate(date: getCurrentDateAndTime())
+        selectedDate = getcurrentdateforcalendar(date: Date())
         loadDCRDetails(viewHeight: self.view.frame.size.height - 64.0)
         
         calendarView.register(UINib(nibName: "DCRCalendarCell", bundle: nil), forCellWithReuseIdentifier: "cell")
@@ -304,7 +304,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     
     func showActivityRestrictionAlert()
     {
-        let alertMsg = "Your first \(PEV_DCR) for this date \(convertDateIntoString(date: selectedDate)) is in approved mode, to apply a another DCR for this day, request your manager to unapprove the first \(PEV_DCR). Note: you can apply second \(PEV_DCR) only when the first \(PEV_DCR) is in applied or in unapproved mode"
+        let alertMsg = "Your first \(PEV_DCR) for this date \(convertDateIntoString(date: selectedDate)) is in approved mode, to apply a another DVR for this day, request your manager to unapprove the first \(PEV_DCR). Note: you can apply second \(PEV_DCR) only when the first \(PEV_DCR) is in applied or in unapproved mode"
         AlertView.showAlertView(title: alertTitle, message: alertMsg, viewController: self)
     }
     

@@ -156,7 +156,7 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     vc.punch_timezone = localTimeZoneName
                     
-                    vc.punch_timeoffset = String(getCurrentTimeZone())
+                    vc.punch_timeoffset = getOffset()
                     }
                     //                DCRModel.sharedInstance.customerId = 0
                     DCRModel.sharedInstance.customerCode = ""
@@ -180,7 +180,7 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                             {
                                 let doctorobj : DCRDoctorVisitModel = model[0]
                                 
-                                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + doctorobj.Doctor_Name
+                                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
 
                                 let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
 
@@ -202,7 +202,7 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                             {
                                 let currentLocation = getCurrentLocaiton()
                                 
-                                let initialAlert = "Punch-in time for " + doctorNameLbl.text! + " is " + getcurrenttime() + ". You cannot Punch-in for other doctors until you punch-out for " + doctorNameLbl.text!
+                                let initialAlert = "Punch-in time for " + doctorNameLbl.text! + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorNameLbl.text!
                                 
                                 //let indexpath = sender.tag
                                 

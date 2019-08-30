@@ -206,7 +206,8 @@ class HourlyReportGoogleMapViewController: UIViewController,GMSMapViewDelegate,U
         {
            cell.doctorName.text = doctorData.Doctor_Name
         }
-        cell.doctorDetail.text = "\(doctorData.MDL_Number) | \(doctorData.Speciality_Name) | \(doctorData.Category_Name) | \(doctorData.Lattitude) | \(doctorData.Longitude) | \(doctorData.Doctor_Region_Name)"
+//        cell.doctorDetail.text = "\(doctorData.MDL_Number) | \(doctorData.Speciality_Name) | \(doctorData.Category_Name) | \(doctorData.Lattitude) | \(doctorData.Longitude) | \(doctorData.Doctor_Region_Name)"
+        cell.doctorDetail.text = "\(doctorData.Speciality_Name) | \(doctorData.Category_Name) | \(doctorData.Lattitude) | \(doctorData.Longitude) | \(doctorData.Doctor_Region_Name)"
         let index = doctorListWithLocations.index(of: doctorData)!
         cell.countlabel.text = String(index+1)
         return cell

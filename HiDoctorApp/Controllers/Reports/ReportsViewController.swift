@@ -17,15 +17,9 @@ class ReportsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var liveTrackerReport = "Live Tracker Report"
     var userperdayreport = "User per day report"
     var tourplannerreport = "\(PEV_TOUR_PLAN) report"
-    
     var traveltrackingreport = "Travel Tracking Report"
-    
-    
-    
     var approvalMenu : [MenuMasterModel] = []
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableData()

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -899,7 +899,7 @@
                                                     <constraint firstItem="YpK-y2-FRC" firstAttribute="top" secondItem="Ec3-gW-Pcw" secondAttribute="top" id="uTs-m7-q22"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Please download accompanist data from Manage Accompanist screen." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1R3-Cy-74c">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Please download Ride Along data from Manage Ride Along screen." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1R3-Cy-74c">
                                                 <rect key="frame" x="25" y="306" width="270" height="33.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                 <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="0.75" colorSpace="calibratedRGB"/>
@@ -1389,11 +1389,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon-calendar" width="48" height="48"/>
+        <image name="icon-calendar" width="24" height="24"/>
         <image name="icon-checkbox-blank" width="24" height="24"/>
-        <image name="icon-close1" width="100" height="100"/>
+        <image name="icon-close1" width="50" height="50"/>
         <image name="icon-stepper-remarks" width="24" height="24"/>
-        <image name="icon-view" width="36" height="36"/>
+        <image name="icon-view" width="18" height="18"/>
         <image name="icon-work-user" width="24" height="24"/>
     </resources>
 </document>

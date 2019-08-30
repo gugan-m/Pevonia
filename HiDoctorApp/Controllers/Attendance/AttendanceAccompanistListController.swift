@@ -241,11 +241,11 @@ class AttendanceAccompanistListController: UIViewController,UITableViewDelegate,
         
         if type == 1
         {
-            emptyStateTxt = "No Accompanists Found"
+            emptyStateTxt = "No Ride Along Found"
         }
         else
         {
-            emptyStateTxt = "No Accompanists Found"
+            emptyStateTxt = "No Ride Along Found"
         }
         self.emptyStateLabel.text = emptyStateTxt
     }
@@ -253,7 +253,6 @@ class AttendanceAccompanistListController: UIViewController,UITableViewDelegate,
     func setSortedArray() -> [UserMasterWrapperModel]
     {
         return userWrapperList.sorted { (($0).userObj.Employee_name).localizedCaseInsensitiveCompare((($1).userObj.Employee_name) as String) == ComparisonResult.orderedAscending }
-        
     }
     
     //MARK :-Search Bar Delegate

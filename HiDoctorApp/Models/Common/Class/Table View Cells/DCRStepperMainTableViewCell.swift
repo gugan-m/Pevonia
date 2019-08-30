@@ -147,16 +147,19 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
                 if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled()
                     
                 {
-                    line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
+//                    line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
+                    line2Text = objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
                 }
                 else if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DCR_CHEMIST_VISIT_MODE) == PrivilegeValues.VISIT_TIME_MANDATORY.rawValue) && (!BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled())
                 {
-                    line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
+                  //  line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
+                    line2Text =  objChemist.RegionName +  " | " + objChemist.VisitTime! + objChemist.VisitMode!
                 }
                     
                 else
                 {
-                    line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | "  + objChemist.VisitMode!
+                  //  line2Text = objChemist.MDLNumber + " | " + objChemist.RegionName +  " | "  + objChemist.VisitMode!
+                    line2Text =  objChemist.RegionName +  " | "  + objChemist.VisitMode!
                 }
                 
             }
@@ -285,8 +288,8 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
             
             
             let strHospitalName = checkNullAndNilValueForString(stringData: doctorObj.Hospital_Name) as? String
-            cell.line1Text.text = strHospitalName! + " | " + "\(ccmNumberCaption): " + ccmNumberPrefix + doctorObj.MDL_Number! + " | " + doctorObj.Speciality_Name
-            
+//            cell.line1Text.text = strHospitalName! + " | " + "\(ccmNumberCaption): " + ccmNumberPrefix + doctorObj.MDL_Number! + " | " + doctorObj.Speciality_Name
+            cell.line1Text.text = strHospitalName!  + " | " + doctorObj.Speciality_Name
             var line2Text: String = ""
             
             if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
@@ -310,5 +313,6 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
             
             return cell
         }
-    }
 }
+    }
+

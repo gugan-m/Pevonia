@@ -22,7 +22,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
     @IBOutlet weak var mandatoryStoryView: UIView!
     @IBOutlet weak var selectionView: UIView!
     
-   
+    
     var assetViewController : AssetsListViewController!
     var storyViewController : AssetsMainStoryListViewController!
     var showViewController : AssetShowListViewController!
@@ -35,11 +35,11 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
     var isComingFromDigitalAssets = false
     var isComingFromDCR = false
     
-  //  @IBOutlet weak var bottomTabViewThreeWidth: NSLayoutConstraint!
-   // @IBOutlet weak var bottomTabViewTwoWidth: NSLayoutConstraint!
-   // @IBOutlet weak var bottomTabViewoneWidth: NSLayoutConstraint!
+    //  @IBOutlet weak var bottomTabViewThreeWidth: NSLayoutConstraint!
+    // @IBOutlet weak var bottomTabViewTwoWidth: NSLayoutConstraint!
+    // @IBOutlet weak var bottomTabViewoneWidth: NSLayoutConstraint!
     @IBOutlet weak var BottomTabViewThree: UIView!
-   // @IBOutlet weak var bottomTabViewone: UIView!
+    // @IBOutlet weak var bottomTabViewone: UIView!
     @IBOutlet weak var bottomTabViewTwo: UIView!
     @IBOutlet weak var bottomTabViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomTabView: UIView!
@@ -68,11 +68,11 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             currentIndex = 1
             bottomTabView.isHidden = false
             bottomTabViewHeight.constant = 50
-           // bottomTabViewoneWidth.constant = 0
-          //  bottomTabViewone.isHidden = true
-           
-          //  bottomTabViewTwoWidth.constant = self.view.frame.size.width/2
-          //  bottomTabViewThreeWidth.constant = self.view.frame.size.width/2
+            // bottomTabViewoneWidth.constant = 0
+            //  bottomTabViewone.isHidden = true
+            
+            //  bottomTabViewTwoWidth.constant = self.view.frame.size.width/2
+            //  bottomTabViewThreeWidth.constant = self.view.frame.size.width/2
             addAssetListViewController()
         }
         else
@@ -144,6 +144,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
         
         self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
+    
     func isCurrentDate() -> Bool
     {
         
@@ -159,26 +160,33 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             return false
         }
     }
+    
     @objc func backButtonClicked()
     {
         let customerObj =  BL_AssetModel.sharedInstance.getCustomerObjByCustomerCode()
         if(BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && customerObj != nil)
         {
-        
-        var dcrId = 0
-        let convertedDate = getStringInFormatDate(dateString: getCurrentDate())
-        let dcrDetail = DBHelper.sharedInstance.getDCRIdforDCRDate(dcrDate: convertedDate)
-        if dcrDetail.count > 0
-        {
-            dcrId = dcrDetail[0].DCR_Id
-        }
-        let assets = DBHelper.sharedInstance.getAssestAnalyticscheckpunchendtime(customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
             
-        if(assets != nil && assets.count > 0 && assets[0].Punch_End_Time == "")
-        {
-            showpunchendtimealert(name: assets[0].Customer_Name, time: getcurrenttime(), obj: customerObj! , dcrId: dcrId, code: assets[0].Customer_Code )
-        }
-        else
+            var dcrId = 0
+            let convertedDate = getStringInFormatDate(dateString: getCurrentDate())
+            let dcrDetail = DBHelper.sharedInstance.getDCRIdforDCRDate(dcrDate: convertedDate)
+            if dcrDetail.count > 0
+            {
+                dcrId = dcrDetail[0].DCR_Id
+            }
+            let assets = DBHelper.sharedInstance.getAssestAnalyticscheckpunchendtime(customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
+            
+            if(assets != nil && assets.count > 0 && assets[0].Punch_End_Time == "")
+            {
+                if(isComingFromDCR)
+                {
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else{
+                    showpunchendtimealert(name: assets[0].Customer_Name, time: getcurrenttime(), obj: customerObj! , dcrId: dcrId, code: assets[0].Customer_Code )
+                }
+            }
+            else
             {
                 if isComingFromTP || isComingFromDigitalAssets || isComingFromDCR
                 {
@@ -189,22 +197,24 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
                     setSplitViewRootController(backFromAsset: true, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
                 }
             }
+            
         }
         else
         {
-        if isComingFromTP || isComingFromDigitalAssets || isComingFromDCR
-        {
-            self.navigationController?.popViewController(animated: true)
-        }
-        else
-        {
-            setSplitViewRootController(backFromAsset: true, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
-        }
+            if isComingFromTP || isComingFromDigitalAssets || isComingFromDCR
+            {
+                self.navigationController?.popViewController(animated: true)
+            }
+            else
+            {
+                setSplitViewRootController(backFromAsset: true, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
+            }
         }
     }
+    
     func showpunchendtimealert(name: String, time: String , obj: CustomerMasterModel, dcrId:Int, code: String)
     {
-        let initialAlert = "Punch-out time for " + name + " is " + time + ". You cannot Punch-in for other doctors until you punch-out for " + name 
+        let initialAlert = "Punch-out time for " + name + " is " + time + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + name
         //let indexpath = sender.tag
         let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -213,10 +223,10 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             {
                 self.navigationController?.popViewController(animated: true)
             }
-            else
-            {
-                setSplitViewRootController(backFromAsset: true, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
-            }
+            //            else
+            //            {
+            //                setSplitViewRootController(backFromAsset: true, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
+            //            }
             alertViewController.dismiss(animated: true, completion: nil)
         }))
         
@@ -243,14 +253,13 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
         
         self.present(alertViewController, animated: true, completion: nil)
     }
+    
     func updatepunchout(dcrID: Int, visitid: Int, doctorcode: String)
     {
         let time = getStringFromDateforPunch(date: getCurrentDateAndTime())
         executeQuery(query: "UPDATE \(TRAN_DCR_DOCTOR_VISIT) SET Punch_End_Time = '\(time)', Punch_Status = 2 WHERE DCR_Id = \(dcrID) AND Doctor_Code = '\(doctorcode)'")
-        
-        
-        
     }
+    
     func addBarButtonItem()
     {
         addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToShowList))
@@ -483,12 +492,12 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
         }
         
         self.assetIcon.image = UIImage(named: assetImage)
-      //  self.showIcon.image = UIImage(named: showImage)
+        //  self.showIcon.image = UIImage(named: showImage)
         self.storyIcon.image = UIImage(named: storyImage)
         
         self.assetBottomLbl.textColor = assetTextColor
         self.storyBottomLbl.textColor = storyTextColor
-       // self.showBottomLbl.textColor = showTextColor
+        // self.showBottomLbl.textColor = showTextColor
         
     }
     

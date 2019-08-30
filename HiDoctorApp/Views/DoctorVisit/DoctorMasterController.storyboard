@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,7 +33,7 @@
                                 </constraints>
                                 <segments>
                                     <segment title="ALL"/>
-                                    <segment title="TP"/>
+                                    <segment title="PR"/>
                                     <segment title="Beat/Patch"/>
                                 </segments>
                                 <connections>
@@ -196,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vHc-7a-HLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="945" y="67.5"/>
+            <point key="canvasLocation" x="744" y="67"/>
         </scene>
         <!--Customer Address View Controller-->
         <scene sceneID="d9j-KQ-Kd0">
@@ -295,7 +295,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzA-OC-eNg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1598" y="68"/>
+            <point key="canvasLocation" x="1509" y="67"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wQz-3C-LHR">
@@ -1132,7 +1132,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tiA-aF-bFN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2304.375" y="-641.25"/>
+            <point key="canvasLocation" x="2261" y="-681"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4Qd-h1-O6S">
@@ -1355,7 +1355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l1U-DG-5TN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3148.125" y="33.75"/>
+            <point key="canvasLocation" x="2955" y="67"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1MT-jA-6RE">
@@ -1373,7 +1373,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BR9-OE-DMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2109.375" y="708.75"/>
+            <point key="canvasLocation" x="2216" y="67"/>
         </scene>
         <!--Select Speciality-->
         <scene sceneID="snh-MW-piS">
@@ -1710,12 +1710,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZcW-N9-CUo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="649" y="356"/>
+            <point key="canvasLocation" x="313" y="839"/>
         </scene>
     </scenes>
     <resources>
         <image name="icon-eDetail" width="35" height="35"/>
-        <image name="icon-right-arrow" width="48" height="48"/>
+        <image name="icon-right-arrow" width="24" height="24"/>
         <image name="icon-stepper-cycle" width="24" height="24"/>
         <image name="icon-stepper-down-arrow" width="24" height="24"/>
         <image name="icon-stepper-two-user" width="24" height="24"/>

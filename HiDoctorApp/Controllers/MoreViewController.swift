@@ -128,7 +128,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             moreDescObj.stoaryBoardName = commonListSb
             moreDescObj.viewControllerIdentifier = "DPM"
-            moreDescObj.icon = "icon-two-user"
+            moreDescObj.icon = "icon-Product"
             moreDescObj.descriptionTxt = doctorProductMapping
             dataList.append(moreDescObj)
         }
@@ -885,15 +885,15 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if (dcrCount > 0 && tpCount > 0)
         {
-            message += "\(dcrCount) DCR(s) and \(tpCount) TPs"
+            message += "\(dcrCount) DVR(s) and \(tpCount) TPs"
         }
         else if (dcrCount > 0)
         {
-            message += "\(dcrCount) DCRs"
+            message += "\(dcrCount) DVRs"
         }
         else if (tpCount > 0)
         {
-            message += "\(tpCount) TPs"
+            message += "\(tpCount) PRs"
         }
         
         message += " pending to upload. \n\nTap 'PROCEED' to ignore upload and logout \n\n Tap 'CANCEL' to stop logout"

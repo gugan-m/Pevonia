@@ -58,7 +58,7 @@ class RcpaListController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         else if(section == 1)
         {
-            return "Selected Accompanist of the day"
+            return "Selected Ride Along of the day"
         }
         else
         {

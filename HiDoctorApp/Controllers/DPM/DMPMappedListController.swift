@@ -23,8 +23,6 @@ class DMPMappedListController: UIViewController,UITableViewDelegate,UITableViewD
     var customerCode: String!
     var mcCode: String!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +32,6 @@ class DMPMappedListController: UIViewController,UITableViewDelegate,UITableViewD
         
         // Do any additional setup after loading the view.
     }
-    
     
     func setDefaults()
     {
@@ -71,8 +68,6 @@ class DMPMappedListController: UIViewController,UITableViewDelegate,UITableViewD
             }
         }
         self.tableView.reloadData()
-        
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,7 +84,7 @@ class DMPMappedListController: UIViewController,UITableViewDelegate,UITableViewD
         {
             let productObj = self.mappedList[indexPath.row]
             cell.titleOne.text = "\(appDoctor) Name: \(productObj.Customer_Name!)"
-            cell.titleTwo.text = "MDL No: \(checkNullAndNilValueForString(stringData:productObj.MDL_Number))"
+            cell.titleTwo.text = "" //  "MDL No: \(checkNullAndNilValueForString(stringData:productObj.MDL_Number))"
             cell.titleThree.text = "Prescriptions: \(checkNullAndNilValueForString(stringData:(productObj.Support_Quantity)))"
             cell.titleFour.text = "Potential Prescriptions: \(checkNullAndNilValueForString(stringData:(productObj.Potential_Quantity!)))"
             cell.titleFive.text = "Mapped By: \(productObj.Created_By!)"
@@ -113,15 +108,10 @@ class DMPMappedListController: UIViewController,UITableViewDelegate,UITableViewD
             }
             cell.titleFive.text = "Mapped By: \(custObj.Created_By!)"
         }
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-    
-    
-    
-    
 }

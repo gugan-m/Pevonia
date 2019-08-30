@@ -58,7 +58,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         {
             addBarButtonItem()
             addBackButtonView()
-            addRefreshBtn()
+            //addRefreshBtn()
             //            let list = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterSortList(regionCode: regionCode, sortFieldCode: 0, sortTypeCode: 0)!
             //            doctorMasterList = list
             //            getHospitalNameSortedList(userWrapperList: doctorMasterList)
@@ -66,7 +66,13 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
             segmentedControl.selectedSegmentIndex = 0
             segmentedControl.removeSegment(at: 1, animated: false)
             setDefaults()
-            self.navigationItem.rightBarButtonItems = [refreshBtn]
+            
+            let rect = CGRect(origin: self.segmentedControl.frame.origin, size: CGSize(width: self.segmentedControl.frame.size.width, height: 0))
+            self.segmentedControl.frame = rect
+            self.segmentedControl.setTitle(appDoctor + " List", forSegmentAt: 0)
+            self.segmentedControl.setEnabled(true, forSegmentAt: 0)
+            //self.segmentedControl.isHidden = true
+            //self.navigationItem.rightBarButtonItems = [refreshBtn]
         }
         else
         {
@@ -112,8 +118,10 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 selectedIndex = 1
             }
             
-            segmentedControl.selectedSegmentIndex = selectedIndex
+            //segmentedControl.selectedSegmentIndex = selectedIndex
+            //segmentedControl.isHidden = true
         }
+        
         setCurrentTableList()
     }
     
@@ -458,7 +466,8 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                     
                     var detailText : String = ""
                     
-                    detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                    detailText = String(format: "%@ | %@| %@","\n", model.Speciality_Name, model.Category_Name!, model.Region_Name)
                     
                     if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                     {
@@ -484,7 +493,8 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                     
                     var detailText : String = ""
                     
-                    detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//                    detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                    detailText = String(format: "%@ | %@| %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                     
                     if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                     {
@@ -570,7 +580,11 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 
                 var detailText : String = ""
                 
-                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                
+                detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                
+                
                 if(!isfromnotes)
                 {
                     if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
@@ -597,7 +611,9 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 
                 var detailText : String = ""
                 
-                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//                detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                
+                detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                 
                 if(!isfromnotes)
                 {
@@ -625,7 +641,9 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         {
             var detailText : String = ""
             
-            detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+//            detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
+            
+            detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
             
             if(!isfromnotes)
             {
@@ -831,9 +849,6 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         self.searchBar.showsCancelButton = false
         self.searchBar.text = nil
         self.searchBar.resignFirstResponder()
-        
-        
-        
         selectedIndex = sender.selectedSegmentIndex
         setCurrentTableList()
     }
@@ -931,14 +946,23 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     // private func toggleTickButton(list : CustomerMasterModel)
     private func toggleTickButton()
     {
-        self.navigationItem.rightBarButtonItems = [refreshBtn]
-        
+        if(!isfromnotes)
+        {
+            self.navigationItem.rightBarButtonItems = [refreshBtn]
+        }
         let filtered = doctorMasterList.filter{
             $0.isSelected == true
         }
         if (filtered.count > 0 )
         {
-            self.navigationItem.rightBarButtonItems = [refreshBtn, nextBtn]
+            if(isfromnotes)
+            {
+                self.navigationItem.rightBarButtonItems = [nextBtn]
+            }
+            else
+            {
+                self.navigationItem.rightBarButtonItems = [refreshBtn, nextBtn]
+            }
         }
         
     }

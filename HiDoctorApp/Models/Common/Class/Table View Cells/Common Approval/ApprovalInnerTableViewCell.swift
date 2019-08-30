@@ -452,7 +452,7 @@ class ApprovalInnerTableViewCell: UITableViewCell, UITableViewDelegate, UITableV
             mdlNumber = NOT_APPLICABLE
         }
         
-        doctorDetails = "MDL NO : \(mdlNumber)"
+       // doctorDetails = "MDL NO : \(mdlNumber)"
         
         //organisation
         var HospitalName : String = checkNullAndNilValueForString(stringData: dict.object(forKey: "Hospital_Name") as? String)

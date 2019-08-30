@@ -140,7 +140,7 @@ class ApprovalUserListViewController: UIViewController, UITableViewDelegate, UIT
                             {
                                 self.appUserList = self.convertApprovalUserMasterModel(UserList: apiResponseObj.list)
                                 self.sectionArray(list: self.appUserList)
-                                self.setEmptyStateLblTxt(text: "None of your direct reporting users are having pending DCR(s) for approval. Please click on search button to search your ALL Hierarchy Users")
+                                self.setEmptyStateLblTxt(text: "None of your direct reporting users are having pending DVR(s) for approval. Please click on search button to search your ALL Hierarchy Users")
                                 self.endRefresh()
                                 self.reloadTableView()
                                 if type == 2
@@ -430,7 +430,7 @@ class ApprovalUserListViewController: UIViewController, UITableViewDelegate, UIT
             }
             else
             {
-                self.emptyStateLbl.text = "No Accompanists found."
+                self.emptyStateLbl.text = "No Ride Along found."
             }
             showEmptyStateView(show: true)
         }
@@ -622,7 +622,7 @@ class ApprovalUserListViewController: UIViewController, UITableViewDelegate, UIT
         }
         else
         {
-            self.emptyStateLbl.text = "No Accompanists found. Clear your search and try again."
+            self.emptyStateLbl.text = "No Ride Along found. Clear your search and try again."
         }
     }
     
@@ -630,7 +630,6 @@ class ApprovalUserListViewController: UIViewController, UITableViewDelegate, UIT
     {
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        
         refreshControl.addTarget(self, action: #selector(ApprovalUserListViewController.refresh), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)
     }

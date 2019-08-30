@@ -85,7 +85,7 @@ class TPUploadSelectionViewController: UIViewController,UITableViewDelegate,UITa
         if uploadList.count == 0
         {
             self.emptyStateView.isHidden = false
-            self.emptyStateLabel.text = "No TP Data available for upload"
+            self.emptyStateLabel.text = "No PR Data available for upload"
             self.tableView.isHidden = true
         }
         else

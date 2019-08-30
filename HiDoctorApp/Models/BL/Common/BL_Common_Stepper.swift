@@ -32,7 +32,6 @@ class BL_Common_Stepper: NSObject
     var skipFromController = [Bool](repeating: false, count: 8)
     var isModify : Bool = false
     
-    
     private func clearAllArray()
     {
         chemistVisitList = []
@@ -324,7 +323,7 @@ class BL_Common_Stepper: NSObject
         stepperObjModel.emptyStateSubTitle = "Update details of the user who worked with you"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD ACCOMPANIST"
+        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
         
         if (chemistVisitList.count > 0 && stepperIndex.accompanistIndex != 0 )
         {
@@ -737,7 +736,6 @@ class BL_Common_Stepper: NSObject
         enableAddShowButton(index: stepperIndex.pobIndex)
         dynamicArrayValue += 1
         self.generateDataArray()
-        
     }
     
     func getDCRDoctorAssetDetails() -> [AssetsModel]
@@ -777,7 +775,6 @@ class BL_Common_Stepper: NSObject
     
     func enableAddShowButton(index:Int) //update add skip button for previous index
     {
-        
         let indexValue = index-1
         
         if (stepperDataList[index].recordCount > 0)
@@ -801,9 +798,8 @@ class BL_Common_Stepper: NSObject
                 stepperDataList[index].showEmptyStateSkipButton = false
             }
         }
-        
-       
     }
+    
     func showAddSkipButton(indexValue:Int)
     {
 //        for i in (0 ... indexValue).reversed()
@@ -1204,11 +1200,9 @@ class BL_Common_Stepper: NSObject
     func doAllCustomerValidations() -> String
     {
         var errorMessage: String = EMPTY
-        
         if (BL_Stepper.sharedInstance.isChemistDayEnabled())
         {
             errorMessage =  self.doChemistVisitAllValidations()
-            
             if (self.chemistVisitList.count > 0)
             {
                 let priviledge = BL_Common_Stepper.sharedInstance.getChemistDayCaptureValue().uppercased()
@@ -1230,7 +1224,6 @@ class BL_Common_Stepper: NSObject
                                 let filteredArray = doctorAccompanistList.filter{
                                     $0.AccUserCode == objDCRAccompanist.Acc_User_Code && $0.AccRegionCode == objDCRAccompanist.Acc_Region_Code
                                 }
-                                
                                 if (filteredArray.count == 0)
                                 {
                                     errorMessage = "\(accompMissedPrefixErrorMsg)" + "\(objDCRAccompanist.Employee_Name!)" + "\(accompMissedSuffixErrorMsg)"
@@ -1242,7 +1235,6 @@ class BL_Common_Stepper: NSObject
                 }
             }
         }
-        
         return errorMessage
     }
     

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "3.Stem Cell Icon.png",
+      "filename" : "ic_supervisor_account.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "2.Stem Cell Icon.png",
+      "filename" : "ic_supervisor_account_2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "1.Stem Cell Icon.png",
+      "filename" : "ic_supervisor_account_3x.png",
       "scale" : "3x"
     }
   ],

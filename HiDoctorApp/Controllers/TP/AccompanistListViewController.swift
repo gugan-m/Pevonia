@@ -15,7 +15,7 @@ class AccompanistListViewController: UIViewController,UITableViewDataSource,UITa
     
     //MARK:- Variable
     var accList:[UserMasterWrapperModel] = []
-    var titleText = "Choose Accompanist"
+    var titleText = "Choose Ride Along"
     
     //MARK:- View Controller LifeCycle
     override func viewDidLoad() {

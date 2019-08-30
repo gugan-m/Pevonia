@@ -248,7 +248,7 @@ class TpReportDetailsInnerTableViewCell: UITableViewCell,UITableViewDataSource,U
             mdlNumber = NOT_APPLICABLE
         }
         
-        doctorDetails = doctorDetails + " | " + "MDL NO : \(mdlNumber)"
+       // doctorDetails = doctorDetails + " | " + "MDL NO : \(mdlNumber)"
         
         let specialityName : String = checkNullAndNilValueForString(stringData: dict.object(forKey: "Speciality_Name") as? String)
         if specialityName != ""

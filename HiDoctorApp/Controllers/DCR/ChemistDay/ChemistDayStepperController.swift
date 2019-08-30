@@ -350,7 +350,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                     cell.cardView.clipsToBounds = false
                     
                     cell.accompEmptyStateView.isHidden = false
-                    cell.accompEmptyLbl.text = "No accompanists available"
+                    cell.accompEmptyLbl.text = "No Ride Along available"
                     
                     if cell.parentTableView != nil
                     {
@@ -725,7 +725,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                                 }
                                 else
                                 {
-                                    AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                                    AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
                                 }
                             }
                             else
@@ -826,7 +826,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                                 }
                                 else
                                 {
-                                    AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                                    AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
                                 }
                             }
                             else

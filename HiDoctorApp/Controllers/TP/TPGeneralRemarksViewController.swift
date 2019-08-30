@@ -200,7 +200,6 @@ func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replace
     }
     textView.autocorrectionType = .no
     return true
-
     }
 
 //MARK:- Update Views
@@ -216,6 +215,5 @@ func updateTextView()
         remarksTextView.text = placeHolder
     }
 }
-
 }
 

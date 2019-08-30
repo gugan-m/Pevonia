@@ -12,8 +12,8 @@ import Photos
 
 class LandingViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,onBoardComplete
 {
-   
-
+    
+    
     @IBOutlet weak var quicknotes: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var userName: UILabel!
@@ -43,7 +43,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         BL_PrepareMyDevice.sharedInstance.getbussinessStatusPotential()
         orientation = UIDevice.current.orientation
         
-         NotificationCenter.default.addObserver(self, selector: #selector(alertAction(_:)), name: NSNotification.Name(rawValue: "onBoardAction"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(alertAction(_:)), name: NSNotification.Name(rawValue: "onBoardAction"), object: nil)
         
         if SwifterSwift().isPad || SCREEN_HEIGHT > 650
         {
@@ -83,19 +83,19 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
     @objc func didBecomeActive() {
         checkForceUpdate()
         
-
+        
     }
     
     func pass(splashlist: [SplashModel]){
         for splash in splashlist {
-      if(splashlist.count > 1)
-      {
-        splashlist2.append(splash)
+            if(splashlist.count > 1)
+            {
+                splashlist2.append(splash)
             }
-    }
-            self.showAlert()
-            UserDefaults.standard.set(getCurrentDate(), forKey: "lastAlertDate")
-    
+        }
+        self.showAlert()
+        UserDefaults.standard.set(getCurrentDate(), forKey: "lastAlertDate")
+        
     }
     
     private func showAlert() {
@@ -115,7 +115,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
             alert.addAction(UIAlertAction(title: "Close", style: .default){ (action) in
                 print("pressed yes")
-               // removeAndShowNextMessage()
+                // removeAndShowNextMessage()
                 self.check  = true
             })
             if splashlist1.count > 1
@@ -125,7 +125,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                     removeAndShowNextMessage()
                 })
             }
-
+            
         }
         else if type1 == 1
         {   var imageURL = UIImage()
@@ -153,15 +153,15 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         }
         UIApplication.shared.delegate?.window??.rootViewController?.present(alert, animated: true)
     }
-  
-
+    
+    
     func checksplash()
     {
         splash { (status) in
             if(status == SERVER_SUCCESS_CODE)
             {
-               
-               self.pass(splashlist: self.splashlist1)
+                
+                self.pass(splashlist: self.splashlist1)
             }
         }
     }
@@ -201,7 +201,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         }
     }
     @objc func willEnterForeground() {
-       // print("will enter foreground")
+        // print("will enter foreground")
     }
     
     @objc func alertAction(_ notification: NSNotification)
@@ -222,21 +222,16 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         let date = UserDefaults.standard.value(forKey: "lastAlertDate") as! String!
         
         let isEqual = (getCurrentDate() == date)
-        if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
-        {
-            //quicknotes.isHidden = false
-        }
-        else
-        {
-            //quicknotes.isHidden = true
-        }
+        
+        
+        quicknotes.isHidden = true
         if date == nil || !isEqual
         {
             self.checksplash()
         }
         showVersionToastView(textColor : UIColor.white)
-//        self.getAlertsCount()
-       // self.checkAlertRedirection()
+        //        self.getAlertsCount()
+        // self.checkAlertRedirection()
         //uploadEDetailingAnalytics(isUploadDCR: false)
         
         checkForceUpdate { (status) in
@@ -294,12 +289,12 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                 self.present(alertViewController, animated: true, completion: nil)
             }
         }
-    
-            }
+        
+    }
     
     func checkAlertRedirection()
     {
-       var getAlertValue = BL_MenuAccess.sharedInstance.getLandingAlertValue()
+        var getAlertValue = BL_MenuAccess.sharedInstance.getLandingAlertValue()
         getAlertValue = getAlertValue.replacingOccurrences(of: " ", with: "")
         
         alertArray = getAlertValue.components(separatedBy: ",")
@@ -314,7 +309,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
             
             self.navigateToNextScreen(stoaryBoard: storyBoard, viewController: viewController)
-    
+            
             
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -429,7 +424,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                                 splash.type = 0
                                 splash.title = title
                                 
-                            
+                                
                             }
                             
                             self.splashlist1.append(splash)
@@ -482,7 +477,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                     completion(SERVER_SUCCESS_CODE)
                 }
             }
-            //isAppUpdateAvailable 
+            //isAppUpdateAvailable
             
         }
         else
@@ -563,8 +558,8 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                     dismissBanner()
                 }
                 DispatchQueue.main.async {
-                let title =  String(BL_AssetDownloadOperation.sharedInstance.totalAssetCount) + " Assets"
-                showBanner(title: "Downloading...", subTitle: title, bgColor: BannerColors.yellow)
+                    let title =  String(BL_AssetDownloadOperation.sharedInstance.totalAssetCount) + " Assets"
+                    showBanner(title: "Downloading...", subTitle: title, bgColor: BannerColors.yellow)
                 }
             }
             else
@@ -585,7 +580,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             if(BL_AssetDownloadOperation.sharedInstance.totalAssetCount > 0)
             {
                 DispatchQueue.main.async {
-                showBanner(title: "Sorry", subTitle: assetInternetDropOffMsg, bgColor: BannerColors.red)
+                    showBanner(title: "Sorry", subTitle: assetInternetDropOffMsg, bgColor: BannerColors.red)
                 }
             }
         }
@@ -770,7 +765,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         case 3:
             setDashboard()
             /*self.navigateToNextScreen(stoaryBoard: "Dashboard", viewController: "Dashboard")
-            //            self.navigateToDashboardView()*/
+             //            self.navigateToDashboardView()*/
             removeVersionToastView()
             
             break
@@ -791,8 +786,8 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                 }
                 else
                 {
-                    AlertView.showAlertView(title: infoTitle, message: "No applied / approved DCRs found to upload")
-                  
+                    AlertView.showAlertView(title: infoTitle, message: "No applied / approved DVRs found to upload")
+                    
                     
                 }
             }
@@ -840,10 +835,10 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                         let vc = sb.instantiateViewController(withIdentifier: masterDataVcID) as! MasterDataDownloadViewController
                         self.navigationController?.pushViewController(vc, animated: true)
                     }
-//                    else
-//                    {
-//                        AlertView.showAlertView(title: errorTitle, message: authenticationMsg, viewController: self)
-//                    }
+                    //                    else
+                    //                    {
+                    //                        AlertView.showAlertView(title: errorTitle, message: authenticationMsg, viewController: self)
+                    //                    }
                 })
             }
             else
@@ -852,24 +847,24 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             }
             break
         case 9:
-//            BL_DoctorList.sharedInstance.customerCode = ""
-//            BL_DoctorList.sharedInstance.regionCode  = ""
-//            BL_DoctorList.sharedInstance.doctorTitle = ""
-//            BL_AssetModel.sharedInstance.detailedCustomerId = 0
-//            //            let sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
-//            //            let vc = sb.instantiateViewController(withIdentifier:  Constants.ViewControllerNames.AssetsListVcID) as! AssetsListViewController
-//            let sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
-//            let vc = sb.instantiateViewController(withIdentifier: AssetParentVCID) as! AssetParentViewController
-//            vc.isComingFromDigitalAssets = true
-//            self.navigationController?.pushViewController(vc, animated: true)
-//            break
+            //            BL_DoctorList.sharedInstance.customerCode = ""
+            //            BL_DoctorList.sharedInstance.regionCode  = ""
+            //            BL_DoctorList.sharedInstance.doctorTitle = ""
+            //            BL_AssetModel.sharedInstance.detailedCustomerId = 0
+            //            //            let sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
+            //            //            let vc = sb.instantiateViewController(withIdentifier:  Constants.ViewControllerNames.AssetsListVcID) as! AssetsListViewController
+            //            let sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
+            //            let vc = sb.instantiateViewController(withIdentifier: AssetParentVCID) as! AssetParentViewController
+            //            vc.isComingFromDigitalAssets = true
+            //            self.navigationController?.pushViewController(vc, animated: true)
+            //            break
             if (checkInternetConnectivity())
             {
-//                BL_MenuAccess.sharedInstance.getCheckUserExist(viewController: self, completion: { (objAiResponse) in
-                    let sb = UIStoryboard(name: landingViewSb, bundle: nil)
-                    let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.LandingAlertVCId) as! LandingAlertsViewController
-                    self.navigationController?.pushViewController(vc, animated: true)
-//                })
+                //                BL_MenuAccess.sharedInstance.getCheckUserExist(viewController: self, completion: { (objAiResponse) in
+                let sb = UIStoryboard(name: landingViewSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.LandingAlertVCId) as! LandingAlertsViewController
+                self.navigationController?.pushViewController(vc, animated: true)
+                //                })
             }
             else
             {
@@ -877,6 +872,12 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             }
             break
         case 10:
+            break
+        case 12:
+            let sb = UIStoryboard(name: "calendar", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "pevoniaVCid") as! ViewCalendarController
+            self.navigationController?.pushViewController(vc, animated: true)
+            
             break
         default:
             print("")
@@ -930,24 +931,54 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         {
             if isManager()
             {
+                
+                
                 if BL_DCR_Doctor_Visit.sharedInstance.geteDetailingConfigVal().lowercased() == ConfigValues.YES.rawValue.lowercased()
                 {
-                    landingList = titleObj.getMenuListForWithEDManager_Mobile()
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                        landingList = titleObj.getMenuListForWithEDManager_MobileNotes()
+                    }
+                    else{
+                        landingList = titleObj.getMenuListForWithEDManager_Mobile()
+                    }
                 }
                 else
                 {
-                    landingList = titleObj.getMenuListForWithoutEDManager_Mobile()
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                        landingList = titleObj.getMenuListForWithoutEDManager_MobileNotes()
+                    }
+                    else
+                    {
+                        landingList = titleObj.getMenuListForWithoutEDManager_Mobile()
+                    }
                 }
+                
             }
             else
             {
                 if BL_DCR_Doctor_Visit.sharedInstance.geteDetailingConfigVal().lowercased() == ConfigValues.YES.rawValue.lowercased()
                 {
-                    landingList = titleObj.getMenuListForWithEDRep_Mobile()
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                        landingList = titleObj.getMenuListForWithEDRep_MobileNotes()
+                    }
+                    else
+                    {
+                        landingList = titleObj.getMenuListForWithEDRep_Mobile()
+                    }
                 }
                 else
                 {
-                    landingList = titleObj.getMenuListForWithoutEDRep_Mobile()
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                        landingList = titleObj.getMenuListForWithoutEDRep_MobileNotes()
+                    }
+                    else
+                    {
+                        landingList = titleObj.getMenuListForWithoutEDRep_Mobile()
+                    }
                 }
             }
         }
@@ -957,22 +988,50 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             {
                 if BL_DCR_Doctor_Visit.sharedInstance.geteDetailingConfigVal().lowercased() == ConfigValues.YES.rawValue.lowercased()
                 {
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                        landingList = titleObj.getMenuListForWithEDManager_IPadNotes()
+                    }
+                    else
+                    {
                     landingList = titleObj.getMenuListForWithEDManager_IPad()
+                    }
                 }
                 else
                 {
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                    landingList = titleObj.getMenuListForWithoutEDManager_IPadNotes()
+                    }
+                    else
+                    {
                     landingList = titleObj.getMenuListForWithoutEDManager_IPad()
+                    }
                 }
             }
             else
             {
                 if BL_DCR_Doctor_Visit.sharedInstance.geteDetailingConfigVal().lowercased() == ConfigValues.YES.rawValue.lowercased()
                 {
-                    landingList = titleObj.getMenuListForWithEDRep_IPad()
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
+                    landingList = titleObj.getMenuListForWithEDRep_IPadNotes()
+                    }
+                    else
+                    {
+                        landingList = titleObj.getMenuListForWithEDRep_IPad()
+                    }
                 }
                 else
                 {
+                    if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+                    {
                     landingList = titleObj.getMenuListForWithoutEDRep_IPad()
+                    }
+                    else
+                    {
+                        landingList = titleObj.getMenuListForWithoutEDRep_IPadNotes()
+                    }
                     
                 }
             }
@@ -1117,7 +1176,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                                                 WebServiceHelper.sharedInstance.getInwardChalanListWithProduct{ (apiObj) in
                                                     if(apiObj.Status == SERVER_SUCCESS_CODE)
                                                     {
-                                                         UserDefaults.standard.set(apiObj.list.count, forKey: UserDefaultsValues.Inward.rawValue)
+                                                        UserDefaults.standard.set(apiObj.list.count, forKey: UserDefaultsValues.Inward.rawValue)
                                                         if (apiObj.list.count > 0)
                                                         {
                                                             self.showAlertsBadge = true
@@ -1178,7 +1237,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                     {   let splash = SplashModel()
                         for splashobj in apiResponseObj.list
                         {
-                          splash.desc =  (splashobj as! NSDictionary).value(forKey: "Description") as! String
+                            splash.desc =  (splashobj as! NSDictionary).value(forKey: "Description") as! String
                             if(splash.desc.contains("blob"))
                             {
                                 splash.type = 1
@@ -1402,58 +1461,58 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         self.collectionView.reloadData()
     }
     func setDashboard()
-        {
-            
-            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    {
         
-            
-            let existingDashboardAction = UIAlertAction(title: "Existing Dashboard", style: .default, handler: {
-                (alert: UIAlertAction) -> Void in
-                
-                
-                self.navigateToNextScreen(stoaryBoard: "Dashboard", viewController: "Dashboard")
-                
-            })
-            actionSheetController.addAction(existingDashboardAction)
+        let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        
+        let existingDashboardAction = UIAlertAction(title: "Existing Dashboard", style: .default, handler: {
+            (alert: UIAlertAction) -> Void in
             
             
-            let newDashboardAction = UIAlertAction(title: "New Dashboard", style: .default, handler:{
-                (alert: UIAlertAction) -> Void in
-                let username = getUserName()
-                let password = getUserPassword()
-                let companyUrl = getCompanyName()
-                let companyName = companyUrl.components(separatedBy: ".")
-                let loginData = String(format: "%@/%@/%@", companyName.first!, username, password).data(using: String.Encoding.utf8)!
-                let base64LoginData = loginData.base64EncodedString()
-                let url = "\(dashboardBaseUrl)" + "\(base64LoginData)"
-                //                let decodedData = Data(base64Encoded: base64LoginData)!
-                //                let decodedString = String(data: decodedData, encoding: .utf8)!
-                //
-                //                print(decodedString)
-                //
-                self.navigateTowebView(siteUrl:url, title: "Dashboard")
-            })
-            actionSheetController.addAction(newDashboardAction)
+            self.navigateToNextScreen(stoaryBoard: "Dashboard", viewController: "Dashboard")
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
-                (alert: UIAlertAction) -> Void in
-                
-            })
-            actionSheetController.addAction(cancelAction)
+        })
+        actionSheetController.addAction(existingDashboardAction)
+        
+        
+        let newDashboardAction = UIAlertAction(title: "New Dashboard", style: .default, handler:{
+            (alert: UIAlertAction) -> Void in
+            let username = getUserName()
+            let password = getUserPassword()
+            let companyUrl = getCompanyName()
+            let companyName = companyUrl.components(separatedBy: ".")
+            let loginData = String(format: "%@/%@/%@", companyName.first!, username, password).data(using: String.Encoding.utf8)!
+            let base64LoginData = loginData.base64EncodedString()
+            let url = "\(dashboardBaseUrl)" + "\(base64LoginData)"
+            //                let decodedData = Data(base64Encoded: base64LoginData)!
+            //                let decodedString = String(data: decodedData, encoding: .utf8)!
+            //
+            //                print(decodedString)
+            //
+            self.navigateTowebView(siteUrl:url, title: "Dashboard")
+        })
+        actionSheetController.addAction(newDashboardAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
+            (alert: UIAlertAction) -> Void in
             
-            if SwifterSwift().isPhone
-            {
+        })
+        actionSheetController.addAction(cancelAction)
+        
+        if SwifterSwift().isPhone
+        {
+            self.present(actionSheetController, animated: true, completion: nil)
+        }
+        else
+        {
+            if let currentPopoverpresentioncontroller = actionSheetController.popoverPresentationController{
+                currentPopoverpresentioncontroller.sourceView = self.view
+                currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
+                currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
                 self.present(actionSheetController, animated: true, completion: nil)
             }
-            else
-            {
-                if let currentPopoverpresentioncontroller = actionSheetController.popoverPresentationController{
-                    currentPopoverpresentioncontroller.sourceView = self.view
-                    currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
-                    currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
-                    self.present(actionSheetController, animated: true, completion: nil)
-                }
-            }
+        }
     }
     func navigateTowebView(siteUrl:String, title:String)
     {
@@ -1482,11 +1541,11 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             removeVersionToastView()
         }
     }
-
+    
     @IBAction func onclick() {
         let sb = UIStoryboard(name: "calendar", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "pevoniaVCid") as! ViewCalendarController
         self.navigationController?.pushViewController(vc, animated: true)
     }
-   
+    
 }

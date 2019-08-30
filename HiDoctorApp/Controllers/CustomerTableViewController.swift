@@ -28,9 +28,9 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var tpSubtitleLabel: UILabel!
     @IBOutlet weak var tpSubTitleView: UIView!
     @IBOutlet var topViewHeightCont: NSLayoutConstraint!
-    
     @IBOutlet var customerHeaderView: UIView!
     @IBOutlet var segmentViewHeightConst: NSLayoutConstraint!
+    
     weak var delegate : CustomerDelegate?
     var regionCode : String?
     var userCode: String?
@@ -70,16 +70,14 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         //        tableView.estimatedSectionHeaderHeight = 60
         if (showOrganisation == PrivilegeValues.YES.rawValue)
         {
-            selectedIndex = 5
+            selectedIndex = 4
             selectedName = "Organisation"
         }
-            
         else
         {
             selectedIndex = 0
             selectedName = "Name"
         }
-        
         subTitle.text = "\(appDoctorPlural) List"
         sortName.text = selectedName
         sortTypeBtn.setImage(UIImage(named: "icon-stepper-up-arrow"), for: .normal)
@@ -87,15 +85,13 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         //        addBackButtonView()
         addCustomBackButtonToNavigationBar()
         let date = convertDateIntoServerDisplayformat(date: getCurrentDateAndTime())
-        tpSubtitleLabel.text = "Today (\( date)) TP \(appDoctorPlural)"
+        tpSubtitleLabel.text = "Today (\( date)) PR \(appDoctorPlural)"
         
         if(isCustomerMasterEdit)
         {
             self.topViewHeightCont.constant = 0
             self.segmentViewHeightConst.constant = 0
         }
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -233,19 +229,23 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
         else if selectedIndex == 1
         {
-            getMdlNoSortedList(userWrapperList: userWrapperList)
+            getOtherSortedList(userWrapperList: userWrapperList)
+            //getMdlNoSortedList(userWrapperList: userWrapperList)
         }
         else if selectedIndex == 2
         {
-            getOtherSortedList(userWrapperList: userWrapperList)
+            getValidCategoryList(userWrapperList: userWrapperList)
+            //getOtherSortedList(userWrapperList: userWrapperList)
         }
         else if selectedIndex == 3
         {
-            getValidCategoryList(userWrapperList: userWrapperList)
+            getValidWorkplaceList(userWrapperList: userWrapperList)
+           // getValidCategoryList(userWrapperList: userWrapperList)
         }
         else if selectedIndex == 4
         {
-            getValidWorkplaceList(userWrapperList: userWrapperList)
+            getHospitalNameSortedList(userWrapperList: userWrapperList)
+//            getValidWorkplaceList(userWrapperList: userWrapperList)
         }
         else if selectedIndex == 5
         {
@@ -383,19 +383,19 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         for obj in userWrapperList
         {
             var capitalisedStr : NSString!
-            if selectedIndex == 2
+            if selectedIndex == 1
             {
                 capitalisedStr = condenseWhitespace(stringValue: obj.Speciality_Name).capitalized as NSString
             }
-            else if selectedIndex == 3
+            else if selectedIndex == 2
             {
                 capitalisedStr = condenseWhitespace(stringValue: obj.Category_Name!).capitalized as NSString
             }
-            else if selectedIndex == 4
+            else if selectedIndex == 3
             {
                 capitalisedStr = condenseWhitespace(stringValue: obj.Local_Area!).capitalized as NSString
             }
-            else if selectedIndex == 5
+            else if selectedIndex == 4
             {
                 if obj.Hospital_Account_Number != ""
                 {
@@ -639,7 +639,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 let date = convertDateIntoString(date: getCurrentDateAndTime())
                 
-                emptyStateTxt = "No TP \(appDoctorPlural) found for Today (\( date))"
+                emptyStateTxt = "No PR \(appDoctorPlural) found for Today (\( date))"
             }
             else
             {
@@ -665,7 +665,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 let date = convertDateIntoServerDisplayformat(date: getCurrentDateAndTime())
                 
-                emptyStateTxt = "No TP \(appDoctorPlural) found for Today (\( date)). Clear your search and try again."
+                emptyStateTxt = "No PR \(appDoctorPlural) found for Today (\( date)). Clear your search and try again."
             }
             else
             {
@@ -773,7 +773,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             tpSubTitleView.isHidden = false
             self.navigationItem.rightBarButtonItems = nil
             self.navigationItem.rightBarButtonItems = [rightBarButtonItem2]
-        }else{
+        } else {
             tpSubTitleView.isHidden = true
             self.navigationItem.rightBarButtonItems = nil
             self.navigationItem.rightBarButtonItems = [rightBarButtonItem1, rightBarButtonItem2]
@@ -963,7 +963,6 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 status = ""
             }
-            
         }
         //        var userDetail = "\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
         //
@@ -982,7 +981,9 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 var hospitalDetails = "\(checkNullAndNilValueForString(stringData: userList.Hospital_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Hospital_Account_Number) as String)"
                 
-                var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
+//                var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
+                
+                var userDetail = "\n\(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
                 
                 
                 if userList.Local_Area != ""
@@ -1005,9 +1006,9 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             else
             {
                 //var hospitalDetails = "\(checkNullAndNilValueForString(stringData: userList.Hospital_Name) as String)"
-                var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
+//                var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
                 
-                
+                 var userDetail = "\n\(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
                 if userList.Local_Area != ""
                 {
                     userDetail = "\(userDetail) | \(String(describing: userList.Local_Area!))" + status
@@ -1027,8 +1028,9 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         }else{
             
             //var hospitalDetails = "\(checkNullAndNilValueForString(stringData: userList.Hospital_Name) as String)"
-            var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
+//            var userDetail = "\n\(ccmNumberPrefix)\(checkNullAndNilValueForString(stringData: userList.MDL_Number) as String) | \(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
             
+             var userDetail = "\n\(checkNullAndNilValueForString(stringData: userList.Speciality_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Category_Name) as String) | \(checkNullAndNilValueForString(stringData: userList.Region_Name) as String)"
             
             if userList.Local_Area != ""
             {
@@ -1608,7 +1610,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             }
             else
             {
-                showToastView(toastText: "Unable to download the customer data..")
+                showToastView(toastText: "Unable to download the \(appDoctorPlural)..")
             }
         }
     }
@@ -1646,7 +1648,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
                 }
                 else
                 {
-                    showToastView(toastText: "Unable to download the customer data..")
+                    showToastView(toastText: "Unable to download the \(appDoctorPlural)..")
                 }
             }
             
@@ -1668,7 +1670,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             emptyStateWrapper.isHidden = true
         }
         
-        showCustomActivityIndicatorView(loadingText: "Loading the Customer data..")
+        showCustomActivityIndicatorView(loadingText: "Loading the \(appDoctorPlural)..")
     }
     
     @IBAction func refreshAction(_ sender: Any)

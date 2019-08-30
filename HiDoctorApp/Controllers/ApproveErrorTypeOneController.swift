@@ -251,9 +251,9 @@ class ApproveErrorTypeOneController: UIViewController,UITableViewDataSource,UITa
                 }
             }
         }
-         return MDLNum + HospitalName + specialityName + categoryNamwe + campaginName
+//         return MDLNum + HospitalName + specialityName + categoryNamwe + campaginName
+          return HospitalName + specialityName + categoryNamwe + campaginName
     }
-    
     
     //MARK:-Search Bar Delegate
     

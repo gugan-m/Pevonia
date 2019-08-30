@@ -70,7 +70,6 @@ class TPSampleDetailsViewController: UIViewController , UITableViewDataSource, U
         }
     }
     
-    
     @IBAction func stepDownBtnAction(_ sender: UIButton)
     {
         let productDetail = currentList[sender.tag]
@@ -79,7 +78,6 @@ class TPSampleDetailsViewController: UIViewController , UITableViewDataSource, U
             productDetail.sampleObj.Quantity_Provided! -= 1
             self.tableView.reloadData()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,14 +93,12 @@ class TPSampleDetailsViewController: UIViewController , UITableViewDataSource, U
         var rowHeight : CGFloat = 60
         let productNameTextHeight = getTextSize(text: productDetail.sampleObj.Product_Name, fontName: fontRegular, fontSize: 16, constrainedWidth: SCREEN_WIDTH - 73).height
         rowHeight += productNameTextHeight
-        
         return rowHeight
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: SampleDCRListCell, for: indexPath) as! SampleDCRListTableViewCell
-        
         let productDetail = currentList[indexPath.row]
         var productCount : String = "0"
         let productName  = productDetail.sampleObj.Product_Name as String

@@ -219,7 +219,7 @@ class BL_DCR_Accompanist: NSObject
     
     func isAnyAccompaistDataUsedInDCR(dcrAccompanistObj : DCRAccompanistModel) -> String
     {
-        let errorMessage : String = "you are trying to remove <b>\(dcrAccompanistObj.Employee_Name!)</b> from the accompanist list\n 1. If any visit of \(appDoctor)/\(appChemist) that belong to this accompanist/region is available in this DCR, system will remove the \(appDoctor)/\(appChemist) visit.\n2. If you have marked this accompanist/region name in \(appDoctor)/\(appChemist) accompanist, those records will be removed.\n3. The CP, SFC records and visit of \(appChemist) who belongs to this accompanist/region name will be removed.\n Click <b>OK</b> to continue\nClick <b>CANCEL to retain this accompanist/region and related \(appDoctor)/\(appChemist) visits."
+        let errorMessage : String = "you are trying to remove <b>\(dcrAccompanistObj.Employee_Name!)</b> from the Ride Along list\n 1. If any visit of \(appDoctor)/\(appChemist) that belong to this Ride Along/region is available in this DVR, system will remove the \(appDoctor)/\(appChemist) visit.\n2. If you have marked this Ride Along/region name in \(appDoctor)/\(appChemist) Ride Along, those records will be removed.\n3. The CP, SFC records and visit of \(appChemist) who belongs to this Ride Along/region name will be removed.\n Click <b>OK</b> to continue\nClick <b>CANCEL to retain this Ride Along/region and related \(appDoctor)/\(appChemist) visits."
         let accompanistRegionCode = dcrAccompanistObj.Acc_Region_Code
         let accompanistUserCode = checkNullAndNilValueForString(stringData: dcrAccompanistObj.Acc_User_Code)
         

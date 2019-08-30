@@ -20,15 +20,13 @@ class TPKnowyourCalendarController: UIViewController {
     @IBOutlet weak var holidayRoundView: UIView!
     @IBOutlet weak var oneActivityRoundView: UIView!
     @IBOutlet weak var twoActivityRoundView: UIView!
-    
     @IBOutlet weak var contentViewHeightConst: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setDefaults()
-
-        // Do any additional setup after loading the view.
     }
+    
     func setDefaults()
     {
         self.navigationItem.title = "Know your Calendar"

@@ -458,7 +458,7 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
             
         }
         self.emptyStateLabel.isHidden == true
-        showCustomActivityIndicatorView(loadingText: "Loading TP Reports....")
+        showCustomActivityIndicatorView(loadingText: "Loading PR Reports....")
     }
     
     

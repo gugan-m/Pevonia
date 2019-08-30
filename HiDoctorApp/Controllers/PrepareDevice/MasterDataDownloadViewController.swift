@@ -24,8 +24,8 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
         static let DoctorData = "Doctor/Customer Data" //"\(appDoctor) Data"
         static let ExpenseData = "Expense data"
         static let ProductData = "Product data"
-        static let CpTpDetails = "Cp & Tp Details"//"\(appCp) Details"
-        static let SFCAccompanistData = "SFC & Accompanist Data"
+        static let CpTpDetails = "Cp & PR Details"//"\(appCp) Details"
+        static let SFCAccompanistData = "SFC & Ride Along Data"
         static let MenuData = "Menu Data"
         static let DigitalAssets = PEV_DIGITAL_ASSETS
         static let MarketContent = "Market Content"
@@ -40,9 +40,9 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
         static let ExpenseData = "Expense data"
         static let ProductData = "Product data"
         static let CpTpDetails = "\(appCp) Details"
-        static let SFCAccompanistData = "SFC & Accompanist Data"
+        static let SFCAccompanistData = "SFC & Ride Along Data"
         static let MenuData = "Menu Data"
-        static let DigitalAssets = "Digital Assets"
+        static let DigitalAssets = "Digital Resource"
         static let MarketContent = "Market Content"
     }
     

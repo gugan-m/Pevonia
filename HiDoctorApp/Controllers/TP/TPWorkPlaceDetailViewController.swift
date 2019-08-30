@@ -74,17 +74,12 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
     }
     @IBAction func navigateWorkPlace(_ sender: Any)
     {
-        
         self.navigateToWorkPlace()
-        
     }
     
     @IBAction func navigateToNextScreenBtnAction(_ sender: AnyObject)
     {
-        
-        
         self.naviageToNextScreen(senderTag: sender.tag)
-        
     }
     
     func naviageToNextScreen(senderTag : Int)
@@ -100,7 +95,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             print("")
         }
     }
-    
     
     func validateWorkPlaceDetails() -> Bool
     {
@@ -150,9 +144,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         }
         return true
     }
-    
-    
-    
     
     @objc func pickerDoneBtnAction()
     {
@@ -217,7 +208,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         return SCREEN_WIDTH
     }
     
-    
     func getWorkCategoryList()
     {
         workCategoryList = getDefaultWorkCategoryObj()
@@ -235,7 +225,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         let categoryObj : WorkCategories = WorkCategories(dict: dict)
         return [categoryObj]
     }
-    
     
     func setDefaultValues()
     {
@@ -288,7 +277,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
                 cpCode = EMPTY
                 cpName = defaultCampaignLblText
             }
-            
             campaignPlanLbl.text = cpName!
             setValuetoCpModelObj(cpId: cpId, cpName: cpName!, cpCode: cpCode!)
         }
@@ -422,14 +410,12 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         }
     }
     
-    
     func navigateToUserAccompanistPage()
     {
         let sb = UIStoryboard(name: commonListSb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
         vc.navigationScreenName = UserListScreenName.TPWorkPlace.rawValue
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     func naviagteToCpListPage()
@@ -453,6 +439,7 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     func setSelectedCpName(cpModel : CampaignPlannerHeader?)
     {
         if cpModel != nil
@@ -465,7 +452,6 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             self.campaignPlanLbl.text = "Select \(appCp)"
         }
     }
-    
     //MARK: - Validation
     
     private func validateWorkPlace()
@@ -683,10 +669,8 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             index = workCategoryList.index(where: { (obj) -> Bool in
                 obj.Category_Name.uppercased() == name.uppercased()
             })!
-            
             self.pickerView.selectRow(index, inComponent: 0, animated: false)
         }
-        
     }
     
     func getWorkCategoryObj(categoryName : String) ->  WorkCategoresObjectModel

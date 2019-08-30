@@ -169,7 +169,7 @@ class DashboardPendingUserListViewController: UIViewController,UITableViewDelega
         }
         else
         {
-            self.emptyStateLbl.text = "No Accompanists found."
+            self.emptyStateLbl.text = "No Ride Along found."
             showEmptyStateView(show: true)
         }
         

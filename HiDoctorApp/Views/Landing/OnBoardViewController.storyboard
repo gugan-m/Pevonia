@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7N-hW-03Y">
-                                <rect key="frame" x="10" y="105" width="300" height="270"/>
+                                <rect key="frame" x="10" y="127.5" width="300" height="225.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F7V-Fu-seC">
                                         <rect key="frame" x="-10" y="-189.5" width="375" height="667"/>
@@ -37,7 +37,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L33-mc-i5z">
-                                        <rect key="frame" x="275" y="10.5" width="15" height="15"/>
+                                        <rect key="frame" x="275" y="10" width="15" height="15"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="15" id="WUJ-vl-D9I"/>
@@ -55,7 +55,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPj-Ql-Fd1" customClass="RoundedCornerRadiusView" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="71.5" width="8" height="8"/>
+                                        <rect key="frame" x="10" y="71" width="8" height="8"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="8" id="1a8-8t-p24"/>
@@ -68,22 +68,8 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyX-DW-O2F" customClass="RoundedCornerRadiusView" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="111" width="8" height="8"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="8" id="WsT-a0-FeC"/>
-                                            <constraint firstAttribute="width" constant="8" id="i5U-xs-MHY"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chemist geolocation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y3S-Jq-9IY">
-                                        <rect key="frame" x="28" y="105" width="262" height="19.5"/>
-                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6vS-4n-VpR" customClass="RoundedCornerRadiusView" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="150.5" width="8" height="8"/>
+                                        <rect key="frame" x="10" y="105.5" width="8" height="8"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="8" id="6D6-w7-UQR"/>
@@ -91,13 +77,13 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minor bug fixes done." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVf-OY-x2b">
-                                        <rect key="frame" x="28" y="144.5" width="262" height="19.5"/>
+                                        <rect key="frame" x="28" y="100" width="262" height="19.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fy7-5D-gMA">
-                                        <rect key="frame" x="50" y="214" width="200" height="36"/>
+                                        <rect key="frame" x="50" y="169.5" width="200" height="36"/>
                                         <color key="backgroundColor" red="0.10196078431372549" green="0.13725490196078433" blue="0.49411764705882355" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="LgA-rP-ltP"/>
@@ -120,26 +106,21 @@
                                 <constraints>
                                     <constraint firstItem="6vS-4n-VpR" firstAttribute="leading" secondItem="e7N-hW-03Y" secondAttribute="leading" constant="10" id="0Fx-SN-IEn"/>
                                     <constraint firstAttribute="trailing" secondItem="Ua4-Bv-wvm" secondAttribute="trailing" constant="10" id="0VU-lA-pF0"/>
-                                    <constraint firstAttribute="trailing" secondItem="Y3S-Jq-9IY" secondAttribute="trailing" constant="10" id="2CY-wO-ka0"/>
                                     <constraint firstItem="Ua4-Bv-wvm" firstAttribute="top" secondItem="phA-xJ-g1u" secondAttribute="bottom" constant="20" id="3cb-yj-ZQp"/>
-                                    <constraint firstItem="VVf-OY-x2b" firstAttribute="top" secondItem="Y3S-Jq-9IY" secondAttribute="bottom" constant="20" id="E5j-Db-3Db"/>
                                     <constraint firstAttribute="width" constant="300" id="Fdf-0B-GZj"/>
                                     <constraint firstItem="phA-xJ-g1u" firstAttribute="top" secondItem="e7N-hW-03Y" secondAttribute="top" constant="20" id="L6w-z0-2CI"/>
                                     <constraint firstAttribute="trailing" secondItem="VVf-OY-x2b" secondAttribute="trailing" constant="10" id="OVi-rX-9oz"/>
-                                    <constraint firstItem="xyX-DW-O2F" firstAttribute="centerY" secondItem="Y3S-Jq-9IY" secondAttribute="centerY" id="Px6-W9-lCD"/>
                                     <constraint firstAttribute="bottom" secondItem="fy7-5D-gMA" secondAttribute="bottom" constant="20" id="Qwo-at-xpG"/>
                                     <constraint firstItem="VVf-OY-x2b" firstAttribute="leading" secondItem="6vS-4n-VpR" secondAttribute="trailing" constant="10" id="UBD-Ve-yCj"/>
                                     <constraint firstItem="gPj-Ql-Fd1" firstAttribute="centerY" secondItem="Ua4-Bv-wvm" secondAttribute="centerY" id="XkV-Nq-Zx8"/>
-                                    <constraint firstItem="Y3S-Jq-9IY" firstAttribute="top" secondItem="Ua4-Bv-wvm" secondAttribute="bottom" constant="20" id="XxO-Om-cIh"/>
                                     <constraint firstItem="fy7-5D-gMA" firstAttribute="centerX" secondItem="e7N-hW-03Y" secondAttribute="centerX" id="aik-5a-Y0Y"/>
                                     <constraint firstItem="gPj-Ql-Fd1" firstAttribute="leading" secondItem="e7N-hW-03Y" secondAttribute="leading" constant="10" id="cQn-g0-ucA"/>
                                     <constraint firstItem="phA-xJ-g1u" firstAttribute="centerX" secondItem="e7N-hW-03Y" secondAttribute="centerX" id="dLJ-Uk-RVU"/>
                                     <constraint firstItem="L33-mc-i5z" firstAttribute="centerY" secondItem="phA-xJ-g1u" secondAttribute="centerY" constant="-15" id="kYA-fR-qVO"/>
                                     <constraint firstItem="fy7-5D-gMA" firstAttribute="top" secondItem="VVf-OY-x2b" secondAttribute="bottom" constant="50" id="mON-78-oAr"/>
-                                    <constraint firstItem="xyX-DW-O2F" firstAttribute="leading" secondItem="e7N-hW-03Y" secondAttribute="leading" constant="10" id="nAd-lW-QJr"/>
                                     <constraint firstItem="Ua4-Bv-wvm" firstAttribute="leading" secondItem="gPj-Ql-Fd1" secondAttribute="trailing" constant="10" id="pc4-6Z-v64"/>
                                     <constraint firstAttribute="trailing" secondItem="L33-mc-i5z" secondAttribute="trailing" constant="10" id="pgz-VR-5ft"/>
-                                    <constraint firstItem="Y3S-Jq-9IY" firstAttribute="leading" secondItem="xyX-DW-O2F" secondAttribute="trailing" constant="10" id="siV-WK-4rd"/>
+                                    <constraint firstItem="VVf-OY-x2b" firstAttribute="top" secondItem="Ua4-Bv-wvm" secondAttribute="bottom" constant="15" id="wGa-7g-AB3"/>
                                     <constraint firstItem="6vS-4n-VpR" firstAttribute="centerY" secondItem="VVf-OY-x2b" secondAttribute="centerY" id="yYJ-d5-bU1"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

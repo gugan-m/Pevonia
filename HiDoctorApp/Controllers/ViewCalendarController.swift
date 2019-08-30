@@ -2,15 +2,17 @@ import UIKit
 import EventKit
 
 class ViewCalendarController: UIViewController, CalendarViewDataSource, CalendarViewDelegate, UIActionSheetDelegate {
-
     
     @IBOutlet weak var calendarView: CalendarView!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var showpickerbtn: UIButton!
-    
+    @IBOutlet weak var datelabel: UILabel!
+    @IBOutlet weak var emptyview: UIView!
     //@IBOutlet weak var draftview: UIView!
     @IBOutlet weak var draftview: UIButton!
     var date: String = getCurrentDate()
+    var datelist: [String] = []
+    
     @IBAction func onclickshow() {
         if datePicker.isHidden == true
         {
@@ -23,6 +25,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
             datePicker.isHidden = true
         }
     }
+    
     @IBAction func onclicknotesview() {
         
         let sb = UIStoryboard(name: "calendar", bundle: nil)
@@ -35,39 +38,58 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
     
     @IBAction func addbtnclick() {
         
-        let actionSheet = UIActionSheet(title: "", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Notes", "Task","Know your calendar")
+        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Notes", "Task")
         
         actionSheet.show(in: self.view)
     }
     func actionSheet(_ actionSheet: UIActionSheet, clickedButtonAt buttonIndex: Int)
     {
-        
-        switch (buttonIndex){
-            
+        switch (buttonIndex) {
         case 0: break
-            //println("Cancel")
+        //println("Cancel")
         case 1:
-        let sb = UIStoryboard(name: "calendar", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
-        vc.isfromnotes = true
-        vc.dateselected = self.date
-        self.navigationController?.pushViewController(vc, animated: true)
-        case 2: 
-        let sb = UIStoryboard(name: "calendar", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
-        vc.dateselected = self.date
-        vc.isfromtask = true
-        self.navigationController?.pushViewController(vc, animated: true)
-        case 3:
-        let sb = UIStoryboard(name:"calendar", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "NotesCalendarVcID") as! NotesKnowYourCalendar
-        self.navigationController?.pushViewController(vc, animated: true)
-            
-            //println("Delete")
+            let sb = UIStoryboard(name: "calendar", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
+            vc.isfromnotes = true
+            vc.dateselected = self.date
+            self.navigationController?.pushViewController(vc, animated: true)
+        case 2:
+            let sb = UIStoryboard(name: "calendar", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
+            vc.dateselected = self.date
+            vc.isfromtask = true
+            self.navigationController?.pushViewController(vc, animated: true)
         default: break
             //println("Default")
             //Some code here..
-            
+        }
+    }
+    @IBAction func morebtnclick() {
+        guard let viewRect = self.view as? UIView else {
+            return
+        }
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        alert.addAction(UIAlertAction(title: "Know your calendar", style: UIAlertActionStyle.default, handler:{  alertAction in
+            let sb = UIStoryboard(name:"calendar", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "NotesCalendarVcID") as! NotesKnowYourCalendar
+            self.navigationController?.pushViewController(vc, animated: true)        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{  alertAction in
+            alert .dismiss(animated: true, completion: nil)
+        }))
+        
+        if SwifterSwift().isPhone
+        {
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            if let currentPopoverpresentioncontroller = alert.popoverPresentationController{
+                currentPopoverpresentioncontroller.sourceView = self.view
+                currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
+                currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -93,8 +115,8 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         CalendarView.Style.hideCellsOutsideDateRange = false
         CalendarView.Style.changeCellColorOutsideRange = false
         
-        CalendarView.Style.cellFont = UIFont(name: "Helvetica", size: 20.0)
-        CalendarView.Style.headerFont = UIFont(name: "Helvetica", size: 20.0)
+        CalendarView.Style.cellFont = UIFont(name: "Helvetica", size: 15.0)
+        CalendarView.Style.headerFont = UIFont(name: "Helvetica", size: 17.0)
         CalendarView.Style.subHeaderFont = UIFont(name: "Helvetica", size: 14.0)
         
         calendarView.dataSource = self
@@ -108,25 +130,27 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         draftview.backgroundColor = UIColor(red: 53/255, green: 127/255, blue: 206/255, alpha: 1.0)
         calendarView.layer.cornerRadius = 0.0
         //calendarView.backgroundColor = UIColor(red:0.31, green:0.44, blue:0.47, alpha:1.00)
-        calendarView.backgroundColor = UIColor(red: 32/255, green: 110/255, blue: 193/255, alpha: 1.0)
+        // calendarView.backgroundColor = UIColor(red: 0/255, green: 84/255, blue: 204/255, alpha: 1.0)
         //getnotes()
-        getcalender(year: String(getCurrentDate().prefix(4)))
+        //getcalender(year: String(getCurrentDate().prefix(4)))
         addNavigationBarBut()
         calendarView.collectionView.reloadData()
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-       
+        
         //CalendarView.loadEvents()
     }
     override open var shouldAutorotate: Bool {
         return false
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getcalender(year: String(getCurrentDate().prefix(4)))
-       calendarView.collectionView.reloadData()
+        calendarView.collectionView.reloadData()
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-       self.showpickerbtn.isHidden = true
+        self.showpickerbtn.isHidden = true
+        self.datelabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: getDateFromString(dateString: getCurrentDate()) )
+        self.emptyview.isHidden = false
     }
     
     func addNavigationBarBut()
@@ -137,11 +161,21 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         //add function for button
         button.addTarget(self, action: #selector(addbtnclick), for: .touchUpInside)
         //set frame
-        button.frame = CGRect(x: 0, y: 0, width: 53, height: 51)
+        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         
         let barButton = UIBarButtonItem(customView: button)
+        
+        let button1 = UIButton(type: .custom)
+        //set image for button
+        button1.setImage(UIImage(named: "icon-menubar"), for: .normal)
+        //add function for button
+        button1.addTarget(self, action: #selector(morebtnclick), for: .touchUpInside)
+        //set frame
+        button1.frame = CGRect(x: 0, y: 0, width: 53, height: 51)
+        
+        let barButton1 = UIBarButtonItem(customView: button1)
         //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
+        self.navigationItem.rightBarButtonItems = [barButton1,barButton]
     }
     func getnotes()
     {
@@ -163,7 +197,8 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         
         let today = Date()
         datePicker.isHidden = true
-        draftview.isHidden = false
+        draftview.isHidden = true
+        emptyview.isHidden = false
         var tomorrowComponents = DateComponents()
         tomorrowComponents.day = 1
         
@@ -176,7 +211,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let s = dateFormatter.date(from: dateString)
         self.calendarView.selectDate(s!)
-      
+        
         
         #if KDCALENDAR_EVENT_MANAGER_ENABLED
         self.calendarView.loadEvents() { error in
@@ -196,11 +231,11 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         self.datePicker.timeZone = CalendarView.Style.timeZone
         self.datePicker.setDate(s!, animated: false)
         //getcalender(year: String(self.date.suffix(4)))
-       // getcalender(year: String(self.date.suffix(4)))
+        // getcalender(year: String(self.date.suffix(4)))
         calendarView.collectionView.reloadData()
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
     }
-
+    
     // MARK : KDCalendarDataSource
     
     func startDate() -> Date {
@@ -218,23 +253,24 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
     func endDate() -> Date {
         
         var dateComponents = DateComponents()
-      
+        
         dateComponents.year = 3
         let today = Date()
         let twoYearsFromNow = self.calendarView.calendar.date(byAdding: dateComponents, to: today)!
         
         return twoYearsFromNow
-  
+        
     }
     
     
     // MARK : KDCalendarDelegate
-   
+    
     func calendar(_ calendar: CalendarView, didSelectDate date : Date, withEvents events: [CalendarEvent]) {
         
-       // print("Did Select: \(date)")
+        // print("Did Select: \(date)")
         self.date = convertDateIntoString(date: date)
-        
+        draftview.isHidden = true
+        emptyview.isHidden = false
         let temp: String = self.date
         let year: String = String(temp.suffix(4))
         let tempmonth: String = String(temp.prefix(5))
@@ -242,10 +278,20 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         let day: String = String(tempmonth.prefix(2))
         self.date = year + "-" + month + "-" + day
         print("Did Select: \(self.date)")
+        self.datelabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date:date)
+        for i in self.datelist
+        {
+            if (self.date == i)
+            {
+                draftview.isHidden = false
+                emptyview.isHidden = true
+            }
+        }
+        
         //getcalender(year: String(self.date.prefix(4)))
     }
     
-//    func calendar
+    //    func calendar
     
     func calendar(_ calendar: CalendarView, didScrollToMonth date : Date) {
         
@@ -276,39 +322,40 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         
         if(checkInternetConnectivity())
         {
-       
-                self.calendarView.notesdateindex.removeAll()
-                self.calendarView.taskdateindex.removeAll()
-                self.calendarView.bothdateindex.removeAll()
-                self.calendarView.holidaydateindex.removeAll()
-                self.calendarView.weekenddateindex.removeAll()
-        
-        
-                var y = Int(year.suffix(2))
-                y = y! - 2
-                var y1 = Int(year.suffix(2))
-                y1 = y1! - 1
-                var y2 = Int(year.suffix(2))
-                var y3 = Int(year.suffix(2))
-                y3 = y3! + 1
-                var y4 = Int(year.suffix(2))
-                y4 = y4! + 2
-                var y5 = Int(year.suffix(2))
-                y5 = y5! + 3
-                var yearlist: [String] = []
-                yearlist.append(year.prefix(2) + "\(y!)")
-                yearlist.append(year.prefix(2) + "\(y1!)")
-                yearlist.append(year.prefix(2) + "\(y2!)")
-                yearlist.append(year.prefix(2) + "\(y3!)")
-                yearlist.append(year.prefix(2) + "\(y4!)")
-                yearlist.append(year.prefix(2) + "\(y5!)")
-                for i in yearlist
-                {
-                    
-                    showCustomActivityIndicatorView(loadingText: "Loading Calendar....")
+            self.datelist.removeAll()
+            self.calendarView.notesdateindex.removeAll()
+            self.calendarView.taskdateindex.removeAll()
+            self.calendarView.bothdateindex.removeAll()
+            self.calendarView.holidaydateindex.removeAll()
+            self.calendarView.weekenddateindex.removeAll()
+            
+            
+            var y = Int(year.suffix(2))
+            y = y! - 2
+            var y1 = Int(year.suffix(2))
+            y1 = y1! - 1
+            var y2 = Int(year.suffix(2))
+            var y3 = Int(year.suffix(2))
+            y3 = y3! + 1
+            var y4 = Int(year.suffix(2))
+            y4 = y4! + 2
+            var y5 = Int(year.suffix(2))
+            y5 = y5! + 3
+            var yearlist: [String] = []
+            yearlist.append(year.prefix(2) + "\(y!)")
+            yearlist.append(year.prefix(2) + "\(y1!)")
+            yearlist.append(year.prefix(2) + "\(y2!)")
+            yearlist.append(year.prefix(2) + "\(y3!)")
+            yearlist.append(year.prefix(2) + "\(y4!)")
+            yearlist.append(year.prefix(2) + "\(y5!)")
+            for i in yearlist
+            {
+                
+                showCustomActivityIndicatorView(loadingText: "Loading Calendar....")
                 WebServiceHelper.sharedInstance.getcalendarnotesyear( year: i, completion: { (apiObj) in
                     if apiObj.Status == SERVER_SUCCESS_CODE
                     {
+                        
                         let list = apiObj.list
                         //removeCustomActivityView()
                         for i in list as! NSArray
@@ -338,7 +385,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                                 dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
                                 let dateformat = dateFormatter.date(from: date)
                                 //let dateformat = getDateFromString(dateString: date)
-                               // guard let temp = CalendarView.indexPathForDate(dateformat!) else { return }
+                                // guard let temp = CalendarView.indexPathForDate(dateformat!) else { return }
                                 //temp = CalendarView.indexPathForDate(dateformat)!
                                 if((i as! NSDictionary).value(forKey: "DCR_Status") as! Int == 9)
                                 {
@@ -353,8 +400,12 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                                     self.calendarView.colorboth(dateformat!)
                                 }
                                 
-                                
-                                
+                                self.datelist.append(String(getStringFromDate(date: dateformat!).prefix(10)))
+                                if (getCurrentDate() == String(getStringFromDate(date: dateformat!).prefix(10)))
+                                {
+                                    self.emptyview.isHidden = true
+                                    self.draftview.isHidden = false
+                                }
                             }
                             
                         }
@@ -364,10 +415,8 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                 })
                 
             }
-                //end for
-        
-            
-    //removeCustomActivityView()
+            //end for
+            //removeCustomActivityView()
         }
         else
         {

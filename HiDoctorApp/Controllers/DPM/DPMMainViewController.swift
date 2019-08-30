@@ -28,7 +28,7 @@ class DPMMainViewController: UIViewController,UIPickerViewDelegate,UITextFieldDe
     var pickerViewThree: UIPickerView!
     var selectedIndex: Int = 0
     var pickerIndex: Int = 1
-    var mappingMode :[String] = ["Customer product mapping","Product customer mapping"]
+    var mappingMode :[String] = ["Partner product mapping","Product partner mapping"]
     var typeOfMap : [String] = ["General Mapping","Target Mapping","Marketing Campaign"]
     var userList: [DPMUserList] = []
     var selectedMappingUser: DPMUserList!

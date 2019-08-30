@@ -1466,7 +1466,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             showToastView(toastText: "Problem in getting \(appDoctor) Visit Details")
             
         case DoctorDetailsHeaderType.Accompanist.rawValue:
-            showToastView(toastText: "Problem in getting accompanist Details")
+            showToastView(toastText: "Problem in getting Ride Along Details")
             
         case DoctorDetailsHeaderType.Sample.rawValue:
             showToastView(toastText: "Problem in getting sample list")
@@ -1474,7 +1474,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
         case DoctorDetailsHeaderType.DetailedProduct.rawValue:
             showToastView(toastText: "Problem in getting detailed product Details")
         case DoctorDetailsHeaderType.DigitalAssets.rawValue:
-            showToastView(toastText: "Problem in getting digital asset Details")
+            showToastView(toastText: "Problem in getting digital resource Details")
         case DoctorDetailsHeaderType.FollowUps.rawValue:
             showToastView(toastText: "Problem in getting followup details")
         case DoctorDetailsHeaderType.ChemistVisit.rawValue:

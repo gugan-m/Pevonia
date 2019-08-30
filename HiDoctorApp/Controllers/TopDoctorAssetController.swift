@@ -50,11 +50,13 @@ class TopDoctorAssetController: UIViewController, UITableViewDelegate, UITableVi
         titleLbl.text = doctorModel.Doctor_Name
         if doctorModel.Category_Name != ""
         {
-            descLbl.text = "\(doctorModel.MDL_No!) | \(doctorModel.Doctor_Speciality!) | \(doctorModel.Category_Name!)"
+            descLbl.text = "\(doctorModel.Doctor_Speciality!) | \(doctorModel.Category_Name!)"
+//            descLbl.text = "\(doctorModel.MDL_No!) | \(doctorModel.Doctor_Speciality!) | \(doctorModel.Category_Name!)"
         }
         else
         {
-            descLbl.text = "\(doctorModel.MDL_No!) | \(doctorModel.Doctor_Speciality!)"
+          //  descLbl.text = "\(doctorModel.MDL_No!) | \(doctorModel.Doctor_Speciality!)"
+             descLbl.text = "\(doctorModel.Doctor_Speciality!)"
         }
     }
     

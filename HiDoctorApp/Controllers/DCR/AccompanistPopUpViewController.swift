@@ -134,12 +134,12 @@ class AccompanistPopUpViewController: UIViewController,UITableViewDelegate , UIT
             }
             else
             {
-                showToastView(toastText: "You have already downloaded \(getDownloadedAccompanistCount()) accompanists' data. You can download maximum of \(MAX_ACCOMPANIST_DATA_DOWNLOAD_COUNT) accompanists data only")
+                showToastView(toastText: "You have already downloaded \(getDownloadedAccompanistCount()) Ride Along' data. You can download maximum of \(MAX_ACCOMPANIST_DATA_DOWNLOAD_COUNT) Ride Along data only")
             }
         }
         else
         {
-            showToastView(toastText: "Please select atleast one accompanist")
+            showToastView(toastText: "Please select atleast one Ride Along")
         }
     }
     

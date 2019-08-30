@@ -89,7 +89,7 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
             
             if (status == SERVER_SUCCESS_CODE)
             {
-                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from TP"), completion: { (apiObj) in
+                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from PR"), completion: { (apiObj) in
                     self.hideLoader()
                 self.showToast(message: "\(PEV_ACCOMPANIST) data downloaded successfully")
                 
@@ -365,7 +365,7 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline TP is ready to submit in Applied status. Once submitted you can not edit your TP.\n\n Press 'Ok' to submit TP.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline PR is ready to submit in Applied status. Once submitted you can not edit your PR.\n\n Press 'Ok' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -393,7 +393,7 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline TP is ready to submit to your manager.\n\n Click 'Upload' to submit TP.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my TP' option from the TP calendar screen to submit your applied TP."
+        let alertMessage =  "Your Offline PR is ready to submit to your manager.\n\n Click 'Upload' to submit PR.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my PR' option from the PR calendar screen to submit your applied PR."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -481,7 +481,7 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.copyTpHeightConstraint.constant = 0
         cell.copyeditTpHeightConstraint.constant = 0
         cell.isFromTp = true
-        let messageText = "More than one accompanist has planned joint visit on this day. Do you want to copy his \(PEV_TOUR_PLAN)?"
+        let messageText = "More than one Ride Along has planned joint visit on this day.Do you want to copy his \(PEV_TOUR_PLAN)?"
         let getheight = getTextSize(text: messageText, fontName: fontRegular, fontSize: 13, constrainedWidth: SCREEN_WIDTH-120).height
         let calculateHeihgt = 50 - getheight
         
@@ -647,7 +647,6 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.sectionToggleImageView.isHidden = true
             cell.sectionCoverBtnView.isHidden = true
         }
-        
         return cell
     }
     
@@ -802,16 +801,16 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
                             BL_TPStepper.sharedInstance.generateDataArray()
                             self.reloadTableView()
                             
-                            showToastView(toastText: "Copied Accompanist \(PEV_TOUR_PLAN)")
+                            showToastView(toastText: "Copied Ride Along \(PEV_TOUR_PLAN)")
                         }
                         else
                         {
-                            showToastView(toastText: "This feature is not applicable for this Accompanist")
+                            showToastView(toastText: "This feature is not applicable for this Ride Along")
                         }
                     }
                     else
                     {
-                        showToastView(toastText: "No tp(s) found")
+                        showToastView(toastText: "No PR(s) found")
                     }
                 }
                 else
@@ -828,7 +827,7 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func showActivityIndicator()
     {
-        showCustomActivityIndicatorView(loadingText: "Loading Accompanist data..")
+        showCustomActivityIndicatorView(loadingText: "Loading Ride Along data..")
     }
     
     func toggleSubmitButton()

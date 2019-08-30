@@ -218,7 +218,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     else
                     {
                         accompanistObj.isSelected = false
-                        AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four accompanists only", viewController: self)
+                        AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four Ride Along only", viewController: self)
                     }
                 }
                 else
@@ -589,11 +589,11 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         if type == 1
         {
-            emptyStateTxt = "No Accompanists Found"
+            emptyStateTxt = "No Ride Along Found"
         }
         else
         {
-            emptyStateTxt = "No accompanists found. Clear your search and try again."
+            emptyStateTxt = "No Ride Along found. Clear your search and try again."
         }
         self.emptyStateLbl.text = emptyStateTxt
     }
@@ -1048,7 +1048,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     @objc func refreshAction()
     {
-        showCustomActivityIndicatorView(loadingText: "Downloading Accompanists data")
+        showCustomActivityIndicatorView(loadingText: "Downloading Ride Along data")
         if checkInternetConnectivity()
         {
             BL_PrepareMyDevice.sharedInstance.getAccompanists(masterDataGroupName: EMPTY) {(status) in

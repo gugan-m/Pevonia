@@ -1177,7 +1177,7 @@ class AssetsPlayerChildViewController: UIViewController  {
         
         if AssetsDataManager.sharedManager.currentIndex != AssetsDataManager.sharedManager.childControllersList.count - 1{
             
-            alertViewController.addAction(UIAlertAction(title: "Next Asset", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: "Next resource", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.delegate?.didTapNext()
             }))
         }

@@ -286,12 +286,12 @@ class AssetStoryListViewController:  UIViewController,UITableViewDelegate,UITabl
         
         if type == 1
         {
-            emptyStateTxt = "No Assets Found"
+            emptyStateTxt = "No resource Found"
             searchViewHeightConst.constant = 0
         }
         else if type == 2
         {
-            emptyStateTxt = "No Assets found. Clear your search and try again."
+            emptyStateTxt = "No resource found. Clear your search and try again."
         }
         else
         {
@@ -450,7 +450,7 @@ class AssetStoryListViewController:  UIViewController,UITableViewDelegate,UITabl
         }
         else
         {
-            showToastView(toastText: "Select atleast anyone assets to proceed download")
+            showToastView(toastText: "Select atleast anyone resource to proceed download")
         }
     }
     

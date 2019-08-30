@@ -491,9 +491,6 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     
-    
-    
-    
     func checkForShowList()
     {
         if selectedList.count > 0
@@ -637,12 +634,12 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         
         if type == 1
         {
-            emptyStateTxt = "No Assets Found"
+            emptyStateTxt = "No resource Found"
             searchViewHeightConst.constant = 0
         }
         else if type == 2
         {
-            emptyStateTxt = "No Assets found. Clear your search and try again."
+            emptyStateTxt = "No resource found. Clear your search and try again."
         }
         else
         {
@@ -967,7 +964,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         }
         else
         {
-            showToastView(toastText: "Select atleast anyone assets to proceed download")
+            showToastView(toastText: "Select atleast anyone resource to proceed download")
         }
     }
     
@@ -988,7 +985,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
             {
                 BL_AssetDownloadOperation.sharedInstance.initiateOperation()
             }
-            showToastView(toastText:"Please stay on this screen inorder to asset download faster")
+            showToastView(toastText:"Please stay on this screen inorder to resource download faster")
         }
         else
         {
@@ -1184,7 +1181,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
     {
         if checkInternetConnectivity()
         {
-            let alertViewController = UIAlertController(title: nil, message: "This Asset can be played after downloading.Do you want to download \"\(assetObj.daName!)\"?", preferredStyle: UIAlertControllerStyle.alert)
+            let alertViewController = UIAlertController(title: nil, message: "This resource can be played after downloading.Do you want to download \"\(assetObj.daName!)\"?", preferredStyle: UIAlertControllerStyle.alert)
             alertViewController.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.startDownloadAssets(downloadList: [assetObj])
                 alertViewController.dismiss(animated: true, completion: nil)

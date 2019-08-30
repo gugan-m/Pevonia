@@ -135,6 +135,21 @@ func getServerFormattedDate(date : Date) -> Date
     return date!
 }
 
+func getcurrentdateforcalendar(date: Date) -> Date
+{
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = defaultServerDateFormat
+    dateFormatter.timeZone = TimeZone.current
+    let dateString = dateFormatter.string(from: date)
+    let dateFormatter1 = DateFormatter()
+    dateFormatter1.timeZone = TimeZone.current
+    dateFormatter1.dateFormat = defaultServerDateFormat
+    let date = dateFormatter1.date(from: dateString)
+    return date!
+}
+
+
+
 func getServerFormattedDateString(date : Date) -> String
 {
     let dateFormatter = DateFormatter()
@@ -374,7 +389,6 @@ func getDateFromString(dateString : String) -> Date {
     return Date()
 }
 
-
 func getStringFromDate(date : Date) -> String {
     
     let dateFormatter = DateFormatter()
@@ -383,6 +397,7 @@ func getStringFromDate(date : Date) -> String {
     let dateStr = dateFormatter.string(from: date)
     return dateStr
 }
+
 func getStringFromDateforPunch(date : Date) -> String {
     
     let dateFormatter = DateFormatter()
@@ -391,6 +406,7 @@ func getStringFromDateforPunch(date : Date) -> String {
     let dateStr = dateFormatter.string(from: date)
     return dateStr
 }
+
 func getMonthNumberFromMonthString(monthString: String) -> Int
 {
     switch monthString {
@@ -1501,6 +1517,18 @@ func getUTCOffsetValue() -> Int
     return UTCOffset
 }
 
+
+func getOffset() -> String
+{
+    var secondsFromGMT: Int { return TimeZone.current.secondsFromGMT() }
+    let UTCOffset = secondsFromGMT / 60
+    let hours = secondsFromGMT/3600
+    let minutes = abs(secondsFromGMT/60) % 60
+    let tz = String(format: "%+.2d:%.2d", hours, minutes)
+    return tz
+}
+
+
 func getCurrentTimeZone() -> String
 {
     let timeZone = TimeZone.current.abbreviation()
@@ -1712,8 +1740,6 @@ func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true
     mainContainer.alpha = 0.5
     mainContainer.tag = 789456123
     mainContainer.isUserInteractionEnabled = false
-    
-    
     
     let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:originX,y: originY,width: 80,height: 80))
     viewBackgroundLoading.center = viewController.view.center

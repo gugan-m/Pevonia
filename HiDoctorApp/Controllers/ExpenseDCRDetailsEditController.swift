@@ -250,8 +250,6 @@ class ExpenseDCRDetailsEditController: UIViewController,UITextFieldDelegate,UITe
         return true
     }
   
- 
-    
     //MARK:- Keyboard Action
     @objc func keyboardWillShow(notification: NSNotification)
     {
@@ -459,7 +457,7 @@ class ExpenseDCRDetailsEditController: UIViewController,UITextFieldDelegate,UITe
         }
         else
         {
-            showToastView(toastText: "No TP SFC found")
+            showToastView(toastText: "No PR SFC found")
         }
         
         

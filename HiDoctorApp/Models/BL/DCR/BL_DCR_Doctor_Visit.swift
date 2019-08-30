@@ -288,7 +288,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateSubTitle = "Update details of the user who worked with you"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD ACCOMPANIST"
+        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
         
         if (doctorVisitList.count > 0  && stepperIndex.accompanistIndex != 0)
         {
@@ -3810,7 +3810,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         lockDCRMsg += "\n"
                     }
                     
-                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DCR is in lock status"
+                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DVR is in lock status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Lock_Status)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3839,7 +3839,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noDCRMsg += "\n"
                     }
                     
-                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DCR"
+                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DVR"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3873,7 +3873,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noApprovedDCRMsg += "\n"
                     }
                     
-                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is not in approved status"
+                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is not in approved status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3916,7 +3916,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         successMsg += "\n"
                     }
                     
-                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is downloaded"
+                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is downloaded"
                 }
             }
         }

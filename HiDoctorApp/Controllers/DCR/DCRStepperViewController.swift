@@ -72,9 +72,9 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         {
             if list!.count > 0 && list!.count > 4
         {
-            let alertViewController = UIAlertController(title: "Alert", message: "You entered accompanist is exceed the limit. HiDoctor dose not allow more than 4 accompanist per day.", preferredStyle: UIAlertControllerStyle.alert)
+            let alertViewController = UIAlertController(title: "Alert", message: "You entered Ride Along is exceed the limit. Pevonia Intl dose not allow more than 4 Ride Along per day.", preferredStyle: UIAlertControllerStyle.alert)
             
-            alertViewController.addAction(UIAlertAction(title: "Modify Accompanist", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: "Modify Ride Along", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.navigateToEditAccompanist()
                 alertViewController.dismiss(animated: true, completion: nil)
             }))
@@ -150,7 +150,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     private func showPreFillAlert(buttonAction: Bool)
     {
         var message = EMPTY
-        let followMsg = "Following reasons have been identified during auto populate of Approved TP details in DCR."
+        let followMsg = "Following reasons have been identified during auto populate of Approved PR details in DVR."
         let review = "kindly review the same."
         BL_DCRCalendar.sharedInstance.tpPreFillAlert.insert(followMsg, at: 0)
         BL_DCRCalendar.sharedInstance.tpPreFillAlert.append(review)
@@ -220,7 +220,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if (status == SERVER_SUCCESS_CODE)
             {
-                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from DCR"), completion: { (apiObj) in
+                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Ride Along from DVR"), completion: { (apiObj) in
                     self.hideLoader()
                     self.showToast(message: "\(PEV_ACCOMPANIST) data downloaded successfully")
                     
@@ -230,7 +230,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             else
             {
-                self.showToast(message: "Error while downloading accompanist data. Please try again later")
+                self.showToast(message: "Error while downloading Ride Along data. Please try again later")
             }
         }
         self.checkaccompanist()
@@ -288,7 +288,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func showTPFreezeView()
     {
-        let text = "The approved TP details(i.e. Accompanist Name, Work Category, Work Place and SFC Details) are not allowed to be changed. To change any of these details, we request you to contact your HO."
+        let text = "The approved PR details(i.e. Ride Along Name, Work Category, Work Place and SFC Details) are not allowed to be changed. To change any of these details, we request you to contact your HO."
         let textSize = getTextSize(text: text, fontName: fontRegular, fontSize: 13, constrainedWidth: SCREEN_WIDTH - 16).height
         let totalHeight: CGFloat = 28 + textSize
         
@@ -737,7 +737,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func showAlertToConfirmAppliedMode(captureLocation: Bool)
     {
-        let alertMessage =  "Your Offline DCR is ready to submit in Applied/Approved status. Once submitted you can not edit your DCR.\n\n Press 'Ok' to submit DCR.\n OR \n Press 'Cancel."
+        let alertMessage =  "Your Offline DVR is ready to submit in Applied/Approved status. Once submitted you can not edit your DVR.\n\n Press 'Ok' to submit DVR.\n OR \n Press 'Cancel."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -774,7 +774,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline DCR is ready to submit to your manager.\n\n Click 'Upload' to submit DCR.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DCR' option from the home screen to submit your applied DCR."
+        let alertMessage =  "Your Offline DVR is ready to submit to your manager.\n\n Click 'Upload' to submit DVR.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DVR' option from the home screen to submit your applied DVR."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -804,10 +804,10 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         else
         {
-            alertMsg = "DCR work time is not available"
+            alertMsg = "DVR work time is not available"
         }
         
-        let alertMessage =  "\(alertMsg) \n\n Tap on PROCEED to submit the DCR \n\n OR \n\n Tap on CHANGE to change work time"
+        let alertMessage =  "\(alertMsg) \n\n Tap on PROCEED to submit the DVR \n\n OR \n\n Tap on CHANGE to change work time"
         
         let alertViewController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         

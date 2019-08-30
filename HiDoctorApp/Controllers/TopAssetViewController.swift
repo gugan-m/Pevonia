@@ -47,7 +47,7 @@ class TopAssetViewController: UIViewController , CardStackViewDataSource, CardSt
         cardStackView.delegate = self
         showMainView()
         getAssetandDoctorServiceCall()
-        self.navigationItem.title = "Top 10 Asset's"
+        self.navigationItem.title = "Top 10 resource's"
         subtitleText.text = "Top \(appDoctorPlural)"
         addCustomBackButtonToNavigationBar()
         swipeHintLbl.isHidden = true

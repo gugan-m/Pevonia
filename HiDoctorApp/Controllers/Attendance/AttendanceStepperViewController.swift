@@ -61,7 +61,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     private func showPreFillAlert()
     {
         var message = EMPTY
-        let followMsg = "Following reasons has been identified during auto populate of Approvd TP details in DCR."
+        let followMsg = "Following reasons has been identified during auto populate of Approvd PR details in DVR."
         let review = "kindly review the same."
         BL_DCRCalendar.sharedInstance.tpPreFillAlert.insert(followMsg, at: 0)
         BL_DCRCalendar.sharedInstance.tpPreFillAlert.append(review)
@@ -342,7 +342,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     func showAlertToConfirmAppliedMode(captureLocation:Bool)
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit in Applied/Approved status. Once submit you can not edit your DCR.\n\n Press 'OK' to submit DCR.\n OR \n Press 'Cancel."
+        let alertMessage =  "Your Offline Attendance is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -379,7 +379,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DCR'option from the home screen to submit your applied Attendance."
+        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DVR'option from the home screen to submit your applied Attendance."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in

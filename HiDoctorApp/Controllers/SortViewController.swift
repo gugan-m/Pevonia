@@ -16,7 +16,8 @@ protocol SortDelegate
 class SortViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
     var delegate : SortDelegate?
-    var sortList : [String] = ["Name", ccmNumberCaption, "Speciality", "Category", "Work Place", "Organisation"]
+//    var sortList : [String] = ["Name", ccmNumberCaption, "Speciality", "Category", "Work Place", "Organisation"]
+    var sortList : [String] = ["Name", "Position", "Category", "Work Place", "Organisation"]
     var selectedIndex: Int = 0
     
     override func viewDidLoad()
@@ -24,11 +25,11 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.SHOW_ORGANISATION_IN_CUSTOMER) == PrivilegeValues.YES.rawValue)
         {
-            sortList = ["Name", ccmNumberCaption, "Speciality", "Category", "Work Place", "Organisation"]
+            sortList = ["Name", "Position", "Category", "Work Place", "Organisation"]
         }
         else
         {
-            sortList = ["Name", ccmNumberCaption, "Speciality", "Category", "Work Place"]
+            sortList = ["Name", "Position", "Category", "Work Place"]
         }
             // Do any additional setup after loading the view.
     }

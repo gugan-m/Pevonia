@@ -40,8 +40,8 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     var retryFlag : Bool = false
     var refreshRetryFlag : Bool = false
     var index : Int = 0
-    let uploadLoaderText: String = "Uploading DCR data.."
-    let downloadLoaderText: String = "Downloading DCR data.."
+    let uploadLoaderText: String = "Uploading DVR data.."
+    let downloadLoaderText: String = "Downloading DVR data.."
     var enabledAutoSync: Bool = false
     var orientation = UIDeviceOrientation(rawValue: 0)
     var isSkiped: Bool = false
@@ -82,7 +82,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setDefaults()
     {
-        self.navigationItem.title = "Upload DCR"
+        self.navigationItem.title = "Upload DVR"
         uploadDetailList = BL_Upload_DCR.sharedInstance.convertToUploadDetail()
         
         if (uploadDetailList.count > 0)
@@ -223,7 +223,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
                     else
                     {
                         removeCustomActivityView()
-                        AlertView.showAlertView(title: errorTitle, message: "Unable to upload DCR", viewController: self)
+                        AlertView.showAlertView(title: errorTitle, message: "Unable to upload DVR", viewController: self)
                     }
                 }
             }
@@ -253,7 +253,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
                 else
                 {
                     removeCustomActivityView()
-                    AlertView.showAlertView(title: errorTitle, message: "Unable to upload DCR", viewController: self)
+                    AlertView.showAlertView(title: errorTitle, message: "Unable to upload DVR", viewController: self)
                 }
             }
         }
@@ -288,7 +288,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
                     else
                     {
                         removeCustomActivityView()
-                        AlertView.showAlertView(title: errorTitle, message: "Unable to upload DCR", viewController: self)
+                        AlertView.showAlertView(title: errorTitle, message: "Unable to upload DVR", viewController: self)
                     }
                 }
             }
@@ -372,7 +372,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 if (checkNullAndNilValueForString(stringData: dcrHeaderObj.Place_Worked).count > flexiPlaceMaxLength)
                 {
-                    let errorMsg: String = "You have entered more than \(flexiPlaceMaxLength) characters in Work Place. The DCR is in draft status now. Please change the work place before proceeding further"
+                    let errorMsg: String = "You have entered more than \(flexiPlaceMaxLength) characters in Work Place. The DVR is in draft status now. Please change the work place before proceeding further"
                     self.setButtonText(title: failedStatus)
                     self.updateUploadDetail(statusMsg: failedStatus, reason: errorMsg, showPopup: false, failedStatusCode: 0)
                     BL_Upload_DCR.sharedInstance.updateDCRStatusAsDraft(dcrId: dcrHeaderObj.DCR_Id, dcrDate: dcrHeaderObj.DCR_Actual_Date)
@@ -393,7 +393,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 if (checkNullAndNilValueForString(stringData: attendanceActivity.Remarks).count > attendanceActivityRemarksLength)
                 {
-                    let errorMsg: String = "You have entered more than \(attendanceActivityRemarksLength) characters for the activity \(checkNullAndNilValueForString(stringData: attendanceActivity.Activity_Name)). The DCR is in draft status now. Please correct the remarks before proceeding further"
+                    let errorMsg: String = "You have entered more than \(attendanceActivityRemarksLength) characters for the activity \(checkNullAndNilValueForString(stringData: attendanceActivity.Activity_Name)). The DVR is in draft status now. Please correct the remarks before proceeding further"
                     self.setButtonText(title: failedStatus)
                     self.updateUploadDetail(statusMsg: failedStatus, reason: errorMsg, showPopup: false, failedStatusCode: 0)
                     BL_Upload_DCR.sharedInstance.updateDCRStatusAsDraft(dcrId: model.dcrId, dcrDate: model.dcrDate)
@@ -663,7 +663,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
         
         BL_Upload_DCR.sharedInstance.downloadExpenseData(completion: { (status) in
             removeCustomActivityView()
-            showToastView(toastText: "Updated expense data downloaded. The DCR is in draft mode. Please edit & resubmit the DCR")
+            showToastView(toastText: "Updated expense data downloaded. The DVR is in draft mode. Please edit & resubmit the DCR")
         })
     }
     

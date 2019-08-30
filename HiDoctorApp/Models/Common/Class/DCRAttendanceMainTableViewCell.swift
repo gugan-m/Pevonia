@@ -286,7 +286,9 @@ class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITa
             }
             
             
-            cell.line1Text.text = "\(ccmNumberCaption): " + ccmNumberPrefix + doctorObj.MDL_Number! + " | " + doctorObj.Hospital_Name + " | " + doctorObj.Speciality_Name
+//            cell.line1Text.text = "\(ccmNumberCaption): " + ccmNumberPrefix + doctorObj.MDL_Number! + " | " + doctorObj.Hospital_Name + " | " + doctorObj.Speciality_Name
+//
+            cell.line1Text.text =  doctorObj.Hospital_Name + " | " + doctorObj.Speciality_Name
             
             var line2Text: String = ""
             
@@ -374,7 +376,7 @@ class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITa
             mdlNumber = NOT_APPLICABLE
         }
         
-        doctorDetails = "MDL NO : \(mdlNumber)"
+        //doctorDetails = "MDL NO : \(mdlNumber)"
         
         let hospitalName : String = checkNullAndNilValueForString(stringData: dict.Hospital_Name)
         if hospitalName != ""

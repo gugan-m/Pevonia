@@ -651,7 +651,7 @@ class BL_Stepper: NSObject
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD ACCOMPANIST"
+        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.Accompanist.rawValue
         
         let dcrAccompanistList = BL_DCR_Accompanist.sharedInstance.getDCRAccompanistList()
@@ -1596,7 +1596,7 @@ class BL_Stepper: NSObject
             {
                 if (dcrAccompanistList!.count < minimumAccompanistCount)
                 {
-                    errorMessage = "You need to enter minimum of \(minimumAccompanistCount) accompanists in a DCR"
+                    errorMessage = "You need to enter minimum of \(minimumAccompanistCount) Ride Along in a DVR"
                     return errorMessage
                 }
             }
@@ -1607,7 +1607,7 @@ class BL_Stepper: NSObject
             {
                 if (dcrAccompanistList!.count > maximumAccompanistCount)
                 {
-                    errorMessage = "You can enter maximum of \(maximumAccompanistCount) accompanists only in a DCR"
+                    errorMessage = "You can enter maximum of \(maximumAccompanistCount) Ride Along only in a DVR"
                     return errorMessage
                 }
             }
@@ -1881,7 +1881,7 @@ class BL_Stepper: NSObject
             }
             else
             {
-                errorMessage = "There are some invalid expense type(s) in your DCR"
+                errorMessage = "There are some invalid expense type(s) in your DVR"
             }
         }
         
@@ -2012,7 +2012,7 @@ class BL_Stepper: NSObject
                 {
                     if (dcrDoctorAccompanistList?.count)! > 0
                     {
-                        errorMessage = "You have entered " + dcrAccompanitsListCount + " accompanist(s) in DCR but not selected in any of the \(appDoctorPlural). Please select the accompanist for the entered \(appDoctorPlural) to proceed the same."
+                        errorMessage = "You have entered " + dcrAccompanitsListCount + " Ride Along(s) in DVR but not selected in any of the \(appDoctorPlural). Please select the Ride Along for the entered \(appDoctorPlural) to proceed the same."
                     }
                 }
             }
@@ -2035,7 +2035,7 @@ class BL_Stepper: NSObject
                 {
                     if (dcrDoctorAccompanistList?.count)! > 0
                     {
-                        errorMessage = "You are entered the " + dcrAccompanitsListCount + " accompanist(s), but not selected for any of the \(appChemistPlural). Please select the accompanist for the entered \(appChemistPlural) to proceed the same."
+                        errorMessage = "You are entered the " + dcrAccompanitsListCount + " Ride Along(s), but not selected for any of the \(appChemistPlural). Please select the Ride Along for the entered \(appChemistPlural) to proceed the same."
                     }
                 }
             }
@@ -2066,7 +2066,7 @@ class BL_Stepper: NSObject
                         
                         if (doctorList.count == 0)
                         {
-                            errorMessage = "No \(categoryName) \(appDoctorPlural) are entered in this DCR. You need to enter minimum of 1 RCPA for \(categoryName) \(appDoctorPlural)"
+                            errorMessage = "No \(categoryName) \(appDoctorPlural) are entered in this DVR. You need to enter minimum of 1 RCPA for \(categoryName) \(appDoctorPlural)"
                             return errorMessage
                         }
                         
