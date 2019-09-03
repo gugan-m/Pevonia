@@ -318,7 +318,7 @@ func convertPickerDateIntoDefault(date: Date , format : String) -> String
 
 private func getUtcDateFormatter(formartString: String) -> DateFormatter
 {
-    return getDateFormatter(formartString: formartString, timeZone: utcTimeZone)
+    return getDateFormatter(formartString: formartString, timeZone: TimeZone.current)
 }
 
 private func getLocalDateFormatter(formartString: String) -> DateFormatter
@@ -330,7 +330,7 @@ private func getDateFormatter(formartString: String, timeZone: TimeZone) -> Date
 {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = formartString
-    dateFormatter.timeZone = timeZone
+    dateFormatter.timeZone = TimeZone.current
     return dateFormatter
 }
 
