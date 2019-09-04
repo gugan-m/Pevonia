@@ -966,7 +966,7 @@ extension AssetsPlayerViewController : UITableViewDelegate , UITableViewDataSour
         
             if assetPlayList.isFirstAssetInStory && assetPlayList.isStoryEnabled{
                 cell.storytitleLabel.text = assetPlayList.storyObj.Story_Name
-                cell.storySubtitleLabel.text = "No of resource : \(assetPlayList.storyObj.No_Of_Assets!)"
+                cell.storySubtitleLabel.text = "No of asset : \(assetPlayList.storyObj.No_Of_Assets!)"
                 if let expiryDate = assetPlayList.storyObj.Effective_To{
                     cell.expiryDateLabel.text = "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
                 }
@@ -1218,7 +1218,7 @@ extension AssetsPlayerViewController : UIScrollViewDelegate {
             if leftEdge < 0 {
                 leftEdge = leftEdge * (-1)
                 if scrollView.contentOffset.x < leftEdge{
-                    showToastViewWithShortTime(toastText: "you're at the first resource")
+                    showToastViewWithShortTime(toastText: "you're at the first asset")
                 }
             }
         }else if AssetsDataManager.sharedManager.currentIndex == assetsArray.count - 1 && !didScreenOrientationChange{
@@ -1227,7 +1227,7 @@ extension AssetsPlayerViewController : UIScrollViewDelegate {
             if rightEdge < 0 {
                 rightEdge = rightEdge * (-1)
                 if scrollView.contentOffset.x > rightEdge{
-                    showToastViewWithShortTime(toastText: "you're at the last resource")
+                    showToastViewWithShortTime(toastText: "you're at the last asset")
                     //showAvailablityForNextStory()
                 }
             }
@@ -1267,7 +1267,7 @@ extension AssetsPlayerViewController{
         if AssetsDataManager.sharedManager.currentIndex != self.controllersList.count-1 && self.autoPlayBtn.tag == 1{
             if AssetsDataManager.sharedManager.currentIndex == timerIndex{
                 
-                let alertViewController = UIAlertController(title: title, message: "Would you like to forward next resource?", preferredStyle: UIAlertControllerStyle.alert)
+                let alertViewController = UIAlertController(title: title, message: "Would you like to forward next assets?", preferredStyle: UIAlertControllerStyle.alert)
                 alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default)
                 { action -> Void in
                     self.checkForNextAsset()

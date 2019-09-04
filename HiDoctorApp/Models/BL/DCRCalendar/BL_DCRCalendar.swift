@@ -129,7 +129,7 @@ class BL_DCRCalendar: NSObject
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
+        dateFormatter.timeZone = TimeZone.current
         let currentDateString = dateFormatter.string(from: getCurrentDateAndTime())
         let paramDateString = dateFormatter.string(from: date)
         if currentDateString == paramDateString

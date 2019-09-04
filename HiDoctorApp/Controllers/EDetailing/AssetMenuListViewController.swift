@@ -76,7 +76,6 @@ class AssetMenuListViewController: UIViewController,UITableViewDelegate,UITableV
         cell.menuNameLbl.text = assetMenuObj.menuName
         cell.menuImg.image = UIImage(named : assetMenuObj.menuLeftIcon)
         
-      
         if isToShowList{
             if showListObj.storyEnabled{
             cell.rightIcon.image = UIImage(named: "icon-movie")
@@ -225,7 +224,7 @@ class AssetMenuListViewController: UIViewController,UITableViewDelegate,UITableV
                 }
                 else
                 {
-                    showToastView(toastText: "Selected resources cannot be downloaded")
+                    showToastView(toastText: "Selected assets cannot be downloaded")
                     sender.setOn(false, animated: true)
                     reloadIndex()
                 }

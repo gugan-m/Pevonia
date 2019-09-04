@@ -37,12 +37,8 @@ class AttendanceSampleReportViewController: UIViewController,UITableViewDelegate
             emptyStateLabel.text = ""
             tableView.isHidden = false
         }
-
     }
-    
-    
-    
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sampleBatchList.count
     }

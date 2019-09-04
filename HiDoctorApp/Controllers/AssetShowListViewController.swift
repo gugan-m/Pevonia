@@ -13,7 +13,6 @@ protocol  deleteOrAddShowListDelegate
     func didDeleteOrAddTheShowList()
 }
 
-
 class AssetShowListViewController : UIViewController,UITableViewDelegate,UITableViewDataSource,AssetsSelectedDelegate,StorySelectionDelegate
 {
     @IBOutlet weak var tableView: UITableView!
@@ -45,8 +44,6 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
     var isComingFromPlayBtn : Bool = false
     var allowpreview : Bool = false
     var isFromPlus : Bool = false
-
-    
     
     //var allowRemove : Bool = false
     //var assetMenuList : [AssetsMenuModel] = []
@@ -68,12 +65,8 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         addFooterView()
         
         assetSwapPrivValue = BL_AssetModel.sharedInstance.getAssetSwapPrivilegeValue()
-        
-        
         showAlertCheck()
        // view.perform(#selector(self.showAlertCheck), with: nil, afterDelay: 1.5)
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool)
@@ -101,27 +94,31 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         super.viewWillTransition(to: size, with: coordinator)
     }
     
-    func showAlertCheck() {
+    func isAssetNotOffline() -> Bool {
         let list1 = BL_AssetModel.sharedInstance.showList
-        
-        if (list1.count == 0){
-            
-        }else{
-            var downloadedStatusCheck : String = EMPTY
-            downloadedStatusCheck = BL_AssetModel.sharedInstance.getDownloadStatus(isDownloaded:0)
-            if (downloadedStatusCheck == "Online"){
-                
-                let alertViewController = UIAlertController(title: nil, message: "Few resource can be played after downloading.", preferredStyle: UIAlertControllerStyle.alert)
-                alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction) -> Void in
-                    
-                    // self.startDownloadAssets(downloadList: [assetObj])
-                }))
-                //            alertViewController.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction) -> Void in
-                //
-                //            }))
-                self.present(alertViewController, animated: false, completion: nil)
+        for data in list1 {
+            let status = data.assetDetail.isDownloaded
+            if status! == isFileDownloaded.pending.rawValue {
+                return true
             }
         }
+        return false
+    }
+    
+    func showAlertCheck() {
+        if isAssetNotOffline(){
+            var downloadedStatusCheck : String = EMPTY
+            downloadedStatusCheck = BL_AssetModel.sharedInstance.getDownloadStatus(isDownloaded:0)
+            if (downloadedStatusCheck == "Online") {
+                
+                let alertViewController = UIAlertController(title: nil, message: "Few asset can be played after downloading.", preferredStyle: UIAlertControllerStyle.alert)
+                alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alert: UIAlertAction) -> Void in
+                }))
+                self.present(alertViewController, animated: false, completion: nil)
+            }
+        }else{
+            
+    }
     }
     
     func setAssetDetails()
@@ -240,11 +237,11 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             cell.collectionView.tag = indexPath.section
             cell.collectionView.reloadData()
             cell.assetNameLbl.text = checkNullAndNilValueForString(stringData: showObj.storyObj.storyObj.Story_Name)
-            cell.assetCountLbl.text = "No of resource : \(showObj.storyObj.assetList.count)"
+            cell.assetCountLbl.text = "No of asset : \(showObj.storyObj.assetList.count)"
             
             if let expiryDate = showObj.storyObj.storyObj.Effective_To
             {
-                cell.assetCountLbl.text = "No of resource : \(showObj.storyObj.assetList.count)" + " | " + "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
+                cell.assetCountLbl.text = "No of asset : \(showObj.storyObj.assetList.count)" + " | " + "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
             }
             
             cell.targetLabel.text = "Target - " + BL_StoryModel.sharedInstance.getSpecialitynamesForStory(storyId: showObj.storyObj.storyObj.Story_Id)
@@ -374,7 +371,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         else if self.isComingFromPlayBtn != true && self.allowpreview != true {
             if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.CAN_PLAY_ASSETS_IN_SEQUENCE) == PrivilegeValues.YES.rawValue)
             {
-                AlertView.showAlertView(title: "Alert", message: "Resource play in sequence options is enabled for you. you can't play this asset directly.")
+                AlertView.showAlertView(title: "Alert", message: "Asset play in sequence options is enabled for you. you can't play this asset directly.")
             }
                 //self.isComingFromPlayBtn = false
                 //self.allowpreview = false
@@ -414,10 +411,6 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         isForPreview = false
         vc.isPreview = preview
         vc.isComingFromShowList = true
-        
-        
-        
-        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -567,12 +560,12 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         
         if type == 1
         {
-            emptyStateTxt = "No resource Found"
+            emptyStateTxt = "No asset Found"
             searchViewHeightConst.constant = 0
         }
         else if type == 2
         {
-            emptyStateTxt = "No resource found. Clear your search and try again."
+            emptyStateTxt = "No asset found. Clear your search and try again."
         }
         else
         {
@@ -584,7 +577,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
     
     private func setDragAndDropView(cgsize : CGSize)
     {
-        dragView =  AssetsSelectionView.loadNib()
+        dragView = AssetsSelectionView.loadNib()
         dragView.frame = self.getDragViewFrame(cgsize :cgsize)
         dragView.delegate = self
         dragView.isComingFromDigitalAssets = isComingFromDigitalAssets
@@ -791,7 +784,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         }
         else
         {
-            showToastView(toastText: "Select atleast anyone resource to proceed download")
+            showToastView(toastText: "Select atleast anyone asset to proceed download")
         }
     }
     
@@ -951,7 +944,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             if myarray.contains(showListObj.assetDetail.daCode){
                 DBHelper.sharedInstance.removeAssetFromShowListbyDaCode(daCode: showListObj.assetDetail.daCode)
             }else{
-                showToastView(toastText: "You don't have the privilege to remove this resource.")
+                showToastView(toastText: "You don't have the privilege to remove this asset.")
                 return
             }
             
@@ -980,7 +973,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             if myarray.contains(showListObj.assetDetail.daCode){
                DBHelper.sharedInstance.removeAssetFromShowListbyDaCode(daCode: showListObj.assetDetail.daCode)
             }else{
-                showToastView(toastText: "You don't have the privilege to remove this resource.")
+                showToastView(toastText: "You don't have the privilege to remove this asset.")
                 return
             }
             
@@ -1005,7 +998,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
     {
         if checkInternetConnectivity()
         {
-            let alertViewController = UIAlertController(title: nil, message: "This resource can be played after downloading.Do you want to download \"\(assetObj.daName!)\"?", preferredStyle: UIAlertControllerStyle.alert)
+            let alertViewController = UIAlertController(title: nil, message: "This asset can be played after downloading.Do you want to download \"\(assetObj.daName!)\"?", preferredStyle: UIAlertControllerStyle.alert)
             alertViewController.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.startDownloadAssets(downloadList: [assetObj])
                 alertViewController.dismiss(animated: true, completion: nil)

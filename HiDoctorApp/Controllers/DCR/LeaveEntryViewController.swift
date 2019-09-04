@@ -10,7 +10,6 @@ import UIKit
 
 class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryListDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource
 {
-
     @IBOutlet weak var scrollViewBtm: NSLayoutConstraint!
     @IBOutlet weak var txtCount: UILabel!
     @IBOutlet weak var leaveReason: UITextField!
@@ -565,7 +564,8 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
             }
             else
             {
-                self.showAlertToUploadDCR()
+                //self.showAlertToUploadDCR()
+                 _ = self.navigationController?.popViewController(animated: true)
             }
             
             alertViewController.dismiss(animated: true, completion: nil)
@@ -606,7 +606,6 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         
          BL_DCRCalendar.sharedInstance.getDCRUploadError(viewController: self, isFromLandingUpload: false, enabledAutoSync: enabledAutoSync)
     }
-    
     
     //MARK:- tableview delegate
     
@@ -652,6 +651,4 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         vc.isfromLeave = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
 }

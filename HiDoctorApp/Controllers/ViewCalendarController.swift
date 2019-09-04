@@ -207,7 +207,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         var dateString = self.date
         var dateFormatter = DateFormatter()
         //dateFormatter.locale = NSLocale(localeIdentifier: "en_US") as Locale
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
+        dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let s = dateFormatter.date(from: dateString)
         self.calendarView.selectDate(s!)
@@ -365,7 +365,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                             let dateFormatter = DateFormatter()
                             
                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                            dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
+                            dateFormatter.timeZone = TimeZone.current
                             let dateformat = dateFormatter.date(from: date)
                             if((i as! NSDictionary).value(forKey: "Is_Holiday") as! Int == 1)
                             {
@@ -382,7 +382,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                                 let dateFormatter = DateFormatter()
                                 
                                 dateFormatter.dateFormat = "yyyy-MM-dd"
-                                dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
+                                dateFormatter.timeZone = TimeZone.current
                                 let dateformat = dateFormatter.date(from: date)
                                 //let dateformat = getDateFromString(dateString: date)
                                 // guard let temp = CalendarView.indexPathForDate(dateformat!) else { return }

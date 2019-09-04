@@ -33,7 +33,7 @@
                                     <constraint firstAttribute="height" constant="40" id="gcQ-Rx-H1H"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                                <state key="normal" title="SUBMIT DCR">
+                                <state key="normal" title="SUBMIT DVR">
                                     <color key="titleColor" red="0.0" green="0.58823529411764708" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>

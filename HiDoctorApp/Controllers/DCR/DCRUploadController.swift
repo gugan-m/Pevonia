@@ -421,7 +421,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
                         
                         BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
                         
-                        if (apiResponseModel.Message == "Your DCR has been Locked for this day, Due to delay in uploading DCR. Please contact H.O. to release the lock.") || (apiResponseModel.Message == "Your DCR has been Locked, due to unapproved DCR activity Lock.")
+                        if (apiResponseModel.Message == "Your DVR has been Locked for this day, Due to delay in uploading DVR. Please contact H.O. to release the lock.") || (apiResponseModel.Message == "Your DVR has been Locked, due to unapproved DVR activity Lock.")
                         {
                             self.updateUploadDetail(statusMsg: skippedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
                             

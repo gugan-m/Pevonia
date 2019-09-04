@@ -1681,7 +1681,8 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 var visittime = ""
                 var visitmode = ""
                 
-                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
+                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue
+                    || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME_MANDATORY.rawValue){
                     
                     if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
                         visittime = stringFromDate(date1: Date())

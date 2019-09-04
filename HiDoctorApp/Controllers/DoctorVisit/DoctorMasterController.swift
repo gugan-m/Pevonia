@@ -744,6 +744,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             navigationController.pushViewController(vc, animated: false)
         }
     }
+    
     func isCurrentDate() -> Bool
     {
         
@@ -759,6 +760,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             return false
         }
     }
+    
     private func PunchInmoveToDCRDoctorVisitStepper(indexPath: IndexPath, geoFencingSkipRemarks: String, currentLocation: GeoLocationModel)
     {
         let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
@@ -783,6 +785,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             navigationController.pushViewController(vc, animated: false)
         }
     }
+    
     func saveSkipRemarks(remarks: String, isCancelled: Bool, indexPath: IndexPath, currentLocation: GeoLocationModel)
     {
         if (!isCancelled)

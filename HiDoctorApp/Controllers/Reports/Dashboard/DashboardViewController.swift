@@ -626,7 +626,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             if ((dashboardAssetList.count == 0 && (index == Index.assetWise || index == 0)) || (dashBoardCustomerWiseList.count == 0 && (index == Index.customerWise || index == 1))) && checkInternetConnectivity()
             {
                 cell.emptyStateView.isHidden = false
-                var emptyStateText = "No Resource Details Found"
+                var emptyStateText = "No Asset Details Found"
                 if (index == Index.customerWise ||  index == 1)
                 {
                     emptyStateText = "No Customer Details Found"
@@ -643,7 +643,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                         let firstObj = dashboardAssetList[0]
                         let secondObj = dashboardAssetList[1]
                         
-                        cell.top10AssetsLbl.text = "Top\n10\nResources"
+                        cell.top10AssetsLbl.text = "Top\n10\nAssetss"
                         cell.top10DoctorLbl.text = "Top\n10\n\(appDoctorPlural)"
                         cell.detailedAssetsLbl.text = "\(firstObj.assetHeaderType!)\n\(firstObj.assetCount!)"
                         cell.nonDetailedAssetsLbl.text = "\(secondObj.assetHeaderType!)\n\(secondObj.assetCount!)"

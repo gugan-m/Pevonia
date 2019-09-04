@@ -19,8 +19,8 @@ func getDBPath() -> String
 {
     
   //DB local and device change
- //   let databasePath = "/Users/swaas/Documents/Database/HiDoctor_DB.sqlite"
-    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
+  //let databasePath = "/Users/swaas/Documents/Database/HiDoctor_DB.sqlite"
+   let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
     let databasePath = documentsPath.appendingPathComponent("HiDoctor_DB.sqlite")
     
     return databasePath
@@ -126,7 +126,7 @@ func getServerFormattedDate(date : Date) -> Date
 {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = defaultServerDateFormat
-    
+    dateFormatter.timeZone = TimeZone.current
     let formatter = getUtcDateFormatter(formartString: defaultServerDateFormat)
     let dateString = dateFormatter.string(from: date)
     
@@ -147,7 +147,6 @@ func getcurrentdateforcalendar(date: Date) -> Date
     let date = dateFormatter1.date(from: dateString)
     return date!
 }
-
 
 
 func getServerFormattedDateString(date : Date) -> String
@@ -318,7 +317,7 @@ func convertPickerDateIntoDefault(date: Date , format : String) -> String
 
 private func getUtcDateFormatter(formartString: String) -> DateFormatter
 {
-    return getDateFormatter(formartString: formartString, timeZone: utcTimeZone)
+    return getDateFormatter(formartString: formartString, timeZone: TimeZone.current)
 }
 
 private func getLocalDateFormatter(formartString: String) -> DateFormatter
@@ -330,7 +329,7 @@ private func getDateFormatter(formartString: String, timeZone: TimeZone) -> Date
 {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = formartString
-    dateFormatter.timeZone = timeZone
+    dateFormatter.timeZone = TimeZone.current
     return dateFormatter
 }
 

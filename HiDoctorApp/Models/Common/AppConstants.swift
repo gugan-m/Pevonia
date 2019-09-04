@@ -529,8 +529,8 @@ let wsCustomerSpeciality = "CustomerSpeciality/"
 let wsCustomerCategory = "CustomerCategory/"
 
 //MARK:- Story
-let storyPendingAssetDownloadAlert: String = "Some of the resources are yet to download."
-let storyProgressAssetDownloadAlert: String = "Some of the resources are downloading. Please wait.."
+let storyPendingAssetDownloadAlert: String = "Some of the assets are yet to download."
+let storyProgressAssetDownloadAlert: String = "Some of the assets are downloading. Please wait.."
 
 enum customerEntityInt : Int
 {
@@ -937,8 +937,8 @@ let accompMissedPrefixErrorMsg : String = "You are missed to select the 'Accompa
 let accompMissedSuffixErrorMsg : String = ". Please select any one of the options"
 
 //MARK:- DCR Doctor visit asset details
-let assetName: String = "Resource name: "
-let assetType: String = "Resource type: "
+let assetName: String = "Asset name: "
+let assetType: String = "Asset type: "
 let viewedPages: String = "Viewed pages: "
 let uniquePages: String = "Unique pages: "
 let viewedDuration: String = "Viewed duration: "
@@ -948,8 +948,8 @@ let defaultTagCount = 4
 
 //MARK:- EDetailing Message
 
-let assetDownloadMessage = "Downloading Resource(s)"
-let htmlDownloadMessage = "Selected resource can be viewed in offline only"
+let assetDownloadMessage = "Downloading Asset(s)"
+let htmlDownloadMessage = "Selected asset can be viewed in offline only"
 let ratingSelectMessage = "Please give rating for the asset"
 
 //MARK:- Maximum length
@@ -998,7 +998,7 @@ let docTypeId = "com.microsoft.word.doc"
 let docxTypeId = "org.openxmlformats.wordprocessingml.document"
 
 //MARK:- Dashboard
-let assetsEmptyMsg = "No Resource found"
+let assetsEmptyMsg = "No Asset found"
 let doctorsEmptyMsg = "No Doctor's found"
 
 //MARK:- Tour Planner
@@ -1066,13 +1066,13 @@ let ccmNumberPrefix = ""
 let others = "Others"
 
 //MARK:- eDetailing Assets
-let assetInternetDropOffMsg : String = "Unable to download resource now. Please check your network"
-let assetDownloadFailedMsg : String = "Some of the resource downloaded failed. Please try again"
+let assetInternetDropOffMsg : String = "Unable to download asset now. Please check your network"
+let assetDownloadFailedMsg : String = "Some of the asset downloaded failed. Please try again"
 var uploadAnalyticsDuringDCRRefresh: Bool = false
 var navigateToAttachmentUpload: Bool = false
 
 //MARK:- Asset analytics
-let assetAnalyticsInternetDropOffMsg : String = "Unable to upload resource analytics now. Please check your network"
+let assetAnalyticsInternetDropOffMsg : String = "Unable to upload asset analytics now. Please check your network"
 let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload customer feedback analytics now. Please check your network"
 let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload doctor visit feedback analytics now. Please check your network"
 
@@ -1617,7 +1617,6 @@ struct Constants
         static let POBDetailCell : String = "detailTableViewCell"
         static let POBAmountDetailsCell :String = "AmountDetailsTableViewCell"
         static let RCPAListCell :String = "rcpaListCell"
-        
         }
     
     struct CollectionViewIdentifier
@@ -1639,7 +1638,6 @@ struct Constants
         static let AccompanistCommonTableViewCell = "AccompanistCommonCell"
         static let VisitCell = "VisitCell"
         static let DoctorDetailEditCell = "DoctorDetailEditCell"
-        
     }
     
     struct StoaryBoardNames
@@ -1663,7 +1661,6 @@ struct Constants
         static let TPUploadSb = "TPUploadViewController"
         static let TPCopyTourPlanSb = "CopyTourPlannerViewController"
         static let MessageSb = "MessageViewController"
-       
     }
     
     struct ViewControllerNames
@@ -1697,7 +1694,6 @@ struct Constants
         static let HourlyReportMapViewVc: String = "HourlyReportMapViewVc"
         static let HourlyReportGoogleMapViewVc: String = "HourlyReportGoogleMapViewVc"
         static let HourlyTravelTrackingReportGoogleMapViewVc: String = "TravelTrackingReportMapViewVc"
-
         static let HourlyReportDateVcID : String = "HourlyReportDateVcID"
         static let TravelTrackingReportDateVcID : String = "TravelTrackingReportVcID"
         static let GeoReportDateVcID : String = "GeoReportDateVcID"
@@ -1764,7 +1760,7 @@ struct Constants
         static let ComplaintViewControllerID: String = "ComplaintViewControllerID"
         static let ComplaintFormViewControllerID: String = "ComplaintFormViewControllerID"
         static let IceFeedbackViewControllerID: String = "IceFeedbackViewControllerID"
-       static let AllTaskViewControllerID = "AllTaskViewControllerID"
+        static let AllTaskViewControllerID = "AllTaskViewControllerID"
         static let AttendanceAccompanistListVCID = "AttendanceAccompanistListVCID"
         static let AttendanceReportVCID = "attendanceSampleReportVC"
     }
