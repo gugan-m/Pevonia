@@ -1239,7 +1239,7 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iXM-Nq-TXM">
                                 <rect key="frame" x="16" y="28" width="288" height="29"/>
                                 <segments>
-                                    <segment title="Doctor"/>
+                                    <segment title="Partner"/>
                                     <segment title="Chemist"/>
                                     <segment title="Stockist"/>
                                 </segments>

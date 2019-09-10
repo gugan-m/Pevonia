@@ -324,7 +324,7 @@ class BL_DoctorList: NSObject
             
             // Specialty
             dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = "Speciality"
+            dataListObj.headerTitle = "Position"
             dataListObj.value = doctorDetailObj!.Speciality_Name
             dataListObj.isEditable = true
             dataListObj.isMandatory = true
@@ -340,23 +340,23 @@ class BL_DoctorList: NSObject
             
             doctorOfficialList.append(dataListObj)
             
-            // MDL Number
-            dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = ccmNumberCaption
-           // dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
-            dataListObj.isEditable = true
-            dataListObj.isMandatory = true
-            dataListObj.controlType = controlValues.Text
-            dataListObj.newValue = doctorDetailObj!.MDL_Number
-            
-            if (doctorDetailObj!.Customer_Status == Constants.Customer_Status.Approved && privMandFieldModify == PrivilegeValues.DISABLED.rawValue)
-            {
-                dataListObj.isEditable = false
-                dataListObj.controlType = controlValues.Label
-            }
-            
-            doctorOfficialList.append(dataListObj)
-            
+//            // MDL Number
+//            dataListObj = DoctorDataListModel()
+//            dataListObj.headerTitle = ccmNumberCaption
+//           // dataListObj.value = ccmNumberPrefix + doctorDetailObj!.MDL_Number
+//            dataListObj.isEditable = true
+//            dataListObj.isMandatory = true
+//            dataListObj.controlType = controlValues.Text
+//            dataListObj.newValue = doctorDetailObj!.MDL_Number
+//
+//            if (doctorDetailObj!.Customer_Status == Constants.Customer_Status.Approved && privMandFieldModify == PrivilegeValues.DISABLED.rawValue)
+//            {
+//                dataListObj.isEditable = false
+//                dataListObj.controlType = controlValues.Label
+//            }
+//
+//            doctorOfficialList.append(dataListObj)
+//
             // Category
             dataListObj = DoctorDataListModel()
             dataListObj.headerTitle = "Category Name"

@@ -16,14 +16,13 @@ class NotesKnowYourCalendar: UIViewController{
     @IBOutlet weak var weekendOffRoundView: UIView! // weekend
     @IBOutlet weak var todayRoundView: UIView! // today
   
-    
-    
-    override func viewDidLoad() {
+     override func viewDidLoad() {
         super.viewDidLoad()
         self.setDefaults()
         
         // Do any additional setup after loading the view.
     }
+    
     func setDefaults()
     {
         self.navigationItem.title = "Know your Calendar"

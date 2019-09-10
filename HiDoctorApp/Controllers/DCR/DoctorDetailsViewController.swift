@@ -196,7 +196,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
         
         var description : String = NOT_APPLICABLE
         
-        if obj.value != ""
+        if obj.value != nil || (obj.value != "")
         {
             description = obj.value
         }

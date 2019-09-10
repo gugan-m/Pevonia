@@ -13,7 +13,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 // use this url for production but not for live.
 let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 
-//MARK:- Development issue email
+//MARK:- Development  email issue
 //let supportEmail : String = "support@swaas.net"
 
 //MARK:- Testing issue email
@@ -892,7 +892,7 @@ var appCp: String = "Beat/Patch Name"
 
 //MARK:- DCR Calendar validation messages
 let activityConfigErrorMsg : String = "You are not allowed to enter more than one activity"
-let seqValidPrefixErrorMsg : String = "You have missed dcr entry for the date"
+let seqValidPrefixErrorMsg : String = "You have missed dvr entry for the date"
 let seqValidSuffixErrorMsg : String = "Please fill and proceed."
 let seqDCRStatusValidPrefixErrorMsg : String = "You have drafted/unapproved dvr entry for the date"
 let seqDCRStatusValidSuffixErrorMsg : String = "Please submit and proceed."
@@ -999,7 +999,7 @@ let docxTypeId = "org.openxmlformats.wordprocessingml.document"
 
 //MARK:- Dashboard
 let assetsEmptyMsg = "No Asset found"
-let doctorsEmptyMsg = "No Doctor's found"
+let doctorsEmptyMsg = "No Partner's found"
 
 //MARK:- Tour Planner
 let meetingPoint = "Meeting Point"
@@ -2031,7 +2031,7 @@ struct Display_Messages
         static let ACCOMPANIST_VALIDATION_ERROR_MESSAGE: String = "@ACC_USER has entered DVR and marked you as Ride Along in \(appDoctor) visits. Hence you can't mark this Ride Along for independent call"
         static let ACCOMPANIST_VALIDATION_USER_OFFLINE_MESSAGE: String = "You are offline. Please turn on internet, hence system can validate the chosen Ride Along DVR for DVR inheritance"
         static let ACCOMPANIST_VALIDATION_API_ERROR_MESSAGE: String = "Sorry. Unable to validate the Ride Along. Please try again later."
-        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as Ride Along. But you have not inherited any of the Doctor."
+        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as Ride Along. But you have not inherited any of the Partner."
         static let APP_FORCE_UPDATE_MESSAGE: String = "New version is available in app store. Please download and try again."
     }
     
@@ -2046,7 +2046,7 @@ struct Display_Messages
     
     struct DCR_DOCTOR_VISIT
     {
-        static let EDETAILED_DOCTOR_REMOVE_BUT_ANALYTICS_SYNCED: String = "The doctor record is already synched up and cannot be deleted"
+        static let EDETAILED_DOCTOR_REMOVE_BUT_ANALYTICS_SYNCED: String = "The partner record is already synched up and cannot be deleted"
     }
     
     struct LOGIN_DATA_DOWNLOAD

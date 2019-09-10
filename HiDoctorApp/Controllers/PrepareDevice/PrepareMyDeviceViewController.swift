@@ -150,7 +150,7 @@ class PrepareMyDeviceViewController: UIViewController
         static let DCRDetailedProducts = "DVR Detailed Products"
         static let DCRChemistVisitDetails = "DVR \(appChemist) Visit"
         static let DCRRCPADetails = "DVR RCPA"
-        static let DCRCustomerFollowUpDetails = "DVR Customer Follow-Up"
+        static let DCRCustomerFollowUpDetails = "DVR Partner Follow-Up"
         static let DCRAttachmentDetails = "DVR Attachment"
         static let DCRStockistVisitDetails = "DVR \(appStockiest) Visit"
         static let DCRExpenseDetails = "DVR Expense"
@@ -179,12 +179,12 @@ class PrepareMyDeviceViewController: UIViewController
         static let DCRChemistRCPACompetitorProductDetails = "DVR \(appChemist) RCPA Competitor Product Details"
         static let DCRChemistDayFollowups = "DVR \(appChemist) Followups"
         static let DCRChemistDayAttachments = "DVR \(appChemist) Attachments"
-        static let CustomerAddress = "Customer Address Details"
+        static let CustomerAddress = "Partner Address Details"
         static let UpdatemasterDataDownloaded = "All MasterData"
-        static let CustomerActivity = "Customer Activity"
-        static let CustomerMarketingActivity = "Customer Marketing Campaign Activity"
+        static let CustomerActivity = "Partner Activity"
+        static let CustomerMarketingActivity = "Partner Marketing Campaign Activity"
         static let DCRMCActivity = "DVR Activity Details"
-        static let CustomerAttendanceMarketingActivity = "Customer Marketing Campaign Activity"
+        static let CustomerAttendanceMarketingActivity = "Partner Marketing Campaign Activity"
         static let DCRAttendanceMCActivity = "DVR Activity Details"
         static let DCRCOMPETITOR = "DVR Competitor Details"
         static let COMPETITOR = "Competitor"
@@ -816,7 +816,6 @@ class PrepareMyDeviceViewController: UIViewController
             {
                 self.showErrorBtn(show: true)
             }
-            
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRCalendarDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
         }

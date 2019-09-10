@@ -646,7 +646,7 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="www.swaas.net" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IEI-gw-hAU">
+                                                    <textView hidden="YES" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="www.swaas.net" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="IEI-gw-hAU">
                                                         <rect key="frame" x="10" y="62" width="120" height="25"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
@@ -1084,7 +1084,7 @@
                                                                 <rect key="frame" x="0.0" y="113.5" width="300" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cag-AH-7FI" id="i9X-UE-DRz">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43.5"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u6R-Bv-gYi">

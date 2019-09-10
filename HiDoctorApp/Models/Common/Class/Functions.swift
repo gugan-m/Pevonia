@@ -1010,6 +1010,7 @@ func getUserModelObj() -> UserMasterModel?
     
     return userObj
 }
+
 //For exception handling
 func getErrorLogDefaultExtProperty(functionName: String, className: String, lineNo: Int) -> NSMutableDictionary
 {

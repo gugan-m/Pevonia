@@ -52,7 +52,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pv3-TQ-pB7" userLabel="TP Freeze Msg">
                                         <rect key="frame" x="8" y="8" width="359" height="62"/>
-                                        <string key="text">The approved TP details(i.e. Ride Along Name, Work Category, Work Place and SFC Details) are not allowed to be changed. To change any of these details, we request you to contact your HO.</string>
+                                        <string key="text">The approved PR details(i.e. Ride Along Name, Work Category, Work Place and SFC Details) are not allowed to be changed. To change any of these details, we request you to contact your HO.</string>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -227,7 +227,7 @@
                                                                                     <rect key="frame" x="0.0" y="268" width="318" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lAE-fy-Vk4" id="AmG-Ax-Zno">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="318" height="119.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_from_to_marker" translatesAutoresizingMaskIntoConstraints="NO" id="O2E-d5-EPz" userLabel="Route Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
@@ -312,7 +312,7 @@
                                                                                     <rect key="frame" x="0.0" y="388" width="318" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MiV-Px-rPI" id="h5f-Cp-0fh">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="318" height="119.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lph-G7-1kX" userLabel="Doctor Wrapper View">

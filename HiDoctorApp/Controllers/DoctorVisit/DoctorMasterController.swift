@@ -1207,7 +1207,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             else if selectedIndex == 1
             {
                 emptyStateImage.image = UIImage(named: "icon-stepper-cycle")
-                text = "Tour planner data not available"
+                text = "Partner Routing data not available"
             }
             else if selectedIndex == 2
             {

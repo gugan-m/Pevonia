@@ -9,13 +9,14 @@
 //  Copyright © 2016 swaas. All rights reserved.
 //
 
+
 import UIKit
 
 class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessStatusSelectDelegate
 {
     @IBOutlet weak var punchintime: UILabel!
     @IBOutlet weak var punchouttime: UILabel!
-    
+
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var serverTimeLbl: UILabel!
@@ -413,6 +414,11 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             if type == 1
             {
                 self.setVisitMode(mode: AM)
+            }  else if type == 2
+            {
+                self.visitTime = getServerTime()
+                self.visitMode = self.getVisitModeType(visitTime: visitTime)
+                self.visitTimeTxtField.text = self.visitTime
             }
         }
         
@@ -772,11 +778,9 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                 {
                     var visittime = ""
                     var visitmode = ""
-                    
-                    if(BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.AM_PM.rawValue)
-                    {
-                        
-                        if(BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue){
+                  
+                        if(BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue)
+                            || (BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME_MANDATORY.rawValue){
                             
                             if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
                                 visittime = stringFromDate(date1: Date())
@@ -798,7 +802,7 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                                 visitmode = ""
                             }
                         }
-                    }
+                  
                     
                     BL_DCR_Doctor_Visit.sharedInstance.saveFlexiAttendanceDoctorVisitDetails(doctorName: customerMasterObj.Customer_Name, specialityName: customerMasterObj.Speciality_Name, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: customerMasterObj.Region_Code, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignCode:checkNullAndNilValueForString(stringData: self.campaignCode),campaignName:self.campaignName)
                     DCRModel.sharedInstance.customerCode = ""

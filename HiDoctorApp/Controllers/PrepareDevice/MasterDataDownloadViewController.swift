@@ -21,7 +21,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
         static let DownloadAllMasterData = "Download all Master Data"
         static let SystemSettings = "System Settings"
         static let HolidayData = "Holiday Data"
-        static let DoctorData = "Doctor/Customer Data" //"\(appDoctor) Data"
+        static let DoctorData = "Partner/Customer Data" //"\(appDoctor) Data"
         static let ExpenseData = "Expense data"
         static let ProductData = "Product data"
         static let CpTpDetails = "Cp & PR Details"//"\(appCp) Details"

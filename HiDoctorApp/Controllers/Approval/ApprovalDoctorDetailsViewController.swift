@@ -102,8 +102,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             getMCActivityDetails(regionCode: DCRModel.sharedInstance.userDetail.Region_Code, userCode: DCRModel.sharedInstance.userDetail.User_Code, startDate: DCRModel.sharedInstance.dcrDateString, endDate: DCRModel.sharedInstance.dcrDateString)
         }
     }
-    
-    
+
     func setOfflineDoctorDetailList()
     {
         if(isFromChemistDay)
@@ -534,7 +533,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
                         {
                             visitTime = visitTime + " " + checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Visit_Mode") as? String)
                         }
-                        let dict : NSDictionary = ["Doctor_Name" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Chemist_Name") as? String), "MDL_Number" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Chemists_MDL_Number") as? String) , "Speciality_Name" : NA , "Category_Name" : NA, "Visit_Mode" :  checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Visit_Mode") as? String) , "Visit_Time" :  visitTime, "POB_Amount" : String(describing: chemistObj.value(forKey: "POB_Amount") as! Int), "Remarks" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Remarks") as? String)]
+                        let dict : NSDictionary = ["Doctor_Name" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Chemist_Name") as? String), /*"MDL_Number" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Chemists_MDL_Number") as? String) , */"Speciality_Name" : NA , "Category_Name" : NA, "Visit_Mode" :  checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Visit_Mode") as? String) , "Visit_Time" :  visitTime, "POB_Amount" : String(describing: chemistObj.value(forKey: "POB_Amount") as! Int), "Remarks" : checkNullAndNilValueForString(stringData: chemistObj.value(forKey: "Remarks") as? String)]
                         list.add(dict)
                     }
                     
@@ -1137,16 +1136,16 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
         convertList.add(detailDict)
         detailDict = NSDictionary()
         
-        var MDLNum = checkNullAndNilValueForString(stringData:  dict.object(forKey: "MDL_Number") as? String)
-        
-        if MDLNum == ""
-        {
-            MDLNum = NOT_APPLICABLE
-        }
-        
-        detailDict = ["SectionName" : "MDL Number" , "SectionValue" : MDLNum]
-        convertList.add(detailDict)
-        detailDict = NSDictionary()
+//        var MDLNum = checkNullAndNilValueForString(stringData:  dict.object(forKey: "MDL_Number") as? String)
+//
+//        if MDLNum == ""
+//        {
+//            MDLNum = NOT_APPLICABLE
+//        }
+//
+//        detailDict = ["SectionName" : "MDL Number" , "SectionValue" : MDLNum]
+//        convertList.add(detailDict)
+//        detailDict = NSDictionary()
         
         // organisation adding
         var hospitalName = checkNullAndNilValueForString(stringData:  dict.object(forKey: "Hospital_Name") as? String)
@@ -1168,7 +1167,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             splName = NOT_APPLICABLE
         }
         
-        detailDict = ["SectionName" : "Speciality Name" , "SectionValue" : splName]
+        detailDict = ["SectionName" : "Position Name" , "SectionValue" : splName]
         convertList.add(detailDict)
         detailDict = NSDictionary()
         

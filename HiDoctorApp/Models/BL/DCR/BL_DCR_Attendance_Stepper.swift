@@ -185,9 +185,9 @@ class BL_DCR_Attendance_Stepper: NSObject
         
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "Doctor Sample Details"
-        stepperObjModel.emptyStateTitle = "Doctor Sample Details"
-        stepperObjModel.emptyStateSubTitle = "Update the doctor samples details here"
+        stepperObjModel.sectionTitle = "Partner Sample Details"
+        stepperObjModel.emptyStateTitle = "Partner Sample Details"
+        stepperObjModel.emptyStateSubTitle = "Update the Partner samples details here"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"

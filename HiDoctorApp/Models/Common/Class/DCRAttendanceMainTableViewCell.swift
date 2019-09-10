@@ -14,6 +14,7 @@ protocol AddAttendanceSampleDelegate
     func removeDoctorButtonAction(sender: UIButton)
     func didSelectExpandableCell()
 }
+
 class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITableViewDataSource
  {
 
@@ -398,7 +399,6 @@ class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITa
         
         doctorDetails = doctorDetails + " | " + categoryName
         
-        
         let regionName = checkNullAndNilValueForString(stringData: dict.Region_Name)
         if regionName != ""
         {
@@ -419,7 +419,5 @@ class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITa
         BL_DCR_Attendance_Stepper.sharedInstance.selectedDoctorIndex = sender.tag
         self.delegate?.removeDoctorButtonAction(sender: sender)
     }
-    
-    
 }
 

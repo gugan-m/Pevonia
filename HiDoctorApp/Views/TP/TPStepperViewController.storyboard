@@ -305,7 +305,7 @@
                                                                                             <rect key="frame" x="0.0" y="388" width="263" height="220"/>
                                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dgc-3b-Yap" id="fMM-Zl-f3D">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="219.5"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="220"/>
                                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OO3-X5-qdh" userLabel="Doctor Wrapper View">
@@ -381,9 +381,9 @@
                                                                                                                 </connections>
                                                                                                             </tableView>
                                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7C-qU-nA8">
-                                                                                                                <rect key="frame" x="142" y="182.5" width="113" height="28"/>
+                                                                                                                <rect key="frame" x="138" y="182.5" width="117" height="28"/>
                                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
-                                                                                                                <state key="normal" title="REMOVE DOCTOR">
+                                                                                                                <state key="normal" title="REMOVE PARTNER">
                                                                                                                     <color key="titleColor" red="0.3156459614372345" green="0.69212703563216948" blue="0.7150056670984456" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                                 </state>
                                                                                                             </button>
@@ -2312,7 +2312,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4zV-rN-fLF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2261" y="865"/>
+            <point key="canvasLocation" x="2261" y="678"/>
         </scene>
         <!--Attendance Stepper View Controller-->
         <scene sceneID="Fdd-h9-25S">
