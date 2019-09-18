@@ -623,13 +623,18 @@ class BL_AssetModel: NSObject
             analyticsObj.Punch_TimeZone = localTimeZoneName
             analyticsObj.Punch_Offset = getOffset()
                 
-                let assets = DBHelper.sharedInstance.getAssestAnalyticsByCustomer(dcrDate: getCurrentDate(), customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
-                
-//           let assets = DBHelper.sharedInstance.getPunchEndTimeWith(customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
-                if(assets != nil && assets.count > 0 && assets[0].Punch_End_Time != "" && assets[0].Punch_End_Time != nil)
-                {
-                   analyticsObj.Punch_End_Time = assets[0].Punch_End_Time
+                if customerObj != nil {
+                    let assets = DBHelper.sharedInstance.getAssestAnalyticsByCustomer(dcrDate: getCurrentDate(), customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
+                    
+                    //           let assets = DBHelper.sharedInstance.getPunchEndTimeWith(customerCode: customerObj!.Customer_Code, customeRegionCode: customerObj!.Region_Code)
+                    if(assets != nil && assets.count > 0 && assets[0].Punch_End_Time != "" && assets[0].Punch_End_Time != nil)
+                    {
+                        analyticsObj.Punch_End_Time = assets[0].Punch_End_Time
+                    }
                 }
+                
+                
+                
                 
             }
         }
