@@ -206,6 +206,11 @@ class PrivilegesAndConfigSettings: NSObject
         defaultPrivilege.setValue(PrivilegeValues.NO.rawValue, forKey: PrivilegeNames.LEAVE_POLICY.rawValue)
         //Account Number Filter
         defaultPrivilege.setValue(PrivilegeValues.NO.rawValue, forKey: PrivilegeNames.SHOW_ORGANISATION_IN_CUSTOMER.rawValue)
+        // Attendance Privilege
+  defaultPrivilege.setValue(PrivilegeValues.DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE_VALUE.rawValue, forKey: PrivilegeNames.DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE.rawValue)
+        // New Privilege
+        defaultPrivilege.setValue(PrivilegeValues.DCR_FIELD_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.DCR_FIELD_CAPTURE_CONTROLS.rawValue)
+        defaultPrivilege.setValue(PrivilegeValues.DCR_ATTENDANCE_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.DCR_ATTENDANCE_CAPTURE_CONTROLS.rawValue)
     }
     
     private func setConfigSettingsDefaultValue()

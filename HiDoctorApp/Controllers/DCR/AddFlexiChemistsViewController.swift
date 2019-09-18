@@ -70,8 +70,8 @@ class AddFlexiChemistsViewController: UIViewController,UITableViewDataSource,UIT
         vc.flexiChemistObj = flexiChemistObj
         if let navigationController = self.navigationController
         {
-            navigationController.popViewController(animated: false)
-            navigationController.popViewController(animated: false)
+//            navigationController.popViewController(animated: false)
+//            navigationController.popViewController(animated: false)
             navigationController.pushViewController(vc, animated: false)
         }
 

@@ -32,6 +32,7 @@ class BL_Common_Stepper: NSObject
     var skipFromController = [Bool](repeating: false, count: 8)
     var isModify : Bool = false
     
+    
     private func clearAllArray()
     {
         chemistVisitList = []
@@ -61,15 +62,15 @@ class BL_Common_Stepper: NSObject
             {
                 self.getVisitData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.accompanist)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_accompanist)
             {
                 self.getAccompanistData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.samples)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_samples)
             {
                 self.getSampleProductData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.detailing)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_detailing)
             {
                 self.getDetailProductData()
             }
@@ -81,19 +82,19 @@ class BL_Common_Stepper: NSObject
             {
                 
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.followUp)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_followUp)
             {
                 self.getFollowupData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.attachment)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_attachment)
             {
                 self.getAttachmentData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.RCPA)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_RCPA)
             {
                 self.getRCPAData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.pob)
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.chemist_pob)
             {
                 self.getPOBData()
             }
@@ -118,7 +119,7 @@ class BL_Common_Stepper: NSObject
     {
         
         determineButtonStatus()
-
+        
     }
     
     func updateAddSkipButton(index:Int)//after chemist Vist
@@ -155,7 +156,7 @@ class BL_Common_Stepper: NSObject
             stepperDataList[index].showEmptyStateAddButton = true
             stepperDataList[index].showEmptyStateSkipButton = true
         }
- 
+        
     }
     
     private func updateStepperIndex(isUpdate:Bool)
@@ -179,23 +180,23 @@ class BL_Common_Stepper: NSObject
                 {
                     stepperIndex.doctorVisitIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.accompanist)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_accompanist)
                 {
-                  /*  if(isUpdate)
-                    {
-                        if(j != 1 && showAddButton > 0 && showAddButton != dynmicOrderData.count-1)
-                        {
-                            showAddButton -= 1
-                        }
-                    }*/
+                    /*  if(isUpdate)
+                     {
+                     if(j != 1 && showAddButton > 0 && showAddButton != dynmicOrderData.count-1)
+                     {
+                     showAddButton -= 1
+                     }
+                     }*/
                     stepperIndex.accompanistIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.samples)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_samples)
                 {
                     stepperIndex.sampleIndex = j
                     
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.detailing)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_detailing)
                 {
                     stepperIndex.detailedProduct = j
                 }
@@ -207,19 +208,19 @@ class BL_Common_Stepper: NSObject
                 {
                     stepperIndex.chemistIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.followUp)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_followUp)
                 {
                     stepperIndex.followUpIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.attachment)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_attachment)
                 {
                     stepperIndex.attachmentIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.RCPA)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_RCPA)
                 {
                     stepperIndex.rcpaDetailIndex = j
                 }
-                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.pob)
+                else if(dynmicOrderData[j] == Constants.ChemistDayCaptureValue.chemist_pob)
                 {
                     stepperIndex.pobIndex = j
                 }
@@ -307,7 +308,7 @@ class BL_Common_Stepper: NSObject
         {
             showAddButton += 1
         }
-       
+        
         stepperDataList.append(stepperObjModel)
         dynamicArrayValue += 1
         self.generateDataArray()
@@ -343,7 +344,7 @@ class BL_Common_Stepper: NSObject
             stepperObjModel.showEmptyStateSkipButton = true
             if(dynmicOrderData.count-1 != stepperIndex.accompanistIndex)
             {
-            showAddButton += 1
+                showAddButton += 1
             }
         }
         
@@ -366,63 +367,63 @@ class BL_Common_Stepper: NSObject
         
         if chemistVisitList.count > 0
         {
-         
-                let sampleProductList = getSampleProducts()
-                let sampleBatchProductList = getSampleBatchProducts()
-                if sampleProductList != nil
+            
+            let sampleProductList = getSampleProducts()
+            let sampleBatchProductList = getSampleBatchProducts()
+            if sampleProductList != nil
+            {
+                var sampleDataList : [SampleBatchProductModel] = []
+                for sampleObj in sampleProductList!
                 {
-                    var sampleDataList : [SampleBatchProductModel] = []
+                    var sampleModelList:[DCRChemistSamplePromotion] = []
+                    let sampleBatchObj = SampleBatchProductModel()
+                    sampleBatchObj.title = sampleObj.ProductName
+                    
+                    let filterValue = sampleBatchProductList.filter{
+                        $0.Ref_Id == sampleObj.DCRChemistSampleId
+                    }
+                    if(filterValue.count > 0)
+                    {
+                        for obj in filterValue
+                        {
+                            let dict = ["DCR_Chemist_Day_Visit_Id":0,"DCR_Id":sampleObj.DCRId,"DCR_Code":sampleObj.DCRCode,"Chemist_Visit_Id":sampleObj.ChemistVisitId,"CV_Visit_Id":0,"Product_Code":sampleObj.ProductCode,"Product_Name":sampleObj.ProductName,"Quantity_Provided":obj.Quantity_Provided] as [String : Any]
+                            let sampleChemist = DCRChemistSamplePromotion(dict: dict as NSDictionary)
+                            sampleChemist.BatchName = obj.Batch_Number
+                            sampleModelList.append(sampleChemist)
+                        }
+                        sampleBatchObj.title = sampleObj.ProductName
+                        sampleBatchObj.isShowSection = true
+                        sampleBatchObj.chemistSamplePromotion = sampleModelList
+                        sampleDataList.append(sampleBatchObj)
+                    }
+                }
+                if((sampleProductList?.count)! > 0)
+                {
+                    let sampleBatchObj = SampleBatchProductModel()
+                    var sampleModelList:[DCRChemistSamplePromotion] = []
+                    sampleBatchObj.title = ""
+                    sampleBatchObj.isShowSection = false
                     for sampleObj in sampleProductList!
                     {
-                        var sampleModelList:[DCRChemistSamplePromotion] = []
-                        let sampleBatchObj = SampleBatchProductModel()
-                        sampleBatchObj.title = sampleObj.ProductName
                         
                         let filterValue = sampleBatchProductList.filter{
                             $0.Ref_Id == sampleObj.DCRChemistSampleId
                         }
-                        if(filterValue.count > 0)
+                        if(filterValue.count == 0)
                         {
-                            for obj in filterValue
-                            {
-                                let dict = ["DCR_Chemist_Day_Visit_Id":0,"DCR_Id":sampleObj.DCRId,"DCR_Code":sampleObj.DCRCode,"Chemist_Visit_Id":sampleObj.ChemistVisitId,"CV_Visit_Id":0,"Product_Code":sampleObj.ProductCode,"Product_Name":sampleObj.ProductName,"Quantity_Provided":obj.Quantity_Provided] as [String : Any]
-                                let sampleChemist = DCRChemistSamplePromotion(dict: dict as NSDictionary)
-                                sampleChemist.BatchName = obj.Batch_Number
-                                sampleModelList.append(sampleChemist)
-                            }
-                            sampleBatchObj.title = sampleObj.ProductName
-                            sampleBatchObj.isShowSection = true
-                            sampleBatchObj.chemistSamplePromotion = sampleModelList
-                            sampleDataList.append(sampleBatchObj)
+                            sampleModelList.append(sampleObj)
                         }
+                        
                     }
-                    if((sampleProductList?.count)! > 0)
+                    if(sampleModelList.count > 0)
                     {
-                        let sampleBatchObj = SampleBatchProductModel()
-                        var sampleModelList:[DCRChemistSamplePromotion] = []
-                        sampleBatchObj.title = ""
-                        sampleBatchObj.isShowSection = false
-                        for sampleObj in sampleProductList!
-                        {
-                            
-                            let filterValue = sampleBatchProductList.filter{
-                                $0.Ref_Id == sampleObj.DCRChemistSampleId
-                            }
-                            if(filterValue.count == 0)
-                            {
-                                sampleModelList.append(sampleObj)
-                            }
-                            
-                        }
-                        if(sampleModelList.count > 0)
-                        {
-                            sampleBatchObj.chemistSamplePromotion = sampleModelList
-                            sampleDataList.append(sampleBatchObj)
-                        }
+                        sampleBatchObj.chemistSamplePromotion = sampleModelList
+                        sampleDataList.append(sampleBatchObj)
                     }
-                    self.sampleList = sampleDataList
-                    stepperObjModel.recordCount = sampleDataList.count
                 }
+                self.sampleList = sampleDataList
+                stepperObjModel.recordCount = sampleDataList.count
+            }
             
         }
         if getInputMandatoryNumber() == 0
@@ -648,9 +649,9 @@ class BL_Common_Stepper: NSObject
         stepperDataList.append(stepperObjModel)
         
         
-      enableAddShowButton(index: stepperIndex.attachmentIndex)
+        enableAddShowButton(index: stepperIndex.attachmentIndex)
         
-
+        
         dynamicArrayValue += 1
         self.generateDataArray()
     }
@@ -677,7 +678,7 @@ class BL_Common_Stepper: NSObject
         }
         
         showSkipButton.append(true)
-    
+        
         if(skipFromController[stepperIndex.rcpaDetailIndex])
         {
             showAddButton += 1
@@ -693,7 +694,7 @@ class BL_Common_Stepper: NSObject
         stepperDataList.append(stepperObjModel)
         
         enableAddShowButton(index: stepperIndex.rcpaDetailIndex)
-
+        
         dynamicArrayValue += 1
         self.generateDataArray()
     }
@@ -720,7 +721,7 @@ class BL_Common_Stepper: NSObject
         }
         
         showSkipButton.append(true)
-    
+        
         if(skipFromController[stepperIndex.pobIndex])
         {
             showAddButton += 1
@@ -736,6 +737,7 @@ class BL_Common_Stepper: NSObject
         enableAddShowButton(index: stepperIndex.pobIndex)
         dynamicArrayValue += 1
         self.generateDataArray()
+        
     }
     
     func getDCRDoctorAssetDetails() -> [AssetsModel]
@@ -775,6 +777,7 @@ class BL_Common_Stepper: NSObject
     
     func enableAddShowButton(index:Int) //update add skip button for previous index
     {
+        
         let indexValue = index-1
         
         if (stepperDataList[index].recordCount > 0)
@@ -798,47 +801,48 @@ class BL_Common_Stepper: NSObject
                 stepperDataList[index].showEmptyStateSkipButton = false
             }
         }
+        
+        
     }
-    
     func showAddSkipButton(indexValue:Int)
     {
-//        for i in (0 ... indexValue).reversed()
-//        {
-//
-//            if(stepperIndex.detailedProduct == i)
-//            {
-//                stepperDataList[i].showEmptyStateAddButton = true
-//
-//                if getDetailedProductMandatoryNumber() == 0
-//                {
-//                    stepperDataList[i].showEmptyStateSkipButton = true
-//                }
-//                else
-//                {
-//                    stepperDataList[i].showEmptyStateSkipButton = false
-//                }
-//            }
-//            else if(stepperIndex.sampleIndex == i)
-//            {
-//                stepperDataList[i].showEmptyStateAddButton = true
-//
-//                if getInputMandatoryNumber() == 0
-//                {
-//                    stepperDataList[i].showEmptyStateSkipButton = true
-//                }
-//                else
-//                {
-//                    stepperDataList[i].showEmptyStateSkipButton = false
-//                }
-//
-//            }
-//            else
-//            {
-//                stepperDataList[i].showEmptyStateAddButton = true
-//                stepperDataList[i].showEmptyStateSkipButton = true
-//            }
-//        }
-
+        //        for i in (0 ... indexValue).reversed()
+        //        {
+        //
+        //            if(stepperIndex.detailedProduct == i)
+        //            {
+        //                stepperDataList[i].showEmptyStateAddButton = true
+        //
+        //                if getDetailedProductMandatoryNumber() == 0
+        //                {
+        //                    stepperDataList[i].showEmptyStateSkipButton = true
+        //                }
+        //                else
+        //                {
+        //                    stepperDataList[i].showEmptyStateSkipButton = false
+        //                }
+        //            }
+        //            else if(stepperIndex.sampleIndex == i)
+        //            {
+        //                stepperDataList[i].showEmptyStateAddButton = true
+        //
+        //                if getInputMandatoryNumber() == 0
+        //                {
+        //                    stepperDataList[i].showEmptyStateSkipButton = true
+        //                }
+        //                else
+        //                {
+        //                    stepperDataList[i].showEmptyStateSkipButton = false
+        //                }
+        //
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[i].showEmptyStateAddButton = true
+        //                stepperDataList[i].showEmptyStateSkipButton = true
+        //            }
+        //        }
+        
         for i in (0 ... indexValue).reversed()
         {
             if(stepperIndex.detailedProduct == i)
@@ -955,7 +959,7 @@ class BL_Common_Stepper: NSObject
             }
         }
         
-        if privArray.contains(Constants.ChemistDayCaptureValue.samples)
+        if privArray.contains(Constants.ChemistDayCaptureValue.chemist_samples)
         {
             if (!getInputMandatoryPrivilegeValidation(dcrChemistVisitId: chemistVisitObj.DCRChemistDayVisitId))
             {
@@ -963,7 +967,7 @@ class BL_Common_Stepper: NSObject
             }
         }
         
-        if privArray.contains(Constants.ChemistDayCaptureValue.detailing)
+        if privArray.contains(Constants.ChemistDayCaptureValue.chemist_detailing)
         {
             if (!getDetailedProductMandatoryPrivilegeValidation(dcrChemistVisitId: chemistVisitObj.DCRChemistDayVisitId))
             {
@@ -971,33 +975,33 @@ class BL_Common_Stepper: NSObject
             }
         }
         
-//        if privArray.contains(Constants.ChemistDayCaptureValue.RCPA)
-//        {
-//            if (BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorList().count > 0)
-//            {
-//                let rcpaCheckList = chemistRCPACheckMandatory(chemistVisitId: chemistVisitObj.DCRChemistDayVisitId)
-//
-//                if rcpaCheckList.count > 0
-//                {
-//                    for obj in rcpaCheckList
-//                    {
-//                        let rcpaCheck = obj[0] as! Bool
-//                        let docName = obj[1] as! String
-//
-//                        if rcpaCheck == false
-//                        {
-//                            return "You need to enter minimum of 1 RCPA for the \(appDoctor) \(docName )"
-//                        }
-//                    }
-//                }
-//                else
-//                {
-//                    return "You need to enter minimum of 1 RCPA for the \(appDoctor) in DCR"
-//                }
-//            }
-//        }
+        //        if privArray.contains(Constants.ChemistDayCaptureValue.RCPA)
+        //        {
+        //            if (BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorList().count > 0)
+        //            {
+        //                let rcpaCheckList = chemistRCPACheckMandatory(chemistVisitId: chemistVisitObj.DCRChemistDayVisitId)
+        //
+        //                if rcpaCheckList.count > 0
+        //                {
+        //                    for obj in rcpaCheckList
+        //                    {
+        //                        let rcpaCheck = obj[0] as! Bool
+        //                        let docName = obj[1] as! String
+        //
+        //                        if rcpaCheck == false
+        //                        {
+        //                            return "You need to enter minimum of 1 RCPA for the \(appDoctor) \(docName )"
+        //                        }
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    return "You need to enter minimum of 1 RCPA for the \(appDoctor) in DCR"
+        //                }
+        //            }
+        //        }
         
-        if privArray.contains(Constants.ChemistDayCaptureValue.pob)
+        if privArray.contains(Constants.ChemistDayCaptureValue.chemist_pob)
         {
             let poblist = chemistPOBSaleProductCheck(chemistVisitId: chemistVisitObj.DCRChemistDayVisitId)
             
@@ -1200,9 +1204,11 @@ class BL_Common_Stepper: NSObject
     func doAllCustomerValidations() -> String
     {
         var errorMessage: String = EMPTY
+        
         if (BL_Stepper.sharedInstance.isChemistDayEnabled())
         {
             errorMessage =  self.doChemistVisitAllValidations()
+            
             if (self.chemistVisitList.count > 0)
             {
                 let priviledge = BL_Common_Stepper.sharedInstance.getChemistDayCaptureValue().uppercased()
@@ -1224,6 +1230,7 @@ class BL_Common_Stepper: NSObject
                                 let filteredArray = doctorAccompanistList.filter{
                                     $0.AccUserCode == objDCRAccompanist.Acc_User_Code && $0.AccRegionCode == objDCRAccompanist.Acc_Region_Code
                                 }
+                                
                                 if (filteredArray.count == 0)
                                 {
                                     errorMessage = "\(accompMissedPrefixErrorMsg)" + "\(objDCRAccompanist.Employee_Name!)" + "\(accompMissedSuffixErrorMsg)"
@@ -1235,6 +1242,7 @@ class BL_Common_Stepper: NSObject
                 }
             }
         }
+        
         return errorMessage
     }
     
@@ -1243,7 +1251,7 @@ class BL_Common_Stepper: NSObject
         var errorMessage: String = EMPTY
         
         errorMessage =  self.doChemistVisitAllValidations(chemistVisitObj: chemistObj)
-               return errorMessage
+        return errorMessage
     }
     
     func getRCPAMandatoryDoctorCategoryPriviledgeValue() -> String
@@ -1680,13 +1688,13 @@ class BL_Common_Stepper: NSObject
         var line1Height : CGFloat = 0
         var line2Height : CGFloat = 0
         
-//        if parentIndex == stepperIndex.sampleIndex
-//        {
-//            let productName = sampleList[selectedIndex].ProductName
-//            line1Height = getTextSize(text: productName, fontName: fontSemiBold, fontSize: 15.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
-//            let quantityText = String(format: "%d", sampleList[selectedIndex].QuantityProvided)
-//            line2Height = getTextSize(text: quantityText, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
-//        }
+        //        if parentIndex == stepperIndex.sampleIndex
+        //        {
+        //            let productName = sampleList[selectedIndex].ProductName
+        //            line1Height = getTextSize(text: productName, fontName: fontSemiBold, fontSize: 15.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
+        //            let quantityText = String(format: "%d", sampleList[selectedIndex].QuantityProvided)
+        //            line2Height = getTextSize(text: quantityText, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
+        //        }
         if parentIndex == stepperIndex.pobIndex
         {
             let orderEntryId = pobDataList[selectedIndex].Order_Entry_Id
@@ -1960,3 +1968,4 @@ class BL_Common_Stepper: NSObject
     }
     
 }
+

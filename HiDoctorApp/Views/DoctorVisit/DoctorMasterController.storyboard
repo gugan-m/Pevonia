@@ -586,7 +586,7 @@
                                                                             <rect key="frame" x="0.0" y="128" width="264" height="25"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DLr-bq-lRx" id="lFD-ep-Q1g">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="24.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRE-iq-u5i">
@@ -621,7 +621,7 @@
                                                                             <rect key="frame" x="0.0" y="153" width="264" height="40"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZOY-Lp-v18" id="zhr-cB-eZv">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="39.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="40"/>
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pAD-dg-HGN" userLabel="MainView">
@@ -715,7 +715,7 @@
                                                                             <rect key="frame" x="0.0" y="193" width="264" height="30"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="eXR-TM-lGk" id="B9B-zd-xZk">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="29.5"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="30"/>
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eff-FG-Mjj" userLabel="AssetName">
@@ -1214,7 +1214,7 @@
                                             <constraint firstAttribute="width" constant="24" id="aaw-Qk-LRH"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Doctor Speciality" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-ff-eJO">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Partner Position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vp-ff-eJO">
                                         <rect key="frame" x="47" y="0.0" width="170" height="50"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <nil key="textColor"/>

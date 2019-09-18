@@ -11,7 +11,6 @@ import UIKit
 class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,AddAttendanceSampleDelegate
 {
     @IBOutlet weak var tableView: UITableView!
-
     @IBOutlet weak var submitViewHgtConst: NSLayoutConstraint!
     
     // MARK:- Variables
@@ -192,7 +191,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
             
             
             cell.emptyStateAddButton.isHidden = !objStepperModel.showEmptyStateAddButton
-           
+            
             
             cell.emptyStateView.isHidden = false
             cell.cardView.isHidden = true
@@ -214,15 +213,15 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
             cell.commonSectionTitleHeightConstraint.constant = 30
             cell.sectionTitleView.isHidden = false
             cell.coverButtonView.isHidden = false
-    
+            
             if (rowIndex == BL_DCR_Attendance_Stepper.sharedInstance.doctorindex)
             {
-//                cell.sectionTitleView.isHidden = true
-//                cell.sectionTitleView.clipsToBounds = false
-//                cell.commonSectionTitleHeightConstraint.constant = 0
-//                cell.sectionCoverButton.isHidden = false
-//                cell.coverButtonView.isHidden = true
-//                cell.rightButton.isHidden = true
+                //                cell.sectionTitleView.isHidden = true
+                //                cell.sectionTitleView.clipsToBounds = false
+                //                cell.commonSectionTitleHeightConstraint.constant = 0
+                //                cell.sectionCoverButton.isHidden = false
+                //                cell.coverButtonView.isHidden = true
+                //                cell.rightButton.isHidden = true
                 cell.sectionTitleView.isHidden = false
                 cell.sectionTitleView.clipsToBounds = true
                 cell.commonSectionTitleHeightConstraint.constant = 4
@@ -237,13 +236,10 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
         }
         
         
-
+        
         cell.sectionTitleImageView.image = UIImage(named: objStepperModel.sectionIconName)
         cell.sectionToggleImageView.isHidden = true
         cell.sectionToggleImageView.clipsToBounds = true
-        
-        
-       
         
         if (objStepperModel.recordCount > 1)
         {
@@ -264,8 +260,6 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
         cell.moreView.clipsToBounds = true
         cell.moreViewHeightConstraint.constant = 0
         cell.buttonViewHeight.constant = 20
-        
-        
         
         if (objStepperModel.isExpanded == false && objStepperModel.recordCount > 1)
         {
@@ -444,11 +438,61 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     }
     
     //MARK:-- Button Action Helper Methods
-    private func addNewEntry(index: Int)
-    {
-        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable()){
-            
-        
+    
+    
+    func hideTravel_hideExpense(index: Int) {
+        switch index
+        {
+        case 0:
+            navigateToAddWorkPlaceDetails()
+        case 1:
+            navigateToAddActivityDetails()
+        case 2:
+            navigateToAddDoctor()
+        case 3:
+            navigateToAddGeneralRemarks()
+        default:
+            print(1)
+        }
+    }
+    
+    func hideTravel_showExpense(index: Int) {
+        switch index
+        {
+        case 0:
+            navigateToAddWorkPlaceDetails()
+        case 1:
+            navigateToAddActivityDetails()
+        case 2:
+            navigateToAddDoctor()
+        case 3:
+            navigateToAddExpense()
+        case 4:
+            navigateToAddGeneralRemarks()
+        default:
+            print(1)
+        }
+    }
+    
+    func showTravel_hideExpense(index: Int) {
+        switch index
+        {
+        case 0:
+            navigateToAddWorkPlaceDetails()
+        case 1:
+            navigateToAddTravelPlace()
+        case 2:
+            navigateToAddActivityDetails()
+        case 3:
+            navigateToAddDoctor()
+        case 4:
+            navigateToAddGeneralRemarks()
+        default:
+            print(1)
+        }
+    }
+    
+    func showTravel_showExpense(index: Int) {
         switch index
         {
         case 0:
@@ -466,30 +510,133 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
         default:
             print(1)
         }
+    }
+    
+    
+    
+    
+    private func addNewEntry(index: Int)
+    {
+        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable()){
+            
+            if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == false &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == false {
+                
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                   self.showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_showExpense(index: index)
+                }
+            } else if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == true &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == false {
+                
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_showExpense(index: index)
+                }
+                
+            } else if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == false &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == true {
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_showExpense(index: index)
+                }
+            } else if BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == true &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == true {
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.showTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.showTravel_showExpense(index: index)
+                }
+                }
         }
         else {
             switch index
             {
             case 0:
-            navigateToAddWorkPlaceDetails()
+                navigateToAddWorkPlaceDetails()
             case 1:
-            navigateToAddTravelPlace()
+                navigateToAddTravelPlace()
             case 2:
-            navigateToAddActivityDetails()
+                navigateToAddActivityDetails()
             case 3:
-            navigateToAddExpense()
+                navigateToAddExpense()
             case 4:
-            navigateToAddGeneralRemarks()
+                navigateToAddGeneralRemarks()
             default:
-            print(1)
-        }
+                print(1)
+            }
         }
     }
     
-    private func modifyEntry(index: Int)
+    func mod_hideTravel_hideExpense(index: Int){
+        switch index
+        {
+        case 0:
+            navigateToEditWorkPlaceDetails()
+        case 1:
+            navigateToEditActiviytDetails()
+        case 2:
+            navigateToEditDoctorVisit()
+        case 3:
+            navigateToEditGeneralRemarks()
+        default:
+            print(1)
+        }
+    }
+    
+    func mod_hideTravel_showExpense(index: Int)
     {
-        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable()){
-            
+        switch index
+        {
+        case 0:
+        navigateToEditWorkPlaceDetails()
+        case 1:
+        navigateToEditActiviytDetails()
+        case 2:
+        navigateToEditDoctorVisit()
+        case 3:
+        navigateToEditExpense()
+        case 4:
+        navigateToEditGeneralRemarks()
+        default:
+        print(1)
+        }
+    }
+    
+    func mod_showTravel_hideExpense(index: Int){
+        switch index
+        {
+        case 0:
+            navigateToEditWorkPlaceDetails()
+        case 1:
+            navigateToEditTravelPlace()
+        case 2:
+            navigateToEditActiviytDetails()
+        case 3:
+            navigateToEditDoctorVisit()
+        case 4:
+            navigateToEditGeneralRemarks()
+        default:
+            print(1)
+        }
+    }
+    
+    func mod_showTravel_showExpense(index: Int){
         switch index
         {
         case 0:
@@ -507,6 +654,64 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
         default:
             print(1)
         }
+    }
+    
+  private func modifyEntry(index: Int)
+    {
+        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable()) {
+            if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == false &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == false {
+                
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                   self.mod_hideTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_showExpense(index: index)
+                }
+                
+                
+            } else if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == true &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == false {
+               
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_showExpense(index: index)
+                }
+                
+                
+            } else if  BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == false &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == true {
+                
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_showExpense(index: index)
+                }
+                
+                
+            } else if BL_DCR_Attendance_Stepper.sharedInstance.isExpenceAllowed() == true &&  BL_DCR_Attendance_Stepper.sharedInstance.isTravelAllowed() == true {
+                
+                if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                     self.mod_showTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count == 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_hideExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count == 0 {
+                    self.mod_hideTravel_showExpense(index: index)
+                } else if BL_DCR_Attendance_Stepper.sharedInstance.expenseList.count != 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0 {
+                    self.mod_showTravel_showExpense(index: index)
+                }
+                
+                
+            }
         }
         else {
             switch index
@@ -664,7 +869,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     private func setSubmitViewHeightConst()
     {
-        if BL_DCR_Attendance_Stepper.sharedInstance.activityList.count > 0 && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count > 0
+        if BL_DCR_Attendance_Stepper.sharedInstance.activityList.count > 0 //&& //BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count > 0
         {
             self.submitViewHgtConst.constant = 40
         }

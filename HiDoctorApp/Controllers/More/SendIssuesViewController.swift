@@ -139,7 +139,7 @@ class SendIssuesViewController: UIViewController, IssueTypeDelegate, MFMailCompo
         {
             if checkInternetConnectivity()
             {
-                let subject = "Pevonia Intl"
+                let subject = "Pevonia CRM"
                 let htmlString = getHtmlString()
 
                 if MFMailComposeViewController.canSendMail()
@@ -207,7 +207,7 @@ class SendIssuesViewController: UIViewController, IssueTypeDelegate, MFMailCompo
         {
             self.emptyTextField()
             controller.dismiss(animated:true)
-            AlertView.showAlertView(title: "Success", message: "Your message has been sent to Pevonia Intl support team successfully. Pevonia Intl support team will contact you shortly.")
+            AlertView.showAlertView(title: "Success", message: "Your message has been sent to Pevonia CRM support team successfully. Pevonia CRM support team will contact you shortly.")
         }
         else if result == MFMailComposeResult.failed
         {

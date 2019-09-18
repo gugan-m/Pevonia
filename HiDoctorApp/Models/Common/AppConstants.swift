@@ -2,16 +2,17 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
- //let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+// let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
 let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
 // use this url for production but not for live.
-let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+//let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+//let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
 //MARK:- Development  email issue
 //let supportEmail : String = "support@swaas.net"
@@ -20,7 +21,7 @@ let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 let supportEmail : String = "support@swaas.net"
 
 //MARK:- App Name
-let appName = "Pevonia Intl"
+let appName = "Pevonia CRM"
 
 //MARK:- Screen Measurements
 var SCREEN_WIDTH =  UIScreen.main.bounds.size.width
@@ -1164,6 +1165,10 @@ enum PrivilegeNames: String
     case LEAVE_POLICY = "LEAVE_POLICY"
     case IS_DCR_PUNCH_IN_OUT_ENABLED = "IS_DCR_PUNCH_IN_OUT_ENABLED"
     case SHOW_ORGANISATION_IN_CUSTOMER = "SHOW_ORGANISATION_IN_CUSTOMER"
+    // New Privilege
+    case DCR_FIELD_CAPTURE_CONTROLS = "DCR_FIELD_CAPTURE_CONTROLS"
+    case DCR_ATTENDANCE_CAPTURE_CONTROLS = "DCR_ATTENDANCE_CAPTURE_CONTROLS"
+     case DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE = "DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE"
 }
 
 enum PrivilegeValues: String
@@ -1210,6 +1215,11 @@ enum PrivilegeValues: String
     case DISABLED = "DISABLED"
     case RIGID = "RIGID"
     case FLEXI = "FLEXI"
+    
+    // New Privilege values
+    case DCR_FIELD_CAPTURE_VALUE =  "DOCTOR_ACCOMPANIST,DOCTOR_ACTIVITY,DETAILING,DOCTOR_SAMPLES,DOCTOR_POB,RCPA,DOCTOR_ATTACHMENTS,DOCTOR_FOLLOW_UP,TRAVEL_DETAILS,EXPENSE_DETAILS,FIELD_STOCKIST_VISITS"
+    case DCR_ATTENDANCE_CAPTURE_VALUE = "TRAVEL_DETAILS,DOCTOR_SAMPLES,DOCTOR_ACTIVITY,EXPENSE_DETAILS"
+    case DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE_VALUE = "DOCTOR_SAMPLES,DOCTOR_ACTIVITY,ATTENDANCE_EXPENSE_DETAILS"
 }
 
 enum ConfigNames: String
@@ -1505,8 +1515,8 @@ enum MenuIDs: Int
     case Kennect = 31
     case MyDocument = 33
     case traveltrackingreport = 34
-    case QuickNotes = 35
-    //case QuickNotes = 36
+   // case QuickNotes = 35
+    case QuickNotes = 36
 }
 
 
@@ -1894,17 +1904,32 @@ struct Constants
     struct ChemistDayCaptureValue {
         
         static let visit : String = "VISIT"
-        static let accompanist : String = "ACCOMPANIST"
-        static let samples : String = "SAMPLES"
+        static let chemist_accompanist : String = "ACCOMPANIST"
+        static let chemist_samples : String = "SAMPLES"
+        static let chemist_detailing : String = "DETAILING"
+        static let chemist_RCPA : String = "RCPA"
+        static let chemist_pob : String = "POB"
+        static let chemist_followUp : String = "FOLLOW-UP"
+        static let chemist_attachment : String = "ATTACHMENTS"
+        static let chemist_activity : String = "ACTIVITY"
+        static let chemist_assets : String = "ASSET"
+        
+        // New values
+        
+        static let accompanist : String = "DOCTOR_ACCOMPANIST"
+        static let samples : String = "DOCTOR_SAMPLES"
         static let detailing : String = "DETAILING"
         static let RCPA : String = "RCPA"
-        static let pob : String = "POB"
-        static let followUp : String = "FOLLOW-UP"
-        static let attachment : String = "ATTACHMENTS"
-        static let activity : String = "ACTIVITY"
+        static let pob : String = "DOCTOR_POB"
+        static let followUp : String = "DOCTOR_FOLLOW_UP"
+        static let attachment : String = "DOCTOR_ATTACHMENTS"
+        static let activity : String = "DOCTOR_ACTIVITY"
         static let assets : String = "ASSET"
-       
-        
+        static let expenses : String = "EXPENSE_DETAILS"
+        static let stockiest : String = "FIELD_STOCKIST_VISITS"
+        static let travel_details : String = "TRAVEL_DETAILS"
+        // News values end
+        static let attendance_expenses : String = "EXPENSE_DETAILS"
     }
     
     struct Customer_Status
@@ -2051,7 +2076,7 @@ struct Display_Messages
     
     struct LOGIN_DATA_DOWNLOAD
     {
-       static let DATA_DOWNLOAD_ALERT: String = "Since Pevonia Intl SFA is a CRM tool, the app needs to download all the partner related data, partner routing details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
+       static let DATA_DOWNLOAD_ALERT: String = "Since Pevonia CRM SFA is a CRM tool, the app needs to download all the partner related data, partner routing details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
     }
     
     struct Landing_Alert_Message

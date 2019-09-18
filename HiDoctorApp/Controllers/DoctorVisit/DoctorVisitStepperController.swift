@@ -44,7 +44,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        //Do any additional setup after loading the view.
         //addBackButtonView()
         addCustomBackButtonToNavigationBar()
         DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
@@ -55,6 +55,22 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
     
     override func viewWillAppear(_ animated: Bool)
     {
+
+        var temp_dynmicOrderData:[String] = []
+        for (index, element) in BL_DCR_Doctor_Visit.sharedInstance.dynmicOrderData.enumerated()
+        {
+            if(element != Constants.ChemistDayCaptureValue.travel_details &&
+                element != Constants.ChemistDayCaptureValue.expenses &&
+                element != Constants.ChemistDayCaptureValue.stockiest)
+            {
+                temp_dynmicOrderData.append(element)
+            }
+        }
+        if temp_dynmicOrderData != nil && temp_dynmicOrderData.count > 0{
+            BL_DCR_Doctor_Visit.sharedInstance.dynmicOrderData = temp_dynmicOrderData
+        }
+
+        
         if BL_DCR_Doctor_Visit.sharedInstance.showAssetCard()
         {
             for (index, element) in BL_DCR_Doctor_Visit.sharedInstance.dynmicOrderData.enumerated()
@@ -231,14 +247,11 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 
                 if customerMasterModel.Hospital_Account_Number != ""
                 {
-//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
-                     detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                    detailText = String(format: "%@ | %@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
                 else
                 {
-//                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
-                    detailText = String(format: "%@ | %@ | %@ | %@", strHospitalName!,
-                    customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, ccmNumberPrefix + customerMasterModel.MDL_Number, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
                 }
             }
             else
@@ -1220,7 +1233,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                     cell.cardView.clipsToBounds = false
                     
                     cell.accompEmptyStateView.isHidden = false
-                    cell.accompEmptyLbl.text = "No Ride Along available"
+                    cell.accompEmptyLbl.text = "No Ride Along Available"
                     
                     if cell.parentTableView != nil
                     {
@@ -1388,15 +1401,18 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 cell.buttonViewHeight.constant = 0
                 cell.moreViewHeightConstraint.constant = 0
             }
+            
             cell.btmSepView.isHidden = true
             cell.leftButton.isHidden = true
             cell.rightButton.isHidden = true
         }
+        
         cell.sectionCoverButton.tag = rowIndex
         cell.leftButton.tag = rowIndex
         cell.rightButton.tag = rowIndex
         cell.emptyStateAddButton.tag = rowIndex
         cell.emptyStateSkipButton.tag = rowIndex
+        
         return cell
     }
     
@@ -1681,7 +1697,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 var visittime = ""
                 var visitmode = ""
                 
-                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME_MANDATORY.rawValue ){
+                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
                     
                     if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
                         visittime = stringFromDate(date1: Date())

@@ -217,6 +217,7 @@ class WebServiceWrapper: NSObject
                                     if let jsonDict = json as? NSDictionary
                                     {
                                         completion(ApiResponseModel.sharedInstance.getSuccessApiModel(dict: jsonDict))
+                                        print(jsonDict)
                                     }
                                     else
                                     {

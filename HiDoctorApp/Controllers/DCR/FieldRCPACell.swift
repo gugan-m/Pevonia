@@ -10,6 +10,12 @@ import UIKit
 
 class FieldRCPACell: UITableViewCell {
 
+    
+    @IBOutlet weak var chemistView: UIView!
+    @IBOutlet weak var rcpaView: UIView!
+    @IBOutlet weak var stockistView: UIView!
+    @IBOutlet weak var expenseView: UIView!
+    
     @IBOutlet weak var wrapperView: UIView!
     @IBOutlet weak var dcrLabel: UILabel!
     @IBOutlet weak var dcrStatus: UILabel!
@@ -33,6 +39,7 @@ class FieldRCPACell: UITableViewCell {
     @IBOutlet weak var unapprovedView: UIView!
     @IBOutlet weak var chemistEntryLbl: UILabel!
     @IBOutlet weak var stockiestEntryLbl: UILabel!
+    @IBOutlet weak var expenseEntryLbl: UILabel!
     
     override func awakeFromNib() {
         chemistEntryLbl.text = "\(appChemist) Entry"

@@ -1,3 +1,4 @@
+
 //
 //  BL_Stepper.swift
 //  HiDoctorApp
@@ -73,17 +74,75 @@ class BL_Stepper: NSObject
         getAccompanistData()
         getWorkPlaceDetails()
         updateDCRStatusAsDraft()
-        getSFCDetails()
+        
+        // Privilege
+        
+        checkTravelDetailsPrivilege()
+        
+        // getSFCDetails()
         getDoctorDetails()
         getChemistDetails()
-        getStockistDetails()
-        getExpenseDetails()
+        
+        // Based upon Privilege
+        checkStockistAndExpensesPrivilege()
+        
+        // getStockistDetails()
+        // getExpenseDetails()
         getGeneralRemarks()
         getWorkTimeDetails()
         isTPFreezedDate()
         
         determineButtonStatus()
         disableButtonsForTPFreeze()
+    }
+    
+    // Based upon privilege(pivonia purpose)
+    private func checkStockistAndExpensesPrivilege()
+    {
+        let priviledge = getDoctorCaptureValue()
+        let privilegeArray = priviledge.components(separatedBy: ",")
+        
+        let expenseList: [DCRExpenseModel]? = getDCRExpenseDetails()
+        let stockistList: [DCRStockistVisitModel]? = getDCRStockistDetails()
+        
+        //        if (privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) &&  privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses)) || (stockistList!.count > 0 && expenseList!.count > 0)
+        //        {
+        //            getStockistDetails()
+        //            getExpenseDetails()
+        //        }
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) || stockistList!.count > 0
+        {
+            getStockistDetails()
+        }
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses) || expenseList!.count > 0
+        {
+            getExpenseDetails()
+        }
+        
+    }
+    
+    func isTravelAllowed() -> Bool {
+        let sfcList: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+        let priviledge = getDoctorCaptureValue()
+        let privilegeArray = priviledge.components(separatedBy: ",")
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.travel_details) || sfcList!.count > 0
+        {
+            return true
+        }
+        return false
+    }
+    
+    
+    
+    private func checkTravelDetailsPrivilege()
+    {
+        let sfcList: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+        let priviledge = getDoctorCaptureValue()
+        let privilegeArray = priviledge.components(separatedBy: ",")
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.travel_details) || sfcList!.count > 0
+        {
+            getSFCDetails()
+        }
     }
     
     func isDCRAutoApprovalRequired() -> Bool
@@ -434,10 +493,17 @@ class BL_Stepper: NSObject
             return errorMessage
         }
         
-        errorMessage = doAllSFCValidations()
-        if (errorMessage != EMPTY)
+        let priviledge = getDoctorCaptureValue()
+        let privilegeArray = priviledge.components(separatedBy: ",")
+        let expenseList: [DCRExpenseModel]? = getDCRExpenseDetails()
+        
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses) || expenseList!.count > 0
         {
-            return errorMessage
+            errorMessage = doAllSFCValidations()
+            if (errorMessage != EMPTY)
+            {
+                return errorMessage
+            }
         }
         
         errorMessage = doAllCustomerValidations()
@@ -488,10 +554,14 @@ class BL_Stepper: NSObject
             return errorMessage
         }
         
-        errorMessage = doAllExpenseValidations()
-        if (errorMessage != EMPTY)
+        let sfcList: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.travel_details) || sfcList!.count > 0
         {
-            return errorMessage
+            errorMessage = doAllExpenseValidations()
+            if (errorMessage != EMPTY)
+            {
+                return errorMessage
+            }
         }
         
         errorMessage = doAllGeneralRemarksValidations()
@@ -936,24 +1006,24 @@ class BL_Stepper: NSObject
         stepperObjModel.leftButtonTitle = ""
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.GeneralRemarks.rawValue
         
-//        if (doctorList.count > 0)
-//        {
-            dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
-            var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
-            
-            if (generalRemarks != nil)
+        //        if (doctorList.count > 0)
+        //        {
+        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+        
+        if (generalRemarks != nil)
+        {
+            if (checkNullAndNilValueForString(stringData: generalRemarks!) != "")
             {
-                if (checkNullAndNilValueForString(stringData: generalRemarks!) != "")
-                {
-                    generalRemarks = generalRemarks!.replacingOccurrences(of: GENERAL_REMARKS_API_SPLIT_CHAR, with: " ")
-                    generalRemarks = generalRemarks!.replacingOccurrences(of: GENERAL_REMARKS_LOCAL_SPLIT_CHAR, with: " ")
-                    
-                    dcrHeaderObj!.DCR_General_Remarks = generalRemarks
-                    
-                    stepperObjModel.recordCount = 1
-                }
+                generalRemarks = generalRemarks!.replacingOccurrences(of: GENERAL_REMARKS_API_SPLIT_CHAR, with: " ")
+                generalRemarks = generalRemarks!.replacingOccurrences(of: GENERAL_REMARKS_LOCAL_SPLIT_CHAR, with: " ")
+                
+                dcrHeaderObj!.DCR_General_Remarks = generalRemarks
+                
+                stepperObjModel.recordCount = 1
             }
-//        }
+        }
+        //        }
         
         stepperDataList.append(stepperObjModel)
     }
@@ -979,10 +1049,10 @@ class BL_Stepper: NSObject
         
         if(startTime != EMPTY && endTime != EMPTY)
         {
-        DBHelper.sharedInstance.updateDCRWorkTime(startTime: startTime, endTime: endTime, dcrId: getDCRId())
-        self.dcrHeaderObj?.Start_Time = startTime
-        self.dcrHeaderObj?.End_Time = endTime
-        stepperObjModel.recordCount = 1
+            DBHelper.sharedInstance.updateDCRWorkTime(startTime: startTime, endTime: endTime, dcrId: getDCRId())
+            self.dcrHeaderObj?.Start_Time = startTime
+            self.dcrHeaderObj?.End_Time = endTime
+            stepperObjModel.recordCount = 1
         }
         
         stepperDataList.append(stepperObjModel)
@@ -1021,7 +1091,7 @@ class BL_Stepper: NSObject
                 let timeString = convert12HrTo24Hr(timeString: chemvisittime)
                 let visitTime = dcrDateString! + " " + timeString + ":00"
                 let converedTime = dateFormatter.date(from: visitTime)!
-//                let converedTime: Date = getDateStringInFormatDate(dateString : visitTime , dateFormat : dateTimeWithoutMilliSec) // TODO:2 Convert to date type
+                //                let converedTime: Date = getDateStringInFormatDate(dateString : visitTime , dateFormat : dateTimeWithoutMilliSec) // TODO:2 Convert to date type
                 
                 timeArray.append(converedTime)
             }
@@ -1141,11 +1211,733 @@ class BL_Stepper: NSObject
             
             if (sfcList.count == 0)
             {
-                stepperDataList[2].showEmptyStateAddButton = true
-                stepperDataList[2].showEmptyStateSkipButton = false
+                //
+                
+                // new privilege added
+                let sfcListdata: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+                let priviledge1 = getDoctorCaptureValue()
+                let privilegeArray1 = priviledge1.components(separatedBy: ",")
+                if !privilegeArray1.contains(Constants.ChemistDayCaptureValue.travel_details)
+                {
+                    stepperDataList[2].showRightButton = true
+                    stepperDataList[2].showLeftButton = true
+                    
+                    if doctorList.count > 0 {
+                        
+                        if isChemistDayEnabled() {
+                            
+                            if (chemistDayHeaderList.count == 0)
+                            {
+                                stepperDataList[3].showEmptyStateAddButton = true
+                                stepperDataList[3].showEmptyStateSkipButton = true
+                                
+                            }else{
+                                stepperDataList[3].showLeftButton = true
+                                stepperDataList[3].showRightButton = true
+                            }
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.stockiest)
+                                {
+                                    if stockistList.count == 0{
+                                        stepperDataList[4].showEmptyStateAddButton = true
+                                        stepperDataList[4].showEmptyStateSkipButton = true
+                                    }else{
+                                        stepperDataList[4].showLeftButton = true
+                                        stepperDataList[4].showRightButton = true
+                                    }
+                                    
+                                    
+                                    
+                                    if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                    {
+                                        if expenseList.count == 0{
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                            stepperDataList[5].showEmptyStateSkipButton = true
+                                        }else{
+                                            stepperDataList[5].showLeftButton = true
+                                            stepperDataList[5].showRightButton = true
+                                        }
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[6].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[7].showRightButton = true
+                                            } else {
+                                                stepperDataList[7].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[6].showEmptyStateAddButton = true
+                                            stepperDataList[6].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                    }else{
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[5].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[6].showRightButton = true
+                                            } else {
+                                                stepperDataList[6].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                            stepperDataList[5].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                    
+                                }else{
+                                    
+                                    if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                    {
+                                        if expenseList.count == 0{
+                                            stepperDataList[4].showEmptyStateAddButton = true
+                                            stepperDataList[4].showEmptyStateSkipButton = true
+                                            
+                                            dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                            var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                            
+                                            if generalRemarks != nil && generalRemarks!.count > 0 {
+                                                stepperDataList[5].showRightButton = true
+                                                
+                                                let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                                let startTime = workTime.0
+                                                let endTime = workTime.1
+                                                
+                                                if startTime != EMPTY || endTime != EMPTY {
+                                                    stepperDataList[6].showRightButton = true
+                                                } else {
+                                                    stepperDataList[6].showEmptyStateAddButton = true
+                                                }
+                                                
+                                            } else {
+                                                stepperDataList[5].showEmptyStateAddButton = true
+                                                stepperDataList[5].showEmptyStateSkipButton = true
+                                                
+                                            }
+                                            
+                                        }else{
+                                            stepperDataList[4].showLeftButton = true
+                                            stepperDataList[4].showRightButton = true
+                                            
+                                            dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                            var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                            
+                                            if generalRemarks != nil && generalRemarks!.count > 0 {
+                                                stepperDataList[5].showRightButton = true
+                                                
+                                                let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                                let startTime = workTime.0
+                                                let endTime = workTime.1
+                                                
+                                                if startTime != EMPTY || endTime != EMPTY {
+                                                    stepperDataList[6].showRightButton = true
+                                                } else {
+                                                    stepperDataList[6].showEmptyStateAddButton = true
+                                                }
+                                                
+                                            } else {
+                                                stepperDataList[5].showEmptyStateAddButton = true
+                                                stepperDataList[5].showEmptyStateSkipButton = true
+                                                
+                                            }
+                                            
+                                        }
+                                        
+                                    } else {
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[4].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[5].showRightButton = true
+                                            } else {
+                                                stepperDataList[5].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[4].showEmptyStateAddButton = true
+                                            stepperDataList[4].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                        
+                                        
+                                        
+                                    }
+                                }
+                                
+
+                        } else {
+                            if privilegeArray1.contains(Constants.ChemistDayCaptureValue.stockiest)
+                            {
+                                if stockistList.count == 0{
+                                    stepperDataList[3].showEmptyStateAddButton = true
+                                    stepperDataList[3].showEmptyStateSkipButton = true
+                                }else{
+                                    stepperDataList[3].showLeftButton = true
+                                    stepperDataList[3].showRightButton = true
+                                }
+                                
+                                
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[4].showEmptyStateAddButton = true
+                                        stepperDataList[4].showEmptyStateSkipButton = true
+                         
+                                        
+                                    }else{
+                                        stepperDataList[4].showLeftButton = true
+                                        stepperDataList[4].showRightButton = true
+                                    }
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[5].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[6].showRightButton = true
+                                        } else {
+                                            stepperDataList[6].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[5].showEmptyStateAddButton = true
+                                        stepperDataList[5].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                    
+                                } else {
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[4].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[5].showRightButton = true
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[4].showEmptyStateAddButton = true
+                                        stepperDataList[4].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                }
+
+                            }else{
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[3].showEmptyStateAddButton = true
+                                        stepperDataList[3].showEmptyStateSkipButton = true
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[4].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[5].showRightButton = true
+                                            } else {
+                                                stepperDataList[5].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[4].showEmptyStateAddButton = true
+                                            stepperDataList[4].showEmptyStateSkipButton = true
+                                            
+                                        }
+   
+                                    }else{
+                                        stepperDataList[3].showLeftButton = true
+                                        stepperDataList[3].showRightButton = true
+                                    
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[4].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[5].showRightButton = true
+                                            } else {
+                                                stepperDataList[5].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[4].showEmptyStateAddButton = true
+                                            stepperDataList[4].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                            
+                                    
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[3].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[4].showRightButton = true
+                                        } else {
+                                            stepperDataList[4].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[3].showEmptyStateAddButton = true
+                                        stepperDataList[3].showEmptyStateSkipButton = true
+                                        
+                                        
+                                
+                                    }
+                                    
+                                    
+                                    
+                                }
+                            }
+                         
+                    }
+                        
+                        
+                    }else{
+                        stepperDataList[2].showEmptyStateAddButton = true
+                        stepperDataList[2].showEmptyStateSkipButton = false
+                    }
+                    
+                } else {
+                    
+                    
+                     if isChemistDayEnabled() {
+                        
+                        let sfcListdata: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+                    
+                        if sfcListdata != nil && sfcListdata!.count == 0{
+                            stepperDataList[2].showEmptyStateAddButton = true
+                            stepperDataList[2].showEmptyStateSkipButton = false
+                        }else{
+                            if privilegeArray1.contains(Constants.ChemistDayCaptureValue.stockiest)
+                            {
+                                if stockistList.count == 0{
+                                    stepperDataList[5].showEmptyStateAddButton = true
+                                    stepperDataList[5].showEmptyStateSkipButton = true
+                                }else{
+                                    stepperDataList[5].showLeftButton = true
+                                    stepperDataList[5].showRightButton = true
+                                }
+                                
+                                
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[6].showEmptyStateAddButton = true
+                                        stepperDataList[6].showEmptyStateSkipButton = true
+                                        
+                                        
+                                    }else{
+                                        stepperDataList[6].showLeftButton = true
+                                        stepperDataList[6].showRightButton = true
+                                    }
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[7].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[8].showRightButton = true
+                                        } else {
+                                            stepperDataList[8].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[7].showEmptyStateAddButton = true
+                                        stepperDataList[7].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                    
+                                } else {
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[6].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[7].showRightButton = true
+                                        } else {
+                                            stepperDataList[7].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[6].showEmptyStateAddButton = true
+                                        stepperDataList[6].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                }
+                                
+                            }else{
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[5].showEmptyStateAddButton = true
+                                        stepperDataList[5].showEmptyStateSkipButton = true
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[6].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[7].showRightButton = true
+                                            } else {
+                                                stepperDataList[7].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[6].showEmptyStateAddButton = true
+                                            stepperDataList[6].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                    }else{
+                                        stepperDataList[4].showLeftButton = true
+                                        stepperDataList[4].showRightButton = true
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[5].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[6].showRightButton = true
+                                            } else {
+                                                stepperDataList[6].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                            stepperDataList[5].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    
+                                    
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[5].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[6].showRightButton = true
+                                        } else {
+                                            stepperDataList[6].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[5].showEmptyStateAddButton = true
+                                        stepperDataList[5].showEmptyStateSkipButton = true
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                }
+                            }
+                        }
+                        
+                       
+                        
+                        
+                        
+                        
+                        
+                        
+                     }else{
+                        
+                        
+                        
+                        let sfcListdata: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+                        
+                        if sfcListdata != nil && sfcListdata!.count == 0{
+                            stepperDataList[2].showEmptyStateAddButton = true
+                            stepperDataList[2].showEmptyStateSkipButton = false
+                        }else{
+                            if privilegeArray1.contains(Constants.ChemistDayCaptureValue.stockiest)
+                            {
+                                if stockistList.count == 0{
+                                    stepperDataList[4].showEmptyStateAddButton = true
+                                    stepperDataList[4].showEmptyStateSkipButton = true
+                                }else{
+                                    stepperDataList[4].showLeftButton = true
+                                    stepperDataList[4].showRightButton = true
+                                }
+                                
+                                
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[5].showEmptyStateAddButton = true
+                                        stepperDataList[5].showEmptyStateSkipButton = true
+                                        
+                                        
+                                    }else{
+                                        stepperDataList[5].showLeftButton = true
+                                        stepperDataList[5].showRightButton = true
+                                    }
+                                    
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[6].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[7].showRightButton = true
+                                        } else {
+                                            stepperDataList[7].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[6].showEmptyStateAddButton = true
+                                        stepperDataList[6].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                } else {
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[5].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[6].showRightButton = true
+                                        } else {
+                                            stepperDataList[6].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[5].showEmptyStateAddButton = true
+                                        stepperDataList[5].showEmptyStateSkipButton = true
+                                        
+                                    }
+                                }
+                                
+                            }else{
+                                
+                                if privilegeArray1.contains(Constants.ChemistDayCaptureValue.expenses)
+                                {
+                                    if expenseList.count == 0{
+                                        stepperDataList[4].showEmptyStateAddButton = true
+                                        stepperDataList[4].showEmptyStateSkipButton = true
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[5].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[6].showRightButton = true
+                                            } else {
+                                                stepperDataList[6].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                            stepperDataList[5].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                    }else{
+                                        stepperDataList[4].showLeftButton = true
+                                        stepperDataList[4].showRightButton = true
+                                        
+                                        dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                        var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                        
+                                        if generalRemarks != nil && generalRemarks!.count > 0 {
+                                            stepperDataList[5].showRightButton = true
+                                            
+                                            let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                            let startTime = workTime.0
+                                            let endTime = workTime.1
+                                            
+                                            if startTime != EMPTY || endTime != EMPTY {
+                                                stepperDataList[6].showRightButton = true
+                                            } else {
+                                                stepperDataList[6].showEmptyStateAddButton = true
+                                            }
+                                            
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                            stepperDataList[5].showEmptyStateSkipButton = true
+                                            
+                                        }
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    
+                                    
+                                    dcrHeaderObj = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
+                                    var generalRemarks = dcrHeaderObj?.DCR_General_Remarks
+                                    
+                                    if generalRemarks != nil && generalRemarks!.count > 0 {
+                                        stepperDataList[4].showRightButton = true
+                                        
+                                        let workTime = calculateWorkTimeBasedOnCustomerVisitTime()
+                                        let startTime = workTime.0
+                                        let endTime = workTime.1
+                                        
+                                        if startTime != EMPTY || endTime != EMPTY {
+                                            stepperDataList[5].showRightButton = true
+                                        } else {
+                                            stepperDataList[5].showEmptyStateAddButton = true
+                                        }
+                                        
+                                    } else {
+                                        stepperDataList[4].showEmptyStateAddButton = true
+                                        stepperDataList[4].showEmptyStateSkipButton = true
+                                        
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                }
+                            }
+                            
+                            
+                        }
+                        
+                        
+                    
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                }
+                
             }
             else
             {
+                
                 stepperDataList[2].showRightButton = true
                 stepperDataList[2].showLeftButton = isHOPEnabledForSelectedCategory()
                 
@@ -1163,15 +1955,88 @@ class BL_Stepper: NSObject
                     remarksIndex = 7
                     workTimeIndex = 8
                 }
+                // check Privilege
+                
+                let priviledge = getDoctorCaptureValue()
+                let privilegeArray = priviledge.components(separatedBy: ",")
+                
+                let expenseList: [DCRExpenseModel]? = getDCRExpenseDetails()
+                let stockistList: [DCRStockistVisitModel]? = getDCRStockistDetails()
+                
+                
+                if privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) || stockistList!.count > 0
+                {
+                    chemistIndex = 4
+                    stockistIndex = 4
+                    remarksIndex = 5
+                    workTimeIndex = 6
+                }
+                if privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses) || expenseList!.count > 0
+                {
+                    chemistIndex = 4
+                    expenseIndex = 4
+                    remarksIndex = 5
+                    workTimeIndex = 6
+                }
+                
+                if (privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) &&  privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses)) || (stockistList!.count > 0 && expenseList!.count > 0)
+                {
+                    chemistIndex = 4
+                    stockistIndex = 4
+                    expenseIndex = 5
+                    remarksIndex = 6
+                    workTimeIndex = 7
+                }
+                
+                if !privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) &&  !privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses)
+                {
+                    chemistIndex = 4
+                    remarksIndex = 4
+                    workTimeIndex = 5
+                }
+                
+                if (self.isChemistDay)
+                {
+                    if privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) || stockistList!.count > 0
+                    {
+                        chemistIndex = 4
+                        stockistIndex = 5
+                        remarksIndex = 6
+                        workTimeIndex = 7
+                    }
+                    if privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses) || expenseList!.count > 0
+                    {
+                        chemistIndex = 4
+                        expenseIndex = 5
+                        remarksIndex = 6
+                        workTimeIndex = 7
+                    }
+                    
+                    if (privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) &&  privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses)) || (stockistList!.count > 0 && expenseList!.count > 0)
+                    {
+                        chemistIndex = 4
+                        stockistIndex = 5
+                        expenseIndex = 6
+                        remarksIndex = 7
+                        workTimeIndex = 8
+                    }
+                    if !privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) &&  !privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses)
+                    {
+                        chemistIndex = 4
+                        remarksIndex = 5
+                        workTimeIndex = 6
+                    }
+                }
+                
                 
                 if (doctorList.count == 0)
                 {
                     stepperDataList[3].showEmptyStateAddButton = true
                     
-                    if (self.isChemistDay)
-                    {
-                        stepperDataList[3].showEmptyStateSkipButton = true
-                    }
+                    //                    if (self.isChemistDay)
+                    //                    {
+                    //                        stepperDataList[3].showEmptyStateSkipButton = true
+                    //                    }
                 }
                 else
                 {
@@ -1220,6 +2085,18 @@ class BL_Stepper: NSObject
             {
                 stepperDataList[expenseIndex].showEmptyStateAddButton = true
                 stepperDataList[expenseIndex].showEmptyStateSkipButton = true
+                
+                if (stepperDataList[remarksIndex].recordCount == 0)
+                {
+                    stepperDataList[remarksIndex].showEmptyStateAddButton = true
+                    stepperDataList[remarksIndex].showEmptyStateSkipButton = true
+                }
+                else
+                {
+                    stepperDataList[remarksIndex].showRightButton = true
+                    stepperDataList[remarksIndex].showLeftButton = false
+                }
+                
             }
         }
         else
@@ -1302,7 +2179,7 @@ class BL_Stepper: NSObject
             // Accompanist
             stepperDataList[0].showEmptyStateAddButton = true
             stepperDataList[0].showEmptyStateSkipButton = true
-         //   stepperDataList[0].showLeftButton = true
+            //   stepperDataList[0].showLeftButton = true
             
             //Work Place
             stepperDataList[1].showEmptyStateAddButton = false
@@ -1596,7 +2473,7 @@ class BL_Stepper: NSObject
             {
                 if (dcrAccompanistList!.count < minimumAccompanistCount)
                 {
-                    errorMessage = "You need to enter minimum of \(minimumAccompanistCount) Ride Along in a DVR"
+                    errorMessage = "You need to enter minimum of \(minimumAccompanistCount) ride along in a DVR"
                     return errorMessage
                 }
             }
@@ -1607,7 +2484,7 @@ class BL_Stepper: NSObject
             {
                 if (dcrAccompanistList!.count > maximumAccompanistCount)
                 {
-                    errorMessage = "You can enter maximum of \(maximumAccompanistCount) Ride Along only in a DVR"
+                    errorMessage = "You can enter maximum of \(maximumAccompanistCount) ride along only in a DVR"
                     return errorMessage
                 }
             }
@@ -1650,14 +2527,14 @@ class BL_Stepper: NSObject
                 return errorMessage
             }
         }
-//        if checkNullAndNilValueForString(stringData: dcrHeaderDetails!.Start_Time) != EMPTY
-//        {
-//            if !BL_WorkPlace.sharedInstance.validateFromToTime(fromTime: dcrHeaderDetails!.Start_Time!, toTime: dcrHeaderDetails!.End_Time!)
-//            {
-//                errorMessage = " \"To Time\" should be greater than \"From Time\""
-//                return errorMessage
-//            }
-//        }
+        //        if checkNullAndNilValueForString(stringData: dcrHeaderDetails!.Start_Time) != EMPTY
+        //        {
+        //            if !BL_WorkPlace.sharedInstance.validateFromToTime(fromTime: dcrHeaderDetails!.Start_Time!, toTime: dcrHeaderDetails!.End_Time!)
+        //            {
+        //                errorMessage = " \"To Time\" should be greater than \"From Time\""
+        //                return errorMessage
+        //            }
+        //        }
         
         if (DCRModel.sharedInstance.dcrFlag == DCRFlag.fieldRcpa.rawValue)
         {
@@ -1671,13 +2548,13 @@ class BL_Stepper: NSObject
                     return errorMessage
                 }
             }
-           if dcrHeaderDetails!.CP_Code != EMPTY && dcrHeaderDetails!.CP_Code != nil
-           {
-            if(!BL_WorkPlace.sharedInstance.checkIfCpExistsInMaster(cpCode: dcrHeaderDetails!.CP_Code))//check cp invalid validation
+            if dcrHeaderDetails!.CP_Code != EMPTY && dcrHeaderDetails!.CP_Code != nil
             {
-                errorMessage = ("Selected \(appCp) is not in Approved status")
-                return errorMessage
-            }
+                if(!BL_WorkPlace.sharedInstance.checkIfCpExistsInMaster(cpCode: dcrHeaderDetails!.CP_Code))//check cp invalid validation
+                {
+                    errorMessage = ("Selected \(appCp) is not in Approved status")
+                    return errorMessage
+                }
             }
             
         }
@@ -1732,13 +2609,13 @@ class BL_Stepper: NSObject
                         if (filteredArray.count == 0)
                         {
                             
-//                            if objDCRAccompanist.Employee_Name != "VACANT" && objDCRAccompanist.Employee_Name != "NOT ASSIGNED"
-//
-//                            {
+                            //                            if objDCRAccompanist.Employee_Name != "VACANT" && objDCRAccompanist.Employee_Name != "NOT ASSIGNED"
+                            //
+                            //                            {
                             
                             errorMessage = "\(accompMissedPrefixErrorMsg)" + "\(objDCRAccompanist.Employee_Name!)" + "\(accompMissedSuffixErrorMsg)"
                             break
-                                
+                            
                             //}
                         }
                     }
@@ -2012,7 +2889,7 @@ class BL_Stepper: NSObject
                 {
                     if (dcrDoctorAccompanistList?.count)! > 0
                     {
-                        errorMessage = "You have entered " + dcrAccompanitsListCount + " Ride Along(s) in DVR but not selected in any of the \(appDoctorPlural). Please select the Ride Along for the entered \(appDoctorPlural) to proceed the same."
+                        errorMessage = "You have entered " + dcrAccompanitsListCount + " ride along(s) in DVR but not selected in any of the \(appDoctorPlural). Please select the ride along for the entered \(appDoctorPlural) to proceed the same."
                     }
                 }
             }
@@ -2035,12 +2912,17 @@ class BL_Stepper: NSObject
                 {
                     if (dcrDoctorAccompanistList?.count)! > 0
                     {
-                        errorMessage = "You are entered the " + dcrAccompanitsListCount + " Ride Along(s), but not selected for any of the \(appChemistPlural). Please select the Ride Along for the entered \(appChemistPlural) to proceed the same."
+                        errorMessage = "You are entered the " + dcrAccompanitsListCount + "ride along(s), but not selected for any of the \(appChemistPlural). Please select the ride along for the entered \(appChemistPlural) to proceed the same."
                     }
                 }
             }
         }
         return errorMessage
+    }
+    
+    func getDoctorCaptureValue() -> String
+    {
+        return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DCR_FIELD_CAPTURE_CONTROLS).uppercased()
     }
     
     private func doChemistDayRCPAMandatoryValidation() -> String
@@ -2064,11 +2946,11 @@ class BL_Stepper: NSObject
                     {
                         let doctorList = DBHelper.sharedInstance.getDoctorVisitByCategoryName(dcrId: getDCRId(), categoryName: categoryName)
                         
-                        if (doctorList.count == 0)
-                        {
-                            errorMessage = "No \(categoryName) \(appDoctorPlural) are entered in this DVR. You need to enter minimum of 1 RCPA for \(categoryName) \(appDoctorPlural)"
-                            return errorMessage
-                        }
+//                        if (doctorList.count == 0)
+//                        {
+//                            errorMessage = "No \(categoryName) \(appDoctorPlural) are entered in this DVR. You need to enter minimum of 1 RCPA for \(categoryName) \(appDoctorPlural)"
+//                            return errorMessage
+//                        }
                         
                         for objDoctorVisit in doctorList
                         {

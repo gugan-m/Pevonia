@@ -51,7 +51,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
         setDefaults()
         setChemistDayStepper()
         BL_Common_Stepper.sharedInstance.skipFromController = [Bool](repeating: false, count: BL_Common_Stepper.sharedInstance.dynmicOrderData.count)
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -89,7 +89,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
     }
     func setChemistDayStepper()
     {
-       var chemistStepperString = Constants.ChemistDayCaptureValue.visit + "," +  BL_Common_Stepper.sharedInstance.getChemistDayCaptureValue()
+        var chemistStepperString = Constants.ChemistDayCaptureValue.visit + "," +  BL_Common_Stepper.sharedInstance.getChemistDayCaptureValue()
         chemistStepperString = chemistStepperString.replacingOccurrences(of: " ", with: "")
         
         BL_Common_Stepper.sharedInstance.dynmicOrderData = chemistStepperString.components(separatedBy: ",")
@@ -103,7 +103,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
             ChemistDay.sharedInstance.customerName = flexiChemistName
             if !isFromModify
             {
-            ChemistDay.sharedInstance.chemistVisitId = 0
+                ChemistDay.sharedInstance.chemistVisitId = 0
             }
         }
         else
@@ -194,7 +194,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
             {
                 if (ChemistDay.sharedInstance.customerCode != EMPTY)
                 {
-                   // showEDetailingButton()
+                    // showEDetailingButton()
                 }
             }
         }
@@ -350,7 +350,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                     cell.cardView.clipsToBounds = false
                     
                     cell.accompEmptyStateView.isHidden = false
-                    cell.accompEmptyLbl.text = "No Ride Along available"
+                    cell.accompEmptyLbl.text = "No Ride Along Available"
                     
                     if cell.parentTableView != nil
                     {
@@ -377,8 +377,8 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                 }
                 else
                 {
-                cell.emptyStateAddButton.isHidden = !objStepperModel.showEmptyStateAddButton
-                cell.emptyStateSkipButton.isHidden = !objStepperModel.showEmptyStateSkipButton
+                    cell.emptyStateAddButton.isHidden = !objStepperModel.showEmptyStateAddButton
+                    cell.emptyStateSkipButton.isHidden = !objStepperModel.showEmptyStateSkipButton
                 }
                 
                 cell.parentTableView = tableView
@@ -752,7 +752,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                 else
                 {
                     let userObj = getUserModelObj()
-                   BL_Common_Stepper.sharedInstance.saveFlexiChemistVisitDetails(chemistName: self.flexiChemistName, specialityName: self.flexiSpecialityName, visitTime: EMPTY, visitMode: AM, remarks:EMPTY, regionCode: userObj?.Region_Code, viewController: self)
+                    BL_Common_Stepper.sharedInstance.saveFlexiChemistVisitDetails(chemistName: self.flexiChemistName, specialityName: self.flexiSpecialityName, visitTime: EMPTY, visitMode: AM, remarks:EMPTY, regionCode: userObj?.Region_Code, viewController: self)
                     self.skipChemit(tag:button.tag)
                 }
             }
@@ -780,12 +780,12 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                         visitTime = self.getServerTime()
                         visitMode = self.getVisitModeType(visitTime: visitTime)
                         
-                       
+                        
                         var latitudedeValue = "0.0"
                         var longitudeValue = "0.0"
                         if getLatitude() != EMPTY
                         {
-                           latitudedeValue = getLatitude()
+                            latitudedeValue = getLatitude()
                         }
                         if getLongitude() != EMPTY
                         {
@@ -810,8 +810,8 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                                 {
                                     let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
                                     let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
-                                   
-                                     BL_Common_Stepper.sharedInstance.saveChemistVisitDetails(customerCode: ChemistDay.sharedInstance.customerCode, visitTime: visitTime, visitMode: dateTimeArray[2], entityType: "CHEMIST", remarks: EMPTY, regionCode: self.customerMasterModel.Region_Code, viewController: self)
+                                    
+                                    BL_Common_Stepper.sharedInstance.saveChemistVisitDetails(customerCode: ChemistDay.sharedInstance.customerCode, visitTime: visitTime, visitMode: dateTimeArray[2], entityType: "CHEMIST", remarks: EMPTY, regionCode: self.customerMasterModel.Region_Code, viewController: self)
                                     self.skipChemit(tag:button.tag)
                                     // self.skipDoctor(index:index)
                                 }
@@ -858,8 +858,8 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
             print(1)
             if(BL_Common_Stepper.sharedInstance.stepperDataList.count-1 > button.tag)
             {
-
-            BL_Common_Stepper.sharedInstance.skipFromController[button.tag] = true
+                
+                BL_Common_Stepper.sharedInstance.skipFromController[button.tag] = true
             }
             self.stepperUpdate()
             reloadTableViewAtIndexPath(index: button.tag)
@@ -883,33 +883,33 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                 BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateSkipButton
                 self.reloadTableViewAtIndexPath(index: button.tag+2)
             }
-           /* BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateAddButton = true
-            if(BL_Common_Stepper.sharedInstance.stepperDataList.count > button.tag+1)
-            {
-                
-                BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+1]
-                BL_Common_Stepper.sharedInstance.showAddButton += 1
-            }
-            self.reloadTableViewAtIndexPath(index: button.tag+1)
- */
-
+            /* BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateAddButton = true
+             if(BL_Common_Stepper.sharedInstance.stepperDataList.count > button.tag+1)
+             {
+             
+             BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+1]
+             BL_Common_Stepper.sharedInstance.showAddButton += 1
+             }
+             self.reloadTableViewAtIndexPath(index: button.tag+1)
+             */
+            
         }
         
-     /*   if(button.tag == BL_Common_Stepper.sharedInstance.stepperIndex.accompanistIndex-1)
-        {
-            BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateAddButton = true
-            BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+2]
-            self.reloadTableViewAtIndexPath(index: button.tag+2)
-        }
-            BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateAddButton = true
-        if(BL_Common_Stepper.sharedInstance.stepperDataList.count > button.tag+1)
-        {
-            
-            BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+1]
-        BL_Common_Stepper.sharedInstance.showAddButton += 1
-        }
-            self.reloadTableViewAtIndexPath(index: button.tag+1)
- */
+        /*   if(button.tag == BL_Common_Stepper.sharedInstance.stepperIndex.accompanistIndex-1)
+         {
+         BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateAddButton = true
+         BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+2].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+2]
+         self.reloadTableViewAtIndexPath(index: button.tag+2)
+         }
+         BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateAddButton = true
+         if(BL_Common_Stepper.sharedInstance.stepperDataList.count > button.tag+1)
+         {
+         
+         BL_Common_Stepper.sharedInstance.stepperDataList[button.tag+1].showEmptyStateSkipButton = BL_Common_Stepper.sharedInstance.showSkipButton[button.tag+1]
+         BL_Common_Stepper.sharedInstance.showAddButton += 1
+         }
+         self.reloadTableViewAtIndexPath(index: button.tag+1)
+         */
         
     }
     
@@ -946,7 +946,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
         }
         saveDoctorButtonVisiblity()
     }
-// MARK:-- SegmentControl Action
+    // MARK:-- SegmentControl Action
     
     
     // MARK:-- Navigation to other ViewController
@@ -1161,7 +1161,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
         vc.pobSalesModifyList = list
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     //
     func navigateToRCPA()
     {
@@ -1177,7 +1177,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
         vc.isFromChemistDayRCPA = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
     
     private func getDCRId() -> Int
     {
@@ -1210,3 +1210,4 @@ extension String {
         }
     }
 }
+

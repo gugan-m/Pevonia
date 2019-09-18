@@ -135,7 +135,7 @@ class DCRAttendanceMainTableViewCell: UITableViewCell, UITableViewDelegate, UITa
             
             return cell
         }
-        else if (selectedIndex == BL_DCR_Attendance_Stepper.sharedInstance.travelindex)
+        else if (selectedIndex == BL_DCR_Attendance_Stepper.sharedInstance.travelindex) && BL_DCR_Attendance_Stepper.sharedInstance.sfcList.count != 0
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: AttendanceSFCCell) as! DCRStepperSFCTableViewCell
             let sfcList = BL_DCR_Attendance_Stepper.sharedInstance.sfcList

@@ -441,7 +441,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
             else
             {
                 removeCustomActivityView()
-                let alertMessage =  "Cannot upload before Pevonia Intl start date PR(s)."
+                let alertMessage =  "Cannot upload before Pevonia CRM start date PR(s)."
                 
                 let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                 
@@ -520,7 +520,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
             if(isHidoctorLastDate)
             {
                 removeCustomActivityView()
-                let alertMessage =  "Cannot upload before Pevonia Intl start date PR(s)."
+                let alertMessage =  "Cannot upload before Pevonia CRM start date PR(s)."
                 
                 let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
                 

@@ -580,7 +580,9 @@ class BL_TPStepper: NSObject
                 
                 if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.CAMPAIGN_PLANNER) != PrivilegeValues.NO.rawValue)
                 {
-                    objTP.key = "Campaign Planner"
+                   // objTP.key = "Campaign Planner"
+                    
+                   objTP.key = "Beat/Patch"
                     
                     if (checkNullAndNilValueForString(stringData: self.objTPHeader!.CP_Name) != EMPTY)
                     {

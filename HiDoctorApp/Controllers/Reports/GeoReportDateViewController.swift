@@ -343,10 +343,12 @@ class GeoReportDateViewController: UIViewController,SetSelectedAccompanist,UIPic
             AlertView.showNoInternetAlert()
         }
     }
+    
     private func hideLoader()
     {
         removeCustomActivityView()
     }
+    
     private func navigateToDoctorVisitListPage(doctorVisitList : [ReportDoctorVisitListModel])
     {
         let sb = UIStoryboard(name:Constants.StoaryBoardNames.ReportsSb, bundle: nil)
@@ -356,6 +358,7 @@ class GeoReportDateViewController: UIViewController,SetSelectedAccompanist,UIPic
         vc.userObj = selectedAccompanistObj
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
     private func showApiErrorMessage(objApiResponse: ApiResponseModel)
     {
         hideLoader()
@@ -373,6 +376,7 @@ class GeoReportDateViewController: UIViewController,SetSelectedAccompanist,UIPic
             showAlertView(title: errorTitle, message: "Unable to download report. Please try again")
         }
     }
+    
     private func showAlertView(title : String , message : String)
     {
         AlertView.showAlertView(title: title, message: message,viewController: self)

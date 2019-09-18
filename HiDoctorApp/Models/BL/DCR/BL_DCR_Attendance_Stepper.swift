@@ -34,7 +34,7 @@ class BL_DCR_Attendance_Stepper: NSObject
     var expenseindex = Int()
     var generalindex = Int()
     var selectedDoctorIndex = 0
-    
+    var expenseListCount = 0
     //MARK:- Public Functions
     
     func getCurrentArray()
@@ -42,7 +42,6 @@ class BL_DCR_Attendance_Stepper: NSObject
         self.dcrId = DCRModel.sharedInstance.dcrId
         self.dcrStatus = DCRModel.sharedInstance.dcrStatus
         
-        getIndex()
         clearAllArray()
         
         self.getWorkPlaceDetails()
@@ -55,11 +54,10 @@ class BL_DCR_Attendance_Stepper: NSObject
         }
         self.getExpenseDetails()
         self.getGeneralRemarks()
-        
+        getIndex()
         self.determineButtonStatus()
     }
     
-    //MARK:- Private Fucntions
     private func getWorkPlaceDetails()
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
@@ -156,10 +154,34 @@ class BL_DCR_Attendance_Stepper: NSObject
             self.sfcList = sfcList!
             stepperObjModel.recordCount = sfcList!.count
         }
-        
-        stepperDataList.append(stepperObjModel)
+        if isTravelAllowed(){
+          stepperDataList.append(stepperObjModel)
+        } else {
+            if sfcList?.count != 0 {
+                stepperDataList.append(stepperObjModel)
+            } else {
+                
+            }
+        }
     }
     
+    func isTravelAllowed()-> Bool {
+        let isTravelAvilabel = PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DCR_ATTENDANCE_CAPTURE_CONTROLS).uppercased()
+        if isTravelAvilabel.contains("TRAVEL_DETAILS") {
+            return true
+        }
+        return false
+    }
+    
+    func isExpenceAllowed()-> Bool {
+        let isTravelAvilabel = PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DCR_ATTENDANCE_CAPTURE_CONTROLS).uppercased()
+        print(isTravelAvilabel)
+        if isTravelAvilabel.contains("EXPENSE_DETAILS"){
+            return true
+        }
+        return false
+    }
+
     private func getActivityDetails()
     {
         let stepperObjModel : DCRStepperModel = DCRStepperModel()
@@ -171,7 +193,6 @@ class BL_DCR_Attendance_Stepper: NSObject
         stepperObjModel.isExpanded = false
         stepperObjModel.leftButtonTitle = "ADD ACTIVITY"
         
-        
         let dcrActivityList : [DCRAttendanceActivityModel]?  = getDCRActivityDetails()
         if dcrActivityList != nil
         {
@@ -181,6 +202,7 @@ class BL_DCR_Attendance_Stepper: NSObject
         
         stepperDataList.append(stepperObjModel)
     }
+    
     func getDoctorDetails(){
         
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
@@ -192,7 +214,7 @@ class BL_DCR_Attendance_Stepper: NSObject
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD DOCTOR"
+        stepperObjModel.leftButtonTitle = "ADD PARTNER"
         
         
         self.doctorList = BL_DCR_Attendance.sharedInstance.getDCRAttendanceDoctorVisists()
@@ -230,11 +252,6 @@ class BL_DCR_Attendance_Stepper: NSObject
             let filteredBatchList = lstsampleBatchs.filter{
                 $0.Visit_Id == objStepperDoctor.doctorId
             }
-            
-            
-            
-            
-            
             if(filteredList.count>0)
             {
                 var sampleDataList : [SampleBatchProductModel] = []
@@ -281,7 +298,6 @@ class BL_DCR_Attendance_Stepper: NSObject
                             let objDCRSample: DCRSampleModel = DCRSampleModel(dict: dict)
                             sampleModelList.append(objDCRSample)
                         }
-                        
                     }
                     if(sampleModelList.count > 0)
                     {
@@ -292,9 +308,6 @@ class BL_DCR_Attendance_Stepper: NSObject
                 objStepperDoctor.sampleList = sampleDataList
                 lstStepperDoctorList.append(objStepperDoctor)
             }
-            
-            
-            
         }
         
         return lstStepperDoctorList
@@ -315,8 +328,9 @@ class BL_DCR_Attendance_Stepper: NSObject
         
         if (activityList.count > 0)
         {
-            BL_Expense.sharedInstance.calculateFareForPrefillTypeExpenses()
-            
+            if isExpenceAllowed() {
+              BL_Expense.sharedInstance.calculateFareForPrefillTypeExpenses()
+            }
             let expenseList: [DCRExpenseModel]? = BL_Expense.sharedInstance.getDCRExpenses()
             
             if (expenseList != nil)
@@ -325,8 +339,16 @@ class BL_DCR_Attendance_Stepper: NSObject
                 stepperObjModel.recordCount = expenseList!.count
             }
         }
-        
-        stepperDataList.append(stepperObjModel)
+       
+        if isExpenceAllowed()  {
+             stepperDataList.append(stepperObjModel)
+        } else {
+            if expenseList.count != 0 {
+                stepperDataList.append(stepperObjModel)
+            } else {
+                
+            }
+        }
     }
     
     private func getGeneralRemarks()
@@ -358,102 +380,397 @@ class BL_DCR_Attendance_Stepper: NSObject
                 }
             }
         }
-        
-        
         stepperDataList.append(stepperObjModel)
+    }
+    
+    // MARK:-  Button status fuctions
+    private func workplace_ButtonStatus(index: Int){
+        if (workPlaceList.count == 0)
+        {
+            stepperDataList[index].showEmptyStateAddButton = true
+        } else {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = false
+        }
+    }
+    
+    private func travelplace_ButtonStatus(index: Int) {
+        if workPlaceList.count == 0 {
+            stepperDataList[index].showEmptyStateAddButton = false
+        } else if (sfcList.count == 0)
+        {
+            stepperDataList[index].showEmptyStateAddButton = true
+        }
+        else
+        {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = BL_Stepper.sharedInstance.isHOPEnabledForSelectedCategory()
+        }
+    }
+    
+    private func activity_ButtonStatus(index: Int) {
+        if (workPlaceList.count == 0){
+            stepperDataList[index].showEmptyStateAddButton = false
+        }
+         else if (activityList.count == 0 )
+        {
+            stepperDataList[index].showEmptyStateAddButton = true
+        }
+        else
+        {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = true
+        }
+    }
+    //Doctor details
+    private func partnerDetails_ButtonStatus(index: Int) {
+        
+        if(workPlaceList.count == 0 || activityList.count == 0 ) {
+            stepperDataList[index].showEmptyStateAddButton = false
+        } else if doctorList.count == 0 {
+            stepperDataList[index].showEmptyStateAddButton = true
+        }    else {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = true
+        }
+    }
+    
+    private func expense_ButtonStatus(index: Int) {
+        if (workPlaceList.count == 0 || activityList.count == 0 || doctorList.count == 0 )
+        {
+            stepperDataList[index].showEmptyStateAddButton = false
+        }
+        else if (expenseList.count == 0 ){
+            stepperDataList[index].showEmptyStateAddButton = true
+        }
+        else {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = true
+        }
+    }
+    
+    private func remark_ButtonStatus(index: Int) {
+        if isExpenceAllowed() {
+            if expenseList.count != 0 {
+                stepperDataList[index].showEmptyStateAddButton = true
+            } else {
+                stepperDataList[index].showEmptyStateAddButton = false
+            }
+        } else if doctorList.count == 0 {
+            stepperDataList[index].showEmptyStateAddButton = false
+        } else if (stepperDataList[index].recordCount == 0)
+        {
+            stepperDataList[index].showEmptyStateAddButton = true
+        }
+        else
+        {
+            stepperDataList[index].showRightButton = true
+            stepperDataList[index].showLeftButton = true
+        }
+    }
+
+    
+    func btn_noTravel_noExpense() {
+        workplace_ButtonStatus(index: 0)
+        activity_ButtonStatus(index: 1)
+        partnerDetails_ButtonStatus(index:2)
+        remark_ButtonStatus(index: 3)
+    }
+    
+    func btn_noTravel_yesExpense() {
+        workplace_ButtonStatus(index: 0)
+        activity_ButtonStatus(index: 1)
+        partnerDetails_ButtonStatus(index:2)
+        expense_ButtonStatus(index: 3)
+        remark_ButtonStatus(index: 4)
+    }
+    
+    func btn_yesTravel_noExpense() {
+        workplace_ButtonStatus(index: 0)
+        travelplace_ButtonStatus(index: 1)
+        activity_ButtonStatus(index: 2)
+        partnerDetails_ButtonStatus(index:3)
+        remark_ButtonStatus(index: 4)
+    }
+    
+    func btn_yesTravel_yesExpense() {
+        workplace_ButtonStatus(index: 0)
+        travelplace_ButtonStatus(index: 1)
+        activity_ButtonStatus(index: 2)
+        partnerDetails_ButtonStatus(index:3)
+        expense_ButtonStatus(index: 4)
+        remark_ButtonStatus(index: 5)
+    }
+
+    
+    
+    func no_partner_btn_noTravel_noExpense() {
+        workplace_ButtonStatus(index: 0)
+        activity_ButtonStatus(index: 1)
+       // partnerDetails_ButtonStatus(index:2)
+        remark_ButtonStatus(index: 2)
+    }
+    
+    func no_partner_btn_noTravel_yesExpense() {
+        workplace_ButtonStatus(index: 0)
+        activity_ButtonStatus(index: 1)
+      //  partnerDetails_ButtonStatus(index:2)
+        expense_ButtonStatus(index: 2)
+        remark_ButtonStatus(index: 3)
+    }
+    
+    func no_partner_btn_yesTravel_noExpense() {
+        workplace_ButtonStatus(index: 0)
+        travelplace_ButtonStatus(index: 1)
+        activity_ButtonStatus(index: 2)
+      //  partnerDetails_ButtonStatus(index:3)
+        remark_ButtonStatus(index: 3)
+    }
+    
+    func no_partner_btn_yesTravel_yesExpense() {
+        workplace_ButtonStatus(index: 0)
+        travelplace_ButtonStatus(index: 1)
+        activity_ButtonStatus(index: 2)
+       // partnerDetails_ButtonStatus(index:3)
+        expense_ButtonStatus(index: 3)
+        remark_ButtonStatus(index: 4)
     }
     
     
     private func determineButtonStatus()
     {
-        if (workPlaceList.count == 0)
+        
+        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable())
         {
-            stepperDataList[0].showEmptyStateAddButton = true
-        }
-        else
-        {
-            stepperDataList[0].showRightButton = true
-            stepperDataList[0].showLeftButton = false
-            
-            if (sfcList.count == 0)
-            {
-                stepperDataList[1].showEmptyStateAddButton = true
-            }
-            else
-            {
-                stepperDataList[1].showRightButton = true
-                stepperDataList[1].showLeftButton = BL_Stepper.sharedInstance.isHOPEnabledForSelectedCategory()
+            if isExpenceAllowed() == false && isTravelAllowed() == false {
                 
-                if (activityList.count == 0)
-                {
-                    stepperDataList[2].showEmptyStateAddButton = true
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    btn_noTravel_noExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    btn_yesTravel_yesExpense()
                 }
-                else
-                {
-                    stepperDataList[2].showRightButton = true
-                    stepperDataList[2].showLeftButton = true
-                    if(!checkAttendanceSampleAvailable())
-                    {
-                        
-//                        if (expenseList.count == 0)
+                
+            } else if isExpenceAllowed() ==  true && isTravelAllowed() == false {
+                
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    btn_noTravel_yesExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    btn_yesTravel_yesExpense()
+                }
+                
+                
+            } else if isExpenceAllowed() == false && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    btn_yesTravel_noExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    btn_yesTravel_yesExpense()
+                }
+                
+                
+            } else if isExpenceAllowed() == true && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    btn_yesTravel_yesExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    btn_yesTravel_yesExpense()
+                }
+            } else {
+                
+            }
+        } else {
+            if isExpenceAllowed() == false && isTravelAllowed() == false {
+                
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    no_partner_btn_noTravel_noExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    no_partner_btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    no_partner_btn_yesTravel_yesExpense()
+                }
+                
+            } else if isExpenceAllowed() ==  true && isTravelAllowed() == false {
+                
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    no_partner_btn_noTravel_yesExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    no_partner_btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    no_partner_btn_yesTravel_yesExpense()
+                }
+                
+                
+            } else if isExpenceAllowed() == false && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_noExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    no_partner_btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    no_partner_btn_yesTravel_yesExpense()
+                }
+                
+                
+            } else if isExpenceAllowed() == true && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_yesExpense()
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    no_partner_btn_noTravel_yesExpense()
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    no_partner_btn_yesTravel_noExpense()
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    no_partner_btn_yesTravel_yesExpense()
+                }
+            } else {
+                
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        if (workPlaceList.count == 0)
+//        {
+//            stepperDataList[0].showEmptyStateAddButton = true
+//        }
+//        else
+//        {
+//            stepperDataList[0].showRightButton = true
+//            stepperDataList[0].showLeftButton = false
+//
+//            if (sfcList.count == 0)
+//            {
+//                stepperDataList[1].showEmptyStateAddButton = true
+//            }
+//            else
+//            {
+//                stepperDataList[1].showRightButton = true
+//                stepperDataList[1].showLeftButton = BL_Stepper.sharedInstance.isHOPEnabledForSelectedCategory()
+//
+//                if (activityList.count == 0)
+//                {
+//                    stepperDataList[2].showEmptyStateAddButton = true
+//                }
+//                else
+//                {
+//
+//                    let priviledge = getAttendanceCaptureValue()
+//                    let privilegeArray = priviledge.components(separatedBy: ",")
+//                    let expenseList: [DCRExpenseModel]? = BL_Expense.sharedInstance.getDCRExpenses()
+//
+//                    stepperDataList[2].showRightButton = true
+//                    stepperDataList[2].showLeftButton = true
+//                    if(!checkAttendanceSampleAvailable())
+//                    {
+//
+////                        if (expenseList.count == 0)
+////                        {
+////                            stepperDataList[3].showEmptyStateAddButton = true
+////                        }
+////
+////                        else
+////                        {
+////                            stepperDataList[3].showRightButton = true
+////                            stepperDataList[3].showLeftButton = true
+////                        }
+////
+////                        if (stepperDataList[4].recordCount == 0)
+////                        {
+////                            stepperDataList[4].showEmptyStateAddButton = true
+////                        }
+////                        else
+////                        {
+////                            stepperDataList[4].showRightButton = true
+////                            stepperDataList[4].showLeftButton = false
+////                        }
+//
+//                        if privilegeArray.contains(Constants.ChemistDayCaptureValue.attendance_expenses) || expenseList!.count > 0
 //                        {
-//                            stepperDataList[3].showEmptyStateAddButton = true
+//                            self.expenxeRemarksState(index: 3)
+//                        }
+//                        else
+//                        {
+//                            self.expenxeRemarksState(index: 2)
 //                        }
 //
+//
+//                    }
+//                    else
+//                    {
+//                        if(doctorList.count == 0) {
+//                            stepperDataList[3].showEmptyStateAddButton = true
+//                            if privilegeArray.contains(Constants.ChemistDayCaptureValue.attendance_expenses) || expenseList!.count > 0
+//                            {
+//                                self.expenxeRemarksState(index: 4)
+//                            }
+//                            else
+//                            {
+//                                self.expenxeRemarksState(index: 3)
+//                            }
+//                        }
 //                        else
 //                        {
 //                            stepperDataList[3].showRightButton = true
 //                            stepperDataList[3].showLeftButton = true
-//                        }
 //
-//                        if (stepperDataList[4].recordCount == 0)
-//                        {
-//                            stepperDataList[4].showEmptyStateAddButton = true
-//                        }
-//                        else
-//                        {
-//                            stepperDataList[4].showRightButton = true
-//                            stepperDataList[4].showLeftButton = false
-//                        }
-                        self.expenxeRemarksState(index: 3)
-                    }
-                    else
-                    {
-                        if(doctorList.count == 0){
-                            stepperDataList[3].showEmptyStateAddButton = true
-                            self.expenxeRemarksState(index: 4)
-                        }
-                        else
-                        {
-                            stepperDataList[3].showRightButton = true
-                            stepperDataList[3].showLeftButton = true
-                            
-                            self.expenxeRemarksState(index: 4)
-//                            if (expenseList.count == 0)
+//                            if privilegeArray.contains(Constants.ChemistDayCaptureValue.attendance_expenses) || expenseList!.count > 0
 //                            {
-//                                stepperDataList[4].showEmptyStateAddButton = true
-//                            }
-//
-//                            else
-//                            {
-//                                stepperDataList[4].showRightButton = true
-//                                stepperDataList[4].showLeftButton = true
-//                            }
-//
-//                            if (stepperDataList[5].recordCount == 0)
-//                            {
-//                                stepperDataList[5].showEmptyStateAddButton = true
+//                                self.expenxeRemarksState(index: 4)
 //                            }
 //                            else
 //                            {
-//                                stepperDataList[5].showRightButton = true
-//                                stepperDataList[5].showLeftButton = false
+//                                self.expenxeRemarksState(index: 3)
 //                            }
-                        }
-                    }
-                }
-            }
-        }
+////                            if (expenseList.count == 0)
+////                            {
+////                                stepperDataList[4].showEmptyStateAddButton = true
+////                            }
+////
+////                            else
+////                            {
+////                                stepperDataList[4].showRightButton = true
+////                                stepperDataList[4].showLeftButton = true
+////                            }
+////
+////                            if (stepperDataList[5].recordCount == 0)
+////                            {
+////                                stepperDataList[5].showEmptyStateAddButton = true
+////                            }
+////                            else
+////                            {
+////                                stepperDataList[5].showRightButton = true
+////                                stepperDataList[5].showLeftButton = false
+////                            }
+//                        }
+//                    }
+//                }
+   //         }
+      //  }
     }
     
     func expenxeRemarksState(index:Int)
@@ -480,26 +797,174 @@ class BL_DCR_Attendance_Stepper: NSObject
         }
     }
     
+    func setIndex(work: Int,travel: Int,activity: Int,partner: Int,expense: Int,remark: Int) {
+        workplaceindex = work
+        travelindex = travel
+        activityindex = activity
+        doctorindex = partner
+        expenseindex = expense
+        generalindex = remark
+    }
+    
+    
     func getIndex()
     {
-        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable()){
-            workplaceindex = 0
-            travelindex = 1
-            activityindex = 2
-            doctorindex = 3
-            expenseindex = 4
-            generalindex = 5
+        if(BL_DCR_Attendance_Stepper().checkAttendanceSampleAvailable())
+        {
+            if isExpenceAllowed() == false && isTravelAllowed() == false {
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: -1, remark: 3)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: -1, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                   setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: 4, remark: 5)
+                }
+                
+            } else if isExpenceAllowed() ==  true && isTravelAllowed() == false {
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: 3, remark: 4)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: -1, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: 4, remark: 5)
+                }
+            }else if isExpenceAllowed() == false && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: -1, remark: 4)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: -1, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: 4, remark: 5)
+                }
+            }else if isExpenceAllowed() == true && isTravelAllowed() == true{
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: 4, remark: 5)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: 2, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: -1, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: 3, expense: 4, remark: 5)
+                }
+            } else {
+                
+            }
+            
+
+            
         }
         else{
-            workplaceindex = 0
-            travelindex = 1
-            activityindex = 2
-            expenseindex = 3
-            generalindex = 4
-            doctorindex = -1
+            
+            if isExpenceAllowed() == false && isTravelAllowed() == false {
+                
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                }
+//                workplaceindex = 0
+//                travelindex = -1
+//                activityindex = 1
+//                doctorindex = 2
+//                expenseindex = -1
+//                generalindex = 3
+            } else if isExpenceAllowed() ==  true && isTravelAllowed() == false {
+                
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                }
+                
+//                workplaceindex = 0
+//                travelindex = -1
+//                activityindex = 1
+//                doctorindex = 2
+//                expenseindex = 3
+//                generalindex = 4
+            }else if isExpenceAllowed() == false && isTravelAllowed() == true{
+               
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                }
+                
+                
+                
+//                workplaceindex = 0
+//                travelindex = 1
+//                activityindex = 2
+//                doctorindex = 3
+//                expenseindex = -1
+//                generalindex = 4
+            }else if isExpenceAllowed() == true && isTravelAllowed() == true{
+
+                if sfcList.count == 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                } else if sfcList.count == 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: -1, activity: 1, partner: -1, expense: 2, remark: 3)
+                } else if sfcList.count != 0 && expenseList.count == 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: -1, remark: 3)
+                } else if sfcList.count != 0 && expenseList.count != 0 {
+                    setIndex(work: 0, travel: 1, activity: 2, partner: -1, expense: 3, remark: 4)
+                }
+                
+                
+                
+                //                workplaceindex = 0
+//                travelindex = 1
+//                activityindex = 2
+//                doctorindex = 3
+//                expenseindex = 4
+//                generalindex = 5
+            } else {
+                
+            }
+            
+            
+            
+            
+            
+//            if privilegeArray.contains(Constants.ChemistDayCaptureValue.attendance_expenses) || expenseList!.count > 0
+//            {
+//                workplaceindex = 0
+//                travelindex = 1
+//                activityindex = 2
+//                expenseindex = 3
+//                generalindex = 4
+//                doctorindex = -1
+//            }
+//            else
+//            {
+//                workplaceindex = 0
+//                travelindex = 1
+//                activityindex = 2
+//                generalindex = 3
+//                doctorindex = -1
+//            }
         }
         
     }
+    
     //MARK:-- Get Data Functions
     func checkAttendanceSampleAvailable() -> Bool
     {
@@ -512,6 +977,8 @@ class BL_DCR_Attendance_Stepper: NSObject
             return false
         }
     }
+    
+    
     func getDCRExpenseDetails() -> [DCRExpenseModel]?
     {
         return BL_Expense.sharedInstance.getDCRExpenses()
@@ -780,10 +1247,17 @@ class BL_DCR_Attendance_Stepper: NSObject
             return errorMessage
         }
         
-        errorMessage = BL_Stepper.sharedInstance.doAllExpenseValidations()
-        if (errorMessage != EMPTY)
+        // Based upon attendance privilege value
+        let priviledge = getAttendanceCaptureValue()
+        let privilegeArray = priviledge.components(separatedBy: ",")
+        let expenseList: [DCRExpenseModel]? = BL_Expense.sharedInstance.getDCRExpenses()
+        if privilegeArray.contains(Constants.ChemistDayCaptureValue.attendance_expenses) || expenseList!.count > 0
         {
-            return errorMessage
+            errorMessage = BL_Stepper.sharedInstance.doAllExpenseValidations()
+            if (errorMessage != EMPTY)
+            {
+                return errorMessage
+            }
         }
         
         errorMessage = doAllGeneralRemarksValidations()
@@ -876,6 +1350,7 @@ class BL_DCR_Attendance_Stepper: NSObject
                 if BL_Doctor_Attendance_Stepper.sharedInstance.sampleList.count > 0 || BL_Doctor_Attendance_Stepper.sharedInstance.activitStepperData.count > 0
                 {
                     errorMessage = ""
+                    
                 }
                 else
                 {
@@ -1038,6 +1513,12 @@ class BL_DCR_Attendance_Stepper: NSObject
         
         return totalHeight
     }
+    
+    func getAttendanceCaptureValue() -> String
+    {
+        return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE).uppercased()
+    }
+    
 }
 
 

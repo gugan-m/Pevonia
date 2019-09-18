@@ -1650,6 +1650,28 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             } else {
                 cell.chemistTick.isHidden = true
             }
+            
+            let priviledge = BL_Stepper.sharedInstance.getDoctorCaptureValue()
+            let privilegeArray = priviledge.components(separatedBy: ",")
+            
+            if privilegeArray.contains(Constants.ChemistDayCaptureValue.stockiest) || detailModel.stockiestEntryCount! > 0
+            {
+                cell.stockistView.isHidden = false
+            }
+            else
+            {
+                cell.stockistView.isHidden = true
+            }
+            
+            if privilegeArray.contains(Constants.ChemistDayCaptureValue.expenses) || detailModel.expensesEntryCount! > 0
+            {
+                cell.expenseView.isHidden = false
+            }
+            else
+            {
+                cell.expenseView.isHidden = true
+            }
+            
             if detailModel.stockiestEntryCount! > 0
             {
                 cell.stockiestTick.isHidden = false

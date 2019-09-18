@@ -40,11 +40,11 @@ class BL_DoctorList: NSObject
             var reportObject = DoctorListModel()
             if(isEdit)
             {
-                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Organization Details", "Other Information"][index]
+                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Account Details", "Other Information"][index]
             }
             else
             {
-                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Organization Details", "Other Information","Marketing Campaign Products","Products Mapped"][index]
+                reportObject.sectionTitle = ["\(appDoctor) Official Details","\(appDoctor) Personal Details","Account Details", "Other Information","Marketing Campaign Products","Products Mapped"][index]
             }
             reportObject.sectionType = DoctorListSectionHeader.init(rawValue: index)!
             doctorDataList.append(reportObject)

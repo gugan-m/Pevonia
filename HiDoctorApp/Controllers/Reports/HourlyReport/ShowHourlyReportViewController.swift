@@ -544,9 +544,9 @@ class ShowHourlyReportViewController: UIViewController, UITableViewDelegate, UIT
             }
         })
         
-        let StockistVisitAction = UIAlertAction(title: "Stockist", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.titleStr = "Stockist"
-            self.title = "Stockist - \(self.visitDateString)"
+        let StockistVisitAction = UIAlertAction(title: "Contributor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.titleStr = "Contributor"
+            self.title = "Contributor - \(self.visitDateString)"
             self.dataArray = []
             if self.isComingFromGeo
             {

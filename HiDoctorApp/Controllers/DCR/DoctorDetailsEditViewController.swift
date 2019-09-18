@@ -421,7 +421,7 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
                     {
                         if (data.isMandatory && (data.newValue == EMPTY || data.newValue == specialityDefaults))
                         {
-                            errorMsg = "Please choose specialty"
+                            errorMsg = "Please choose Position"
                         }
                     }
                     else if (fieldName == ccmNumberCaption)
@@ -516,18 +516,16 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
                     specialityCode = checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[3].Code_Value)
                 }
                 
-                if(categoryDefaults == checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[5].newValue))
+                if(categoryDefaults == checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[4].newValue))
                 {
                     categoryName = EMPTY
                     categoryCode = EMPTY
                 }
                 else
                 {
-                    categoryName = checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[5].newValue)
-                    categoryCode = checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[5].Code_Value)
+                    categoryName = checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[4].newValue)
+                    categoryCode = checkNullAndNilValueForString(stringData:doctorDataList[0].dataList[4].Code_Value)
                 }
-                
-                
                 
                 let dobDate = dobServerDate
                 let anniversaryDate = anniversaryServerDate

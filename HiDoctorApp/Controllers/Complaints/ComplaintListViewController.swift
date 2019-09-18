@@ -10,8 +10,6 @@ import UIKit
 
 class ComplaintListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     
-    
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyStateLbl: UILabel!
     @IBOutlet weak var segmentView : UISegmentedControl!

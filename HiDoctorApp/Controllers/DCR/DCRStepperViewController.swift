@@ -71,16 +71,16 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         if list != nil
         {
             if list!.count > 0 && list!.count > 4
-        {
-            let alertViewController = UIAlertController(title: "Alert", message: "You entered Ride Along is exceed the limit. Pevonia Intl dose not allow more than 4 Ride Along per day.", preferredStyle: UIAlertControllerStyle.alert)
-            
-            alertViewController.addAction(UIAlertAction(title: "Modify Ride Along", style: UIAlertActionStyle.default, handler: { alertAction in
-                self.navigateToEditAccompanist()
-                alertViewController.dismiss(animated: true, completion: nil)
-            }))
-            self.present(alertViewController, animated: true, completion: nil)
-            
-        }
+            {
+                let alertViewController = UIAlertController(title: "Alert", message: "You entered ride along is exceed the limit. Pevonia CRM dose not allow more than 4 ride along per day.", preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertViewController.addAction(UIAlertAction(title: "Modify Ride Along", style: UIAlertActionStyle.default, handler: { alertAction in
+                    self.navigateToEditAccompanist()
+                    alertViewController.dismiss(animated: true, completion: nil)
+                }))
+                self.present(alertViewController, animated: true, completion: nil)
+                
+            }
         }
     }
     private func showResignedAccompanistAlert()
@@ -121,7 +121,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         var message = EMPTY
         if(BL_DCRCalendar.sharedInstance.resignedAccompanists.count == 0)
         {
-           showPreFillAlert(buttonAction: true)
+            showPreFillAlert(buttonAction: true)
         }
         else
         {
@@ -220,7 +220,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if (status == SERVER_SUCCESS_CODE)
             {
-                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Ride Along from DVR"), completion: { (apiObj) in
+                WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from DCR"), completion: { (apiObj) in
                     self.hideLoader()
                     self.showToast(message: "\(PEV_ACCOMPANIST) data downloaded successfully")
                     
@@ -230,7 +230,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             else
             {
-                self.showToast(message: "Error while downloading Ride Along data. Please try again later")
+                self.showToast(message: "Error while downloading ride along data. Please try again later")
             }
         }
         self.checkaccompanist()
@@ -824,16 +824,16 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func navigateToUploadDCR(enabledAutoSync: Bool)
     {
-//        let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
-//        let vc = sb.instantiateViewController(withIdentifier:DCRUploadVcID) as! DCRUploadController
-//
-//        vc.enabledAutoSync = enabledAutoSync
-//
-//        if let navigationController = self.navigationController
-//        {
-//            navigationController.popViewController(animated: false)
-//            navigationController.pushViewController(vc, animated: false)
-//        }
+        //        let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
+        //        let vc = sb.instantiateViewController(withIdentifier:DCRUploadVcID) as! DCRUploadController
+        //
+        //        vc.enabledAutoSync = enabledAutoSync
+        //
+        //        if let navigationController = self.navigationController
+        //        {
+        //            navigationController.popViewController(animated: false)
+        //            navigationController.pushViewController(vc, animated: false)
+        //        }
         
         BL_DCRCalendar.sharedInstance.getDCRUploadError(viewController: self, isFromLandingUpload: false, enabledAutoSync: enabledAutoSync)
     }
@@ -1015,7 +1015,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.emptyStateAddButton.tag = rowIndex
         cell.emptyStateSkipButton.tag = rowIndex
         
-        if ((BL_Stepper.sharedInstance.doctorList.count > 0 || BL_Stepper.sharedInstance.chemistDayHeaderList.count > 0) && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != EMPTY && BL_Stepper.sharedInstance.sfcList.count > 0)
+        if ((BL_Stepper.sharedInstance.doctorList.count > 0 || BL_Stepper.sharedInstance.chemistDayHeaderList.count > 0) && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != EMPTY && BL_Stepper.sharedInstance.sfcList.count > 0 || BL_Stepper.sharedInstance.isTravelAllowed() == false)
         {
             showSubmitDCRButton()
         }
@@ -1194,20 +1194,21 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         let  height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYoffset
-        if distanceFromBottom < height {
-            if ((BL_Stepper.sharedInstance.doctorList.count > 0 || BL_Stepper.sharedInstance.chemistDayHeaderList.count > 0) && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != EMPTY && BL_Stepper.sharedInstance.sfcList.count > 0)
-            {
-                showSubmitDCRButton()
-            }
-            else
-            {
-                hideSubmitDCRButton()
-            }
+        //  if distanceFromBottom < height {
+        if ((BL_Stepper.sharedInstance.doctorList.count > 0 || BL_Stepper.sharedInstance.chemistDayHeaderList.count > 0) && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil && BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != EMPTY && BL_Stepper.sharedInstance.sfcList.count > 0 || BL_Stepper.sharedInstance.isTravelAllowed() == false)
+        {
+            showSubmitDCRButton()
         }
         else
         {
             hideSubmitDCRButton()
         }
+        //  }
+        //  else
+        //   {
+        //hideSubmitDCRButton()
+        //  }
     }
-
+    
 }
+

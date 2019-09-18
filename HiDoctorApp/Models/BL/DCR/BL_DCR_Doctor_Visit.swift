@@ -95,7 +95,7 @@ class BL_DCR_Doctor_Visit: NSObject
             {
                 if(!BL_Stepper.sharedInstance.isChemistDayEnabled())
                 {
-                 self.getChemistData()
+                    self.getChemistData()
                 }
             }
             else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.pob)
@@ -229,7 +229,7 @@ class BL_DCR_Doctor_Visit: NSObject
                 {
                     stepperIndex.activity = j
                 }
-               
+                
                 
             }
         }
@@ -288,7 +288,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateSubTitle = "Update details of the user who worked with you"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
+        stepperObjModel.leftButtonTitle = "ADD ACCOMPANIST"
         
         if (doctorVisitList.count > 0  && stepperIndex.accompanistIndex != 0)
         {
@@ -300,7 +300,7 @@ class BL_DCR_Doctor_Visit: NSObject
             }
         }
         
-       // stepperDataList.append(stepperObjModel)
+        // stepperDataList.append(stepperObjModel)
         
         showSkipButton.append(true)
         
@@ -406,7 +406,7 @@ class BL_DCR_Doctor_Visit: NSObject
             }
         }
         
-       // stepperDataList.append(stepperObjModel)
+        // stepperDataList.append(stepperObjModel)
         
         if getInputMandatoryNumber() == 0
         {
@@ -474,7 +474,7 @@ class BL_DCR_Doctor_Visit: NSObject
             }
         }
         
-       // stepperDataList.append(stepperObjModel)
+        // stepperDataList.append(stepperObjModel)
         
         if(getDetailedProductMandatoryNumber() == 0)
         {
@@ -542,7 +542,7 @@ class BL_DCR_Doctor_Visit: NSObject
                 }
             }
             
-           // stepperDataList.append(stepperObjModel)
+            // stepperDataList.append(stepperObjModel)
             
             showSkipButton.append(true)
             
@@ -695,7 +695,7 @@ class BL_DCR_Doctor_Visit: NSObject
             }
         }
         
-       // stepperDataList.append(stepperObjModel)
+        // stepperDataList.append(stepperObjModel)
         
         showSkipButton.append(true)
         
@@ -710,7 +710,7 @@ class BL_DCR_Doctor_Visit: NSObject
         {
             showAddButton += 1
         }
-
+        
         stepperDataList.append(stepperObjModel)
         enableAddShowButton(index: stepperIndex.attachmentIndex)
         dynamicArrayValue += 1
@@ -978,7 +978,7 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            if(showAddButton < dynmicOrderData.count)
+            if(showAddButton < stepperDataList.count && showAddButton < dynmicOrderData.count)
             {
                 if(showAddButton < dynmicOrderData.count-1)
                 {
@@ -1000,106 +1000,106 @@ class BL_DCR_Doctor_Visit: NSObject
                 }
             }
         }
-    
-//        else
-//        {
-//            stepperDataList[stepperIndex.doctorVisitIndex].showLeftButton = false
-//            stepperDataList[stepperIndex.doctorVisitIndex].showRightButton = true
-//
-//            if accompanistList.count == 0
-//            {
-//                stepperDataList[stepperIndex.accompanistIndex].showEmptyStateAddButton = true
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.accompanistIndex].showEmptyStateAddButton = false
-//            }
-//
-//            if sampleList.count == 0
-//            {
-//                stepperDataList[stepperIndex.sampleIndex].showEmptyStateAddButton = true
-//                if getInputMandatoryNumber() == 0
-//                {
-//                    stepperDataList[stepperIndex.sampleIndex].showEmptyStateSkipButton = true
-//                }
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.sampleIndex].showRightButton = true
-//                stepperDataList[stepperIndex.sampleIndex].showLeftButton = true
-//            }
-//
-//            if detailProductList.count == 0
-//            {
-//                if ((getInputMandatoryNumber() == 0 && sampleList.count > 0) || ((getInputMandatoryNumber() != 0) && (getInputMandatoryNumber() <= sampleList.count) && sampleList.count > 0) || chemistVisitList.count > 0 || followUpList.count > 0 || attachmentList.count > 0)
-//                {
-//                    stepperDataList[stepperIndex.detailedProduct].showEmptyStateAddButton = true
-//                }
-//                if getDetailedProductMandatoryNumber() == 0
-//                {
-//                    stepperDataList[stepperIndex.detailedProduct].showEmptyStateSkipButton = true
-//                }
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.detailedProduct].showRightButton = true
-//                stepperDataList[stepperIndex.detailedProduct].showLeftButton = true
-//            }
-//
-//            if chemistVisitList.count == 0
-//            {
-//                if ((getDetailedProductMandatoryNumber() == 0 && detailProductList.count > 0) || ((getDetailedProductMandatoryNumber() != 0) && (getDetailedProductMandatoryNumber() <= detailProductList.count) && detailProductList.count > 0) || followUpList.count > 0 || attachmentList.count > 0)
-//                {
-//                    stepperDataList[stepperIndex.chemistIndex].showEmptyStateAddButton = true
-//                    stepperDataList[stepperIndex.chemistIndex].showEmptyStateSkipButton = true
-//                }
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.chemistIndex].showRightButton = true
-//                stepperDataList[stepperIndex.chemistIndex].showLeftButton = true
-//            }
-//
-//            if followUpList.count == 0
-//            {
-//                if (BL_Stepper.sharedInstance.isChemistDayEnabled())
-//                {
-//                    if (detailProductList.count > 0)
-//                    {
-//                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateAddButton = true
-//                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateSkipButton = true
-//                    }
-//                }
-//                else
-//                {
-//                    if (chemistVisitList.count > 0)
-//                    {
-//                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateAddButton = true
-//                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateSkipButton = true
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.followUpIndex].showLeftButton = true
-//                stepperDataList[stepperIndex.followUpIndex].showRightButton = true
-//            }
-//
-//            if attachmentList.count == 0
-//            {
-//                if followUpList.count > 0
-//                {
-//                    stepperDataList[stepperIndex.attachmentIndex].showEmptyStateAddButton = true
-//                }
-//            }
-//            else
-//            {
-//                stepperDataList[stepperIndex.attachmentIndex].showLeftButton = true
-//                stepperDataList[stepperIndex.attachmentIndex].showRightButton = true
-//            }
-//        }
-    }
         
+        //        else
+        //        {
+        //            stepperDataList[stepperIndex.doctorVisitIndex].showLeftButton = false
+        //            stepperDataList[stepperIndex.doctorVisitIndex].showRightButton = true
+        //
+        //            if accompanistList.count == 0
+        //            {
+        //                stepperDataList[stepperIndex.accompanistIndex].showEmptyStateAddButton = true
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.accompanistIndex].showEmptyStateAddButton = false
+        //            }
+        //
+        //            if sampleList.count == 0
+        //            {
+        //                stepperDataList[stepperIndex.sampleIndex].showEmptyStateAddButton = true
+        //                if getInputMandatoryNumber() == 0
+        //                {
+        //                    stepperDataList[stepperIndex.sampleIndex].showEmptyStateSkipButton = true
+        //                }
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.sampleIndex].showRightButton = true
+        //                stepperDataList[stepperIndex.sampleIndex].showLeftButton = true
+        //            }
+        //
+        //            if detailProductList.count == 0
+        //            {
+        //                if ((getInputMandatoryNumber() == 0 && sampleList.count > 0) || ((getInputMandatoryNumber() != 0) && (getInputMandatoryNumber() <= sampleList.count) && sampleList.count > 0) || chemistVisitList.count > 0 || followUpList.count > 0 || attachmentList.count > 0)
+        //                {
+        //                    stepperDataList[stepperIndex.detailedProduct].showEmptyStateAddButton = true
+        //                }
+        //                if getDetailedProductMandatoryNumber() == 0
+        //                {
+        //                    stepperDataList[stepperIndex.detailedProduct].showEmptyStateSkipButton = true
+        //                }
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.detailedProduct].showRightButton = true
+        //                stepperDataList[stepperIndex.detailedProduct].showLeftButton = true
+        //            }
+        //
+        //            if chemistVisitList.count == 0
+        //            {
+        //                if ((getDetailedProductMandatoryNumber() == 0 && detailProductList.count > 0) || ((getDetailedProductMandatoryNumber() != 0) && (getDetailedProductMandatoryNumber() <= detailProductList.count) && detailProductList.count > 0) || followUpList.count > 0 || attachmentList.count > 0)
+        //                {
+        //                    stepperDataList[stepperIndex.chemistIndex].showEmptyStateAddButton = true
+        //                    stepperDataList[stepperIndex.chemistIndex].showEmptyStateSkipButton = true
+        //                }
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.chemistIndex].showRightButton = true
+        //                stepperDataList[stepperIndex.chemistIndex].showLeftButton = true
+        //            }
+        //
+        //            if followUpList.count == 0
+        //            {
+        //                if (BL_Stepper.sharedInstance.isChemistDayEnabled())
+        //                {
+        //                    if (detailProductList.count > 0)
+        //                    {
+        //                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateAddButton = true
+        //                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateSkipButton = true
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (chemistVisitList.count > 0)
+        //                    {
+        //                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateAddButton = true
+        //                        stepperDataList[stepperIndex.followUpIndex].showEmptyStateSkipButton = true
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.followUpIndex].showLeftButton = true
+        //                stepperDataList[stepperIndex.followUpIndex].showRightButton = true
+        //            }
+        //
+        //            if attachmentList.count == 0
+        //            {
+        //                if followUpList.count > 0
+        //                {
+        //                    stepperDataList[stepperIndex.attachmentIndex].showEmptyStateAddButton = true
+        //                }
+        //            }
+        //            else
+        //            {
+        //                stepperDataList[stepperIndex.attachmentIndex].showLeftButton = true
+        //                stepperDataList[stepperIndex.attachmentIndex].showRightButton = true
+        //            }
+        //        }
+    }
+    
     
     func getEmptyStateHeight(selectedIndex: Int) -> CGFloat
     {
@@ -1274,7 +1274,7 @@ class BL_DCR_Doctor_Visit: NSObject
         
         var assetTypeName = ""
         if assetList[selectedIndex].assetType != nil{
-         assetTypeName = getDocTypeVal(docType: assetList[selectedIndex].assetType)
+            assetTypeName = getDocTypeVal(docType: assetList[selectedIndex].assetType)
         }
         let getAssetName = assetList[selectedIndex].assetsName + "(\(assetTypeName))"
         getAssetNameHeight = getTextSize(text: getAssetName, fontName: fontSemiBold, fontSize: 15.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
@@ -1417,11 +1417,11 @@ class BL_DCR_Doctor_Visit: NSObject
                 let sampleObj = obj.sampleObj
                 let line1Height = getTextSize(text: sampleObj.Product_Name, fontName: fontSemiBold, fontSize: 15.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
                 let quantityText = String(format: "%d", (sampleObj.Quantity_Provided)!)
-               let line2Height = getTextSize(text: quantityText, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
-              childTableHeight += line1Height + line2Height + 35
+                let line2Height = getTextSize(text: quantityText, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
+                childTableHeight += line1Height + line2Height + 35
             }
             
-           childTableHeight += 40
+            childTableHeight += 40
         }
         
         var totalHeight = titleSectionHeight + cellY + childTableHeight + buttonViewHeight + bottomSpaceView + topSpace
@@ -1487,7 +1487,7 @@ class BL_DCR_Doctor_Visit: NSObject
         
         let businessDisplay = "Business Status\n\n" + businessStatus
         let callObjDisplay = "n\nCall Objective\n\n" + callObjective
-         let campaignDisplay = "\n\nCampaign Name\n\n" + campaignName
+        let campaignDisplay = "\n\nCampaign Name\n\n" + campaignName
         let remarksDisplay = "\n\n\n"
         
         let businessStatusHeight : CGFloat = getTextSize(text: businessDisplay, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
@@ -1599,7 +1599,7 @@ class BL_DCR_Doctor_Visit: NSObject
     {
         return DBHelper.sharedInstance.getDoctorVisitDetailByDoctorVisitId(doctorVisitId: doctorVisitId)
     }
-
+    
     
     func getAttendanceDoctorVisitDetailByDoctorVisitId(doctorVisitId: Int) -> DCRDoctorVisitModel?
     {
@@ -1667,13 +1667,13 @@ class BL_DCR_Doctor_Visit: NSObject
     /*
      If the function returns nil value mean, TP is not defined or no doctors defined in TP for the date
      If the function returns zero count mean, no doctors defined in TP
-    */
+     */
     
     func getLocalArea(customerCode:String, regionCode:String) -> CustomerMasterModel?
     {
         return DBHelper.sharedInstance.getLocalArea(customerCode:customerCode, regionCode:regionCode)
     }
-
+    
     func getTPDoctorsForSelectedDate() -> [CustomerMasterModel]?
     {
         var tpDoctorList: [TourPlannerDoctor]?
@@ -1858,18 +1858,18 @@ class BL_DCR_Doctor_Visit: NSObject
         
         switch sortFieldCode
         {
-            case 0:
-                customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Customer_Name", sortType: sortTypeString)
-            case 1:
-                customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "MDL_Number", sortType: sortTypeString)
-            case 2:
-                customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Speciality_Name", sortType: sortTypeString)
-            case 3:
-                customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Category_Name", sortType: sortTypeString)
-            case 4:
-                customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Local_Area", sortType: sortTypeString)
-            default:
-                return []
+        case 0:
+            customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Customer_Name", sortType: sortTypeString)
+        case 1:
+            customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "MDL_Number", sortType: sortTypeString)
+        case 2:
+            customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Speciality_Name", sortType: sortTypeString)
+        case 3:
+            customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Category_Name", sortType: sortTypeString)
+        case 4:
+            customerList = DBHelper.sharedInstance.getCustomerMasterSortListEdit(regionCode: regionCode, customerEntityType: DOCTOR, sortColumn: "Local_Area", sortType: sortTypeString)
+        default:
+            return []
         }
         
         convertedList = convertModel(customerList: customerList)
@@ -1923,7 +1923,7 @@ class BL_DCR_Doctor_Visit: NSObject
         {
             remarkValue = NOT_APPLICABLE
         }
-       //  let dcrIdString = String(format : "%d", getDCRId())
+        //  let dcrIdString = String(format : "%d", getDCRId())
         let dict:NSDictionary = ["DCR_Id":getDCRId(),"DCR_Code":DCRModel.sharedInstance.dcrCode,"Doctor_Code": "","Doctor_Name": doctorName,"DCR_Doctor_Visit_Code": EMPTY,"DCR_Actual_Date": DCRModel.sharedInstance.dcrDateString,"Speciality_Name": specialityName,"Speciality_Code": "","Category_Code":EMPTY, "Hospital_Name": "",  "Category_Name":EMPTY, "Doctor_Region_Name":"","Doctor_Region_Code":regionCode!,"MDL_Number":"","Business_Status_ID": businessStatusId, "Status_Name": businessStatusName, "Status": 1, "Call_Objective_ID": callObjId, "Call_Objective_Name": callObjName, "Call_Objective_Status": callObjStatus,"Campaign_Code":campaignCode,"Campaign_Name":campaignName,"POB_Amount": pob,"Visit_Mode": visitMode, "Visit_Time": visitTime,"Lattitude": getLatitude(), "Longitude": getLongitude(),"Remarks": remarkValue]
         
         let doctorVisitObj:DCRAttendanceDoctorModel = DCRAttendanceDoctorModel.init(dict: dict)
@@ -1954,7 +1954,7 @@ class BL_DCR_Doctor_Visit: NSObject
         var callObjName: String = EMPTY
         var specialityCode : String?
         let callObjStatus: Int = defaultCallObjectiveActviveStatus
-
+        
         
         if (customerCode != nil)
         {
@@ -2013,7 +2013,7 @@ class BL_DCR_Doctor_Visit: NSObject
         
         DCRModel.sharedInstance.doctorVisitId = doctorVisitId
         DCRModel.sharedInstance.customerVisitId = doctorVisitId
-      //  DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
+        //  DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
         
     }
     
@@ -2210,7 +2210,7 @@ class BL_DCR_Doctor_Visit: NSObject
         DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
         
         insertDoctorVisitTracker(modifiedEntity: Constants.DoctorVisitTrackerEntityIDs.Doctor_Modified, pobAmount: pobAmount, viewController: viewController)
-
+        
     }
     func isHourlyReportEnabled() -> Bool
     {
@@ -2241,7 +2241,7 @@ class BL_DCR_Doctor_Visit: NSObject
     
     func isEdetailedDoctor(customerCode:String,regionCode:String,date:String) -> Bool{
         
-      let value =  DBHelper.sharedInstance.getEdetailedDoctor(customerCode: customerCode, regionCode: regionCode, date: date)
+        let value =  DBHelper.sharedInstance.getEdetailedDoctor(customerCode: customerCode, regionCode: regionCode, date: date)
         if(value > 0)
         {
             return true
@@ -2295,9 +2295,9 @@ class BL_DCR_Doctor_Visit: NSObject
                 {
                     DBHelper.sharedInstance.insertDoctorVisitTracker(objDoctorVisitTracker: objDoctorVisitTracker)
                     
-              //      self.sendHourlyReport(completion: { (objApiResponse) in
-               //         print(objApiResponse.Status)
-             //       })
+                    //      self.sendHourlyReport(completion: { (objApiResponse) in
+                    //         print(objApiResponse.Status)
+                    //       })
                 }
             })
         }
@@ -2722,7 +2722,7 @@ class BL_DCR_Doctor_Visit: NSObject
     
     func getDoctorCaptureValue() -> String
     {
-        return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DOCTOR_VISITS_CAPTURE_CONTROLS).uppercased()
+        return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.DCR_FIELD_CAPTURE_CONTROLS).uppercased()
     }
     
     func getDCRDoctorVisitMode() -> String
@@ -2738,7 +2738,7 @@ class BL_DCR_Doctor_Visit: NSObject
         {
             show = true
         }
-         return show
+        return show
     }
     
     func isValidDoctor(dcrDoctorVisitObj: DCRDoctorVisitModel) -> Bool
@@ -2858,12 +2858,12 @@ class BL_DCR_Doctor_Visit: NSObject
         let errorMessage: String = EMPTY
         let priviledge = self.getDoctorCaptureValue()
         let privArray = priviledge.components(separatedBy: ",")
-//        let isValid: Bool = isValidDoctor(dcrDoctorVisitObj: doctorVisitObj)
-//        
-//        if (!isValid)
-//        {
-//            errorMessage = "The doctor \(doctorVisitObj.Doctor_Name!) is invalid"
-//        }
+        //        let isValid: Bool = isValidDoctor(dcrDoctorVisitObj: doctorVisitObj)
+        //
+        //        if (!isValid)
+        //        {
+        //            errorMessage = "The doctor \(doctorVisitObj.Doctor_Name!) is invalid"
+        //        }
         
         if (getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME_MANDATORY.rawValue)
         {
@@ -2924,7 +2924,7 @@ class BL_DCR_Doctor_Visit: NSObject
                 }
             }
         }
-                
+        
         return errorMessage
     }
     
@@ -2982,10 +2982,10 @@ class BL_DCR_Doctor_Visit: NSObject
         return DCRModel.sharedInstance.dcrId
     }
     
-//    private func getCustomerId() -> Int
-//    {
-//        return DCRModel.sharedInstance.customerId
-//    }
+    //    private func getCustomerId() -> Int
+    //    {
+    //        return DCRModel.sharedInstance.customerId
+    //    }
     
     private func getCustomerCode() -> String
     {
@@ -3173,7 +3173,7 @@ class BL_DCR_Doctor_Visit: NSObject
             {
                 let assetObj : AssetsModel = AssetsModel()
                 let filteredList = assetsUnqiueNumberList.filter{
-                  $0.DA_Code == analyticObj.DA_Code
+                    $0.DA_Code == analyticObj.DA_Code
                 }
                 assetObj.assetsName = analyticObj.Da_Name
                 assetObj.assetType = analyticObj.Doc_Type
@@ -3186,13 +3186,13 @@ class BL_DCR_Doctor_Visit: NSObject
                 assetObj.totalPagesViewed = "\(analyticObj.Total_Viewed_Pages!)"
                 if filteredList.count > 0
                 {
-                   let obj = filteredList.first
-                   assetObj.totalUniquePagesCount = "\((obj?.Total_Unique_Pages_Count)!)"
+                    let obj = filteredList.first
+                    assetObj.totalUniquePagesCount = "\((obj?.Total_Unique_Pages_Count)!)"
                 }
                 assetList.append(assetObj)
             }
         }
-
+        
         return assetList
     }
     
@@ -3274,70 +3274,70 @@ class BL_DCR_Doctor_Visit: NSObject
     }
     
     
-//    func insertAssetDetailedDoctorInVisit(dcrDate : String)
-//    {
-//        let assetAnalyticsList = getDCRDoctorAssetDetails(dcrDate: dcrDate)
-//        
-//        if assetAnalyticsList != nil
-//        {
-//            for assetAnalyticsObj in assetAnalyticsList!
-//            {
-//                var doctorId: Int?
-//                var doctorCode: String?
-//                var doctorName: String?
-//                var doctorRegionCode: String?
-//                var specialtyName: String?
-//                var categoryCode: String?
-//                var categoryName: String?
-//                var mdlNumber: String?
-//                var isCPDoc: Int = 0
-//                var isAccDoc: Int = 0
-//                var doctorRegionName: String?
-//                var localArea: String?
-//                var surName: String?
-//                
-//                if (assetAnalyticsObj.Customer_Code != nil)
-//                {
-//                    let doctorObj = getCustomerMasterByCustomerCode(customerCode: (assetAnalyticsObj.Customer_Code)!, regionCode: (assetAnalyticsObj.Customer_Region_Code)!)
-//                    
-//                    if (doctorObj != nil)
-//                    {
-//                        doctorId = doctorObj!.Customer_Id
-//                        doctorCode = doctorObj!.Customer_Code
-//                        doctorName = doctorObj!.Customer_Name
-//                        doctorRegionCode = doctorObj!.Region_Code
-//                        specialtyName = doctorObj!.Speciality_Name
-//                        categoryCode = doctorObj!.Category_Code
-//                        categoryName = doctorObj!.Category_Name
-//                        mdlNumber = doctorObj!.MDL_Number
-//                        doctorRegionName = doctorObj!.Region_Name
-//                        localArea = doctorObj!.Local_Area
-//                        surName = doctorObj!.Sur_Name
-//                        
-//                        isCPDoc = isCPDoctor(doctorCode: doctorCode!, doctorRegionCode: doctorRegionCode!)
-//                        isAccDoc = isAccompanistDoctor(doctorRegionCode: doctorRegionCode!)
-//                    }
-//                    
-//                    let dcrIdString = String(format : "%d", getDCRId())
-//                    let doctorDict: NSDictionary = ["DCR_Id": dcrIdString, "Doctor_Id": doctorId!, "Doctor_Code": doctorCode!, "Doctor_Region_Code": doctorRegionCode!, "Doctor_Name": doctorName!, "Speciality_Name": specialtyName!, "MDL_Number": mdlNumber!, "Category_Code": categoryCode!, "Category_Name": categoryName!,"Is_CP_Doc": isCPDoc, "Is_Acc_Doctor": isAccDoc,"Lattitude": getLatitude(), "Longitude": getLongitude(), "Doctor_Region_Name": doctorRegionName!, "Local_Area": checkNullAndNilValueForString(stringData: localArea), "Sur_Name": checkNullAndNilValueForString(stringData: surName)]
-//                    
-//                    let doctorVisitObj: DCRDoctorVisitModel = DCRDoctorVisitModel(dict: doctorDict)
-//                    
-//                    let doctorVisitId = DBHelper.sharedInstance.insertDCRDoctorVisit(dcrDoctorVisitObj: doctorVisitObj)
-//                    
-//                    DCRModel.sharedInstance.doctorVisitId = doctorVisitId
-//                    
-//                    insertDoctorVisitTracker(modifiedEntity: Constants.DoctorVisitTrackerEntityIDs.Doctor_Modified, pobAmount: 0.0)
-//                }
-//            }
-//        }
-//    }
+    //    func insertAssetDetailedDoctorInVisit(dcrDate : String)
+    //    {
+    //        let assetAnalyticsList = getDCRDoctorAssetDetails(dcrDate: dcrDate)
+    //
+    //        if assetAnalyticsList != nil
+    //        {
+    //            for assetAnalyticsObj in assetAnalyticsList!
+    //            {
+    //                var doctorId: Int?
+    //                var doctorCode: String?
+    //                var doctorName: String?
+    //                var doctorRegionCode: String?
+    //                var specialtyName: String?
+    //                var categoryCode: String?
+    //                var categoryName: String?
+    //                var mdlNumber: String?
+    //                var isCPDoc: Int = 0
+    //                var isAccDoc: Int = 0
+    //                var doctorRegionName: String?
+    //                var localArea: String?
+    //                var surName: String?
+    //
+    //                if (assetAnalyticsObj.Customer_Code != nil)
+    //                {
+    //                    let doctorObj = getCustomerMasterByCustomerCode(customerCode: (assetAnalyticsObj.Customer_Code)!, regionCode: (assetAnalyticsObj.Customer_Region_Code)!)
+    //
+    //                    if (doctorObj != nil)
+    //                    {
+    //                        doctorId = doctorObj!.Customer_Id
+    //                        doctorCode = doctorObj!.Customer_Code
+    //                        doctorName = doctorObj!.Customer_Name
+    //                        doctorRegionCode = doctorObj!.Region_Code
+    //                        specialtyName = doctorObj!.Speciality_Name
+    //                        categoryCode = doctorObj!.Category_Code
+    //                        categoryName = doctorObj!.Category_Name
+    //                        mdlNumber = doctorObj!.MDL_Number
+    //                        doctorRegionName = doctorObj!.Region_Name
+    //                        localArea = doctorObj!.Local_Area
+    //                        surName = doctorObj!.Sur_Name
+    //
+    //                        isCPDoc = isCPDoctor(doctorCode: doctorCode!, doctorRegionCode: doctorRegionCode!)
+    //                        isAccDoc = isAccompanistDoctor(doctorRegionCode: doctorRegionCode!)
+    //                    }
+    //
+    //                    let dcrIdString = String(format : "%d", getDCRId())
+    //                    let doctorDict: NSDictionary = ["DCR_Id": dcrIdString, "Doctor_Id": doctorId!, "Doctor_Code": doctorCode!, "Doctor_Region_Code": doctorRegionCode!, "Doctor_Name": doctorName!, "Speciality_Name": specialtyName!, "MDL_Number": mdlNumber!, "Category_Code": categoryCode!, "Category_Name": categoryName!,"Is_CP_Doc": isCPDoc, "Is_Acc_Doctor": isAccDoc,"Lattitude": getLatitude(), "Longitude": getLongitude(), "Doctor_Region_Name": doctorRegionName!, "Local_Area": checkNullAndNilValueForString(stringData: localArea), "Sur_Name": checkNullAndNilValueForString(stringData: surName)]
+    //
+    //                    let doctorVisitObj: DCRDoctorVisitModel = DCRDoctorVisitModel(dict: doctorDict)
+    //
+    //                    let doctorVisitId = DBHelper.sharedInstance.insertDCRDoctorVisit(dcrDoctorVisitObj: doctorVisitObj)
+    //
+    //                    DCRModel.sharedInstance.doctorVisitId = doctorVisitId
+    //
+    //                    insertDoctorVisitTracker(modifiedEntity: Constants.DoctorVisitTrackerEntityIDs.Doctor_Modified, pobAmount: 0.0)
+    //                }
+    //            }
+    //        }
+    //    }
     
     func getConvertedTPDocForSelDateToCustomerModel() -> [CustomerMasterModel]?
     {
         var tpDoctorList: [TourPlannerDoctor]?
         tpDoctorList = BL_Stepper.sharedInstance.getTPDoctorsByDate(dcrDate: getServerFormattedDate(date: Date()))
- 
+        
         var customerMasterList: [CustomerMasterModel] = []
         
         if (tpDoctorList != nil)
@@ -3355,7 +3355,7 @@ class BL_DCR_Doctor_Visit: NSObject
         
         return customerMasterList
     }
-
+    
     func updateDCRDoctorVisitTimeBasedOnAssetAnaytics()
     {
         if (checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.customerCode) != EMPTY && checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.customerRegionCode) != EMPTY)
@@ -3443,10 +3443,10 @@ class BL_DCR_Doctor_Visit: NSObject
     {
         var statusList = DBHelper.sharedInstance.getBusinessStatusByEntityType(businessStatusEntityType: Constants.Business_Status_Entity_Type_Ids.Doctor)
         
-//        if (statusList.count > 0)
-//        {
-            statusList.insert(getDefaultBusinessStatus(), at: 0)
-//        }
+        //        if (statusList.count > 0)
+        //        {
+        statusList.insert(getDefaultBusinessStatus(), at: 0)
+        //        }
         
         return statusList
     }
@@ -3455,10 +3455,10 @@ class BL_DCR_Doctor_Visit: NSObject
     {
         var statusList = DBHelper.sharedInstance.getBusinessStatusByEntityType(businessStatusEntityType: Constants.Business_Status_Entity_Type_Ids.Detailed_Products)
         
-//        if (statusList.count > 0)
-//        {
-            statusList.insert(getDefaultBusinessStatus(), at: 0)
-//        }
+        //        if (statusList.count > 0)
+        //        {
+        statusList.insert(getDefaultBusinessStatus(), at: 0)
+        //        }
         
         return statusList
     }
@@ -3544,18 +3544,18 @@ class BL_DCR_Doctor_Visit: NSObject
             return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.PROCEED, message: EMPTY)
         }
         
-//        let accompanistList = BL_Stepper.sharedInstance.accompanistList
-//        if (accompanistList.count == 0)
-//        {
-//            if (dcrInheritanceValue == PrivilegeValues.ONE.rawValue)
-//            {
-//                return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_ERROR, message: EMPTY)
-//            }
-//            else if (dcrInheritanceValue == PrivilegeValues.TWO.rawValue)
-//            {
-//                return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_CONFIRMATION, message: EMPTY)
-//            }
-//        }
+        //        let accompanistList = BL_Stepper.sharedInstance.accompanistList
+        //        if (accompanistList.count == 0)
+        //        {
+        //            if (dcrInheritanceValue == PrivilegeValues.ONE.rawValue)
+        //            {
+        //                return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_ERROR, message: EMPTY)
+        //            }
+        //            else if (dcrInheritanceValue == PrivilegeValues.TWO.rawValue)
+        //            {
+        //                return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_CONFIRMATION, message: EMPTY)
+        //            }
+        //        }
         
         let accUserCodes = dcrInheritanceAccompanistCodes()
         
@@ -3576,12 +3576,12 @@ class BL_DCR_Doctor_Visit: NSObject
             return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.PROCEED, message: EMPTY)
         }
         
-//        let accDataNowDownloadedUsers = isAccompanistDataDownloaded(userCodes: accUserCodes)
-//
-//        if (accDataNowDownloadedUsers != EMPTY)
-//        {
-//            return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACC_DATA_NOT_DOWNLOADED_ERROR, message: accDataNowDownloadedUsers)
-//        }
+        //        let accDataNowDownloadedUsers = isAccompanistDataDownloaded(userCodes: accUserCodes)
+        //
+        //        if (accDataNowDownloadedUsers != EMPTY)
+        //        {
+        //            return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.ACC_DATA_NOT_DOWNLOADED_ERROR, message: accDataNowDownloadedUsers)
+        //        }
         
         return generateDCRInheritanceResponseModel(status: Constants.DCR_Inheritance_Status_Codes.MAKE_API_CALL, message: accUserCodes)
     }
@@ -3693,14 +3693,14 @@ class BL_DCR_Doctor_Visit: NSObject
                         self.insertDCRDoctorInheritance(responseList: doctorList, viewController: viewController)
                     }
                     
-//                    let dcrInheritanceValue = self.getDCRInheritancePrivilegeValue()
-//                    if (dcrInheritanceValue == PrivilegeValues.ONE.rawValue)
-//                    {
-//                        if (errorUserList.count > 0 && successMsg == EMPTY)
-//                        {
-//                            objApiResponse.Status = 2
-//                        }
-//                    }
+                    //                    let dcrInheritanceValue = self.getDCRInheritancePrivilegeValue()
+                    //                    if (dcrInheritanceValue == PrivilegeValues.ONE.rawValue)
+                    //                    {
+                    //                        if (errorUserList.count > 0 && successMsg == EMPTY)
+                    //                        {
+                    //                            objApiResponse.Status = 2
+                    //                        }
+                    //                    }
                     
                     objApiResponse.Message = errorMsg
                 }
@@ -3810,7 +3810,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         lockDCRMsg += "\n"
                     }
                     
-                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DVR is in lock status"
+                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DCR is in lock status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Lock_Status)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3839,7 +3839,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noDCRMsg += "\n"
                     }
                     
-                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DVR"
+                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DCR"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3873,7 +3873,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noApprovedDCRMsg += "\n"
                     }
                     
-                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is not in approved status"
+                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is not in approved status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3916,7 +3916,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         successMsg += "\n"
                     }
                     
-                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is downloaded"
+                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is downloaded"
                 }
             }
         }
@@ -3957,7 +3957,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         
                         doctorVisitList.append(doctorVisitObj)
                         
-//                        self.insertDoctorVisitTracker(modifiedEntity: Constants.DoctorVisitTrackerEntityIDs.Doctor_Modified, pobAmount: 0, viewController: viewController)
+                        //                        self.insertDoctorVisitTracker(modifiedEntity: Constants.DoctorVisitTrackerEntityIDs.Doctor_Modified, pobAmount: 0, viewController: viewController)
                     }
                     else
                     {
@@ -4022,4 +4022,5 @@ class BL_DCR_Doctor_Visit: NSObject
         }
     }
 }
+
 

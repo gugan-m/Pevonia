@@ -39,9 +39,9 @@ class BL_POB_Stepper: NSObject
     {
         let stepperObjModel: StepperPOBModel = StepperPOBModel()
         
-        stepperObjModel.sectionTitle = "Stockist"
-        stepperObjModel.emptyStateTitle = "Stockist"
-        stepperObjModel.emptyStateSubTitle = "Add Stockist Detail"
+        stepperObjModel.sectionTitle = "Contributor"
+        stepperObjModel.emptyStateTitle = "Contributor"
+        stepperObjModel.emptyStateSubTitle = "Add Contributor Detail"
         stepperObjModel.isExpanded = false
         setStockiestObj()
         if (stockiestObj != nil)

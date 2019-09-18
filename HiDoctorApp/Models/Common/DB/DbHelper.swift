@@ -6007,10 +6007,23 @@ class DBHelper: NSObject
         var assetAnalyticsList : [AssetAnalyticsDetail] = []
         
         try? dbPool.read { db in
-            assetAnalyticsList = try AssetAnalyticsDetail.fetchAll(db,"SELECT * FROM \(TRAN_ASSET_ANALYTICS_DETAILS) WHERE Customer_Code = '\(customerCode)' AND Customer_Region_Code = '\(customeRegionCode)' AND Punch_End_Time = ''")
+            assetAnalyticsList = try AssetAnalyticsDetail.fetchAll(db,"SELECT * FROM \(TRAN_ASSET_ANALYTICS_DETAILS) WHERE Customer_Code = '\(customerCode)' AND DATE(Detailed_DateTime) = DATE('\(getCurrentDate())') AND Customer_Region_Code = '\(customeRegionCode)' AND Punch_End_Time = ''")
         }
         return assetAnalyticsList
     }
+    
+    
+    
+    func getPunchEndTimeWith( customerCode: String, customeRegionCode: String) -> [AssetAnalyticsDetail]
+    {
+        var assetAnalyticsList : [AssetAnalyticsDetail] = []
+        
+        try? dbPool.read { db in
+            assetAnalyticsList = try AssetAnalyticsDetail.fetchAll(db,"SELECT * FROM \(TRAN_ASSET_ANALYTICS_DETAILS) WHERE Customer_Code = '\(customerCode)' AND Customer_Region_Code = '\(customeRegionCode)'")
+        }
+        return assetAnalyticsList
+    }
+    
     func getAssestAnalyticscheckpunchout(dcrDate: String) -> [AssetAnalyticsDetail]
     {
         var assetAnalyticsList : [AssetAnalyticsDetail] = []
@@ -8434,5 +8447,8 @@ class DBHelper: NSObject
         
         return doctorMappingObj
     }
+    
+    
+    
 }
 

@@ -20,8 +20,8 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     @IBOutlet weak var searchBarHeightConst: NSLayoutConstraint!
     @IBOutlet weak var refreshLabelHeightConst: NSLayoutConstraint!
     @IBOutlet weak var refreshLabel: UILabel!
-    var delegate: ChildViewControllerDelegate?
     
+    var delegate: ChildViewControllerDelegate?
     var selectedIndex : Int! = 1
     var constrainedWidth : CGFloat!
     var cellIdentifier : String!
@@ -1050,6 +1050,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         }
     }
 }
+
 protocol ChildViewControllerDelegate
 {
     func childViewControllerResponse(parameter: [CustomerMasterModel])

@@ -22,7 +22,7 @@ import Foundation
 let PEV_UPLOAD_MY_DCR =  "Upload my DVRs"
 let PEV_DCR_ENTRY =  "DVR Entry"
 let PEV_DCR_REFRESH = "DVR Refresh"
-let PEV_DIGITAL_ASSET_PLS_LBL = "Please note that you must use this section for viewing and practicing the \(PEV_DIGITAL_ASSETS). This section MUST NOT be used for detailing for doctors.If you want to detail to doctor, please click on 'Go to detailing section'below"
+let PEV_DIGITAL_ASSET_PLS_LBL = "Please note that you must use this section for viewing and practicing the \(PEV_DIGITAL_ASSETS). This section MUST NOT be used for detailing for partners .If you want to detail to partner, please click on 'Go to detailing section'below"
 let PEV_HOSPITAL_NAME = "Account Name"
 let PEV_HOSPITAL_ADDRESS =  "Meeting Place"
 let PEV_DCR = "DVR"

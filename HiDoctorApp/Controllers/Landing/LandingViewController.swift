@@ -69,7 +69,6 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         self.setUserDetails()
         
         titleList = getCurrentList()
-        
         //self.collectionView.reloadData()
         self.collectionView.layoutIfNeeded()
         self.navigationController?.isNavigationBarHidden = false

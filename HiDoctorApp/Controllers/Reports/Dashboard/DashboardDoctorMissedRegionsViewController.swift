@@ -28,7 +28,7 @@ class DashboardDoctorMissedRegionsViewController: UIViewController, UITableViewD
         self.addTapGestureForView()
         addBackButtonView()
         self.searchView.isHidden = false
-        self.title = "Missed Doctor's Regions"
+        self.title = "Missed Patner's Regions"
         self.pageLoad()
     }
 

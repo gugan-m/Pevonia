@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Pevonia Intl</string>
+	<string>Pevonia CRM</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -55,13 +55,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Pevonia Intl needs access to your camera, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the camera.</string>
+	<string>Pevonia CRM needs access to your camera, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Pevonia Intl needs your location, so that Doctor’s location can be saved to your Doctor Master. Please tap on “Allow” to capture the location</string>
+	<string>Pevonia CRM needs your location, so that Partner’s location can be saved to your Partner Master. Please tap on “Allow” to capture the location</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Pevonia Intl needs permission to write photos</string>
+	<string>Pevonia CRM needs permission to write photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pevonia Intl needs access to your photos, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the photos/camera roll. </string>
+	<string>Pevonia CRM needs access to your photos, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the photos/camera roll. </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Display-Black.otf</string>

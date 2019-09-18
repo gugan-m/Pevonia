@@ -285,8 +285,6 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
                 cell.visitTimeLabel.text = doctorObj.Visit_Mode
             }
             
-            
-            
             let strHospitalName = checkNullAndNilValueForString(stringData: doctorObj.Hospital_Name) as? String
 //            cell.line1Text.text = strHospitalName! + " | " + "\(ccmNumberCaption): " + ccmNumberPrefix + doctorObj.MDL_Number! + " | " + doctorObj.Speciality_Name
             cell.line1Text.text = strHospitalName!  + " | " + doctorObj.Speciality_Name
