@@ -240,6 +240,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
                 doctorvisitid = list[0].DCR_Doctor_Visit_Id
             }
             self.updatepunchout(dcrID: dcrId, visitid: doctorvisitid, doctorcode: code )
+            BL_DoctorList.sharedInstance.punchInTime = ""
             if self.isComingFromTP || self.isComingFromDigitalAssets || self.isComingFromDCR
             {
                 self.navigationController?.popViewController(animated: true)

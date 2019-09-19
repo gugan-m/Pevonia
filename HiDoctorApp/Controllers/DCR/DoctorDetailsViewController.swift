@@ -343,6 +343,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
                 
                 alertViewController.addAction(UIAlertAction(title: "Punch In", style: UIAlertActionStyle.default, handler: { alertAction in
                     self.moveToNextScreen()
+                    BL_DoctorList.sharedInstance.punchInTime = getStringFromDateforPunch(date: getCurrentDateAndTime())
                     //function
                     //    self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
                     alertViewController.dismiss(animated: true, completion: nil)

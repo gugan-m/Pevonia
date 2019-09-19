@@ -617,7 +617,7 @@ class BL_AssetModel: NSObject
             else
             {
             var localTimeZoneName: String { return TimeZone.current.identifier }
-            analyticsObj.Punch_Start_Time = getStringFromDateforPunch(date: getCurrentDateAndTime())
+            analyticsObj.Punch_Start_Time = BL_DoctorList.sharedInstance.punchInTime
             analyticsObj.Punch_Status = 1
             analyticsObj.Punch_UTC_DateTime =  getUTCDateForPunch()
             analyticsObj.Punch_TimeZone = localTimeZoneName

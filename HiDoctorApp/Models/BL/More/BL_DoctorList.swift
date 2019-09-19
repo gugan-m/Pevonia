@@ -21,6 +21,7 @@ class BL_DoctorList: NSObject
     var customerCategoryArray : NSMutableArray = NSMutableArray()
     var pickerState = String()
     var doctorDataList:[DoctorListModel] = []
+    var punchInTime : String = ""
     
     func getDoctorDataList(isEdit:Bool) -> [DoctorListModel]
     {
