@@ -111,7 +111,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_MenuAccess.sharedInstance.isCustomerMasterScreenAvailable())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Customer"
+            moreHeaderObj.sectionTitle = "Partner"
             moreDescObj.icon = "icon-doctor"
             moreDescObj.descriptionTxt = customerMasterEdit
             moreDescObj.stoaryBoardName = commonListSb
@@ -124,7 +124,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         {
             moreHeaderObj = MoreListHeaderModel()
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Customer"
+            moreHeaderObj.sectionTitle = "Partner"
             
             moreDescObj.stoaryBoardName = commonListSb
             moreDescObj.viewControllerIdentifier = "DPM"
@@ -136,7 +136,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_Geo_Location.sharedInstance.isGeoLocationMandatoryPrivEnabled() && BL_Geo_Location.sharedInstance.doesUserHasLocationEditPermission())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Customer"
+            moreHeaderObj.sectionTitle = "Partner"
             moreDescObj.icon = "icon-location"
             moreDescObj.descriptionTxt = markDoctorLocation
             moreDescObj.stoaryBoardName = commonListSb
@@ -147,7 +147,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_MenuAccess.sharedInstance.isCustomerComplaintAvailable())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Customer"
+            moreHeaderObj.sectionTitle = "Partner"
             moreDescObj.icon = "icon-doctor"
             moreDescObj.descriptionTxt = doctorComplaint
             moreDescObj.stoaryBoardName = commonListSb
