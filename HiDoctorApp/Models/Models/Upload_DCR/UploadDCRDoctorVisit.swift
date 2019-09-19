@@ -38,7 +38,10 @@ class UploadDCRDoctorVisit: Record
     var Modified_Entity: String?
     var Speciality_Code: String?
     var Customer_Entity_Type: String?
-    
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
     
     
     override class var databaseTableName: String
@@ -70,6 +73,11 @@ class UploadDCRDoctorVisit: Record
         Longitude = row["Longitude"]
         Region_Name = row["Region_Name"]
         Customer_Entity_Type = row["Customer_Entity_Type"]
+        UTC_DateTime = row["UTC_DateTime"]
+        Entered_TimeZone = row["Entered_TimeZone"]
+        Entered_OffSet = row["Entered_OffSet"]
+        Created_DateTime = row["Created_DateTime"]
+        
         
         super.init(row: row)
     }

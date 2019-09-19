@@ -71,7 +71,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         if (showOrganisation == PrivilegeValues.YES.rawValue)
         {
             selectedIndex = 4
-            selectedName = "Organisation"
+            selectedName = "Account"
         }
         else
         {

@@ -44,7 +44,11 @@ class UploadDCRHeader: Record
     var leaveTypeName: String?
     var Source_Of_Entry: String?
     var DCR_General_Remarks: String?
-    
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
+
     override class var databaseTableName: String
     {
         return TRAN_DCR_HEADER
@@ -78,6 +82,10 @@ class UploadDCRHeader: Record
         Reason = row["Reason"]
         DCR_Code = row["DCR_Code"]
         DCR_General_Remarks = row["DCR_General_Remarks"]
+        UTC_DateTime = row["UTC_DateTime"]
+        Entered_TimeZone = row["Entered_TimeZone"]
+        Entered_OffSet = row["Entered_OffSet"]
+        Created_DateTime = row["Created_DateTime"]
         
         super.init(row: row)
     }

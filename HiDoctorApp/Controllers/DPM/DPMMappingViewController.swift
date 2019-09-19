@@ -737,8 +737,9 @@ class DPMMappingViewController: UIViewController,UITableViewDelegate,UITableView
             self.tableView.isHidden = false
             self.emptyState.text = ""
             self.setDefaults()
-            tableView.reloadData()
+            
         }
+        tableView.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()

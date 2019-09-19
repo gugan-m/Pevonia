@@ -26,6 +26,10 @@ class DCRChemistAccompanist: Record
     var IsOnlyForChemist : String!
     var EmployeeName: String?
     var RegionName : String?
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
 //    var Is_TP_Frozen: Int = 0
     
     init(dict: NSDictionary)
@@ -76,7 +80,10 @@ class DCRChemistAccompanist: Record
 //
 //            self.Is_TP_Frozen = 0
 //        }
-        
+        self.UTC_DateTime = getUTCDateForPunch()
+        self.Entered_TimeZone = getcurrenttimezone()
+        self.Entered_OffSet = getOffset()
+        self.Created_DateTime = getCurrentDateAndTimeString()
         super.init()
     }
     
@@ -164,6 +171,13 @@ class DCRChemistSamplePromotion: Record
     var ProductTypeCode: String!
     var ProductTypeName : String!
     var BatchName = String()
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
+    
+    
+
     
     init(dict: NSDictionary)
     {
@@ -179,6 +193,10 @@ class DCRChemistSamplePromotion: Record
         self.ProductCode = checkNullAndNilValueForString(stringData: dict.value(forKey: "Product_Code")as? String)
         self.ProductName = checkNullAndNilValueForString(stringData: dict.value(forKey: "Product_Name")as? String)
         self.QuantityProvided = dict.value(forKey: "Quantity_Provided") as? Int ?? 0
+        self.UTC_DateTime = getUTCDateForPunch()
+        self.Entered_TimeZone = getcurrenttimezone()
+        self.Entered_OffSet = getOffset()
+        self.Created_DateTime = getCurrentDateAndTimeString()
         super.init()
     }
     
@@ -243,6 +261,10 @@ class DCRChemistDetailedProduct : Record
     var ProductCode : String!
     var ProductName : String!
     
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
     
     init(dict: NSDictionary)
     {
@@ -257,7 +279,10 @@ class DCRChemistDetailedProduct : Record
         }
        self.ProductCode = checkNullAndNilValueForString(stringData: dict.value(forKey: "Sales_Product_Code")as? String)
         self.ProductName = checkNullAndNilValueForString(stringData: dict.value(forKey: "Sales_Product_Name")as? String)
-        
+        self.UTC_DateTime = getUTCDateForPunch()
+        self.Entered_TimeZone = getcurrenttimezone()
+        self.Entered_OffSet = getOffset()
+        self.Created_DateTime = getCurrentDateAndTimeString()
         super.init()
     }
     
@@ -327,6 +352,11 @@ class DCRChemistRCPAOwn : Record
     var DoctorCategoryName : String!
     var DoctorMDLNumber: String!
     
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
+    
     init(dict: NSDictionary)
     {
         self.DCRChemistDayVisitId = dict.value(forKey: "DCR_Chemist_Day_Visit_Id") as? Int ?? 0
@@ -356,7 +386,10 @@ class DCRChemistRCPAOwn : Record
         self.DoctorSpecialityName = checkNullAndNilValueForString(stringData: dict.value(forKey: "Customer_Speciality_Name")as? String)
         self.DoctorCategoryName = checkNullAndNilValueForString(stringData: dict.value(forKey: "Customer_Category_Name")as? String)
         self.DoctorMDLNumber = checkNullAndNilValueForString(stringData: dict.value(forKey: "Customer_MDLNumber")as? String)
-        
+        self.UTC_DateTime = getUTCDateForPunch()
+        self.Entered_TimeZone = getcurrenttimezone()
+        self.Entered_OffSet = getOffset()
+        self.Created_DateTime = getCurrentDateAndTimeString()
         super.init()
     }
     
@@ -449,6 +482,10 @@ class DCRChemistRCPACompetitor : Record
     var CompetitorProductCode: String!
     var CompetitorProductName: String!
     var Quantity : Float!
+    var UTC_DateTime: String?
+    var Entered_TimeZone: String?
+    var Entered_OffSet: String?
+    var Created_DateTime: String?
     
     init(dict: NSDictionary)
     {
@@ -474,7 +511,10 @@ class DCRChemistRCPACompetitor : Record
         {
             self.Quantity = qty
         }
-        
+        self.UTC_DateTime = getUTCDateForPunch()
+        self.Entered_TimeZone = getcurrenttimezone()
+        self.Entered_OffSet = getOffset()
+        self.Created_DateTime = getCurrentDateAndTimeString()
         super.init()
     }
     

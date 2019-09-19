@@ -293,7 +293,7 @@ class BL_Upload_DCR: NSObject
             
             let dict3: NSDictionary = ["Unapprove_Reason": NSNull(), "Type": leaveTypeCode, "Reason": leaveReason, "Lattitude": latitude, "Longitude": longitude, "Region_Code": getRegionCode(), "Source_Of_Entry": "iOS", "DCR_General_Remarks": generalRemarks]
             
-            let dict4: NSDictionary = ["IsTPFrozenData": dcrHeaderObj.Is_TP_Frozen,"versionName":versionName,"versionCode":versionCode]
+            let dict4: NSDictionary = ["IsTPFrozenData": dcrHeaderObj.Is_TP_Frozen,"versionName":versionName,"versionCode":versionCode,"UTC_DateTime":getUTCDateForPunch(),"Entered_TimeZone":getcurrenttimezone(),"Entered_OffSet":getOffset(),"Created_DateTime":getCurrentDateAndTimeString()]
             
             var combinedAttributes : NSMutableDictionary!
             
@@ -603,7 +603,10 @@ class BL_Upload_DCR: NSObject
             
             let dict2: NSDictionary = ["MDL_Number": mdlNumber, "Speciality_Name": specialtyName, "Visit_Mode": visitMode, "Visit_Time": visitTime, "IS_CP_Doctor": isCPDoc, "POB_Amount": pobAmount, "Category_Code": categoryCode, "Is_Acc_Doctor": isAccDoc]
             
-            let dict3: NSDictionary = ["Remarks": remarks, "Lattitude": latitude, "Longitude": longitude, "Category_Name": categoryName, "Region_Name": regionName, "Source_Of_Entry": "iOS", "Business_Status_ID": businessStatusId, "Call_Objective_ID": callObjectiveId, "Geo_Fencing_Deviation_Remarks": geoFencingRemarks, "Geo_Fencing_Page_Source": geoFencingPageSource, "Is_DCR_Inherited_Doctor": doctorVisitObj.Is_DCR_Inherited_Doctor!,"Campaign_Code":campaignCode,"Punch_Status": doctorVisitObj.Punch_Status,"Customer_Met_StartTime": doctorVisitObj.Punch_Start_Time,"Customer_Met_EndTime": doctorVisitObj.Punch_End_Time,"Punch_TimeZone": doctorVisitObj.Punch_TimeZone,"Punch_OffSet": doctorVisitObj.Punch_Offset,"UTC_DateTime": doctorVisitObj.Punch_UTC_DateTime]
+            let dict3: NSDictionary = ["Remarks": remarks, "Lattitude": latitude, "Longitude": longitude, "Category_Name": categoryName, "Region_Name": regionName, "Source_Of_Entry": "iOS", "Business_Status_ID": businessStatusId, "Call_Objective_ID": callObjectiveId, "Geo_Fencing_Deviation_Remarks": geoFencingRemarks, "Geo_Fencing_Page_Source": geoFencingPageSource, "Is_DCR_Inherited_Doctor": doctorVisitObj.Is_DCR_Inherited_Doctor!,"Campaign_Code":campaignCode,"Punch_Status": doctorVisitObj.Punch_Status,"Customer_Met_StartTime": doctorVisitObj.Punch_Start_Time,"Customer_Met_EndTime": doctorVisitObj.Punch_End_Time,"Punch_TimeZone": doctorVisitObj.Punch_TimeZone,"Punch_OffSet": doctorVisitObj.Punch_Offset,"UTC_DateTime": getUTCDateForPunch(),
+                                       "Entered_TimeZone":getcurrenttimezone(),
+                                       "Entered_OffSet":getOffset(),
+                                       "Created_DateTime":getCurrentDateAndTimeString()]
             
             var combinedAttributes : NSMutableDictionary!
             
@@ -936,7 +939,12 @@ class BL_Upload_DCR: NSObject
                 dueDate = convertDateIntoServerStringFormat(date: obj.Due_Date)
             }
             
-            let dict1: NSDictionary = ["Visit_Id": obj.DCR_Doctor_Visit_Id, "Tasks":followUpText, "Due_Date": dueDate, "DCR_FollowUp_Id":obj.Follow_Up_Id, "DCR_Id": obj.DCR_Id]
+            let dict1: NSDictionary = ["Visit_Id": obj.DCR_Doctor_Visit_Id, "Tasks":followUpText, "Due_Date": dueDate, "DCR_FollowUp_Id":obj.Follow_Up_Id, "DCR_Id": obj.DCR_Id,
+                                       "UTC_DateTime":getUTCDateForPunch(),
+                                       "Entered_TimeZone":getcurrenttimezone(),
+                                       "Entered_OffSet":getOffset(),
+                                       "Created_DateTime":getCurrentDateAndTimeString()
+]
             
             var combinedAttributes : NSMutableDictionary!
             
@@ -974,7 +982,11 @@ class BL_Upload_DCR: NSObject
             dcrVisitCode = dcrAttachmentObj.dcrVisitCode!
             
             let dict1: NSDictionary = ["DCR_Code": dcrCode, "DCR_Visit_Code": dcrVisitCode, "Blob_Url": blobUrl, "Visit_Id": visitId, "DCR_Id": dcrId]
-            let dict2: NSDictionary = ["Uploaded_File_Name": uploadedFileName, "User_Code": userCode, "DCR_Actual_Date": dcrDate, "Updated_Date_Time": updatedDateTime, "CheckSumId": checkSumId]
+            let dict2: NSDictionary = ["Uploaded_File_Name": uploadedFileName, "User_Code": userCode, "DCR_Actual_Date": dcrDate, "Updated_Date_Time": updatedDateTime, "CheckSumId": checkSumId,
+                                       "UTC_DateTime":getUTCDateForPunch(),
+                                       "Entered_TimeZone":getcurrenttimezone(),
+                                       "Entered_OffSet":getOffset(),
+                                       "Created_DateTime":getCurrentDateAndTimeString()]
             
             var combinedAttributes : NSMutableDictionary!
             combinedAttributes = NSMutableDictionary(dictionary: dict1)
@@ -1123,7 +1135,11 @@ class BL_Upload_DCR: NSObject
                 remarks = dcrAttendanceObj.Remarks!
             }
             
-            var dict: NSMutableDictionary = ["DCR_Id": dcrAttendanceObj.DCR_Id, "DCR_Attendance_Id": dcrAttendanceObj.DCR_Attendance_Id, "Activity_Code": dcrAttendanceObj.Activity_Code, "Project_Code": dcrAttendanceObj.Project_Code!, "Start_Time": dcrAttendanceObj.Start_Time!, "End_Time": dcrAttendanceObj.End_Time!, "Remarks": remarks]
+            var dict: NSMutableDictionary = ["DCR_Id": dcrAttendanceObj.DCR_Id, "DCR_Attendance_Id": dcrAttendanceObj.DCR_Attendance_Id, "Activity_Code": dcrAttendanceObj.Activity_Code, "Project_Code": dcrAttendanceObj.Project_Code!, "Start_Time": dcrAttendanceObj.Start_Time!, "End_Time": dcrAttendanceObj.End_Time!, "Remarks": remarks,
+                                             "UTC_DateTime":getUTCDateForPunch(),
+                                             "Entered_TimeZone":getcurrenttimezone(),
+                                             "Entered_OffSet":getOffset(),
+                                             "Created_DateTime":getCurrentDateAndTimeString()]
             
             dict = replaceEmptyStringToNullValues(combinedAttributes: dict)
             
@@ -1163,6 +1179,8 @@ class BL_Upload_DCR: NSObject
             var favouringRegionCode: String = EMPTY
             var remarks: String = EMPTY
             var actionMode: Int = 0
+            
+            
             
             if (objPOB.Visit_Id != nil)
             {
@@ -1260,7 +1278,10 @@ class BL_Upload_DCR: NSObject
             
             let dict1: NSMutableDictionary = ["DCR_Id": objPOB.DCR_Id!, "Visit_Id": visitId, "Order_Id": orderId, "Client_Order_Id": clientOrderId, "Order_Number": orderNumber, "Order_Date": orderDate, "DCR_Actual_Date": dcrActualDate, "Customer_Code": customerCode]
             let dict2: NSMutableDictionary = ["Customer_Region_Code": customerRegionCode, "Customer_Name": customerName, "Customer_Speciality": customerSpecialty, "Customer_MDLNumber": mdlNumber, "Customer_CategoryCode": categoryCode, "Stockiest_Code": stockistCode, "Stockiest_Region_Code": stockistRegionCode, "Order_Due_Date": orderDueDate]
-            let dict3: NSMutableDictionary = ["Order_Status": 1, "Order_Mode": orderMode, "Entity_Type": entityType, "Favouring_User_Code": favouringUserCode, "Favouring_Region_Code": favouringRegionCode, "Remarks": remarks, "Source_Of_Entry": Source_Of_Entry, "Action_Mode": actionMode]
+            let dict3: NSMutableDictionary = ["Order_Status": 1, "Order_Mode": orderMode, "Entity_Type": entityType, "Favouring_User_Code": favouringUserCode, "Favouring_Region_Code": favouringRegionCode, "Remarks": remarks, "Source_Of_Entry": Source_Of_Entry, "Action_Mode": actionMode,"UTC_DateTime":getUTCDateForPunch(),
+                                              "Entered_TimeZone":getcurrenttimezone(),
+                                              "Entered_OffSet":getOffset(),
+                                              "Created_DateTime":getCurrentDateAndTimeString()]
             let pobDetails = getPOBDetails(dcrId: dcrId, lstPOBHeader: lstPOBHeader, lstPOBDetails: pobDetailsArray)
             let dict4: NSMutableDictionary = ["Orderdetails": pobDetails]
             var combinedAttributes : NSMutableDictionary!
@@ -1448,7 +1469,10 @@ class BL_Upload_DCR: NSObject
             }
             
             let dict1: NSMutableDictionary = ["DCR_Id": objChemistAccompanist.DCRId, "CV_Visit_Id": objChemistAccompanist.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Acc_Region_Code": regionCode, "Acc_User_Name": userName, "Acc_User_Code": userCode, "Acc_User_Type_Name": userTypeName]
-            let dict2: NSMutableDictionary = ["Is_Only_For_Chemist": objChemistAccompanist.IsOnlyForChemist, "Is_Accompanied_call": objChemistAccompanist.IsAccompaniedCall]
+            let dict2: NSMutableDictionary = ["Is_Only_For_Chemist": objChemistAccompanist.IsOnlyForChemist, "Is_Accompanied_call": objChemistAccompanist.IsAccompaniedCall,"UTC_DateTime":getUTCDateForPunch(),
+                                              "Entered_TimeZone":getcurrenttimezone(),
+                                              "Entered_OffSet":getOffset(),
+                                              "Created_DateTime":getCurrentDateAndTimeString()]
             
             var combinedAttributes : NSMutableDictionary!
             
@@ -1487,7 +1511,11 @@ class BL_Upload_DCR: NSObject
             }
             let sampleBatchList = getDCRSampleBatchProducts(dcrId: dcrId, visitId: objChemistSample.DCRChemistDayVisitId, productCode: productCode, entityType: sampleBatchEntity.Chemist.rawValue)
             
-            var dict: NSMutableDictionary = ["DCR_Id": objChemistSample.DCRId, "CV_Visit_Id": objChemistSample.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Product_Code": productCode, "Product_Name": productName, "Quantity_Provided": qty,"lstuserproductbatch":sampleBatchList]
+            var dict: NSMutableDictionary = ["DCR_Id": objChemistSample.DCRId, "CV_Visit_Id": objChemistSample.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Product_Code": productCode, "Product_Name": productName, "Quantity_Provided": qty,
+                                             "UTC_DateTime":getUTCDateForPunch(),
+                                             "Entered_TimeZone":getcurrenttimezone(),
+                                             "Entered_OffSet":getOffset(),
+                                    "Created_DateTime":getCurrentDateAndTimeString(),"lstuserproductbatch":sampleBatchList]
             
             dict = replaceEmptyStringToNullValues(combinedAttributes: dict)
             
@@ -1516,7 +1544,10 @@ class BL_Upload_DCR: NSObject
                 productName = checkNullAndNilValueForString(stringData: objChemistDetailProducts.ProductName)
             }
             
-            var dict: NSMutableDictionary = ["Sales_Product_Code": productCode, "Sales_Product_Name": productName, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "CV_Visit_Id": objChemistDetailProducts.DCRChemistDayVisitId]
+            var dict: NSMutableDictionary = ["Sales_Product_Code": productCode, "Sales_Product_Name": productName, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "CV_Visit_Id": objChemistDetailProducts.DCRChemistDayVisitId,"UTC_DateTime":getUTCDateForPunch(),
+                                             "Entered_TimeZone":getcurrenttimezone(),
+                                             "Entered_OffSet":getOffset(),
+                                             "Created_DateTime":getCurrentDateAndTimeString()]
             
             dict = replaceEmptyStringToNullValues(combinedAttributes: dict)
             
@@ -1581,7 +1612,10 @@ class BL_Upload_DCR: NSObject
             }
             
             let dict1: NSMutableDictionary = ["DCR_Id": objChemistRCPA.DCRId, "CV_Visit_Id": objChemistRCPA.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Product_Code": productCode, "Product_Name": productName, "Chemist_RCPA_OWN_Product_Id": objChemistRCPA.DCRChemistRCPAOwnId, "Customer_Code": doctorCode]
-            let dict2: NSMutableDictionary = ["Customer_Name": doctorName, "Customer_Speciality_Name": specialtyName, "Customer_Category_Name": categoryName, "Customer_MDLNumber": mdlNumber, "Qty": qty, "POB": 0, "Customer_RegionCode": doctorRegionCode]
+            let dict2: NSMutableDictionary = ["Customer_Name": doctorName, "Customer_Speciality_Name": specialtyName, "Customer_Category_Name": categoryName, "Customer_MDLNumber": mdlNumber, "Qty": qty, "POB": 0, "Customer_RegionCode": doctorRegionCode,"UTC_DateTime":getUTCDateForPunch(),
+                                              "Entered_TimeZone":getcurrenttimezone(),
+                                              "Entered_OffSet":getOffset(),
+                                              "Created_DateTime":getCurrentDateAndTimeString()]
             
             var combinedAttributes : NSMutableDictionary!
             
@@ -1624,7 +1658,10 @@ class BL_Upload_DCR: NSObject
                 qty = objChemistRCPA.Quantity
             }
             
-            let dict1: NSMutableDictionary = ["Chemist_RCPA_OWN_Product_Id": objChemistRCPA.DCRChemistRCPAOwnId, "CV_Visit_Id": objChemistRCPA.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Own_Product_Code": ownProductCode, "Competitor_Product_Name": compProductName, "Competitor_Product_Code": compProductCode, "DCR_ID": objChemistRCPA.DCRId]
+            let dict1: NSMutableDictionary = ["Chemist_RCPA_OWN_Product_Id": objChemistRCPA.DCRChemistRCPAOwnId, "CV_Visit_Id": objChemistRCPA.DCRChemistDayVisitId, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "Own_Product_Code": ownProductCode, "Competitor_Product_Name": compProductName, "Competitor_Product_Code": compProductCode, "DCR_ID": objChemistRCPA.DCRId,"UTC_DateTime":getUTCDateForPunch(),
+                                              "Entered_TimeZone":getcurrenttimezone(),
+                                              "Entered_OffSet":getOffset(),
+                                              "Created_DateTime":getCurrentDateAndTimeString()]
             
             let dict2: NSMutableDictionary = ["Qty": qty]
             
@@ -1659,7 +1696,10 @@ class BL_Upload_DCR: NSObject
                 dueDate = convertDateIntoServerStringFormat(date: objChemistFollowup.DueDate)
             }
             
-            var dict: NSMutableDictionary = ["Tasks": task, "CV_Visit_Id": objChemistFollowup.DCRChemistDayVisitId, "DCR_Id": objChemistFollowup.DCRId, "Due_Date": dueDate, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode()]
+            var dict: NSMutableDictionary = ["Tasks": task, "CV_Visit_Id": objChemistFollowup.DCRChemistDayVisitId, "DCR_Id": objChemistFollowup.DCRId, "Due_Date": dueDate, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(),"UTC_DateTime":getUTCDateForPunch(),
+                                             "Entered_TimeZone":getcurrenttimezone(),
+                                             "Entered_OffSet":getOffset(),
+                                             "Created_DateTime":getCurrentDateAndTimeString()]
             
             dict = replaceEmptyStringToNullValues(combinedAttributes: dict)
             
@@ -1685,7 +1725,12 @@ class BL_Upload_DCR: NSObject
                     uploadedFileName = checkNullAndNilValueForString(stringData: objChemistAttachment.UploadedFileName)
                 }
                 
-                var dict: NSMutableDictionary = ["Uploaded_File_Name": uploadedFileName, "DCR_Actual_Date": dcrActualDate, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "CV_Visit_Id": objChemistAttachment.DCRChemistDayVisitId, "DCR_Id": objChemistAttachment.DCRId]
+                var dict: NSMutableDictionary = ["Uploaded_File_Name": uploadedFileName, "DCR_Actual_Date": dcrActualDate, "CV_User_Code": getUserCode(), "CV_Region_Code": getRegionCode(), "CV_Visit_Id": objChemistAttachment.DCRChemistDayVisitId, "DCR_Id": objChemistAttachment.DCRId,
+                                                 "UTC_DateTime":getUTCDateForPunch(),
+                                                 "Entered_TimeZone":getcurrenttimezone(),
+                                                 "Entered_OffSet":getOffset(),
+                                                 "Created_DateTime":getCurrentDateAndTimeString()
+]
                 
                 dict = replaceEmptyStringToNullValues(combinedAttributes: dict)
                 

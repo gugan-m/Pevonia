@@ -1983,3 +1983,7 @@ func lastDay(ofMonth m: Int, year y: Int) -> Int {
     let date = cal.date(from: comps)!
     return cal.component(.day, from: date)
 }
+func getcurrenttimezone() -> String {
+    let timezone =   { return TimeZone.current.identifier }
+    return timezone()
+}

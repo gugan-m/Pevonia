@@ -58,7 +58,7 @@ class BL_DoctorProductMapping: NSObject
             else
             {
                 completion([],apiObj.Status)
-               
+                
             }
         }
     }
@@ -109,12 +109,12 @@ class BL_DoctorProductMapping: NSObject
     
     func getMCAllList(refType:String,refCode:String) -> [MCAllDetailsModel]
     {
-       return DBHelper.sharedInstance.getMCAllList(refType: refType, refCode: refCode)
+        return DBHelper.sharedInstance.getMCAllList(refType: refType, refCode: refCode)
     }
     
     private func getCustomerMasterDataList(regionCode:String) -> [CustomerMasterModel]
     {
-
+        
         return DBHelper.sharedInstance.getCustomerMasterList(regionCode: regionCode, customerEntityType: "DOCTOR") ?? []
     }
     
@@ -131,7 +131,7 @@ class BL_DoctorProductMapping: NSObject
         for obj in customerMasterList
         {
             let filteredValue = mappedCustomerList.filter{
-                $0.Customer_Code == obj.Customer_Code 
+                $0.Customer_Code == obj.Customer_Code
             }
             
             if filteredValue.count > 0
@@ -145,10 +145,10 @@ class BL_DoctorProductMapping: NSObject
         return customerMasterList
     }
     
-//    func getSelectedProductFromDoctor(mappedRegionCode:String,refType:String,customerCode:String,customerRegionCode:String)-> [DoctorProductMappingModel]
-//    {
-//        return DBHelper.sharedInstance.getDoctorProductMappingListUsingCustomerCode(mappedRegionCode: mappedRegionCode, refType: refType, customerCode: customerCode, customerRegionCode: customerRegionCode)
-//    }
+    //    func getSelectedProductFromDoctor(mappedRegionCode:String,refType:String,customerCode:String,customerRegionCode:String)-> [DoctorProductMappingModel]
+    //    {
+    //        return DBHelper.sharedInstance.getDoctorProductMappingListUsingCustomerCode(mappedRegionCode: mappedRegionCode, refType: refType, customerCode: customerCode, customerRegionCode: customerRegionCode)
+    //    }
     
     private func getProductMasterList(regionCode:String) -> [DetailProductMaster]
     {
@@ -270,12 +270,12 @@ class BL_DoctorProductMapping: NSObject
     
     func getMappedCustomerList(refType: String, mappedRegion: String, selectedRegion: String, customerCode: String) -> [DoctorProductMappingModel]
     {
-      return DBHelper.sharedInstance.getMappedCustomerList(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, customerCode: customerCode)
+        return DBHelper.sharedInstance.getMappedCustomerList(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, customerCode: customerCode)
     }
     
     func getMappedProductList(refType: String, mappedRegion: String, selectedRegion: String, productCode: String) -> [DoctorProductMappingModel]
     {
-       return DBHelper.sharedInstance.getMappedProductList(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, productCode: productCode)
+        return DBHelper.sharedInstance.getMappedProductList(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, productCode: productCode)
     }
     
     
@@ -291,7 +291,7 @@ class BL_DoctorProductMapping: NSObject
         }
     }
     
-     //MARK:- DPM Mapped list(Marketing Campaign)
+    //MARK:- DPM Mapped list(Marketing Campaign)
     
     func getMappedCampaignCustomerListUsingCampaignCode(refType: String, mappedRegion: String, selectedRegion: String, mcCode: String,customerCode:String) -> [DoctorProductMappingModel]
     {
@@ -308,7 +308,7 @@ class BL_DoctorProductMapping: NSObject
     func getMappingProductList(refType: String, mappedRegion: String, selectedRegion: String, customerCode: String) -> [DetailProductMaster]
     {
         
-       let detailedProductList = getProductMasterList(regionCode: selectedRegion)
+        let detailedProductList = getProductMasterList(regionCode: selectedRegion)
         let mappedList = DBHelper.sharedInstance.getMappedCustomerList(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, customerCode: customerCode)
         
         for obj in detailedProductList
@@ -328,7 +328,7 @@ class BL_DoctorProductMapping: NSObject
                 }
                 else
                 {
-                   obj.priorityOrder = filteredValue[0].Priority_Order
+                    obj.priorityOrder = filteredValue[0].Priority_Order
                 }
             }
         }
@@ -386,8 +386,8 @@ class BL_DoctorProductMapping: NSObject
     }
     func getMappingMarketingProductList(refType: String, mappedRegion: String, selectedRegion: String, mcCode: String, customerCode: String) -> [DetailProductMaster]
     {
-       
-         let detailedProductList = getCampaignProductDataList(regionCode: selectedRegion,campaignCode:mcCode)
+        
+        let detailedProductList = getCampaignProductDataList(regionCode: selectedRegion,campaignCode:mcCode)
         let mappedList = DBHelper.sharedInstance.getMappedCampaignCustomerListUsingCustomerRegion(refType: refType, mappedRegion: mappedRegion, selectedRegion: selectedRegion, mcCode: mcCode, customerCode: customerCode)
         
         for obj in detailedProductList
