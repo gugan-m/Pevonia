@@ -120,7 +120,7 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Va-qs-9kD">
-                                                                    <rect key="frame" x="8" y="80" width="94" height="25"/>
+                                                                    <rect key="frame" x="8" y="80" width="94" height="0.0"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="11"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -129,7 +129,6 @@
                                                         </view>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="1Va-qs-9kD" secondAttribute="bottom" constant="5" id="0Xl-L4-y6d"/>
                                                             <constraint firstItem="1Va-qs-9kD" firstAttribute="top" secondItem="RAe-j9-6eE" secondAttribute="bottom" constant="3" id="5Rc-gu-XrK"/>
                                                             <constraint firstAttribute="trailing" secondItem="1Va-qs-9kD" secondAttribute="trailing" constant="8" id="7n1-CG-Biv"/>
                                                             <constraint firstItem="1Va-qs-9kD" firstAttribute="centerX" secondItem="1e4-d8-oTa" secondAttribute="centerX" id="FjO-G9-eLw"/>
@@ -683,13 +682,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From: 11/10/2017 To: 19/11/2017" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0LX-TL-5Xv">
-                                <rect key="frame" x="8" y="16" width="304" height="19.5"/>
+                                <rect key="frame" x="8" y="16" width="304" height="19"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="76" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="Lvy-sR-s7O">
-                                <rect key="frame" x="0.0" y="51.5" width="320" height="516.5"/>
+                                <rect key="frame" x="0.0" y="51" width="320" height="517"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>

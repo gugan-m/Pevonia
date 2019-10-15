@@ -162,14 +162,29 @@ func getServerFormattedDateString(date : Date) -> String
 
 
 func convertServerDateStringToDate(dateString : String) -> Date{
-    
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = defaultServerDateFormat
-    dateFormatter.timeZone = TimeZone.current
-    let date = dateFormatter.date(from: dateString)
-    
-    return date!
+
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = defaultServerDateFormat
+        dateFormatter.timeZone = TimeZone.current
+        let date = dateFormatter.date(from: dateString)
+        return date!
 }
+
+func Doctor_Visit_Date_Time(dateString : String) -> Date{
+    
+    if dateString.count == 0 {
+        return Date()
+    } else {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateTimeWithoutMilliSec //"yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone.current
+        let date = dateFormatter.date(from: dateString)
+        return date!
+    }
+}
+
+
 func convertDateToMonthStringFormat(dateString:Date) -> String
 {
     let dateFormatter = DateFormatter()

@@ -1155,7 +1155,7 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             hospitalName = NOT_APPLICABLE
         }
         
-        detailDict = ["SectionName" : "Organisation" , "SectionValue" : hospitalName]
+        detailDict = ["SectionName" : "Account Name" , "SectionValue" : hospitalName]
         convertList.add(detailDict)
         detailDict = NSDictionary()
         
@@ -1254,18 +1254,18 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             if (checkNullAndNilValueForString(stringData: dict.value(forKey: "Punch_Start_Time") as? String) != EMPTY)
             {
                 detailDict = NSDictionary()
-                detailDict = ["SectionName" : "Punch In Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Punch_Start_Time") as! String)) as! String]
+                detailDict = ["SectionName" : "Check In Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Punch_Start_Time") as! String)) as! String]
                 convertList.add(detailDict)
             
             if (checkNullAndNilValueForString(stringData: dict.value(forKey: "Punch_End_Time") as? String) != EMPTY)
             {
                 detailDict = NSDictionary()
-                detailDict = ["SectionName" : "Punch Out Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Punch_End_Time") as! String)) as! String]
+                detailDict = ["SectionName" : "Check Out Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Punch_End_Time") as! String)) as! String]
                 convertList.add(detailDict)
             }
                 else
             {
-                detailDict = ["SectionName" : "Punch Out Time" , "SectionValue" : "N/A" as! String]
+                detailDict = ["SectionName" : "Check Out Time" , "SectionValue" : "N/A" as! String]
                 convertList.add(detailDict)
                 }
             }
@@ -1273,18 +1273,18 @@ class ApprovalDoctorDetailsViewController: UIViewController, UITableViewDelegate
             if (checkNullAndNilValueForString(stringData: dict.value(forKey: "Customer_Met_StartTime") as? String) != EMPTY)
             {
                 detailDict = NSDictionary()
-                detailDict = ["SectionName" : "Punch In Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Customer_Met_StartTime") as! String)) as! String]
+                detailDict = ["SectionName" : "Check In Time" , "SectionValue" : stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Customer_Met_StartTime") as! String)) as! String]
                 convertList.add(detailDict)
             
             if (checkNullAndNilValueForString(stringData: dict.value(forKey: "Customer_Met_EndTime") as? String) != EMPTY)
             {
                 detailDict = NSDictionary()
-                detailDict = ["SectionName" : "Punch Out Time" , "SectionValue" :stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Customer_Met_EndTime") as! String))  as! String]
+                detailDict = ["SectionName" : "Check Out Time" , "SectionValue" :stringFromDate(date1: getDateFromString(dateString: dict.value(forKey: "Customer_Met_EndTime") as! String))  as! String]
                 convertList.add(detailDict)
             }
                 else
             {
-                detailDict = ["SectionName" : "Punch Out Time" , "SectionValue" : "N/A" as! String]
+                detailDict = ["SectionName" : "Check Out Time" , "SectionValue" : "N/A" as! String]
                 convertList.add(detailDict)
                 }
             }

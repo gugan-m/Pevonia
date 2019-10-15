@@ -6,10 +6,11 @@
 //  Copyright © 2017 swaas. All rights reserved.
 //
 
+
 import UIKit
 
 class FileViewController: UIViewController, UIWebViewDelegate {
-
+    
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
     @IBOutlet weak var emptyStateLbl: UILabel!
@@ -22,13 +23,13 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.navigationItem.title = model?.attachmentName
         addCustomBackButtonToNavigationBar()
         loadFile()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -38,14 +39,14 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     {
         if(isfromLeave)
         {
-             fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (leaveModel?.attachmentName)!)
+            fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (leaveModel?.attachmentName)!)
         }
         else
         {
-             fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (model?.attachmentName)!)
+            fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (model?.attachmentName)!)
         }
         
-//        let fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (model?.attachmentName)!)
+        //        let fileURL = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: (model?.attachmentName)!)
         if let encodedUrl = fileURL.addingPercentEncoding(withAllowedCharacters: getCharacterSet() as CharacterSet)
         {
             if let checkedUrl = URL(string: encodedUrl)
@@ -134,5 +135,7 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
 }
+
+

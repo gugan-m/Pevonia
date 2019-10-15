@@ -2334,11 +2334,16 @@ class BL_DCR_Doctor_Visit: NSObject
                 pobAmount = 0.0
             }
             
-            let enteredDateTime = convertDateToDate(date: getCurrentDateAndTime(), dateFormat: dateTimeWithoutMilliSec, timeZone: NSTimeZone.local)
+//            let enteredDateTime = convertDateToDate(date: getCurrentDateAndTime(), dateFormat: dateTimeWithoutMilliSec, timeZone: NSTimeZone.local)
+            let visitTime = BL_DoctorList.sharedInstance.punchInTime
             
-            let trackerDict: NSDictionary = ["DCR_Doctor_Visit_Id": 0, "DCR_Id": 0, "DCR_Actual_Date": getServerFormattedDateString(date: Date()), "Doctor_Code": customerCode, "Doctor_Region_Code": regionCode, "MDL_Number": mdlNumber, "Category_Code": categoryCode, "Lattitude": latString, "Longitude": longString, "Doctor_Visit_Date_Time": enteredDateTime, "Modified_Entity": modifiedEntity, "Doctor_Name": doctorName, "Speciality_Name": spltyName, "POB_Amount": pobAmount!, "Hospital_Name": hospitalName]
+            let trackerDict: NSDictionary = ["DCR_Doctor_Visit_Id": 0, "DCR_Id": 0, "DCR_Actual_Date": getServerFormattedDateString(date: Date()), "Doctor_Code": customerCode, "Doctor_Region_Code": regionCode, "MDL_Number": mdlNumber, "Category_Code": categoryCode, "Lattitude": latString, "Longitude": longString, "Doctor_Visit_Date_Time": Doctor_Visit_Date_Time(dateString: visitTime), "Modified_Entity": modifiedEntity, "Doctor_Name": doctorName, "Speciality_Name": spltyName, "POB_Amount": pobAmount!, "Hospital_Name": hospitalName]
             
             let objDoctorVisitTracker = DoctorVisitTrackerModel(dict: trackerDict)
+            
+            
+            
+            
             
             
             BL_MenuAccess.sharedInstance.getCheckUserExist(viewController: viewController, completion: { (objApiResponse) in
@@ -2351,23 +2356,23 @@ class BL_DCR_Doctor_Visit: NSObject
                         print(objApiResponse.Status)
                         if(objApiResponse.Status == SERVER_SUCCESS_CODE)
                         {
-                            
-                            let getVisitDetails = objApiResponse.list[0] as! NSDictionary
-                            let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
-                            let dateTimeArray = getVisitTime.components(separatedBy: " ")
-                            let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
-                            let compare = NSCalendar.current.compare(originalDate, to: Date(), toGranularity: .day)
-                            if(compare == .orderedSame)
-                            {
-                                visitTime = getVisitTime
-                                
-                                self.insertEDetailedDoctorLocation(customerCode: customerCode, customerRegionCode: regionCode, latString: latString, longString: longString, geoFencingDeviationRemarks: geoFencingDeviationRemarks, dateString: visitTime)
-                                completion(SERVER_SUCCESS_CODE)
-                            }
-                            else
-                            {
-                                completion(SERVER_ERROR_CODE)
-                            }
+                            completion(SERVER_SUCCESS_CODE)
+//                            let getVisitDetails = objApiResponse.list[0] as! NSDictionary
+//                            let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
+//                            let dateTimeArray = getVisitTime.components(separatedBy: " ")
+//                            let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
+//                            let compare = NSCalendar.current.compare(originalDate, to: Date(), toGranularity: .day)
+//                            if(compare == .orderedSame)
+//                            {
+//                                visitTime = getVisitTime
+//
+//                                self.insertEDetailedDoctorLocation(customerCode: customerCode, customerRegionCode: regionCode, latString: latString, longString: longString, geoFencingDeviationRemarks: geoFencingDeviationRemarks, dateString: visitTime)
+//                                completion(SERVER_SUCCESS_CODE)
+//                            }
+//                            else
+//                            {
+//                                completion(SERVER_ERROR_CODE)
+//                            }
                         }
                         else
                         {
@@ -2628,7 +2633,7 @@ class BL_DCR_Doctor_Visit: NSObject
                 
                 let dict1: NSDictionary = ["DCR_Visit_Tracker_Id": objTracker.DCR_Doctor_Visit_Tracker_Id, "DCR_Actual_Date": convertDateIntoServerStringFormat(date: objTracker.DCR_Actual_Date), "Visit_Id": objTracker.DCR_Doctor_Visit_Id, "DCR_Id": objTracker.DCR_Id, "Doctor_Region_Code": doctorRegionCode, "Doctor_Code": doctorCode, "MDL_Number": mdlNumber, "Hospital_Name": Hospital_Name, "Category_Code": categoryCode]
                 
-                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": convertDateToString(date: objTracker.Doctor_Visit_Date_Time, timeZone: localTimeZone, format: dateTimeWithoutMilliSec), "Modified_Entity": String(objTracker.Modified_Entity), "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D"]
+                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": EMPTY, "Modified_Entity": String(objTracker.Modified_Entity), "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D"]
                 
                 var combinedAttributes : NSMutableDictionary!
                 combinedAttributes = NSMutableDictionary(dictionary: dict1)

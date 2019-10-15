@@ -211,6 +211,10 @@ class PrivilegesAndConfigSettings: NSObject
         // New Privilege
         defaultPrivilege.setValue(PrivilegeValues.DCR_FIELD_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.DCR_FIELD_CAPTURE_CONTROLS.rawValue)
         defaultPrivilege.setValue(PrivilegeValues.DCR_ATTENDANCE_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.DCR_ATTENDANCE_CAPTURE_CONTROLS.rawValue)
+    
+         defaultPrivilege.setValue(PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS.rawValue)
+         defaultPrivilege.setValue(PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue, forKey: PrivilegeNames.TP_ATTENDANCE_CAPTURE_CONTROLS.rawValue)
+    
     }
     
     private func setConfigSettingsDefaultValue()

@@ -270,23 +270,45 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     //MARK:-- Button Action Helper Methods
     private func addNewEntry(index: Int)
     {
-        switch index
-        {
-        case 0:
-            navigateToAddAccompanist()
-        case 1:
-            removeMeetingPlaceDetails()
-        case 2:
-            navigateToAddWorkPlaceDetails()
-        case 3:
-            navigateToAddTravelPlace()
-        case 4:
-            navigateToAddDoctor()
-        case 5:
-            navigateToAddGeneralRemarks()
-        default:
-            print(1)
+        
+        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            switch index
+            {
+            case 0:
+                navigateToAddAccompanist()
+            case 1:
+                removeMeetingPlaceDetails()
+            case 2:
+                navigateToAddWorkPlaceDetails()
+            case 3:
+                navigateToAddTravelPlace()
+            case 4:
+                navigateToAddDoctor()
+            case 5:
+                navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
+        } else {
+            switch index
+            {
+            case 0:
+                navigateToAddAccompanist()
+            case 1:
+                removeMeetingPlaceDetails()
+            case 2:
+                navigateToAddWorkPlaceDetails()
+            case 3:
+                navigateToAddDoctor()
+            case 4:
+                navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
         }
+        
+        
+        
     }
     
     private func modifyEntry(index: Int)
@@ -310,23 +332,43 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func emptyStateAddNewEntry(index: Int)
     {
-        switch index
-        {
-        case 0:
-            navigateToAddAccompanist()
-        case 1:
-            navigateToAddMeetingPointDetails()
-        case 2:
-            navigateToAddWorkPlaceDetails()
-        case 3:
-            navigateToAddTravelPlace()
-        case 4:
-            navigateToAddDoctor()
-        case 5:
-            navigateToAddGeneralRemarks()
-        default:
-            print(1)
+        
+        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            switch index
+            {
+            case 0:
+                navigateToAddAccompanist()
+            case 1:
+                navigateToAddMeetingPointDetails()
+            case 2:
+                navigateToAddWorkPlaceDetails()
+            case 3:
+                navigateToAddTravelPlace()
+            case 4:
+                navigateToAddDoctor()
+            case 5:
+                navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
+        } else {
+            switch index
+            {
+            case 0:
+                navigateToAddAccompanist()
+            case 1:
+                navigateToAddMeetingPointDetails()
+            case 2:
+                navigateToAddWorkPlaceDetails()
+            case 3:
+                 navigateToAddDoctor()
+            case 4:
+               navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
         }
+        
     }
     
     private func skipItem(index: Int)
@@ -455,15 +497,28 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             else if (index == 3)
             {
-                return BL_TPStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
+                  if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                    return BL_TPStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
+                  } else {
+                    return  BL_TPStepper.sharedInstance.getDoctorCellHeight(selectedIndex: index)
+                }
+                
             }
             else if (index == 4)
             {
-                return BL_TPStepper.sharedInstance.getDoctorCellHeight(selectedIndex: index)
+                 if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                     return BL_TPStepper.sharedInstance.getDoctorCellHeight(selectedIndex: index)
+                 } else {
+                    return BL_TPStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                }
             }
             else if (index == 5)
             {
-                return BL_TPStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                    return BL_TPStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                } else {
+                    return 0
+                }
             }
             else
             {
@@ -570,21 +625,42 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if (objStepperModel.recordCount > 0)
         {
-            if (rowIndex != 4)
-            {
-                cell.sectionTitleView.isHidden = false
-                cell.doctorSectionTitleView.clipsToBounds = true
-                cell.doctorTitleTopConstraint.constant = 4
-                cell.commonSectionTitleHeightConstraint.constant = 30
-            }
-            else
-            {
-                cell.doctorSectionTitleView.isHidden = true
-                cell.doctorSectionTitleView.clipsToBounds = false
-                cell.doctorTitleTopConstraint.constant = 41
-                cell.doctorSectionTitleLabel.text = objStepperModel.doctorEmptyStateTitle
-                cell.doctorSectionSubTitleLabel.text = objStepperModel.doctorEmptyStatePendingCount
-                cell.commonSectionTitleHeightConstraint.constant = 0
+            
+             if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                if (rowIndex != 4)
+                {
+                    cell.sectionTitleView.isHidden = false
+                    cell.doctorSectionTitleView.clipsToBounds = true
+                    cell.doctorTitleTopConstraint.constant = 4
+                    cell.commonSectionTitleHeightConstraint.constant = 30
+                }
+                else
+                {
+                    cell.doctorSectionTitleView.isHidden = true
+                    cell.doctorSectionTitleView.clipsToBounds = false
+                    cell.doctorTitleTopConstraint.constant = 41
+                    cell.doctorSectionTitleLabel.text = objStepperModel.doctorEmptyStateTitle
+                    cell.doctorSectionSubTitleLabel.text = objStepperModel.doctorEmptyStatePendingCount
+                    cell.commonSectionTitleHeightConstraint.constant = 0
+                }
+            
+             } else {
+                if (rowIndex != 3)
+                {
+                    cell.sectionTitleView.isHidden = false
+                    cell.doctorSectionTitleView.clipsToBounds = true
+                    cell.doctorTitleTopConstraint.constant = 4
+                    cell.commonSectionTitleHeightConstraint.constant = 30
+                }
+                else
+                {
+                    cell.doctorSectionTitleView.isHidden = true
+                    cell.doctorSectionTitleView.clipsToBounds = false
+                    cell.doctorTitleTopConstraint.constant = 41
+                    cell.doctorSectionTitleLabel.text = objStepperModel.doctorEmptyStateTitle
+                    cell.doctorSectionSubTitleLabel.text = objStepperModel.doctorEmptyStatePendingCount
+                    cell.commonSectionTitleHeightConstraint.constant = 0
+                }
             }
         }
         
@@ -628,13 +704,24 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if objStepperModel.recordCount > 0
         {
-            if indexPath.row == 4
-            {
-                cell.sectionCoverBtnView.isHidden = true
-            }
-            else
-            {
-                cell.sectionCoverBtnView.isHidden = false
+              if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                if indexPath.row == 4
+                {
+                    cell.sectionCoverBtnView.isHidden = true
+                }
+                else
+                {
+                    cell.sectionCoverBtnView.isHidden = false
+                }
+              } else {
+                if indexPath.row == 3
+                {
+                    cell.sectionCoverBtnView.isHidden = true
+                }
+                else
+                {
+                    cell.sectionCoverBtnView.isHidden = false
+                }
             }
         }
         else
@@ -832,13 +919,24 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func toggleSubmitButton()
     {
-        if (checkNullAndNilValueForString(stringData: BL_TPStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && BL_TPStepper.sharedInstance.placesList.count > 0)
-        {
-            showsubmitButton()
-        }
-        else
-        {
-            hidesubmitButton()
+         if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            if (checkNullAndNilValueForString(stringData: BL_TPStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && BL_TPStepper.sharedInstance.placesList.count > 0)
+            {
+                showsubmitButton()
+            }
+            else
+            {
+                hidesubmitButton()
+            }
+         } else {
+            if (checkNullAndNilValueForString(stringData: BL_TPStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY)
+            {
+                showsubmitButton()
+            }
+            else
+            {
+                hidesubmitButton()
+            }
         }
     }
     

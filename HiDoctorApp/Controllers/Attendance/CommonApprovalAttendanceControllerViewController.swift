@@ -45,7 +45,6 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         
         if (strCheckForLeave == "0")
         {
-            
             UserDefaults.standard.set("", forKey: "IsFromLeaveApprovalCheckBox")
             UserDefaults.standard.synchronize()
             
@@ -140,6 +139,12 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
+        if ifIsComingFromTpPage
+        {
+        } else {
+            
+        }
+        
         return 35
     }
     
@@ -156,6 +161,24 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         let icon = approvalObj.titleImage
         cell.imgView.image = UIImage(named:icon)
         
+        if ifIsComingFromTpPage
+        {
+            if section == 1 {
+                cell.titleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        } else {
+            if section == 1 || section == 4 {
+                cell.titleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        }
         return cell
     }
     
@@ -182,7 +205,20 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         }
         else if approvalDetail.dataList.count == 0
         {
-            return BL_Approval.sharedInstance.getEmptyStateCellHeight()
+            if ifIsComingFromTpPage
+            {
+                if indexPath.section == 1 {
+                    return 0
+                } else {
+                    return BL_Approval.sharedInstance.getEmptyStateCellHeight()
+                }
+            } else {
+                if indexPath.section == 1 || indexPath.section == 4 {
+                     return 0
+                } else {
+                    return BL_Approval.sharedInstance.getEmptyStateCellHeight()
+                }
+            }
         }
         else
         {
@@ -232,6 +268,21 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.AttendanceEmptyStateCell, for: indexPath) as! ApprovalEmptyStateTableViewCell
             cell.emptyStateTiltleLbl.text = approvalDetail.emptyStateText
+            if ifIsComingFromTpPage
+            {
+                 if indexPath.section == 1 {
+                    cell.emptyStateTiltleLbl.isHidden = true
+                 } else {
+                    cell.emptyStateTiltleLbl.isHidden = false
+                }
+            } else {
+                if indexPath.section == 1 || indexPath.section == 4 {
+                    cell.emptyStateTiltleLbl.isHidden = true
+                } else {
+                    cell.emptyStateTiltleLbl.isHidden = false
+                }
+            }
+            
             return cell
         }
         else
@@ -722,7 +773,7 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
             showToastView(toastText: "Problem in getting Activity Details")
             
         case AttendanceHeaderType.Doctor.rawValue :
-            showToastView(toastText: "Problem in getting Doctor Sample Details")
+            showToastView(toastText: "Problem in getting Partner Sample Details")
             
         case SectionHeaderType.Expense.rawValue :
             
@@ -868,10 +919,10 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         BL_Approval.sharedInstance.updateDCRStatus(userList : [userObj] ,userObj: userObj, reason: condenseWhitespace(stringValue: popUpView.reasonTxtView.text)) { (apiResponseObject) in
             if apiResponseObject.Status == SERVER_SUCCESS_CODE
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.approved.rawValue , type : "DCR")
+                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.approved.rawValue , type : "DVR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.unApproved.rawValue, type : "DCR")
+                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.unApproved.rawValue, type : "DVR")
                 }
                 showToastView(toastText: toastText)
                 _ = self.navigationController?.popViewController(animated: false)
@@ -883,10 +934,10 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
             }
             else
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 4, type : "DCR")
+                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 4, type : "DVR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 5, type : "DCR")
+                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 5, type : "DVR")
                 }
                 showToastView(toastText: toastText)
             }
@@ -901,20 +952,20 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         BL_Approval.sharedInstance.updateTpStatus(userList : [userObj] ,userObj: userObj, reason: condenseWhitespace(stringValue: popUpView.reasonTxtView.text)) { (apiResponseObject) in
             if apiResponseObject.Status == SERVER_SUCCESS_CODE
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.approved.rawValue, type : "TP")
+                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.approved.rawValue, type : "PR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.unApproved.rawValue, type : "TP")
+                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: DCRStatus.unApproved.rawValue, type : "PR")
                 }
                 showToastView(toastText: toastText)
                 _ = self.navigationController?.popViewController(animated: false)
             }
             else
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 4, type : "TP")
+                var toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 4, type : "PR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 5, type : "TP")
+                    toastText = getPopUpMsg(Flag: DCRFlag.attendance.rawValue, status: 5, type : "PR")
                 }
                 showToastView(toastText: toastText)
             }

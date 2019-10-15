@@ -217,7 +217,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         // self.collectionView.reloadData()
         setCollectionViewHeight()
         self.getAlertsCount()
-        self.showOnboardName()
+       // self.showOnboardName()
         let date = UserDefaults.standard.value(forKey: "lastAlertDate") as! String!
         
         let isEqual = (getCurrentDate() == date)

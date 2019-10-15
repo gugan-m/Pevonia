@@ -37,9 +37,9 @@ class BL_Approval: NSObject
         {
             var approvalObject = ApprovalTableListModel()
             
-            approvalObject.sectionTitle = ["\(PEV_ACCOMPANIST) Details","Work Place Details","Travel Details", "\(appDoctor) Visits","Product Details"][index]
-            approvalObject.emptyStateText = ["No \(PEV_ACCOMPANIST) available","No work place details available","No travel details available","No \(appDoctor) visit available","No products available"][index]
-            approvalObject.titleImage = ["icon-stepper-two-user","icon-stepper-work-area","icon-map-mark","icon-work-user","icon-stepper-two-user"][index]
+            approvalObject.sectionTitle = ["\(PEV_ACCOMPANIST) Details","Work Place Details"," ", "\(appDoctor) Visits","Product Details"][index]
+            approvalObject.emptyStateText = ["No \(PEV_ACCOMPANIST) available","No work place details available"," ","No \(appDoctor) visit available","No products available"][index]
+            approvalObject.titleImage = ["icon-stepper-two-user","icon-stepper-work-area","icon-map-mark1-8","icon-work-user","icon-stepper-two-user"][index]
             approvalObject.sectionType = TpSectionHeaderType.init(rawValue: index)!
             approvalDataList.append(approvalObject)
         }

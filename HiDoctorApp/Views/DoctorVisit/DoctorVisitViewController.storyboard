@@ -30,7 +30,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meL-fV-RZb">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="506"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="507"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="376-eg-ldF" userLabel="Visit View">
                                                 <rect key="frame" x="15" y="15" width="290" height="40"/>
@@ -367,7 +367,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9WW-SC-kd3" userLabel="Remarks">
-                                                <rect key="frame" x="15" y="376" width="290" height="50"/>
+                                                <rect key="frame" x="15" y="377" width="290" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remarks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2MA-KC-RaW">
                                                         <rect key="frame" x="0.0" y="8" width="290" height="18"/>
@@ -412,13 +412,13 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sDx-uf-dT0">
-                                                <rect key="frame" x="269" y="441" width="36" height="17"/>
+                                                <rect key="frame" x="269" y="442" width="36" height="17"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcd-yY-u48">
-                                                <rect key="frame" x="55" y="466" width="210" height="40"/>
+                                                <rect key="frame" x="55" y="467" width="210" height="40"/>
                                                 <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="fw1-Jz-KdF"/>
@@ -498,8 +498,8 @@
                                                     <constraint firstAttribute="trailing" secondItem="0MN-9X-PPD" secondAttribute="trailing" constant="16" id="zVG-Nz-rCz"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punch In " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Iw-w2-M10">
-                                                <rect key="frame" x="10" y="344" width="150" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check In " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Iw-w2-M10">
+                                                <rect key="frame" x="10" y="344" width="150" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="25" id="JMX-7t-w2V"/>
                                                     <constraint firstAttribute="width" constant="150" id="XRG-Pf-oMD"/>
@@ -508,8 +508,8 @@
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punch Out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQy-aA-lha">
-                                                <rect key="frame" x="160" y="344" width="150" height="24"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check Out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQy-aA-lha">
+                                                <rect key="frame" x="160" y="344" width="150" height="25"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="acf-bV-p5z"/>
                                                     <constraint firstAttribute="height" constant="25" id="aua-qe-DPr"/>
@@ -545,7 +545,6 @@
                                             <constraint firstAttribute="bottom" secondItem="Gcd-yY-u48" secondAttribute="bottom" id="hE8-KZ-TsW"/>
                                             <constraint firstItem="376-eg-ldF" firstAttribute="top" secondItem="meL-fV-RZb" secondAttribute="top" constant="15" id="i5S-MX-LW9"/>
                                             <constraint firstItem="9WW-SC-kd3" firstAttribute="top" secondItem="8Iw-w2-M10" secondAttribute="bottom" constant="8" id="je4-zW-Zkm"/>
-                                            <constraint firstItem="9WW-SC-kd3" firstAttribute="top" secondItem="jPP-gl-oeu" secondAttribute="bottom" constant="40" id="nnI-FF-8RO"/>
                                             <constraint firstItem="9WW-SC-kd3" firstAttribute="trailing" secondItem="376-eg-ldF" secondAttribute="trailing" id="qic-Vs-Ez5"/>
                                             <constraint firstItem="U8a-38-UTn" firstAttribute="trailing" secondItem="376-eg-ldF" secondAttribute="trailing" id="sGI-HI-BZr"/>
                                             <constraint firstAttribute="trailing" secondItem="jPP-gl-oeu" secondAttribute="trailing" constant="15" id="snW-Jo-rPo"/>

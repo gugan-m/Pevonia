@@ -65,7 +65,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
         addFooterView()
         
         assetSwapPrivValue = BL_AssetModel.sharedInstance.getAssetSwapPrivilegeValue()
-        showAlertCheck()
+        //showAlertCheck()
        // view.perform(#selector(self.showAlertCheck), with: nil, afterDelay: 1.5)
     }
     

@@ -214,9 +214,9 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
     
     func showpunchendtimealert(name: String, time: String , obj: CustomerMasterModel, dcrId:Int, code: String)
     {
-        let initialAlert = "Punch-out time for " + name + " is " + time + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + name
+        let initialAlert = "Check-out time for " + name + " is " + time + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + name
         //let indexpath = sender.tag
-        let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+        let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
             if self.isComingFromTP || self.isComingFromDigitalAssets || self.isComingFromDCR
@@ -230,7 +230,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             alertViewController.dismiss(animated: true, completion: nil)
         }))
         
-        alertViewController.addAction(UIAlertAction(title: "Punch Out", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Check Out", style: UIAlertActionStyle.default, handler: { alertAction in
             //function
             DBHelper.sharedInstance.updatepunchendtime(Customercode: obj.Customer_Code, regioncode:obj.Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
             let list = DBHelper.sharedInstance.getDCRDoctorVisitid(dcrId: dcrId, doctorcode: code)

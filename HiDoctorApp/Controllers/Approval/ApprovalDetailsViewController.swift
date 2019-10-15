@@ -46,7 +46,6 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
         self.setHeaderDetails()
         addBackButtonView()
         if isCmngFromApprovalPage && ifIsComingFromTpPage == false
@@ -164,8 +163,21 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        let approvalObj = approvalDataList[section]
         
+        if ifIsComingFromTpPage
+        {
+           if section == 2 ||  section == 4 {
+                return 0
+            }
+        } else {
+            if section == 2 ||  section == 5 || section == 6 {
+                return 0
+            }
+        }
+        
+        
+        
+        let approvalObj = approvalDataList[section]
         if approvalObj.dataList.count > 0
         {
             if approvalObj.sectionViewType == SectionHeaderType.DoctorVisit || approvalObj.sectionType == TpSectionHeaderType.DoctorVisit || approvalObj.sectionViewType == SectionHeaderType.ChemistVisit || approvalObj.sectionViewType == SectionHeaderType.Stockiest
@@ -220,17 +232,34 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
                         cell.viewOnMap.isHidden = false
                         cell.viewOnMap.addTarget(self, action: #selector(self.viewOnStockistMap), for: .touchUpInside)
                     }
-                    
                 }
-                
-                
-                
             }
-            
         }
         let icon = approvalObj.titleImage
         cell.imgView.image = UIImage(named:icon)
         
+        if ifIsComingFromTpPage
+        {
+            if section == 2 ||  section == 4  {
+                cell.titleLabel.isHidden = true
+                cell.subTitleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.subTitleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        } else {
+            if section == 2 ||  section == 5 || section == 6 {
+                cell.titleLabel.isHidden = true
+                cell.subTitleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.subTitleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        }
         return cell
     }
     
@@ -244,7 +273,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         let approvalDetail = approvalDataList[indexPath.section]
         let dataList = approvalDetail.dataList
         let defaultHeight : CGFloat = 10
-        
+      
         if approvalDetail.currentAPIStatus == APIStatus.Loading
         {
             return BL_Approval.sharedInstance.getLoadingCellHeight()
@@ -256,57 +285,61 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         }
         else if approvalDetail.dataList.count == 0
         {
+            if indexPath.section == 2 || indexPath.section == 5 || indexPath.section == 6 {
+                return 0
+            }
             return BL_Approval.sharedInstance.getEmptyStateCellHeight()
         }
         else
         {
-            if approvalDetail.sectionViewType == SectionHeaderType.Travel || approvalDetail.sectionType == TpSectionHeaderType.Travel
-            {
-                return BL_Approval.sharedInstance.getSFCCellHeight(dataList: dataList) + defaultHeight
-            }
-            else if approvalDetail.sectionViewType == SectionHeaderType.DoctorVisit
-            {
-                return BL_Approval.sharedInstance.getDoctorVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
-            }
-            else if approvalDetail.sectionViewType == SectionHeaderType.ChemistVisit
-            {
-                return BL_Approval.sharedInstance.geChemistVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
-            }
-            else if approvalDetail.sectionViewType == SectionHeaderType.Stockiest
-            {
-                return BL_Approval.sharedInstance.geStockistVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
-            }
-            else if approvalDetail.sectionType == TpSectionHeaderType.DoctorVisit
-            {
-                return BL_Approval.sharedInstance.getDoctorVisitCellHeight(dataList: dataList, type: 2) + defaultHeight
-            }
-            else if approvalDetail.sectionViewType == SectionHeaderType.WorkPlace || approvalDetail.sectionType == TpSectionHeaderType.WorkPlace
-            {
-                
-                let dataList  = getWorkPlaceListModel(dict: approvalDetail.dataList.firstObject as! NSDictionary)
-                return BL_Approval.sharedInstance.getCommonHeightforWorkPlaceDetails(dataList: dataList) + defaultHeight
-            }
-            else
-            {
-                var sectionType : Int = 0
-                
-                if ifIsComingFromTpPage
+                if approvalDetail.sectionViewType == SectionHeaderType.Travel || approvalDetail.sectionType == TpSectionHeaderType.Travel
                 {
-                    sectionType = approvalDetail.sectionType.rawValue
+                    return BL_Approval.sharedInstance.getSFCCellHeight(dataList: dataList) + defaultHeight
+                }
+                else if approvalDetail.sectionViewType == SectionHeaderType.DoctorVisit
+                {
+                    return BL_Approval.sharedInstance.getDoctorVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
+                }
+                else if approvalDetail.sectionViewType == SectionHeaderType.ChemistVisit
+                {
+                    return BL_Approval.sharedInstance.geChemistVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
+                }
+                else if approvalDetail.sectionViewType == SectionHeaderType.Stockiest
+                {
+                    return BL_Approval.sharedInstance.geStockistVisitCellHeight(dataList: dataList, type: 1) + defaultHeight
+                }
+                else if approvalDetail.sectionType == TpSectionHeaderType.DoctorVisit
+                {
+                    return BL_Approval.sharedInstance.getDoctorVisitCellHeight(dataList: dataList, type: 2) + defaultHeight
+                }
+                else if approvalDetail.sectionViewType == SectionHeaderType.WorkPlace || approvalDetail.sectionType == TpSectionHeaderType.WorkPlace
+                {
+                    
+                    let dataList  = getWorkPlaceListModel(dict: approvalDetail.dataList.firstObject as! NSDictionary)
+                    return BL_Approval.sharedInstance.getCommonHeightforWorkPlaceDetails(dataList: dataList) + defaultHeight
                 }
                 else
                 {
-                    sectionType = approvalDetail.sectionViewType.rawValue
+                    var sectionType : Int = 0
+                    
+                    if ifIsComingFromTpPage
+                    {
+                        sectionType = approvalDetail.sectionType.rawValue
+                    }
+                    else
+                    {
+                        sectionType = approvalDetail.sectionViewType.rawValue
+                    }
+                    
+                    
+                    if approvalDetail.sectionType == TpSectionHeaderType.Product
+                    {
+                        sectionType = 7
+                    }
+                    
+                    return BL_Approval.sharedInstance.getCommonCellHeight(dataList: approvalDetail.dataList , sectionType:sectionType) + defaultHeight
                 }
-                
-                
-                if approvalDetail.sectionType == TpSectionHeaderType.Product
-                {
-                    sectionType = 7
-                }
-                
-                return BL_Approval.sharedInstance.getCommonCellHeight(dataList: approvalDetail.dataList , sectionType:sectionType) + defaultHeight
-            }
+            
         }
     }
     
@@ -331,6 +364,21 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.ApprovalEmptyStateCell, for: indexPath) as! ApprovalEmptyStateTableViewCell
             cell.emptyStateTiltleLbl.text = approvalDetail.emptyStateText
+            
+            if ifIsComingFromTpPage
+            {
+                if indexPath.section == 2 || indexPath.section == 4 {
+                cell.emptyStateTiltleLbl.isHidden = true
+            } else {
+                cell.emptyStateTiltleLbl.isHidden = false
+                }
+            } else {
+                if indexPath.section == 2 || indexPath.section == 5 || indexPath.section == 6 {
+                    cell.emptyStateTiltleLbl.isHidden = true
+                } else {
+                    cell.emptyStateTiltleLbl.isHidden = false
+                }
+            }
             return cell
         }
         else
@@ -438,7 +486,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
     //MARK:- Reload tableView
     func reloadTableView()
     {
-        self.tableView.reloadData()
+       self.tableView.reloadData()
     }
     
     //MARK:- Setting DCR and TP ApprovalList
@@ -489,6 +537,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 getDCRChemistVisitDetailsForUserPerday()
                 getDCRStockiestsVisitDetails()
                 getDCRExpenseDetails()
+               
             }
             else
             {
@@ -496,6 +545,8 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
     }
+    
+   
     
     func getDCRAccompanistData()
     {
@@ -1329,11 +1380,11 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 
                 if apiResponseObject.Status == SERVER_SUCCESS_CODE
                 {
-                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.approved.rawValue , type : "DCR")
+                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.approved.rawValue , type : "DVR")
                     
                     if approvalStatus == 0
                     {
-                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.unApproved.rawValue , type : "DCR")
+                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.unApproved.rawValue , type : "DVR")
                     }
                     
                     showToastView(toastText: toastText)
@@ -1374,20 +1425,20 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
                 removeCustomActivityView()
                 if apiResponseObject.Status == SERVER_SUCCESS_CODE
                 {
-                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.approved.rawValue, type : "TP")
+                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.approved.rawValue, type : "PR")
                     if approvalStatus == 0
                     {
-                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.unApproved.rawValue, type : "TP")
+                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: DCRStatus.unApproved.rawValue, type : "PR")
                     }
                     showToastView(toastText: toastText)
                     _ = self.navigationController?.popViewController(animated: false)
                 }
                 else
                 {
-                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: 4, type : "TP")
+                    var toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: 4, type : "PR")
                     if approvalStatus == 0
                     {
-                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: 5, type : "TP")
+                        toastText = getPopUpMsg(Flag: DCRFlag.fieldRcpa.rawValue, status: 5, type : "PR")
                     }
                     showToastView(toastText: toastText)
                 }

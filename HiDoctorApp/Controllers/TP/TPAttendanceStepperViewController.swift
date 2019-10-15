@@ -86,15 +86,33 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         {
             if (index == 0 || index == 2)
             {
-                return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+                } else {
+                    if index == 0 {
+                         return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+                    } else {
+                        return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                    }
+                }
             }
             else if (index == 1)
             {
-                return BL_TP_AttendanceStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
+                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                    return BL_TP_AttendanceStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
+                } else {
+                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+                }
+                
             }
             else if (index == 3)
             {
-                return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                     return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+                } else {
+                    return 0
+                }
+               
             }
             else
             {
@@ -301,36 +319,63 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     //MARK:-- Button Action Helper Methods
     private func addNewEntry(index: Int)
     {
-        switch index
-        {
-        case 0:
-            navigateToAddWorkPlaceDetails()
-        case 1:
-            navigateToAddTravelPlace()
-        case 2:
-            navigateToAddActivityDetails()
-        case 3:
-            navigateToAddGeneralRemarks()
-        default:
-            print(1)
+        if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
+            switch index
+            {
+            case 0:
+                navigateToAddWorkPlaceDetails()
+            case 1:
+                navigateToAddTravelPlace()
+            case 2:
+                navigateToAddActivityDetails()
+            case 3:
+                navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
+        } else {
+            switch index
+            {
+            case 0:
+                navigateToAddWorkPlaceDetails()
+            case 1:
+                navigateToAddActivityDetails()
+            case 2:
+                navigateToAddGeneralRemarks()
+            default:
+                print(1)
+            }
         }
     }
     
     private func modifyEntry(index: Int)
     {
-        switch index
-        {
-        case 0:
-            navigateToEditWorkPlaceDetails()
-        case 1:
-            navigateToEditTravelPlace()
-        case 2:
-            navigateToEditActiviytDetails()
-
-        case 3:
-            navigateToEditGeneralRemarks()
-        default:
-            print(1)
+        if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
+            switch index
+            {
+            case 0:
+                navigateToEditWorkPlaceDetails()
+            case 1:
+                navigateToEditTravelPlace()
+            case 2:
+                navigateToEditActiviytDetails()
+            case 3:
+                navigateToEditGeneralRemarks()
+            default:
+                print(1)
+            }
+        } else {
+            switch index
+            {
+            case 0:
+                navigateToEditWorkPlaceDetails()
+            case 1:
+                navigateToEditActiviytDetails()
+            case 2:
+                navigateToEditGeneralRemarks()
+            default:
+                print(1)
+            }
         }
     }
     
@@ -404,6 +449,8 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     private func setSubmitViewHeightConst()
     {
+        
+      if  BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
         if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY && BL_TP_AttendanceStepper.sharedInstance.placesList.count > 0)
         {
             self.submitViewHgtConst.constant = 40
@@ -412,6 +459,18 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         {
             self.submitViewHgtConst.constant = 0
         }
+           } else {
+        if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY)
+        {
+            self.submitViewHgtConst.constant = 40
+        }
+        else
+        {
+            self.submitViewHgtConst.constant = 0
+        }
+        }
+        
+        
     }
     
     private func addCustomBackButtonToNavigationBar()

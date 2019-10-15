@@ -39,13 +39,17 @@ class BL_TPStepper: NSObject
         getAccompanistData()
         getMeetingPointDetails()
         getWorkPlaceDetails()
-        getPlaceDetails()
+        
+        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            getPlaceDetails()
+        }
+        
         getDoctorDetails()
         getGeneralRemarks()
         
         determineButtonStatus()
     }
-    
+
     //MARK:-- Height Functions
     func getEmptyStateHeight(selectedIndex: Int) -> CGFloat
     {
@@ -810,42 +814,92 @@ class BL_TPStepper: NSObject
                 stepperDataList[1].showEmptyStateSkipButton = !isMeetingPlaceTimeMandatory()
             }
             
-            if (checkNullAndNilValueForString(stringData: objTPHeader!.Category_Name) != EMPTY) // Work Place Section
-            {
-                stepperDataList[2].showRightButton = true
-                stepperDataList[2].showLeftButton = true
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
                 
-                if (placesList.count == 0)// SFC Section
+                if (checkNullAndNilValueForString(stringData: objTPHeader!.Category_Name) != EMPTY) // Work Place Section
                 {
-                    stepperDataList[3].showEmptyStateAddButton = true
-                }
-                else
-                {
-                    stepperDataList[3].showLeftButton = BL_TP_SFC.sharedInstance.checkIntermediateEntry()
-                    stepperDataList[3].showRightButton = true
+                    stepperDataList[2].showRightButton = true
+                    stepperDataList[2].showLeftButton = true
                     
-                    if (doctorList.count == 0)// Doctor Section
+                    if (placesList.count == 0)// SFC Section
                     {
-                        stepperDataList[4].showEmptyStateAddButton = true
+                        stepperDataList[3].showEmptyStateAddButton = true
                     }
                     else
                     {
-                        stepperDataList[4].showLeftButton = true
+                        stepperDataList[3].showLeftButton = BL_TP_SFC.sharedInstance.checkIntermediateEntry()
+                        stepperDataList[3].showRightButton = true
                         
-                        if (checkNullAndNilValueForString(stringData: objTPHeader!.Remarks) != EMPTY) // Remarks Section
+                        if (doctorList.count == 0)// Doctor Section
                         {
-                            stepperDataList[5].showRightButton = true
+                            stepperDataList[4].showEmptyStateAddButton = true
                         }
                         else
                         {
-                            stepperDataList[5].showEmptyStateAddButton = true
+                            stepperDataList[4].showLeftButton = true
+                            
+                            if (checkNullAndNilValueForString(stringData: objTPHeader!.Remarks) != EMPTY) // Remarks Section
+                            {
+                                stepperDataList[5].showRightButton = true
+                            }
+                            else
+                            {
+                                stepperDataList[5].showEmptyStateAddButton = true
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                stepperDataList[2].showEmptyStateAddButton = true
+                else
+                {
+                    stepperDataList[2].showEmptyStateAddButton = true
+                }
+                
+            } else {
+                if (checkNullAndNilValueForString(stringData: objTPHeader!.Category_Name) != EMPTY) // Work Place Section
+                {
+                    stepperDataList[2].showRightButton = true
+                    stepperDataList[2].showLeftButton = true
+                   
+                    if (doctorList.count == 0)// Doctor Section
+                    {
+                        stepperDataList[3].showEmptyStateAddButton = true
+                    }
+                    else
+                    {
+                        stepperDataList[3].showLeftButton = true
+                        
+                        if (checkNullAndNilValueForString(stringData: objTPHeader!.Remarks) != EMPTY) // Remarks Section
+                        {
+                            stepperDataList[4].showRightButton = true
+                        }
+                        else
+                        {
+                            stepperDataList[4].showEmptyStateAddButton = true
+                        }
+                    }
+                }
+                else
+                {
+                    stepperDataList[2].showEmptyStateAddButton = true
+                    
+                    if (doctorList.count == 0)// Doctor Section
+                    {
+                        stepperDataList[3].showEmptyStateAddButton = true
+                    }
+                    else
+                    {
+                        stepperDataList[3].showLeftButton = true
+                        
+                        if (checkNullAndNilValueForString(stringData: objTPHeader!.Remarks) != EMPTY) // Remarks Section
+                        {
+                            stepperDataList[4].showRightButton = true
+                        }
+                        else
+                        {
+                            stepperDataList[4].showEmptyStateAddButton = true
+                        }
+                    }
+                }
             }
         }
         else

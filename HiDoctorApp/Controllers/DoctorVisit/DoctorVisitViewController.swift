@@ -136,8 +136,8 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                 }
                 self.visitTimeTxtField.text = stringFromDate(date1: getDateFromString(dateString: time))
             }
-            self.punchintime.text = "Punch In: \(intime)"
-            self.punchouttime.text = "Punch Out: \(outtime)"
+            self.punchintime.text = "Check In: \(intime)"
+            self.punchouttime.text = "Check Out: \(outtime)"
             
         }
         else
@@ -826,47 +826,51 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                 // }
                 
                 _ = self.navigationController?.popViewController(animated: false)
-                if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
                 {
                     let customerCode = DCRModel.sharedInstance.customerCode
                     let remarksText =  condenseWhitespace(stringValue: remarksTxtField.text!)
                     let statusId: Int = defaultBusineessStatusId
                     let statusName: String = EMPTY
                     let postData: NSMutableArray = []
-                    let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":self.modifyDoctorVisitObj.Doctor_Name,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.modifyDoctorVisitObj.Speciality_Name,"Category_Code": self.modifyDoctorVisitObj.Category_Code ?? EMPTY,"MDL_Number":self.modifyDoctorVisitObj.MDL_Number!,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + visitTime,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":1,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+                    let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":self.modifyDoctorVisitObj.Doctor_Name,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.modifyDoctorVisitObj.Speciality_Name,"Category_Code": self.modifyDoctorVisitObj.Category_Code ?? EMPTY,"MDL_Number":self.modifyDoctorVisitObj.MDL_Number!,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":modifyDoctorVisitObj.Punch_Start_Time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":1,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
                     
                     postData.add(dict)
                     showCustomActivityIndicatorView(loadingText: "Loading...")
                     WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
                         if(apiObj.Status == SERVER_SUCCESS_CODE)
                         {
-                            let getVisitDetails = apiObj.list[0] as! NSDictionary
-                            let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
-                            var dateTimeArray = getVisitTime.components(separatedBy: " ")
-                            let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
-                            let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
-                            if(compare == .orderedSame)
-                            {
-                                removeCustomActivityView()
-                                let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
-                                let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
-                                
-                                
-                                //self.insertDCRDoctorAccompanists()
-                                _ = self.navigationController?.popViewController(animated: false)
-                            }
-                            else if(compare == .orderedDescending)
-                            {
-                                removeCustomActivityView()
-                                
-                                //self.insertDCRDoctorAccompanists()
-                                _ = self.navigationController?.popViewController(animated: false)
-                            }
-                            else
-                            {
-                                removeCustomActivityView()
-                                AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
-                            }
+                            
+                            removeCustomActivityView()
+                            _ = self.navigationController?.popViewController(animated: false)
+                            
+//                            let getVisitDetails = apiObj.list[0] as! NSDictionary
+//                            let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
+//                            var dateTimeArray = getVisitTime.components(separatedBy: " ")
+//                            let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
+//                            let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
+//                            if(compare == .orderedSame)
+//                            {
+//                                removeCustomActivityView()
+//                                let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
+//                                let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
+//
+//
+//                                //self.insertDCRDoctorAccompanists()
+//                                _ = self.navigationController?.popViewController(animated: false)
+//                            }
+//                            else if(compare == .orderedDescending)
+//                            {
+//                                removeCustomActivityView()
+//
+//                                //self.insertDCRDoctorAccompanists()
+//                                _ = self.navigationController?.popViewController(animated: false)
+//                            }
+//                            else
+//                            {
+//                                removeCustomActivityView()
+//                                AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
+//                            }
                         }
                         else
                         {
@@ -905,43 +909,54 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateStyle = .short
                     
-                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
                     {
                         let postData: NSMutableArray = []
-                        let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": EMPTY,"Doctor_Name":self.doctorName,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.specialityName,"Category_Code": EMPTY,"MDL_Number":EMPTY,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + visitTime,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+                        let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": EMPTY,"Doctor_Name":self.doctorName,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.specialityName,"Category_Code": EMPTY,"MDL_Number":EMPTY,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
                         
                         postData.add(dict)
                         showCustomActivityIndicatorView(loadingText: "Loading...")
                         WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
                             if(apiObj.Status == SERVER_SUCCESS_CODE)
                             {
-                                let getVisitDetails = apiObj.list[0] as! NSDictionary
-                                let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
-                                var dateTimeArray = getVisitTime.components(separatedBy: " ")
-                                let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
-                                let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
-                                if(compare == .orderedSame)
-                                {
-                                    removeCustomActivityView()
-                                    let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
-                                    let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
-                                    
-                                    BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: self.doctorName, specialityName: self.specialityName, visitTime: visitTime, visitMode: dateTimeArray[2], pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
+                                removeCustomActivityView()
+                                let visittime = stringFromDate(date1: Date())
+                                let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                                let visitmode = visittime.substring(from: lastcharacterIndex)
+                                var localTimeZoneName: String { return TimeZone.current.identifier }
+                                BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: self.doctorName, specialityName: self.specialityName, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
                                     self.insertDCRDoctorAccompanists()
-                                    _ = self.navigationController?.popViewController(animated: false)
-                                }
-                                else if(compare == .orderedDescending)
-                                {
-                                    removeCustomActivityView()
-                                    BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: self.doctorName, specialityName: self.specialityName, visitTime: self.visitTime, visitMode: self.visitMode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
-                                    self.insertDCRDoctorAccompanists()
-                                    _ = self.navigationController?.popViewController(animated: false)
-                                }
-                                else
-                                {
-                                    removeCustomActivityView()
-                                    AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
-                                }
+                                _ = self.navigationController?.popViewController(animated: false)
+                                
+                                
+//
+//                                let getVisitDetails = apiObj.list[0] as! NSDictionary
+//                                let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
+//                                var dateTimeArray = getVisitTime.components(separatedBy: " ")
+//                                let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
+//                                let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
+//                                if(compare == .orderedSame)
+//                                {
+//                                    removeCustomActivityView()
+//                                    let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
+//                                    let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
+//
+//                                    BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: self.doctorName, specialityName: self.specialityName, visitTime: visitTime, visitMode: dateTimeArray[2], pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
+//                                    self.insertDCRDoctorAccompanists()
+//                                    _ = self.navigationController?.popViewController(animated: false)
+//                                }
+//                                else if(compare == .orderedDescending)
+//                                {
+//                                    removeCustomActivityView()
+//                                    BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: self.doctorName, specialityName: self.specialityName, visitTime: self.visitTime, visitMode: self.visitMode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
+//                                    self.insertDCRDoctorAccompanists()
+//                                    _ = self.navigationController?.popViewController(animated: false)
+//                                }
+//                                else
+//                                {
+//                                    removeCustomActivityView()
+//                                    AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
+//                                }
                             }
                             else
                             {
@@ -995,10 +1010,10 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                 {
                     
                     
-                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
                     {
                         let postData: NSMutableArray = []
-                        let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":customerMasterObj.Customer_Name,"regionCode":customerMasterObj.Region_Code,"Speciality_Name":customerMasterObj.Speciality_Name,"Category_Code":customerMasterObj.Category_Code ?? EMPTY,"MDL_Number":customerMasterObj.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + visitTime,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":customerMasterObj.Region_Code,"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+                        let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":customerMasterObj.Customer_Name,"regionCode":customerMasterObj.Region_Code,"Speciality_Name":customerMasterObj.Speciality_Name,"Category_Code":customerMasterObj.Category_Code ?? EMPTY,"MDL_Number":customerMasterObj.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":customerMasterObj.Region_Code,"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
                         
                         postData.add(dict)
                         showCustomActivityIndicatorView(loadingText: "Loading...")
@@ -1006,30 +1021,42 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
                             if(apiObj.Status == SERVER_SUCCESS_CODE)
                             {
                                 removeCustomActivityView()
-                                let getVisitDetails = apiObj.list[0] as! NSDictionary
-                                let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
-                                var dateTimeArray = getVisitTime.components(separatedBy: " ")
-                                let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
-                                let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
-                                if(compare == .orderedSame)
-                                {
-                                    let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
-                                    let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
-                                    
-                                    BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: visitTime, visitMode: dateTimeArray[2], pobAmount: pobAmt, remarks: remarksText,regionCode: self.customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode)
+                                
+                               let visittime = stringFromDate(date1: Date())
+                                let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                               let visitmode = visittime.substring(from: lastcharacterIndex)
+                                
+                                var localTimeZoneName: String { return TimeZone.current.identifier }
+                                BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: pobAmt, remarks: remarksText, regionCode: self.customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
                                     self.insertDCRDoctorAccompanists()
                                     _ = self.navigationController?.popViewController(animated: false)
-                                }
-                                else if(compare == .orderedDescending)
-                                {
-                                    BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: self.visitTime, visitMode: self.visitMode, pobAmount: pobAmt, remarks: remarksText,regionCode: self.customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode)
-                                    self.insertDCRDoctorAccompanists()
-                                    _ = self.navigationController?.popViewController(animated: false)
-                                }
-                                else
-                                {
-                                    AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
-                                }
+                                
+                                
+//
+//                                let getVisitDetails = apiObj.list[0] as! NSDictionary
+//                                let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
+//                                var dateTimeArray = getVisitTime.components(separatedBy: " ")
+//                                let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
+//                                let compare = NSCalendar.current.compare(originalDate, to: DCRModel.sharedInstance.dcrDate, toGranularity: .day)
+//                                if(compare == .orderedSame)
+//                                {
+//                                    let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
+//                                    let visitTime = visitTimeArray[0] + ":" + visitTimeArray[1]
+//
+//                                    BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: visitTime, visitMode: dateTimeArray[2], pobAmount: pobAmt, remarks: remarksText,regionCode: self.customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode)
+//                                    self.insertDCRDoctorAccompanists()
+//                                    _ = self.navigationController?.popViewController(animated: false)
+//                                }
+//                                else if(compare == .orderedDescending)
+//                                {
+//                                    BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: self.visitTime, visitMode: self.visitMode, pobAmount: pobAmt, remarks: remarksText,regionCode: self.customerMasterObj.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode)
+//                                    self.insertDCRDoctorAccompanists()
+//                                    _ = self.navigationController?.popViewController(animated: false)
+//                                }
+//                                else
+//                                {
+//                                    AlertView.showAlertView(title: alertTitle, message: "\(PEV_DCR) Date is not a current date", viewController: self)
+//                                }
                             }
                             else
                             {

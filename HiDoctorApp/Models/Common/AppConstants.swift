@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-// let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
@@ -11,7 +11,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
 // use this url for production but not for live.
-let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+//let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
 //MARK:- Development  email issue
@@ -35,6 +35,7 @@ let Source_Of_Entry = 2
 let ForeUpdateRequired = "ForeUpdateRequired"
 let MasterDataDownloadMessage = "MasterDataDownloadMessage"
 let applicationituneUrl = "https://itunes.apple.com/in/app/hidoctor-sfa/id1219172659?mt=8"
+
 let kennectToken = "KennectToken"
 let kennectUserDetails = "kennectUserDetails"
 
@@ -879,8 +880,8 @@ let timePickerHeight : CGFloat = 150
 
 //MARK: - Add Work Details
 
-let defaultWorkCategoryType = "HQ"
-let defaultWorkCategoryCode = "EEC00000001"
+let defaultWorkCategoryType = "SELECT WORK CATEGORY"
+let defaultWorkCategoryCode = "0"
 
 //MARK:- DCR Label name based on privileges
 var appDoctor:  String = ""
@@ -1075,7 +1076,7 @@ var navigateToAttachmentUpload: Bool = false
 //MARK:- Asset analytics
 let assetAnalyticsInternetDropOffMsg : String = "Unable to upload asset analytics now. Please check your network"
 let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload customer feedback analytics now. Please check your network"
-let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload doctor visit feedback analytics now. Please check your network"
+let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload partner visit feedback analytics now. Please check your network"
 
 let privilegeKeyName = "Privilege_Name"
 let privilegeValueName = "Privilege_Value"
@@ -1169,6 +1170,8 @@ enum PrivilegeNames: String
     case DCR_FIELD_CAPTURE_CONTROLS = "DCR_FIELD_CAPTURE_CONTROLS"
     case DCR_ATTENDANCE_CAPTURE_CONTROLS = "DCR_ATTENDANCE_CAPTURE_CONTROLS"
      case DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE = "DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE"
+    case TP_FIELD_CAPTURE_CONTROLS = "TP_FIELD_CAPTURE_CONTROLS"
+    case TP_ATTENDANCE_CAPTURE_CONTROLS = "TP_ATTENDANCE_CAPTURE_CONTROLS"
 }
 
 enum PrivilegeValues: String
@@ -1220,6 +1223,8 @@ enum PrivilegeValues: String
     case DCR_FIELD_CAPTURE_VALUE =  "DOCTOR_ACCOMPANIST,DOCTOR_ACTIVITY,DETAILING,DOCTOR_SAMPLES,DOCTOR_POB,RCPA,DOCTOR_ATTACHMENTS,DOCTOR_FOLLOW_UP,TRAVEL_DETAILS,EXPENSE_DETAILS,FIELD_STOCKIST_VISITS"
     case DCR_ATTENDANCE_CAPTURE_VALUE = "TRAVEL_DETAILS,DOCTOR_SAMPLES,DOCTOR_ACTIVITY,EXPENSE_DETAILS"
     case DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE_VALUE = "DOCTOR_SAMPLES,DOCTOR_ACTIVITY,ATTENDANCE_EXPENSE_DETAILS"
+    case TP_FIELD_CAPTURE_VALUE = "TRAVEL_DETAILS"
+    
 }
 
 enum ConfigNames: String

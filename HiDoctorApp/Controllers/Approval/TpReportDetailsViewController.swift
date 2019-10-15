@@ -86,13 +86,12 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
     {
         self.emptyStateView.isHidden = true
         self.mainView.isHidden = false
-        self.setDateList()
         self.setDefaultHeight(type: userObj.Activity)
+        self.setDateList()
         self.setTpHeaderDetails()
         self.getCurrentDataList()
     }
-    
-    
+
     func setDateList()
     {
         dateList = BL_TpReport.getDateList()
@@ -145,9 +144,6 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
             headerView.backgroundColor = TPCellColor.draftedBgColor.color
            statusLabel.text = drafted
         }
-        
-        
-
     }
     
     func getTpFieldDetails()
@@ -156,6 +152,7 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
         self.setDetailsToTpFieldList()
     }
     
+  
     func getTpAttendanceDetails()
     {
         tpReportDataList = BL_TpReport.sharedInstance.getTpAttendanceDataList()
@@ -178,13 +175,14 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
         
     }
     
-    
+  
     func setDetailsToTpAttendanceList()
     {
         
         tpReportDataList[0].dataList = BL_TpReport.sharedInstance.getTpWorkPlaceDetails(userName: userObj.Employee_Name)
         tpReportDataList[1].dataList = BL_TpReport.sharedInstance.getTpSFCDetails(userName: userObj.Employee_Name)
         tpReportDataList[2].dataList = BL_TpReport.sharedInstance.getTpActivityDetails(userName: userObj.Employee_Name)
+        
         self.reloadTableView()
     }
     
@@ -235,6 +233,23 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
     {
         let approvalObj = tpReportDataList[section]
         
+        if userObj.Activity == DCRFlag.fieldRcpa.rawValue
+        {
+            if section == 2 {
+                return 0
+            } else {
+                return 40
+            }
+        }
+        else if userObj.Activity == DCRFlag.attendance.rawValue
+        {
+            if section == 1 {
+                return 0
+            } else {
+                return 40
+            }
+        }
+        
         if approvalObj.dataList.count > 0
         {
             if approvalObj.sectionType == TpReportSectionHeader.DoctorVisit
@@ -265,11 +280,33 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
                 cell.subTitleLabel.text = "\(tpObj.dataList.count) \(appDoctor) Visits"
             }
         }
-        
-        
         let icon = tpObj.titleImage
         cell.imgView.image = UIImage(named:icon)
         
+        if userObj.Activity == DCRFlag.fieldRcpa.rawValue
+        {
+            if section == 2 {
+                cell.titleLabel.isHidden = true
+                cell.subTitleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.subTitleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        }
+        else if userObj.Activity == DCRFlag.attendance.rawValue
+        {
+            if section == 1 {
+                cell.titleLabel.isHidden = true
+                cell.subTitleLabel.isHidden = true
+                cell.imgView.isHidden = true
+            } else {
+                cell.titleLabel.isHidden = false
+                cell.subTitleLabel.isHidden = false
+                cell.imgView.isHidden = false
+            }
+        }
         return cell
     }
     
@@ -287,7 +324,24 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
 
         if tpDetail.dataList.count == 0
         {
-            return BL_TpReport.sharedInstance.getEmptyStateCellHeight()
+            if userObj.Activity == DCRFlag.fieldRcpa.rawValue
+            {
+                if indexPath.section == 2 {
+                   return 0
+                } else {
+                    return BL_TpReport.sharedInstance.getEmptyStateCellHeight()
+                }
+            }
+            else if userObj.Activity == DCRFlag.attendance.rawValue
+            {
+                if indexPath.section == 1 {
+                    return 0
+                } else {
+                    return BL_TpReport.sharedInstance.getEmptyStateCellHeight()
+                }
+            } else {
+                return BL_TpReport.sharedInstance.getEmptyStateCellHeight()
+            }
         }
         else
         {
@@ -342,7 +396,23 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
         if tpDetail.dataList.count == 0
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.TpReportEmptyStateCell, for: indexPath) as! ApprovalEmptyStateTableViewCell
-            cell.emptyStateTiltleLbl.text = tpDetail.emptyStateText
+             cell.emptyStateTiltleLbl.text = tpDetail.emptyStateText
+            if userObj.Activity == DCRFlag.fieldRcpa.rawValue
+            {
+                if indexPath.section == 2 {
+                    cell.emptyStateTiltleLbl.isHidden = true
+                } else {
+                    cell.emptyStateTiltleLbl.isHidden = false
+                }
+            }
+            else if userObj.Activity == DCRFlag.attendance.rawValue
+            {
+                if indexPath.section == 1 {
+                    cell.emptyStateTiltleLbl.isHidden = true
+                } else {
+                    cell.emptyStateTiltleLbl.isHidden = false
+                }
+            }
             return cell
         }
         else
@@ -446,6 +516,7 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
             }
         }
     }
+    
     func showActivityIndicator()
     {
         if self.mainView.isHidden == false
@@ -473,6 +544,4 @@ class TpReportDetailsViewController: UIViewController,UICollectionViewDataSource
         self.refreshBtn.isHidden = false
         
     }
-    
-
 }

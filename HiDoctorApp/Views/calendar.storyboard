@@ -425,7 +425,7 @@
                                                     <outlet property="delegate" destination="Skb-GV-bfm" id="CLS-h5-lGR"/>
                                                 </connections>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Customers Tagged" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsE-Nx-Kj5">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Partners Tagged" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsE-Nx-Kj5">
                                                 <rect key="frame" x="15" y="571" width="345" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -610,22 +610,22 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HDU-Kr-R15" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wzu-od-mUg" userLabel="seperator view">
-                                                                            <rect key="frame" x="0.0" y="99" width="375" height="2"/>
+                                                                            <rect key="frame" x="0.0" y="99" width="320" height="2"/>
                                                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="2" id="kth-U5-1FO"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlu-TM-r68">
-                                                                            <rect key="frame" x="20" y="2" width="308" height="20"/>
+                                                                            <rect key="frame" x="20" y="2" width="253" height="20"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDi-zD-t5z">
-                                                                            <rect key="frame" x="20" y="24" width="308" height="20"/>
+                                                                            <rect key="frame" x="20" y="24" width="253" height="20"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
@@ -660,7 +660,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QoM-X3-FrQ" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                            <rect key="frame" x="208" y="70" width="157" height="23"/>
+                                                                            <rect key="frame" x="208" y="70" width="102" height="23"/>
                                                                             <subviews>
                                                                                 <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-stepper-down-arrow" highlightedImage="icon-stepper-down-arrow" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RuA-bQ-ZAM" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                                     <rect key="frame" x="10" y="1" width="20" height="20"/>
@@ -700,7 +700,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ZV-jl-RN8">
-                                                                            <rect key="frame" x="336" y="2" width="31" height="30"/>
+                                                                            <rect key="frame" x="281" y="2" width="31" height="30"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="AiY-Lj-bD5"/>
                                                                             </constraints>

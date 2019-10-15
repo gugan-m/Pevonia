@@ -666,10 +666,10 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         
         if workCategoryList.count > 0
         {
-            index = workCategoryList.index(where: { (obj) -> Bool in
-                obj.Category_Name.uppercased() == name.uppercased()
-            })!
-            self.pickerView.selectRow(index, inComponent: 0, animated: false)
+           // index = workCategoryList.index(where: { (obj) -> Bool in
+             //   obj.Category_Name.uppercased() == name.uppercased()
+         //   })!
+            self.pickerView.selectRow(workCategoryList.startIndex, inComponent: 0, animated: false)
         }
     }
     

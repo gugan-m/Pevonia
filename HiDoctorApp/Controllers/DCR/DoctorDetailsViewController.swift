@@ -333,15 +333,15 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
             if doctorCheck == 0
             {
                 let currentLocation = getCurrentLocaiton()
-                let initialAlert = "Punch-in time for " + BL_DoctorList.sharedInstance.doctorTitle + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + BL_DoctorList.sharedInstance.doctorTitle
+                let initialAlert = "Check-in time for " + BL_DoctorList.sharedInstance.doctorTitle + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + BL_DoctorList.sharedInstance.doctorTitle
                 //let indexpath = sender.tag
-                let alertViewController = UIAlertController(title: "Punch In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
                     alertViewController.dismiss(animated: true, completion: nil)
                 }))
                 
-                alertViewController.addAction(UIAlertAction(title: "Punch In", style: UIAlertActionStyle.default, handler: { alertAction in
+                alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
                     self.moveToNextScreen()
                     BL_DoctorList.sharedInstance.punchInTime = getStringFromDateforPunch(date: getCurrentDateAndTime())
                     //function
@@ -439,8 +439,8 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     func showpunchvalidation(obj: DCRDoctorVisitModel)
     {
-        let string = ". You need to Punch-out " + obj.Doctor_Name  + " for other visits "
-        let initialAlert = "Punch-In time for " + obj.Doctor_Name + " is " + stringFromDate(date1: getDateFromString(dateString: obj.Punch_Start_Time!) ) + string
+        let string = ". You need to Check-out " + obj.Doctor_Name  + " for other visits "
+        let initialAlert = "Check-In time for " + obj.Doctor_Name + " is " + stringFromDate(date1: getDateFromString(dateString: obj.Punch_Start_Time!) ) + string
     
         //let indexpath = sender.tag
         let alertViewController = UIAlertController(title: "Not allowed to visit", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
@@ -454,8 +454,8 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     func showpunchvalidationwithoutobj(doc: String, time: String)
     {
-        let string = ". You need to Punch-out " + doc  + " for other visits "
-        let initialAlert = "Punch-In time for " + doc + " is " + time + string
+        let string = ". You need to Check-out " + doc  + " for other visits "
+        let initialAlert = "Check-In time for " + doc + " is " + time + string
         
         //let indexpath = sender.tag
         let alertViewController = UIAlertController(title: "Not allowed to visit", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
@@ -515,7 +515,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     private func moveToNextScreen()
     {
        
-        if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
+        if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
         {
             if(checkInternetConnectivity())
             {

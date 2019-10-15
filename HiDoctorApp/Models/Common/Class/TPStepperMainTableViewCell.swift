@@ -119,19 +119,41 @@ class TPStepperMainTableViewCell: UITableViewCell ,UITableViewDelegate, UITableV
         }
         else if (selectedIndex == 3)
         {
-            return BL_TPStepper.sharedInstance.getSFCSingleCellHeight(selectedIndex: selectedIndex)
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                return BL_TPStepper.sharedInstance.getSFCSingleCellHeight(selectedIndex: selectedIndex)
+            } else if isFromTp {
+                return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            } else {
+                return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            }
+            
         }
         else if (selectedIndex == 4 && isFromTp)
         {
-            return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            } else {
+                return BL_TPStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            }
+            
+            
         }
         else if (selectedIndex == 4)
         {
-            return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                return BL_TPStepper.sharedInstance.getDoctorSingleCellHeight(selectedIndex: indexPath.row)
+            } else {
+                return BL_TPStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            }
+            
         }
         else if (selectedIndex == 5)
         {
-            return BL_TPStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                return BL_TPStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            } else {
+                return 0
+            }
         }
         else
         {
@@ -180,93 +202,173 @@ class TPStepperMainTableViewCell: UITableViewCell ,UITableViewDelegate, UITableV
         }
         else if (selectedIndex == 3)
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "StepperSFCCell") as! DCRStepperSFCTableViewCell
-            let sfcList = BL_TPStepper.sharedInstance.placesList
-            let sfcObj:TourPlannerSFC = sfcList[indexPath.row]
-            
-            cell.fromPlaceLabel.text = sfcObj.From_Place
-            cell.toPlaceLabel.text = sfcObj.To_Place
-            cell.travelModeLabel.text = sfcObj.Travel_Mode.uppercased()
-            
-            return cell
-        }
-        else if (selectedIndex == 4)
-        {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TPStepperDoctorTVCell") as! TPStepperDoctorTableViewCell
-            let doctorList = BL_TPStepper.sharedInstance.doctorList
-            let doctorObj: StepperDoctorModel = doctorList[indexPath.row]
-            
-            cell.doctorNameLabel.text = doctorObj.Customer_Name
-            cell.isFromTp = true
-            cell.sampleList1 = doctorObj.sampleList1
-            
-            if !doctorObj.isExpanded
-            {
-                cell.addSampleBtn.isHidden = true
-                cell.removeDoctorBtn.isHidden = true
-                cell.sampleLabel.isHidden = true
-                cell.companyIcon.isHidden = true
-                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-down-arrow")
-            }
-            else
-            {
-                cell.addSampleBtn.isHidden = false
-                cell.removeDoctorBtn.isHidden = false
-                cell.sampleLabel.isHidden = false
-                cell.companyIcon.isHidden = false
-                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-up-arrow")
-            }
-            
-            // cell.visitTimeLabel.text = doctorObj.Visit_Mode
-         //   cell.line1Text.text = doctorObj.Hospital_Name! + " | " + "MDL NO: " + doctorObj.MDL_Number! + " | " + (doctorObj.Speciality_Name)!
-              cell.line1Text.text = doctorObj.Hospital_Name! + " | " + (doctorObj.Speciality_Name)!
-            
-            var line2Text: String = ""
-            
-            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
-            {
-                line2Text = doctorObj.Category_Name!
-            }
-            
-            if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
-            {
-                if (line2Text != "")
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StepperSFCCell") as! DCRStepperSFCTableViewCell
+                let sfcList = BL_TPStepper.sharedInstance.placesList
+                let sfcObj:TourPlannerSFC = sfcList[indexPath.row]
+                
+                cell.fromPlaceLabel.text = sfcObj.From_Place
+                cell.toPlaceLabel.text = sfcObj.To_Place
+                cell.travelModeLabel.text = sfcObj.Travel_Mode.uppercased()
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TPStepperDoctorTVCell") as! TPStepperDoctorTableViewCell
+                let doctorList = BL_TPStepper.sharedInstance.doctorList
+                let doctorObj: StepperDoctorModel = doctorList[indexPath.row]
+                
+                cell.doctorNameLabel.text = doctorObj.Customer_Name
+                cell.isFromTp = true
+                cell.sampleList1 = doctorObj.sampleList1
+                
+                if !doctorObj.isExpanded
                 {
-                    line2Text = line2Text + " | " + doctorObj.Region_Name!
+                    cell.addSampleBtn.isHidden = true
+                    cell.removeDoctorBtn.isHidden = true
+                    cell.sampleLabel.isHidden = true
+                    cell.companyIcon.isHidden = true
+                    cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-down-arrow")
                 }
                 else
                 {
-                    line2Text = doctorObj.Region_Name!
+                    cell.addSampleBtn.isHidden = false
+                    cell.removeDoctorBtn.isHidden = false
+                    cell.sampleLabel.isHidden = false
+                    cell.companyIcon.isHidden = false
+                    cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-up-arrow")
                 }
+                
+                // cell.visitTimeLabel.text = doctorObj.Visit_Mode
+                //   cell.line1Text.text = doctorObj.Hospital_Name! + " | " + "MDL NO: " + doctorObj.MDL_Number! + " | " + (doctorObj.Speciality_Name)!
+                cell.line1Text.text = doctorObj.Hospital_Name! + " | " + (doctorObj.Speciality_Name)!
+                
+                var line2Text: String = ""
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                {
+                    line2Text = doctorObj.Category_Name!
+                }
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
+                {
+                    if (line2Text != "")
+                    {
+                        line2Text = line2Text + " | " + doctorObj.Region_Name!
+                    }
+                    else
+                    {
+                        line2Text = doctorObj.Region_Name!
+                    }
+                }
+                
+                cell.line2Text.text = line2Text
+                cell.addSampleBtn.tag = indexPath.row
+                cell.addSampleBtn.addTarget(self, action: #selector(didTapAddSampleBtn), for: .touchUpInside)
+                cell.removeDoctorBtn.tag = indexPath.row
+                cell.removeDoctorBtn.addTarget(self, action: #selector(removeDoctorButtonAction), for: .touchUpInside)
+                cell.tableView.reloadData()
+                return cell
             }
-            
-            cell.line2Text.text = line2Text
-            cell.addSampleBtn.tag = indexPath.row
-            cell.addSampleBtn.addTarget(self, action: #selector(didTapAddSampleBtn), for: .touchUpInside)
-            cell.removeDoctorBtn.tag = indexPath.row
-            cell.removeDoctorBtn.addTarget(self, action: #selector(removeDoctorButtonAction), for: .touchUpInside)
-            cell.tableView.reloadData()
-            return cell
-        }   
+        }
+        else if (selectedIndex == 4) {
+            if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue
+               {
+           
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TPStepperDoctorTVCell") as! TPStepperDoctorTableViewCell
+                let doctorList = BL_TPStepper.sharedInstance.doctorList
+                let doctorObj: StepperDoctorModel = doctorList[indexPath.row]
+                
+                cell.doctorNameLabel.text = doctorObj.Customer_Name
+                cell.isFromTp = true
+                cell.sampleList1 = doctorObj.sampleList1
+                
+                if !doctorObj.isExpanded
+                {
+                    cell.addSampleBtn.isHidden = true
+                    cell.removeDoctorBtn.isHidden = true
+                    cell.sampleLabel.isHidden = true
+                    cell.companyIcon.isHidden = true
+                    cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-down-arrow")
+                }
+                else
+                {
+                    cell.addSampleBtn.isHidden = false
+                    cell.removeDoctorBtn.isHidden = false
+                    cell.sampleLabel.isHidden = false
+                    cell.companyIcon.isHidden = false
+                    cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-up-arrow")
+                }
+                
+                // cell.visitTimeLabel.text = doctorObj.Visit_Mode
+                //   cell.line1Text.text = doctorObj.Hospital_Name! + " | " + "MDL NO: " + doctorObj.MDL_Number! + " | " + (doctorObj.Speciality_Name)!
+                cell.line1Text.text = doctorObj.Hospital_Name! + " | " + (doctorObj.Speciality_Name)!
+                
+                var line2Text: String = ""
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                {
+                    line2Text = doctorObj.Category_Name!
+                }
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
+                {
+                    if (line2Text != "")
+                    {
+                        line2Text = line2Text + " | " + doctorObj.Region_Name!
+                    }
+                    else
+                    {
+                        line2Text = doctorObj.Region_Name!
+                    }
+                }
+                
+                cell.line2Text.text = line2Text
+                cell.addSampleBtn.tag = indexPath.row
+                cell.addSampleBtn.addTarget(self, action: #selector(didTapAddSampleBtn), for: .touchUpInside)
+                cell.removeDoctorBtn.tag = indexPath.row
+                cell.removeDoctorBtn.addTarget(self, action: #selector(removeDoctorButtonAction), for: .touchUpInside)
+                cell.tableView.reloadData()
+                return cell
+        
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StepperRemarksCell") as! DCRStepperRemarksTableViewCell
+                
+                cell.line1Label.text = BL_TPStepper.sharedInstance.generalRemarks
+                cell.line2Label.text = EMPTY
+                
+                return cell
+            }
+        }
         else
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "StepperRemarksCell") as! DCRStepperRemarksTableViewCell
-            
-            cell.line1Label.text = BL_TPStepper.sharedInstance.generalRemarks
-            cell.line2Label.text = EMPTY
-            
-            return cell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "StepperRemarksCell") as! DCRStepperRemarksTableViewCell
+                
+                cell.line1Label.text = BL_TPStepper.sharedInstance.generalRemarks
+                cell.line2Label.text = EMPTY
+                
+                return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if selectedIndex == 4
-        {
-            BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded = !BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded
-            
-            delegate.didSelectExpandableCell()
+        
+        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            if selectedIndex == 4
+            {
+                BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded = !BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded
+                
+                delegate.didSelectExpandableCell()
+            }
+        } else {
+            if selectedIndex == 3
+            {
+                BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded = !BL_TPStepper.sharedInstance.doctorList[indexPath.row].isExpanded
+                
+                delegate.didSelectExpandableCell()
+            }
         }
+        
     }
     
     @objc func didTapAddSampleBtn(sender: UIButton)

@@ -21,10 +21,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var emptyStatelabel: UILabel!
     @IBOutlet weak var addBtn: UIBarButtonItem!
     @IBOutlet weak var searchBarHeightConst: NSLayoutConstraint!
-    
     @IBOutlet var segmentedControlHeight: NSLayoutConstraint!
-    
     @IBOutlet var segmentedControlTopSpace: NSLayoutConstraint!
+    
     var selectedIndex : Int!
     var constrainedWidth : CGFloat!
     var cellIdentifier : String!
@@ -45,6 +44,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     var dcrID: Int = 0
     var currentList1 : [CustomerSortedModel] = []
     var showOrganisation: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showOrganisation = (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.SHOW_ORGANISATION_IN_CUSTOMER))
@@ -600,7 +600,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 var detailText : String = ""
                 
             //   detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
-                detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
+                detailText = String(format: "%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                 
                 if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                 {
@@ -626,7 +626,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 var detailText : String = ""
                 
                // detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
-               detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
+               detailText = String(format: "%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
                 
                 if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
                 {
@@ -651,7 +651,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             var detailText : String = ""
             
 //            detailText = String(format: "%@ | %@ | %@ | %@| %@","\n", ccmNumberPrefix + model.MDL_Number, model.Speciality_Name, model.Category_Name!, model.Region_Name)
-            detailText = String(format: "%@%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
+            detailText = String(format: "6%@ | %@ | %@","\n",model.Speciality_Name, model.Category_Name!, model.Region_Name)
             
             if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && model.Sur_Name != ""
             {
@@ -806,9 +806,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             if(model != nil && model.count > 0)
             {
                 let doctorobj : DCRDoctorVisitModel = model[0]
-                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
+                let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
                 //let indexpath = sender.tag
-                let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
                     alertViewController.dismiss(animated: true, completion: nil)
@@ -830,15 +830,15 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 if doctorCheck == 0
                 {
                     let currentLocation = getCurrentLocaiton()
-                    let initialAlert = "Punch-in time for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
+                    let initialAlert = "Check-in time for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
                     //let indexpath = sender.tag
-                    let alertViewController = UIAlertController(title: "Punch In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                    let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
                     
                     alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
                         alertViewController.dismiss(animated: true, completion: nil)
                     }))
                     
-                    alertViewController.addAction(UIAlertAction(title: "Punch In", style: UIAlertActionStyle.default, handler: { alertAction in
+                    alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
                         //function
                         self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
                         alertViewController.dismiss(animated: true, completion: nil)

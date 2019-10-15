@@ -718,19 +718,9 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ytb-NT-4hZ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="540"/>
-                                        <subviews>
-                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ax2-Ff-YWq">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="540"/>
-                                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </webView>
-                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="540" id="53t-gK-2Sp"/>
-                                            <constraint firstAttribute="trailing" secondItem="ax2-Ff-YWq" secondAttribute="trailing" id="F8b-VJ-J7f"/>
-                                            <constraint firstItem="ax2-Ff-YWq" firstAttribute="top" secondItem="Ytb-NT-4hZ" secondAttribute="top" id="Moe-jo-GZn"/>
-                                            <constraint firstItem="ax2-Ff-YWq" firstAttribute="leading" secondItem="Ytb-NT-4hZ" secondAttribute="leading" id="Y4b-Wb-1CI"/>
-                                            <constraint firstAttribute="bottom" secondItem="ax2-Ff-YWq" secondAttribute="bottom" id="kZX-pH-3Fc"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -790,7 +780,7 @@
                         <outlet property="centerVertical" destination="RUO-ry-qs5" id="P8J-Jo-bM4"/>
                         <outlet property="nextBut" destination="A5K-SJ-ANs" id="l6q-kd-x4M"/>
                         <outlet property="titleLabel" destination="FC8-ml-pvh" id="fXd-hm-z9t"/>
-                        <outlet property="weView" destination="ax2-Ff-YWq" id="M1d-tt-ozq"/>
+                        <outlet property="web_sourceView" destination="Ytb-NT-4hZ" id="37H-2T-wDN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAt-nb-EVn" userLabel="First Responder" sceneMemberID="firstResponder"/>

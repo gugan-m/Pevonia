@@ -305,7 +305,7 @@
                                                                                             <rect key="frame" x="0.0" y="388" width="263" height="220"/>
                                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dgc-3b-Yap" id="fMM-Zl-f3D">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="220"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="219.5"/>
                                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OO3-X5-qdh" userLabel="Doctor Wrapper View">
@@ -892,7 +892,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agC-7f-Pz7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-298.125" y="-10"/>
+            <point key="canvasLocation" x="-356" y="-158"/>
         </scene>
         <!--Accompanist View Controller-->
         <scene sceneID="Y8W-Cj-cnW">

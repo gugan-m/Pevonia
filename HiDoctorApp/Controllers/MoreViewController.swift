@@ -279,7 +279,14 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
                     moreDescObj = MoreListDescriptionModel()
                     moreHeaderObj.sectionTitle = "Miscellaneous"
                     moreDescObj.stoaryBoardName = "ERROR_LOG"
-                    moreDescObj.icon = "icon-task"
+                    
+                    if strDetails[i].Menu_Name == "Contact Master"{
+                        moreDescObj.icon = "icon-doctor"
+                    } else {
+                        moreDescObj.icon = "icon-task"
+                    }
+                    
+                    
                     moreDescObj.viewControllerIdentifier = "Responsive"
                     moreDescObj.descriptionTxt = strDetails[i].Menu_Name
 //                moreDescObj = MoreListDescriptionModel()
@@ -334,7 +341,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         moreDescObj.icon = "ic_notice-board@1,5x.png"
         moreDescObj.descriptionTxt = "Notice Board"
-        dataList.append(moreDescObj)
+       // dataList.append(moreDescObj)
         
         moreDescObj = MoreListDescriptionModel()
         moreDescObj.stoaryBoardName = Constants.StoaryBoardNames.MessageSb
@@ -342,7 +349,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         moreDescObj.icon = "icon-message"
         moreDescObj.descriptionTxt = "Message"
-        dataList.append(moreDescObj)
+       // dataList.append(moreDescObj)
         moreHeaderObj.dataList = dataList
         list.append(moreHeaderObj)
         
@@ -376,12 +383,12 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         
 
         
-        moreDescObj = MoreListDescriptionModel()
-        moreDescObj.stoaryBoardName = "HELP"
-        moreDescObj.viewControllerIdentifier = ""
-        moreDescObj.icon = "icon-help"
-        moreDescObj.descriptionTxt = "Help"
-        dataList.append(moreDescObj)
+//        moreDescObj = MoreListDescriptionModel()
+//        moreDescObj.stoaryBoardName = "HELP"
+//        moreDescObj.viewControllerIdentifier = ""
+//        moreDescObj.icon = "icon-help"
+//        moreDescObj.descriptionTxt = "Help"
+//        dataList.append(moreDescObj)
         
         moreDescObj = MoreListDescriptionModel()
         moreDescObj.stoaryBoardName = MoreViewMasterSb
@@ -1130,11 +1137,5 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                 }
                 }.resume()
-    
-
-        
     }
-    
-
-    
 }

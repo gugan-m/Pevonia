@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class UnApprovalViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ApprovalPopUpDelegate{
     
     @IBOutlet weak var emptyStateLbl: UILabel!
@@ -350,8 +348,9 @@ class UnApprovalViewController: UIViewController, UITableViewDataSource, UITable
         {
             for userObjList in list
             {
-                let dict = userObjList as! NSDictionary
                 
+                let dict = userObjList as! NSDictionary
+                print(dict)
                 let appliedListObj : ApprovalUserMasterModel = ApprovalUserMasterModel()
                 let nullCheck = dict.object(forKey: "Region_Code") as? String
                 appliedListObj.User_Name = self.userList.User_Name
@@ -382,7 +381,7 @@ class UnApprovalViewController: UIViewController, UITableViewDataSource, UITable
                     {
                         if tpId > 0
                         {
-                            appliedListObj.Activity = Int(checkNullAndNilValueForString(stringData: dict.object(forKey: "Activity") as? String))
+                            appliedListObj.Activity = dict.value(forKey: "Activity") as! Int
                             appliedListObj.Activity_Id = dict.object(forKey: "TP_Id") as! Int!
                             appliedListObj.Actual_Date = dict.object(forKey: "TP_Date") as! String!
                             appliedListObj.actualDate = convertDateIntoString(dateString: dict.object(forKey: "TP_Date") as! String!)

@@ -811,6 +811,87 @@ class BL_TpReport: NSObject
                                 }
                                 else
                                 {
+ 
+                                    if(userObj.Activity == 1)
+                                    {
+                                        WebServiceHelper.sharedInstance.getTourPlannerDoctor(postData: postData) { (apiResponseObject) in
+                                            if apiResponseObject.Status == SERVER_SUCCESS_CODE
+                                            {
+                                                if apiResponseObject.list.count > 0
+                                                {
+                                                    for value in apiResponseObject.list
+                                                    {
+                                                        
+                                                        let obj = value as! NSDictionary
+                                                        let doctorModel = CopyAccDoctorDetails()
+                                                        doctorModel.doctor_Name = obj.value(forKey: "Doctor_Name") as? String
+                                                        doctorModel.doctorSpeciality = obj.value(forKey: "Speciality_Name") as? String
+                                                        doctorModel.Hospital_Name = obj.value(forKey: "Hospital_Name") as? String
+                                                        doctorModel.tp_Id = obj.value(forKey: "TP_Id") as! Int
+                                                        doctorModel.tp_Doctor_Id = obj.value(forKey: "TP_Doctor_Id") as! Int
+                                                        doctorModel.doctor_Code = obj.value(forKey: "Doctor_Code") as? String
+                                                        doctorModel.doctor_Region_Code = obj.value(forKey: "Doctor_Region_Code") as? String
+                                                        doctorModel.mdl = obj.value(forKey: "MDL") as? String
+                                                        doctorModel.region_Code = obj.value(forKey: "Region_Code") as? String
+                                                        doctorModel.region_Name = obj.value(forKey: "Region_Name") as? String
+                                                        doctorModel.category_Name = obj.value(forKey: "Category_Name") as? String
+                                                        doctorModel.category_Code = obj.value(forKey: "SFC_Category_Name") as? String
+                                                        
+                                                        self.doctorList.append(doctorModel)
+                                                        
+                                                        
+                                                    }
+                                                    //completion(apiResponseObject)
+                                                    
+                                                }
+                                                //                                            else
+                                                //                                            {
+                                                //                                              completion(apiResponseObject)//only field
+                                                //                                            }
+                                                self.accompanistList.removeAll()
+                                                WebServiceHelper.sharedInstance.getTourPlannerAccompanist(postData: postData)
+                                                {
+                                                    (apiResponseObject) in
+                                                    if apiResponseObject.Status == SERVER_SUCCESS_CODE
+                                                    {
+                                                        if apiResponseObject.list.count > 0
+                                                        {
+                                                            for value in apiResponseObject.list
+                                                            {
+                                                                let obj = value as! NSDictionary
+                                                                let accModel = UserMasterModel()
+                                                                
+                                                                accModel.Employee_name = checkNullAndNilValueForString(stringData: obj.value(forKey: "Acc_User_Name") as? String)
+                                                                accModel.Region_Code = checkNullAndNilValueForString(stringData: obj.value(forKey: "Acc_Region_Code") as? String)
+                                                                accModel.User_Code = checkNullAndNilValueForString(stringData: obj.value(forKey: "Acc_User_Code") as? String)
+                                                                accModel.User_Type_Name = checkNullAndNilValueForString(stringData: obj.value(forKey: "Acc_User_Type_Name") as? String)
+                                                                
+                                                                self.accompanistList.append(accModel)
+                                                                
+                                                            }
+                                                        }
+                                                        completion(apiResponseObject)
+                                                    }
+                                                    else
+                                                    {
+                                                        completion(apiResponseObject)//only field
+                                                    }
+                                                    
+                                                }
+                                                
+                                                self.activityCount = 3
+                                            }
+                                            else
+                                            {
+                                                self.headerList.removeAll()
+                                                self.sfcList.removeAll()
+                                                completion(apiResponseObject)
+                                            }
+                                        }
+                                        
+                                    }
+                                    
+                                    
                                    completion(apiResponseObject)
                                 }
                             }

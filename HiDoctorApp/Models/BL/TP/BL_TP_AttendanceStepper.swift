@@ -31,7 +31,9 @@ class BL_TP_AttendanceStepper: NSObject
         stepperDataList.removeAll()
         
         getWorkPlaceDetails()
-        getPlaceDetails()
+        if isTravelEnabled() {
+           getPlaceDetails()
+        }
         getActivityDetails()
         getGeneralRemarks()
         
@@ -179,6 +181,15 @@ class BL_TP_AttendanceStepper: NSObject
         
         return totalHeight
     }
+    
+    func isTravelEnabled() -> Bool {
+         if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_ATTENDANCE_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+            return true
+         } else {
+            return false
+        }
+    }
+    
     
     //MARK:-- Submit TP Functions
     
@@ -367,32 +378,52 @@ class BL_TP_AttendanceStepper: NSObject
         {
             stepperDataList[0].showRightButton = true
             
-            if (self.placesList.count > 0)
-            {
-                stepperDataList[1].showLeftButton = BL_TP_SFC.sharedInstance.checkIntermediateEntry()
-                stepperDataList[1].showRightButton = true
-                
-                if (checkNullAndNilValueForString(stringData: self.objTPHeader!.Activity_Name) != EMPTY)
+             if isTravelEnabled() {
+                if (self.placesList.count > 0)
                 {
-                    stepperDataList[2].showRightButton = true
+                    stepperDataList[1].showLeftButton = BL_TP_SFC.sharedInstance.checkIntermediateEntry()
+                    stepperDataList[1].showRightButton = true
                     
-                    if (checkNullAndNilValueForString(stringData: self.objTPHeader?.Remarks) != EMPTY)
+                    if (checkNullAndNilValueForString(stringData: self.objTPHeader!.Activity_Name) != EMPTY)
                     {
-                        stepperDataList[3].showRightButton = true
+                        stepperDataList[2].showRightButton = true
+                        
+                        if (checkNullAndNilValueForString(stringData: self.objTPHeader?.Remarks) != EMPTY)
+                        {
+                            stepperDataList[3].showRightButton = true
+                        }
+                        else
+                        {
+                            stepperDataList[3].showEmptyStateAddButton = true
+                        }
                     }
                     else
                     {
-                        stepperDataList[3].showEmptyStateAddButton = true
+                        stepperDataList[2].showEmptyStateAddButton = true
                     }
                 }
                 else
                 {
-                    stepperDataList[2].showEmptyStateAddButton = true
+                    stepperDataList[1].showEmptyStateAddButton = true
                 }
-            }
-            else
-            {
-                stepperDataList[1].showEmptyStateAddButton = true
+             } else  {
+                if (checkNullAndNilValueForString(stringData: self.objTPHeader!.Activity_Name) != EMPTY)
+                {
+                    stepperDataList[1].showRightButton = true
+                    
+                    if (checkNullAndNilValueForString(stringData: self.objTPHeader?.Remarks) != EMPTY)
+                    {
+                        stepperDataList[2].showRightButton = true
+                    }
+                    else
+                    {
+                        stepperDataList[2].showEmptyStateAddButton = true
+                    }
+                }
+                else
+                {
+                    stepperDataList[1].showEmptyStateAddButton = true
+                }
             }
         }
         else

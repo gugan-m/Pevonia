@@ -7,25 +7,32 @@
 //
 
 import UIKit
+import WebKit
 
-class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
+class CodeOfConductViewController: UIViewController {
     
-    @IBOutlet weak var weView: UIWebView!
+    @IBOutlet weak var web_sourceView: UIView!
     @IBOutlet weak var agreeLabel: UILabel!
     @IBOutlet weak var nextBut: UIButton!
     @IBOutlet weak var agreeImage: UIImageView!
     @IBOutlet weak var centerVertical: NSLayoutConstraint!
-     @IBOutlet weak var titleLabel: UILabel!
-    var codeOfConductObj = NSDictionary()
-    
-    var isComingFromCompanyLogin : Bool = false
+    @IBOutlet weak var titleLabel: UILabel!
 
+    var codeOfConductObj = NSDictionary()
+    var isComingFromCompanyLogin : Bool = false
+    var webKitView = WKWebView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.weView.delegate = self
         self.hideAll(value: true)
         self.nextBut.isHidden = true
         self.centerVertical.constant = 45
+        
+        webKitView = WKWebView(frame: self.web_sourceView.frame)
+        self.webKitView.uiDelegate = self
+        self.webKitView.navigationDelegate = self
+        self.web_sourceView.addSubview(webKitView)
+        
         getCodeOfConduct()
     }
 
@@ -34,14 +41,11 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
     @IBAction func navigateToPrepareMYDevice(_ sender: AnyObject) {
-    
         self.acknowledgeAgree()
     }
     
     @IBAction func logOut(_ sender: AnyObject) {
-        
         BL_Logout.sharedInstance.clearAllData()
         if(self.isComingFromCompanyLogin)
         {
@@ -53,11 +57,9 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
             let vc = sb.instantiateViewController(withIdentifier: LogoutVcID) as! LogoutViewController
             self.navigationController?.pushViewController(vc, animated: false)
         }
-        
     }
     
     @IBAction func accknowledgeAction(_ sender: AnyObject) {
-        
         if(agreeImage.image == UIImage(named: "icon-checkbox-blank"))
         {
             agreeImage.image = UIImage(named: "icon-checkbox")
@@ -70,7 +72,6 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
             self.nextBut.isHidden = true
             self.centerVertical.constant = 45
         }
-        
     }
     
     func getCodeOfConduct()
@@ -86,9 +87,8 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
                 let urlString = "https://dev1.hidoctor.me/Content/CodeofContent/" + getCompanyCode().lowercased() + "/" + urlFile
                 let req = NSURLRequest(url: URL(string:urlString)!)
                 self.agreeLabel.text = (self.codeOfConductObj.value(forKey:"Ack_Option") as! String)
-                self.weView.loadRequest(req as URLRequest)
+                self.webKitView.load(req as URLRequest)
                 showCustomActivityIndicatorView(loadingText: "Loading....")
-                
             }
             else
             {
@@ -130,11 +130,6 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
             AlertView.showAlertView(title: internetOfflineTitle, message: internetOfflineMessage, viewController: self)
         }
     }
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        removeCustomActivityView()
-        self.hideAll(value: false)
-    }
-    
     
     func hideAll(value: Bool)
     {
@@ -143,5 +138,11 @@ class CodeOfConductViewController: UIViewController,UIWebViewDelegate {
         titleLabel.isHidden = value
         
     }
+}
 
+extension CodeOfConductViewController : WKUIDelegate,WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        removeCustomActivityView()
+        self.hideAll(value: false)
+    }
 }

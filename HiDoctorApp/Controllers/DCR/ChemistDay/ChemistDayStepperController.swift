@@ -123,22 +123,22 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
         }
         else
         {
-            if customerMasterModel.MDL_Number != ""
-            {
-                var titleString = "\(customerMasterModel.MDL_Number!) "
-                if(customerMasterModel.Category_Name! != EMPTY && customerMasterModel.Category_Name! != "NA")
-                {
-                    titleString += "| \(customerMasterModel.Category_Name!) "
-                }
-                if(customerMasterModel.Region_Name! != EMPTY && customerMasterModel.Region_Name! != "NA")
-                {
-                    titleString += "| \(customerMasterModel.Region_Name!) "
-                }
-                
-                detailText = titleString
-            }
-            else
-            {
+//            if customerMasterModel.MDL_Number != ""
+//            {
+//                var titleString = "\(customerMasterModel.MDL_Number!) "
+//                if(customerMasterModel.Category_Name! != EMPTY && customerMasterModel.Category_Name! != "NA")
+//                {
+//                    titleString += "| \(customerMasterModel.Category_Name!) "
+//                }
+//                if(customerMasterModel.Region_Name! != EMPTY && customerMasterModel.Region_Name! != "NA")
+//                {
+//                    titleString += "| \(customerMasterModel.Region_Name!) "
+//                }
+//
+//                detailText = titleString
+//            }
+//            else
+//            {
                 var titleString = String()
                 if(customerMasterModel.Category_Name! != EMPTY)
                 {
@@ -157,7 +157,7 @@ class ChemistDayStepperController: UIViewController,UITableViewDelegate , UITabl
                     titleString =  titleString.trimFirstIndex
                 }
                 detailText = titleString
-            }
+         //   }
             
             //            if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && customerMasterModel.Sur_Name != ""
             //            {

@@ -83,15 +83,33 @@ class TPAttendanceTableViewCell: UITableViewCell , UITableViewDelegate, UITableV
     {
         if(selectedIndex == 0 || selectedIndex == 2)
         {
-            return BL_TP_AttendanceStepper.sharedInstance.getCommonSingleCellHeight(selectedIndex: selectedIndex)
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                return BL_TP_AttendanceStepper.sharedInstance.getCommonSingleCellHeight(selectedIndex: selectedIndex)
+            } else {
+                if selectedIndex == 0 {
+                   return BL_TP_AttendanceStepper.sharedInstance.getCommonSingleCellHeight(selectedIndex: selectedIndex)
+                } else {
+                    return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+                }
+            }
         }
         else if (selectedIndex == 1)
         {
-            return BL_TP_AttendanceStepper.sharedInstance.getSFCSingleCellHeight(selectedIndex: selectedIndex)
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                 return BL_TP_AttendanceStepper.sharedInstance.getSFCSingleCellHeight(selectedIndex: selectedIndex)
+            } else {
+                 return BL_TP_AttendanceStepper.sharedInstance.getCommonSingleCellHeight(selectedIndex: selectedIndex)
+            }
+           
         }
         else if (selectedIndex == 3)
         {
-            return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksSingleCellHeight(selectedIndex: selectedIndex)
+            } else {
+                return 0
+            }
+            
         }
         else
         {
@@ -108,44 +126,83 @@ class TPAttendanceTableViewCell: UITableViewCell , UITableViewDelegate, UITableV
             var line1Text: String = EMPTY
             var line2Text: String = EMPTY
             
-            if (selectedIndex == 0)
-            {
-                let workPlaceList = BL_TP_AttendanceStepper.sharedInstance.workPlaceList
-                let workPlaceObj: StepperWorkPlaceModel = workPlaceList[indexPath.row]
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                if (selectedIndex == 0)
+                {
+                    let workPlaceList = BL_TP_AttendanceStepper.sharedInstance.workPlaceList
+                    let workPlaceObj: StepperWorkPlaceModel = workPlaceList[indexPath.row]
+                    
+                    line1Text = workPlaceObj.key
+                    line2Text = workPlaceObj.value
+                }
+                else if (selectedIndex == 2)
+                {
+                    line1Text = checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name)
+                    line2Text = EMPTY
+                }
                 
-                line1Text = workPlaceObj.key
-                line2Text = workPlaceObj.value
+                cell.line1Label.text = line1Text
+                cell.line2Label.text = line2Text
+                
+                return cell
+            } else {
+                if (selectedIndex == 0)
+                {
+                    let workPlaceList = BL_TP_AttendanceStepper.sharedInstance.workPlaceList
+                    let workPlaceObj: StepperWorkPlaceModel = workPlaceList[indexPath.row]
+                    
+                    line1Text = workPlaceObj.key
+                    line2Text = workPlaceObj.value
+                    
+                    cell.line1Label.text = line1Text
+                    cell.line2Label.text = line2Text
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.AttendanceStepperRemarksCell) as! DCRStepperRemarksTableViewCell
+                    
+                    cell.line1Label.text = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
+                    cell.line2Label.text = EMPTY
+                    
+                    return cell
+                }
             }
-            else if (selectedIndex == 2)
-            {
-                line1Text = checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name)
-                line2Text = EMPTY
-            }
-            
-            cell.line1Label.text = line1Text
-            cell.line2Label.text = line2Text
-            
-            return cell
         }
         else if (selectedIndex == 1)
         {
-            let cell = tableView.dequeueReusableCell(withIdentifier: AttendanceSFCCell) as! DCRStepperSFCTableViewCell
-            let sfcList = BL_TP_AttendanceStepper.sharedInstance.placesList
-            let sfcObj: TourPlannerSFC = sfcList[indexPath.row]
             
-            cell.fromPlaceLabel.text = sfcObj.From_Place
-            cell.toPlaceLabel.text = sfcObj.To_Place
-            cell.travelModeLabel.text = sfcObj.Travel_Mode.uppercased()
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                let cell = tableView.dequeueReusableCell(withIdentifier: AttendanceSFCCell) as! DCRStepperSFCTableViewCell
+                let sfcList = BL_TP_AttendanceStepper.sharedInstance.placesList
+                let sfcObj: TourPlannerSFC = sfcList[indexPath.row]
+                
+                cell.fromPlaceLabel.text = sfcObj.From_Place
+                cell.toPlaceLabel.text = sfcObj.To_Place
+                cell.travelModeLabel.text = sfcObj.Travel_Mode.uppercased()
+                
+                return cell
+            } else {
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier:AttendanceSubCell) as! DCRAttendanceSubTableViewCell
+                
+                var line1Text: String = EMPTY
+                var line2Text: String = EMPTY
             
-            return cell
+                line1Text = checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name)
+                line2Text = EMPTY
+                
+                cell.line1Label.text = line1Text
+                cell.line2Label.text = line2Text
+                return cell
+            }
         }
         else // if (selectedIndex == 3)
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.AttendanceStepperRemarksCell) as! DCRStepperRemarksTableViewCell
-            
-            cell.line1Label.text = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
-            cell.line2Label.text = EMPTY
-            
+            if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+                
+                cell.line1Label.text = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
+                cell.line2Label.text = EMPTY
+            }
             return cell
         }
     }

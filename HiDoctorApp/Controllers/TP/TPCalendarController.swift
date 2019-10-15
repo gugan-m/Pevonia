@@ -682,6 +682,21 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         
         if (stepperObj.recordCount == 0)
         {
+            if(getActivity == 1)
+            {
+                if (index == 2)
+                {
+                    return 0
+                }
+            } else {
+                if (index == 1)
+                {
+                    return 0
+                }
+            }
+            
+            
+            
             return BL_TPCalendar.sharedInstance.getEmptyStateHeight(selectedIndex: index)
         }
         else

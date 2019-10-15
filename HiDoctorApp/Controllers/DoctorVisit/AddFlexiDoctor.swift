@@ -180,9 +180,9 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                             {
                                 let doctorobj : DCRDoctorVisitModel = model[0]
                                 
-                                let initialAlert = "Punch-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorobj.Doctor_Name
+                                let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
 
-                                let alertViewController = UIAlertController(title: "Punch Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
 
                                 alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
                                      navigationController.popViewController(animated: false)
@@ -202,18 +202,18 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                             {
                                 let currentLocation = getCurrentLocaiton()
                                 
-                                let initialAlert = "Punch-in time for " + doctorNameLbl.text! + " is " + getcurrenttime() + ". You cannot Punch-in for other \(appDoctor) until you punch-out for " + doctorNameLbl.text!
+                                let initialAlert = "Check-in time for " + doctorNameLbl.text! + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorNameLbl.text!
                                 
                                 //let indexpath = sender.tag
                                 
-                                let alertViewController = UIAlertController(title: "Punch In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
 
                                 alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
                                     navigationController.popViewController(animated: false)
                                     alertViewController.dismiss(animated: true, completion: nil)
                                     
                                 }))
-                                alertViewController.addAction(UIAlertAction(title: "Punch In", style: UIAlertActionStyle.default, handler: { alertAction in
+                                alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
                                     if (privValue == PrivilegeValues.YES.rawValue)
                                     {
                                         let sb = UIStoryboard(name: mainSb, bundle: nil)

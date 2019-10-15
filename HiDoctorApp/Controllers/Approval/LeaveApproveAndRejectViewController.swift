@@ -277,10 +277,10 @@ class LeaveApproveAndRejectViewController: UIViewController, UITableViewDelegate
         //BL_Approval.sharedInstance.updateLeaveStatus(userList : [userLeaveObj], userObj: userObj, leaveObj: userLeaveObj, reason: condenseWhitespace(stringValue: popUpView.reasonTxtView.text)) { (apiResponseObject) in
             if apiResponseObject.Status == SERVER_SUCCESS_CODE
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: DCRStatus.approved.rawValue, type : "DCR")
+                var toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: DCRStatus.approved.rawValue, type : "DVR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: DCRStatus.unApproved.rawValue, type : "DCR")
+                    toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: DCRStatus.unApproved.rawValue, type : "DVR")
                 }
                 showToastView(toastText: toastText)
                 _ = self.navigationController?.popViewController(animated: false)
@@ -292,10 +292,10 @@ class LeaveApproveAndRejectViewController: UIViewController, UITableViewDelegate
             }
             else
             {
-                var toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: 4, type : "DCR")
+                var toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: 4, type : "DVR")
                 if approvalStatus == 0
                 {
-                    toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: 5, type : "DCR")
+                    toastText = getPopUpMsg(Flag: DCRFlag.leave.rawValue, status: 5, type : "DVR")
                 }
                 showToastView(toastText: toastText)
             }

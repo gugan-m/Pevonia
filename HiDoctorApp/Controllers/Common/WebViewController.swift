@@ -8,8 +8,9 @@
 
 import UIKit
 
-class WebViewController: UIViewController, UIWebViewDelegate {
 
+class WebViewController: UIViewController, UIWebViewDelegate {
+    
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
     @IBOutlet weak var emptyStateLbl: UILabel!
@@ -21,7 +22,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = webViewTitle
@@ -32,10 +33,10 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
         if siteURL == dashboardWebLink{
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
-
+            
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -53,11 +54,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
                     {
                         showActivityIndicator()
                         var req = NSURLRequest(url: checkedUrl)
-//                        if isFromKennect
-//                        {
-//                           let urlValue =  URL(string:siteURL)
-//                            req = NSURLRequest(url: urlValue!)
-//                        }
+                        //                        if isFromKennect
+                        //                        {
+                        //                           let urlValue =  URL(string:siteURL)
+                        //                            req = NSURLRequest(url: urlValue!)
+                        //                        }
                         let urlValue =  URL(string:siteURL)
                         req = NSURLRequest(url: urlValue!)
                         self.webView.loadRequest(req as URLRequest)
@@ -173,7 +174,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         }
         else
         {
-          loadSite()
+            loadSite()
         }
     }
     
@@ -192,7 +193,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     
     @objc func backButtonClicked()
     {
-       // _ = navigationController?.popViewController(animated: false)
+        // _ = navigationController?.popViewController(animated: false)
         
         navigationController?.popViewController(animated: false)
         dismiss(animated: false, completion: nil)
@@ -206,3 +207,5 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         }
     }
 }
+
+
