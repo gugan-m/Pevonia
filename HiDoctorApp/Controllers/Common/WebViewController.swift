@@ -11,7 +11,7 @@ import UIKit
 
 class WebViewController: UIViewController, UIWebViewDelegate {
     
-    @IBOutlet weak var webView: UIWebView!
+   // @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
     @IBOutlet weak var emptyStateLbl: UILabel!
     var localURL :Bool = false
@@ -19,10 +19,14 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     var webViewTitle: String!
     var pageSource: Int = 0
     var isFromKennect : Bool = false
+    var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        webView = UIWebView(frame: self.view.frame)
+        webView.scalesPageToFit = true
+        webView.delegate = self
+        self.view.addSubview(webView)
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = webViewTitle

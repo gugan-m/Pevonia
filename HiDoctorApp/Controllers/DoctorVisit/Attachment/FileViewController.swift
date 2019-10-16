@@ -11,7 +11,7 @@ import UIKit
 
 class FileViewController: UIViewController, UIWebViewDelegate {
     
-    @IBOutlet weak var webView: UIWebView!
+   // @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
     @IBOutlet weak var emptyStateLbl: UILabel!
     var isFromChemistDay = false
@@ -20,10 +20,14 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     var model: DCRAttachmentModel?
     var leaveModel: DCRLeaveModel?
     var fileURL: String = ""
+    var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        webView = UIWebView(frame: self.view.frame)
+        webView.scalesPageToFit = true
+        webView.delegate = self
+        self.view.addSubview(webView)
         // Do any additional setup after loading the view.
         self.navigationItem.title = model?.attachmentName
         addCustomBackButtonToNavigationBar()

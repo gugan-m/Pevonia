@@ -329,8 +329,15 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
         {
           if(!alert())
           {
-            let doctorCheck = DBHelper.sharedInstance.checkDoctorVisitforDoctorId(doctorCode: BL_DoctorList.sharedInstance.customerCode, regionCode: BL_DoctorList.sharedInstance.regionCode)
-            if doctorCheck == 0
+            var dcrId = 0
+            let convertedDate = getStringInFormatDate(dateString: getCurrentDate())
+            let dcrDetail = DBHelper.sharedInstance.getDCRIdforDCRDate(dcrDate: convertedDate)
+            if dcrDetail.count > 0
+            {
+                dcrId = dcrDetail[0].DCR_Id
+            }
+            let doctorCheck = DBHelper.sharedInstance.getAllDetailsWith(dcrId: dcrId, customerCode: BL_DoctorList.sharedInstance.customerCode, regionCode: BL_DoctorList.sharedInstance.regionCode)
+            if doctorCheck == nil
             {
                 let currentLocation = getCurrentLocaiton()
                 let initialAlert = "Check-in time for " + BL_DoctorList.sharedInstance.doctorTitle + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + BL_DoctorList.sharedInstance.doctorTitle
@@ -342,14 +349,19 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
                 }))
                 
                 alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
+                    BL_DoctorList.sharedInstance.modifyEntity = 0
                     self.moveToNextScreen()
                     BL_DoctorList.sharedInstance.punchInTime = getStringFromDateforPunch(date: getCurrentDateAndTime())
+                    
                     //function
                     //    self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
                     alertViewController.dismiss(animated: true, completion: nil)
                 }))
                 
                 self.present(alertViewController, animated: true, completion: nil)
+            }else{
+                 BL_DoctorList.sharedInstance.modifyEntity = 1
+                BL_DoctorList.sharedInstance.punchInTime = (doctorCheck?.Punch_Start_Time!)!
             }
             }
         }
@@ -407,6 +419,8 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
             let assets = DBHelper.sharedInstance.getPunchtimevalidationforselectedcustomers(dcrDate: dcrId, customerCode: BL_DoctorList.sharedInstance.customerCode, customeRegionCode: BL_DoctorList.sharedInstance.regionCode)
             if (assets != nil && assets.count > 0 )
             {
+                  BL_DoctorList.sharedInstance.modifyEntity = 1
+                BL_DoctorList.sharedInstance.punchInTime = (assets[0].Punch_Start_Time!)
                 moveToNextScreen()
                 return true
                 
@@ -416,6 +430,8 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
                 let assets = DBHelper.sharedInstance.getAssestAnalyticsByCustomer(dcrDate: getCurrentDate(), customerCode: BL_DoctorList.sharedInstance.customerCode, customeRegionCode: BL_DoctorList.sharedInstance.regionCode)
                 if (assets != nil && assets.count > 0)
                 {
+                      BL_DoctorList.sharedInstance.modifyEntity = 1
+                     BL_DoctorList.sharedInstance.punchInTime = (assets[0].Punch_Start_Time!)
                     moveToNextScreen()
                     return true
                 }

@@ -2596,6 +2596,13 @@ class DBHelper: NSObject
         return count
     }
     
+    
+    
+    
+    
+    
+    
+    
     func checkDoctorVisitforAttandanceDoctorId(doctorCode: String, regionCode: String) -> Int
     {
         var count = 0
@@ -6475,6 +6482,16 @@ class DBHelper: NSObject
         
         try? dbPool.read { db in
             obj = try DCRDoctorVisitModel.fetchOne(db, "SELECT DCR_Doctor_Visit_Id FROM \(TRAN_DCR_DOCTOR_VISIT) WHERE DCR_Id = ? AND Doctor_Code = ? AND Doctor_Region_Code = ?", arguments: [dcrId, customerCode, regionCode])
+        }
+        
+        return obj
+    }
+    func getAllDetailsWith(dcrId: Int, customerCode: String, regionCode: String) -> DCRDoctorVisitModel?
+    {
+        var obj: DCRDoctorVisitModel?
+        
+        try? dbPool.read { db in
+            obj = try DCRDoctorVisitModel.fetchOne(db, "SELECT * FROM \(TRAN_DCR_DOCTOR_VISIT) WHERE DCR_Id = ? AND Doctor_Code = ? AND Doctor_Region_Code = ?", arguments: [dcrId, customerCode, regionCode])
         }
         
         return obj

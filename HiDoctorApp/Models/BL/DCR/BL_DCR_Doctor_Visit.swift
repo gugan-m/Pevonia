@@ -2630,10 +2630,10 @@ class BL_DCR_Doctor_Visit: NSObject
                 {
                     pobAmount = 0.0
                 }
-                
+               let punchtime =  BL_DoctorList.sharedInstance.punchInTime
                 let dict1: NSDictionary = ["DCR_Visit_Tracker_Id": objTracker.DCR_Doctor_Visit_Tracker_Id, "DCR_Actual_Date": convertDateIntoServerStringFormat(date: objTracker.DCR_Actual_Date), "Visit_Id": objTracker.DCR_Doctor_Visit_Id, "DCR_Id": objTracker.DCR_Id, "Doctor_Region_Code": doctorRegionCode, "Doctor_Code": doctorCode, "MDL_Number": mdlNumber, "Hospital_Name": Hospital_Name, "Category_Code": categoryCode]
                 
-                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": EMPTY, "Modified_Entity": String(objTracker.Modified_Entity), "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D"]
+                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": punchtime, "Modified_Entity": BL_DoctorList.sharedInstance.modifyEntity, "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D"]
                 
                 var combinedAttributes : NSMutableDictionary!
                 combinedAttributes = NSMutableDictionary(dictionary: dict1)

@@ -22,7 +22,7 @@ class BL_DoctorList: NSObject
     var pickerState = String()
     var doctorDataList:[DoctorListModel] = []
     var punchInTime : String = ""
-    
+    var modifyEntity : Int = 0
     func getDoctorDataList(isEdit:Bool) -> [DoctorListModel]
     {
         var doctorDataList : [DoctorListModel] = []

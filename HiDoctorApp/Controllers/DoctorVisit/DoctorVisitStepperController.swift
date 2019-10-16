@@ -1706,7 +1706,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
     
     func insertDCRDoctorVisit(completion : @escaping (_ status : Int) -> ())
     {
-        let objDoctorVisit = DBHelper.sharedInstance.getDoctorVisitDetailsByDoctorCode(dcrId: DCRModel.sharedInstance.dcrId, customerCode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode)
+        let objDoctorVisit = DBHelper.sharedInstance.getAllDetailsWith(dcrId: DCRModel.sharedInstance.dcrId, customerCode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode)
         
         if (objDoctorVisit == nil)
         {
@@ -1715,7 +1715,7 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
             
             
             
-            if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
+            if (!BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
             {
                 var visittime = ""
                 var visitmode = ""
@@ -1753,12 +1753,12 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                 
             }
             else {
-                if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
+                if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
                 {
                     
                     let postData: NSMutableArray = []
-                    
-                    let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": DCRModel.sharedInstance.customerCode,"Doctor_Name":flexiDoctorName,"regionCode":customerMasterModel.Region_Code,"Speciality_Name":customerMasterModel.Speciality_Name,"Category_Code":customerMasterModel.Category_Code ?? EMPTY,"MDL_Number":customerMasterModel.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + getServerTime(),"Lattitude":self.currentLocation.Latitude,"Longitude":self.currentLocation.Longitude,"Modified_Entity":0,"Doctor_Region_Code":customerMasterModel.Region_Code,"Customer_Entity_Type":"D"]
+                 
+                    let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": DCRModel.sharedInstance.customerCode,"Doctor_Name":flexiDoctorName,"regionCode":customerMasterModel.Region_Code,"Speciality_Name":customerMasterModel.Speciality_Name,"Category_Code":customerMasterModel.Category_Code ?? EMPTY,"MDL_Number":customerMasterModel.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + getServerTime(),"Lattitude":self.currentLocation.Latitude,"Longitude":self.currentLocation.Longitude ,"Modified_Entity":0,"Doctor_Region_Code":customerMasterModel.Region_Code,"Customer_Entity_Type":"D"]
                     
                     postData.add(dict)
                     
@@ -1768,31 +1768,18 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
                         if(apiObj.Status == SERVER_SUCCESS_CODE)
                         {
                             removeCustomActivityView()
-                            let getVisitDetails = apiObj.list[0] as! NSDictionary
-                            let getVisitTime = getVisitDetails.value(forKey: "Synced_DateTime") as! String
-                            var dateTimeArray = getVisitTime.components(separatedBy: " ")
-                            let originalDate = convertDateIntoString(dateString: dateTimeArray[0])
-                            let compare = NSCalendar.current.compare(originalDate, to: Date(), toGranularity: .day)
-                            if(compare == .orderedSame)
-                            {
-                                removeCustomActivityView()
-                                let visitTimeArray = dateTimeArray[1].components(separatedBy: ":")
-                                let visitTimes =    visitTimeArray[0] + ":" + visitTimeArray[1]
-                                
-                                
-                                BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: DCRModel.sharedInstance.customerCode, visitTime: visitTimes, visitMode: dateTimeArray[2], pobAmount: 0.0, remarks: EMPTY, regionCode: self.customerMasterModel.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: defaultBusineessStatusId, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY)
-                                
-                                BL_DCR_Doctor_Visit.sharedInstance.insertEDetailedDoctorLocation(customerCode: DCRModel.sharedInstance.customerCode, customerRegionCode: self.customerMasterModel.Region_Code, latString: "\(self.currentLocation.Latitude!)", longString: "\(self.currentLocation.Longitude!)", geoFencingDeviationRemarks: self.geoLocationSkipRemarks, dateString: getVisitTime)
-                                
-                                BL_DCR_Doctor_Accompanists.sharedInstance.insertDCRDoctorAccompanists(dcrAccompanistList: BL_DCR_Doctor_Accompanists.sharedInstance.getDCRAccompanists())
-                                
-                                completion(SERVER_SUCCESS_CODE)
-                            }
-                            else
-                            {
-                                removeCustomActivityView()
-                                completion(SERVER_ERROR_CODE)
-                            }
+                            
+                            let visittime = stringFromDate(date1: Date())
+                            let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                            let visitmode = visittime.substring(from: lastcharacterIndex)
+                            
+                            
+                            BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails(customerCode: DCRModel.sharedInstance.customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: 0.0, remarks: EMPTY, regionCode: self.customerMasterModel.Region_Code, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: defaultBusineessStatusId, businessStatusName: EMPTY, objCallObjective: nil, campaignName: EMPTY, campaignCode: EMPTY, Punch_Start_Time: self.punch_start, Punch_Status: self.punch_status, Punch_Offset: self.punch_timeoffset, Punch_TimeZone: self.punch_timezone, Punch_UTC_DateTime: self.punch_UTC)
+                            
+                            BL_DCR_Doctor_Accompanists.sharedInstance.insertDCRDoctorAccompanists(dcrAccompanistList: BL_DCR_Doctor_Accompanists.sharedInstance.getDCRAccompanists())
+                            
+                            completion(SERVER_SUCCESS_CODE)
+
                         }
                         else
                         {
@@ -1833,7 +1820,38 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            completion(SERVER_SUCCESS_CODE)
+            
+            if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
+            {
+                
+                let postData: NSMutableArray = []
+            
+                
+                let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": DCRModel.sharedInstance.customerCode,"Doctor_Name":flexiDoctorName,"regionCode":customerMasterModel.Region_Code,"Speciality_Name":customerMasterModel.Speciality_Name,"Category_Code":customerMasterModel.Category_Code ?? EMPTY,"MDL_Number":customerMasterModel.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":objDoctorVisit?.Punch_Start_Time ?? "" ,"Lattitude":objDoctorVisit?.Lattitude ?? 0.0,"Longitude":objDoctorVisit?.Longitude ?? 0.0 ,"Modified_Entity":1,"Doctor_Region_Code":objDoctorVisit?.Doctor_Region_Code ?? "","Customer_Entity_Type":"D"]
+                
+                postData.add(dict)
+                
+                showCustomActivityIndicatorView(loadingText: "Loading...")
+                
+                WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
+                    if(apiObj.Status == SERVER_SUCCESS_CODE)
+                    {
+                        removeCustomActivityView()
+                        
+                        completion(SERVER_SUCCESS_CODE)
+
+                    }
+                    else
+                    {
+                        removeCustomActivityView()
+                        completion(SERVER_ERROR_CODE)
+                    }
+                    
+                })
+                
+            }else{
+                completion(SERVER_SUCCESS_CODE)
+            }
         }
     }
     

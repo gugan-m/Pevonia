@@ -702,7 +702,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0zG-Pl-ODX" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nxb-mG-hxt">
-                        <rect key="frame" x="0.0" y="20" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -773,31 +773,19 @@
                                     <constraint firstAttribute="trailing" secondItem="yh3-eq-t1m" secondAttribute="trailing" constant="10" id="fd9-Yk-f7f"/>
                                 </constraints>
                             </view>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2r0-ra-eqG">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Ag5-7b-H8S" id="Nhf-H2-cIB"/>
-                                </connections>
-                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XeS-Rg-FbX" firstAttribute="bottom" secondItem="2r0-ra-eqG" secondAttribute="bottom" id="5uM-w4-4aT"/>
                             <constraint firstItem="X6j-ia-UK1" firstAttribute="leading" secondItem="XeS-Rg-FbX" secondAttribute="leading" id="As0-cr-aXR"/>
-                            <constraint firstItem="2r0-ra-eqG" firstAttribute="leading" secondItem="XeS-Rg-FbX" secondAttribute="leading" id="Jdd-ML-85u"/>
                             <constraint firstItem="XeS-Rg-FbX" firstAttribute="trailing" secondItem="X6j-ia-UK1" secondAttribute="trailing" id="MLY-bG-Rxf"/>
                             <constraint firstItem="XeS-Rg-FbX" firstAttribute="bottom" secondItem="X6j-ia-UK1" secondAttribute="bottom" id="ZZq-Jm-c3b"/>
                             <constraint firstItem="X6j-ia-UK1" firstAttribute="top" secondItem="2Oe-JZ-Too" secondAttribute="top" id="eJU-xT-MSS"/>
-                            <constraint firstItem="2r0-ra-eqG" firstAttribute="top" secondItem="XeS-Rg-FbX" secondAttribute="top" id="gfj-hh-FFC"/>
-                            <constraint firstItem="XeS-Rg-FbX" firstAttribute="trailing" secondItem="2r0-ra-eqG" secondAttribute="trailing" id="hUm-my-Zcg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XeS-Rg-FbX"/>
                     </view>
                     <connections>
                         <outlet property="emptyStateLbl" destination="lKH-OO-mD0" id="KeM-dK-Hf3"/>
                         <outlet property="emptyStateWrapper" destination="X6j-ia-UK1" id="GSE-tN-afe"/>
-                        <outlet property="webView" destination="2r0-ra-eqG" id="mhK-0z-mW3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OpZ-W6-fPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
