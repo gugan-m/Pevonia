@@ -41,7 +41,7 @@ class BL_Upload_DCR: NSObject
             }
             else if model.Flag == DCRFlag.attendance.rawValue
             {
-                uploadModel.flagLabel = "A"
+                uploadModel.flagLabel = "O"
             }
             else if model.Flag == DCRFlag.leave.rawValue
             {

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,10 +25,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="250" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cwf-E4-OI0">
-                                <rect key="frame" x="0.0" y="28" width="320" height="501"/>
+                                <rect key="frame" x="0.0" y="8" width="320" height="521"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AttendanceMainCell" id="HGM-Be-7f7" userLabel="Stepper Main Cell" customClass="DCRAttendanceMainTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AttendanceMainCell" id="HGM-Be-7f7" userLabel="Stepper Main Cell" customClass="DCRAttendanceMainTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HGM-Be-7f7" id="b2g-S2-mnv">
@@ -38,7 +36,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HdN-n1-oqJ" userLabel="Outer View">
-                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="250"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="250"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iDC-FI-TzX" userLabel="Round View">
                                                             <rect key="frame" x="16" y="0.0" width="25" height="25"/>
@@ -66,10 +64,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9w-qB-DLE" userLabel="Card View" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                            <rect key="frame" x="49" y="4" width="208" height="226"/>
+                                                            <rect key="frame" x="49" y="4" width="263" height="226"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-by-bTS" userLabel="Section Title View">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="208" height="30"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="263" height="30"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-work" translatesAutoresizingMaskIntoConstraints="NO" id="R0u-Vf-gu7" userLabel="Section Header Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                             <rect key="frame" x="4" y="4" width="24" height="24"/>
@@ -79,14 +77,14 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="icon-stepper-down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="SbS-FB-3Jj" userLabel="Section Toggle Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                            <rect key="frame" x="176" y="4" width="24" height="24"/>
+                                                                            <rect key="frame" x="231" y="4" width="24" height="24"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="24" id="MvN-PX-pFZ"/>
                                                                                 <constraint firstAttribute="width" constant="24" id="c0l-Hn-Nc1"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sSs-1p-Qt6" userLabel="Section Title Label">
-                                                                            <rect key="frame" x="36" y="6" width="148" height="16"/>
+                                                                            <rect key="frame" x="36" y="6" width="203" height="16"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -104,27 +102,27 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cKX-4m-0Oa" userLabel="Child table View">
-                                                                    <rect key="frame" x="0.0" y="30" width="208" height="136"/>
+                                                                    <rect key="frame" x="0.0" y="30" width="263" height="136"/>
                                                                     <subviews>
                                                                         <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JR5-5D-4dS" userLabel="Child Table View">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="208" height="136"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="263" height="136"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                             <prototypes>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceSubCell" id="gKZ-fd-dBw" userLabel="Common Cell" customClass="DCRAttendanceSubTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="28" width="208" height="120"/>
+                                                                                    <rect key="frame" x="0.0" y="28" width="263" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gKZ-fd-dBw" id="XuA-hu-ucc">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="120"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyx-jj-Haz" userLabel="Line 1">
-                                                                                                <rect key="frame" x="36" y="0.0" width="164" height="16"/>
+                                                                                                <rect key="frame" x="36" y="0.0" width="219" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mD0-Th-fqk" userLabel="Line 2">
-                                                                                                <rect key="frame" x="36" y="20" width="164" height="16"/>
+                                                                                                <rect key="frame" x="36" y="20" width="219" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
@@ -147,14 +145,14 @@
                                                                                     </connections>
                                                                                 </tableViewCell>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TPStepperDoctorTVCell" rowHeight="220" id="TEa-p3-dYj" userLabel="Doctor Cell" customClass="TPStepperDoctorTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="148" width="208" height="220"/>
+                                                                                    <rect key="frame" x="0.0" y="148" width="263" height="220"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TEa-p3-dYj" id="uLb-8T-l9i">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="219.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="220"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wXa-P1-dWk" userLabel="Doctor Wrapper View">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="208" height="219.5"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="220"/>
                                                                                                 <subviews>
                                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-stepper-two-user" translatesAutoresizingMaskIntoConstraints="NO" id="2GZ-3l-rRv" userLabel="Section Header Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                                                         <rect key="frame" x="4" y="4" width="24" height="24"/>
@@ -164,33 +162,33 @@
                                                                                                         </constraints>
                                                                                                     </imageView>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAg-Pr-qWs" userLabel="Doctor Name Label">
-                                                                                                        <rect key="frame" x="36" y="6" width="132" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="6" width="187" height="16"/>
                                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V26-7m-LFZ" userLabel="Line 1 Label">
-                                                                                                        <rect key="frame" x="36" y="34" width="164" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="34" width="219" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apa-OB-0fu" userLabel="Line 2 Label">
-                                                                                                        <rect key="frame" x="36" y="54" width="164" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="54" width="219" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkY-M8-TG1" userLabel="Divider View">
-                                                                                                        <rect key="frame" x="0.0" y="218.5" width="208" height="1"/>
+                                                                                                        <rect key="frame" x="0.0" y="219" width="263" height="1"/>
                                                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="1" id="Usf-J1-haK"/>
                                                                                                         </constraints>
                                                                                                     </view>
                                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="icon-stepper-down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="lYG-n6-QCK" userLabel="Section Toggle Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                                        <rect key="frame" x="176" y="8" width="24" height="24"/>
+                                                                                                        <rect key="frame" x="231" y="8" width="24" height="24"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="width" constant="24" id="41h-7H-OEb"/>
                                                                                                             <constraint firstAttribute="height" constant="24" id="pRC-C3-vDc"/>
@@ -203,20 +201,20 @@
                                                                                                         </constraints>
                                                                                                     </imageView>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mfq-QL-NXX">
-                                                                                                        <rect key="frame" x="36" y="85" width="164" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="85" width="219" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nkC-gV-jKq">
-                                                                                                        <rect key="frame" x="36" y="109" width="164" height="29.5"/>
+                                                                                                        <rect key="frame" x="36" y="109" width="219" height="30"/>
                                                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <prototypes>
                                                                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doctorSampleTVCell" id="jOX-od-oJE">
-                                                                                                                <rect key="frame" x="0.0" y="28" width="164" height="44"/>
+                                                                                                                <rect key="frame" x="0.0" y="28" width="219" height="44"/>
                                                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jOX-od-oJE" id="Jdr-HF-aWu">
-                                                                                                                    <rect key="frame" x="0.0" y="0.0" width="164" height="43.5"/>
+                                                                                                                    <rect key="frame" x="0.0" y="0.0" width="219" height="44"/>
                                                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                                                 </tableViewCellContentView>
                                                                                                             </tableViewCell>
@@ -227,14 +225,14 @@
                                                                                                         </connections>
                                                                                                     </tableView>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-hg-rwj">
-                                                                                                        <rect key="frame" x="83" y="182.5" width="117" height="28"/>
+                                                                                                        <rect key="frame" x="138" y="183" width="117" height="28"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <state key="normal" title="REMOVE PARTNER">
                                                                                                             <color key="titleColor" red="0.31564596140000001" green="0.6921270356" blue="0.71500566710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                         </state>
                                                                                                     </button>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgp-bv-PcK">
-                                                                                                        <rect key="frame" x="108" y="146.5" width="92" height="28"/>
+                                                                                                        <rect key="frame" x="163" y="147" width="92" height="28"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <state key="normal" title="ADD SAMPLES">
                                                                                                             <color key="titleColor" red="0.31564596140000001" green="0.6921270356" blue="0.71500566710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -298,14 +296,14 @@
                                                                                     </connections>
                                                                                 </tableViewCell>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StepperDoctorCell" id="9UM-7t-zIG" userLabel="Doctor Cell" customClass="DCRStepperDoctorTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="368" width="208" height="120"/>
+                                                                                    <rect key="frame" x="0.0" y="368" width="263" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9UM-7t-zIG" id="hj2-No-0MZ">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="120"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBm-aD-Ag1" userLabel="Doctor Wrapper View">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="208" height="119.5"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="263" height="120"/>
                                                                                                 <subviews>
                                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-stepper-two-user" translatesAutoresizingMaskIntoConstraints="NO" id="emO-F2-aBv" userLabel="Section Header Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                                                         <rect key="frame" x="4" y="4" width="24" height="24"/>
@@ -315,31 +313,31 @@
                                                                                                         </constraints>
                                                                                                     </imageView>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ol-ik-g72" userLabel="Visit Mode Label">
-                                                                                                        <rect key="frame" x="165" y="6" width="35" height="16"/>
+                                                                                                        <rect key="frame" x="220" y="6" width="35" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fa1-S2-BXW" userLabel="Doctor Name Label">
-                                                                                                        <rect key="frame" x="36" y="6" width="137" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="6" width="192" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBH-0X-fYt" userLabel="Line 1 Label">
-                                                                                                        <rect key="frame" x="36" y="34" width="164" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="34" width="219" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Sw-nW-HGF" userLabel="Line 2 Label">
-                                                                                                        <rect key="frame" x="36" y="54" width="164" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="54" width="219" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye2-mr-kbw" userLabel="Divider View">
-                                                                                                        <rect key="frame" x="0.0" y="118.5" width="208" height="1"/>
+                                                                                                        <rect key="frame" x="0.0" y="119" width="263" height="1"/>
                                                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="1" id="hak-XD-pZa"/>
@@ -384,13 +382,13 @@
                                                                                     </connections>
                                                                                 </tableViewCell>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="approvalDoctorVisitCell" rowHeight="94" id="3Og-iZ-jGg" customClass="ApprovalDoctorVisitTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="488" width="208" height="94"/>
+                                                                                    <rect key="frame" x="0.0" y="488" width="263" height="94"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Og-iZ-jGg" id="eWI-fE-ksZ">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="94"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="94"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
-                                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l8g-C1-pTV">
+                                                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l8g-C1-pTV">
                                                                                                 <rect key="frame" x="8" y="0.0" width="192" height="93.5"/>
                                                                                                 <subviews>
                                                                                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-work-user" translatesAutoresizingMaskIntoConstraints="NO" id="pdI-ZD-Niu" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
@@ -400,21 +398,21 @@
                                                                                                             <constraint firstAttribute="width" constant="30" id="Sa7-Bk-hhG"/>
                                                                                                         </constraints>
                                                                                                     </imageView>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelLabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g40-Zk-KYM" userLabel="Title label">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="LabelLabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g40-Zk-KYM" userLabel="Title label">
                                                                                                         <rect key="frame" x="40" y="3.5" width="142" height="31.5"/>
                                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZ4-77-qY5">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZ4-77-qY5">
                                                                                                         <rect key="frame" x="40" y="35" width="142" height="32.5"/>
                                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XmV-wg-yje">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="More..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XmV-wg-yje">
                                                                                                         <rect key="frame" x="137.5" y="71.5" width="46.5" height="17"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="17" id="cFn-5O-vt4"/>
@@ -423,7 +421,7 @@
                                                                                                         <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
-                                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wTF-N3-nqx">
+                                                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wTF-N3-nqx">
                                                                                                         <rect key="frame" x="0.0" y="92.5" width="192" height="0.5"/>
                                                                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <constraints>
@@ -469,10 +467,10 @@
                                                                                     </connections>
                                                                                 </tableViewCell>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceSFCCell" id="ukM-bJ-vF3" userLabel="SFC Cell" customClass="DCRStepperSFCTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="582" width="208" height="120"/>
+                                                                                    <rect key="frame" x="0.0" y="582" width="263" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ukM-bJ-vF3" id="DF6-cB-Wk6">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="119.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
                                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_from_to_marker" translatesAutoresizingMaskIntoConstraints="NO" id="j4q-u9-rnU" userLabel="Route Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
@@ -482,7 +480,7 @@
                                                                                                     <constraint firstAttribute="height" constant="40" id="yCP-HB-aTi"/>
                                                                                                 </constraints>
                                                                                             </imageView>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnR-e5-0Kf" userLabel="Travel Mode Label">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnR-e5-0Kf" userLabel="Travel Mode Label">
                                                                                                 <rect key="frame" x="164" y="-4" width="50" height="21"/>
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="width" constant="50" id="D46-ks-pfv"/>
@@ -492,33 +490,33 @@
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2D-T6-LU8" userLabel="Distance Label">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2D-T6-LU8" userLabel="Distance Label">
                                                                                                 <rect key="frame" x="171.5" y="17" width="35" height="16"/>
                                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="KM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3Y-L9-JUX" userLabel="KM">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="KM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3Y-L9-JUX" userLabel="KM">
                                                                                                 <rect key="frame" x="178.5" y="33" width="21" height="11"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znA-G3-acd" userLabel="Divider View">
+                                                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znA-G3-acd" userLabel="Divider View">
                                                                                                 <rect key="frame" x="159" y="4" width="1" height="40"/>
                                                                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <constraints>
                                                                                                     <constraint firstAttribute="width" constant="1" id="93V-3i-9Ys"/>
                                                                                                 </constraints>
                                                                                             </view>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Pc-TR-XFl" userLabel="Line 1 Label">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Pc-TR-XFl" userLabel="Line 1 Label">
                                                                                                 <rect key="frame" x="42" y="4" width="125" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUx-3g-8zo" userLabel="Line 2 Label">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUx-3g-8zo" userLabel="Line 2 Label">
                                                                                                 <rect key="frame" x="42" y="24" width="125" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -556,19 +554,19 @@
                                                                                     </connections>
                                                                                 </tableViewCell>
                                                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceStepperRemarksCell" id="fcH-pH-zxD" userLabel="General Remarks Cell" customClass="DCRStepperRemarksTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="702" width="208" height="120"/>
+                                                                                    <rect key="frame" x="0.0" y="702" width="263" height="120"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fcH-pH-zxD" id="Ox9-bO-fx8">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="208" height="119.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="263" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qt4-m8-a0M" userLabel="Line 1">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qt4-m8-a0M" userLabel="Line 1">
                                                                                                 <rect key="frame" x="36" y="0.0" width="164" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQv-6G-iTl" userLabel="Line 2">
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQv-6G-iTl" userLabel="Line 2">
                                                                                                 <rect key="frame" x="36" y="20" width="164" height="16"/>
                                                                                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -607,13 +605,13 @@
                                                                     </constraints>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rgM-KG-ePc" userLabel="Bottom View">
-                                                                    <rect key="frame" x="0.0" y="166" width="208" height="60"/>
+                                                                    <rect key="frame" x="0.0" y="166" width="263" height="60"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caU-vj-K50" userLabel="More View">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="208" height="20"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="263" height="20"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="more..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FWF-y3-Nb8">
-                                                                                    <rect key="frame" x="36" y="3" width="148" height="14"/>
+                                                                                    <rect key="frame" x="36" y="3" width="203" height="14"/>
                                                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <nil key="highlightedColor"/>
@@ -626,14 +624,14 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmS-a2-cLV" userLabel="Border View">
-                                                                            <rect key="frame" x="0.0" y="24" width="208" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="24" width="263" height="1"/>
                                                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="1" id="Ltr-ol-N30"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YzF-Ix-5UW" userLabel="Button View">
-                                                                            <rect key="frame" x="0.0" y="25" width="208" height="35"/>
+                                                                            <rect key="frame" x="0.0" y="25" width="263" height="35"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L7B-IO-dGK" userLabel="Left Button">
                                                                                     <rect key="frame" x="16" y="0.0" width="150" height="35"/>
@@ -650,7 +648,7 @@
                                                                                     </connections>
                                                                                 </button>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLG-rq-FM4" userLabel="Right Button">
-                                                                                    <rect key="frame" x="108" y="0.0" width="100" height="35"/>
+                                                                                    <rect key="frame" x="163" y="0.0" width="100" height="35"/>
                                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="100" id="g4g-sl-cjK"/>
@@ -708,10 +706,10 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoM-Nb-EJw" userLabel="coverButton">
-                                                            <rect key="frame" x="49" y="4" width="208" height="191"/>
+                                                            <rect key="frame" x="49" y="4" width="263" height="191"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecm-fo-x3b" userLabel="Section Title Cover Button">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="208" height="191"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="263" height="191"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <connections>
                                                                         <action selector="SectionExpandBtnAction:" destination="AOF-UN-JKx" eventType="touchUpInside" id="zlK-2q-pF3"/>
@@ -727,15 +725,15 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boA-XG-8It" userLabel="Empty State View">
-                                                            <rect key="frame" x="49" y="0.0" width="208" height="230"/>
+                                                            <rect key="frame" x="49" y="0.0" width="263" height="230"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DvE-j6-o2c" userLabel="Empty State section title Label">
-                                                                    <rect key="frame" x="0.0" y="2" width="200" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="255" height="17"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2g-wI-Tu1" userLabel="Empty state sub title">
-                                                                    <rect key="frame" x="0.0" y="23" width="200" height="14.5"/>
+                                                                    <rect key="frame" x="0.0" y="23" width="255" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -768,7 +766,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MH0-B1-0ux" userLabel="Bottom space View">
-                                                            <rect key="frame" x="0.0" y="230" width="265" height="20"/>
+                                                            <rect key="frame" x="0.0" y="230" width="320" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="Wl8-Sx-kEr"/>
@@ -854,7 +852,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rup-CJ-xAW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
-                                        <state key="normal" title="SUBMIT ATTENDANCE">
+                                        <state key="normal" title="SUBMIT OFFICE">
                                             <color key="titleColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -895,6 +893,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jB3-x4-a3O" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="139" y="134"/>
         </scene>
         <!--Attendance Accompanist List Controller-->
         <scene sceneID="t2m-up-5oL">
@@ -905,7 +904,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NeW-zj-dIj">
-                                <rect key="frame" x="0.0" y="92" width="375" height="575"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserListCell" id="S94-bN-RIx" customClass="UserListIndexTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
@@ -997,7 +996,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Ucq-OT-LiD">
-                                <rect key="frame" x="8" y="28" width="359" height="56"/>
+                                <rect key="frame" x="8" y="8" width="359" height="56"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1044,7 +1043,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lnf-ug-auN">
-                                <rect key="frame" x="0.0" y="20" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brR-cO-kOM">
                                         <rect key="frame" x="16" y="8" width="343" height="0.0"/>
@@ -1126,7 +1125,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" tag="200" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="254" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UUI-87-6Fg">
-                                <rect key="frame" x="0.0" y="140" width="375" height="487"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="507"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doctorVisitMain" id="ENo-La-8mk" customClass="DoctorVisitStepperMain" customModule="HiDOCTOR" customModuleProvider="target">
@@ -1218,14 +1217,14 @@
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qz-Ud-h1n">
-                                                                                        <rect key="frame" x="40" y="0.0" width="271" height="9.5"/>
+                                                                                        <rect key="frame" x="40" y="0.0" width="271" height="10"/>
                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IV3-5g-J62">
-                                                                                        <rect key="frame" x="275" y="9.5" width="36" height="23"/>
+                                                                                        <rect key="frame" x="275" y="10" width="36" height="23"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" constant="23" id="JNZ-oj-RPI"/>
                                                                                         </constraints>
@@ -1255,25 +1254,25 @@
                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uI-HR-7Rg">
-                                                                                        <rect key="frame" x="40" y="0.0" width="271" height="0.5"/>
+                                                                                        <rect key="frame" x="40" y="0.0" width="271" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EC9-NK-9Jb">
-                                                                                        <rect key="frame" x="40" y="10.5" width="271" height="0.0"/>
+                                                                                        <rect key="frame" x="40" y="10" width="271" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0z-Wo-PKv">
-                                                                                        <rect key="frame" x="40" y="30.5" width="271" height="0.0"/>
+                                                                                        <rect key="frame" x="40" y="28" width="271" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3K-6O-e2g">
-                                                                                        <rect key="frame" x="40" y="40.5" width="271" height="0.0"/>
+                                                                                        <rect key="frame" x="40" y="38" width="271" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>
@@ -1316,7 +1315,7 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wEl-Vk-B1b">
-                                                                                        <rect key="frame" x="40" y="10" width="271" height="0.5"/>
+                                                                                        <rect key="frame" x="40" y="8" width="271" height="0.0"/>
                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                                                         <nil key="highlightedColor"/>

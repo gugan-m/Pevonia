@@ -115,7 +115,7 @@ class LockReleaseFormController: UIViewController,SelectedUserDetailsDelegate {
                     }
                     else if(objLockRelease.Lock_Type == "ATTENDANCE")
                     {
-                        flag = "A"
+                        flag = "O"
                     }
                     else
                     {

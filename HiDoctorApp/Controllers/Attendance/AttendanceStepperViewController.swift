@@ -25,7 +25,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
       removeVersionToastView()
       self.setSubmitViewHeightConst()
       addBackButtonView()
-      self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + "(Attendance)"
+      self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + "(Office)"
     }
 
     override func viewWillAppear(_ animated: Bool)
@@ -336,7 +336,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     func showAlertToConfirmAppliedMode(captureLocation:Bool)
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
+        let alertMessage =  "Your Offline Office is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -373,7 +373,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DVR'option from the home screen to submit your applied Attendance."
+        let alertMessage =  "Your Offline Office is ready to submit to your manager.\n\n Click 'Upload' to submit Office.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DVR'option from the home screen to submit your applied Office."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in

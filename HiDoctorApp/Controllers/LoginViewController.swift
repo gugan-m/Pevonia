@@ -83,7 +83,6 @@ class LoginViewController: UIViewController
         forgotPwdBtn.setAttributedTitle(forgotPwdAttString, for: UIControlState.normal)
         companyName.text = checkNullAndNilValueForString(stringData: companyDict.value(forKey: "Company_Name") as? String)
         
-        
         let companyUrl = checkNullAndNilValueForString(stringData: companyDict.value(forKey: "Company_Url") as? String)
         
         let companyLogoURL = checkNullAndNilValueForString(stringData: companyDict.value(forKey: "Company_Logo_Url") as? String)

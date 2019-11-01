@@ -107,11 +107,11 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
         
         if activityType != ""
         {
-            headerText = "Attendance - \(actualDate) | \(activityType)"
+            headerText = "Office - \(actualDate) | \(activityType)"
         }
         else
         {
-            headerText = "Attendance - \(actualDate)"
+            headerText = "Office - \(actualDate)"
         }
         if ifIsComingFromTpPage == false && isCmngFromReportPage == false && isCmngFromRejectPage == false
         {

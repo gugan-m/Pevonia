@@ -46,7 +46,7 @@ class ExpenseClaimCalandarListController: UIViewController,UITableViewDelegate,U
         }
         else if(section == 1)
         {
-            cell1.titleLbl.text = "Attendance"
+            cell1.titleLbl.text = "Office"
             
         }
         else if(section == 2)

@@ -127,15 +127,15 @@ class CommonLeaveApprovalViewController: UIViewController,ApprovalPopUpDelegate
         if isCmngFromReportPage && isMine
         {
             activityType = BL_Approval.sharedInstance.getDCRStatus(dcrStatus: userObj.DCR_Status)
-            headerText = "Leave - \(actualDate) | \(activityType)"
+            headerText = "Not Working - \(actualDate) | \(activityType)"
         }
         else if isCmngFromReportPage || isCmngFromRejectPage
         {
-           headerText = "Leave - \(actualDate)"
+           headerText = "Not Working - \(actualDate)"
         }
         else
         {
-            headerText = "Leave - \(actualDate) | \(activityType)"
+            headerText = "Not Working - \(actualDate) | \(activityType)"
         }
         
         if isCmngFromRejectPage
@@ -311,7 +311,7 @@ class CommonLeaveApprovalViewController: UIViewController,ApprovalPopUpDelegate
     
     func showErrorToastView()
     {
-        showToastView(toastText: "Problem in getting Leave Details")
+        showToastView(toastText: "Problem in getting Not Working Details")
     }
     
     //MARK:- Update Status
@@ -319,7 +319,7 @@ class CommonLeaveApprovalViewController: UIViewController,ApprovalPopUpDelegate
     {
         if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.LEAVE_POLICY) == PrivilegeValues.YES.rawValue)
         {
-            AlertView.showAlertView(title: "Alert", message: "Leave Policy is enabled. You are not allowed to Approve/Reject leave from this page. Please go to Leave Approval Screen to Approve/Reject Leave.")
+            AlertView.showAlertView(title: "Alert", message: "Not Working Policy is enabled. You are not allowed to Approve/Reject Not Working from this page. Please go to Not Working Approval Screen to Approve/Reject Not Working.")
         }
         else if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.LEAVE_POLICY) == PrivilegeValues.NO.rawValue)
         {
@@ -334,7 +334,7 @@ class CommonLeaveApprovalViewController: UIViewController,ApprovalPopUpDelegate
     {
         if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.LEAVE_POLICY) == PrivilegeValues.YES.rawValue)
         {
-            AlertView.showAlertView(title: "Alert", message: "Leave Policy is enabled. You are not allowed to Approve/Reject leave from this page. Please go to Leave Approval Screen to Approve/Reject Leave.")
+            AlertView.showAlertView(title: "Alert", message: "Not Working Policy is enabled. You are not allowed to Approve/Reject Not Working from this page. Please go to Not Working Approval Screen to Approve/Reject Not Working.")
         }
         
         else if (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.LEAVE_POLICY) == PrivilegeValues.NO.rawValue)

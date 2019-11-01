@@ -1212,7 +1212,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             else if selectedIndex == 2
             {
                 emptyStateImage.image = UIImage(named: "icon-stepper-cycle")
-                text = "Beat/Patch data not available"
+                text = "Saved Routing data not available"
             }
             self.searchBarHeightConst.constant = 0
         }

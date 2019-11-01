@@ -211,14 +211,14 @@ class BL_DCR_Leave: NSObject
                     
                     if (filteredArray!.count == 0)
                     {
-                        errorMessage = "Already you have entered two activities for \(convertedDate). Hence you are not allowed to apply leave for this date"
+                        errorMessage = "Already you have entered two activities for \(convertedDate). Hence you are not allowed to apply Not Working for this date"
                     }
                 }
                 else
                 {
                     if (dcrHeaderList![0].Flag == DCRFlag.leave.rawValue && dcrHeaderList![0].DCR_Status != String(DCRStatus.unApproved.rawValue) && dcrHeaderList![0].DCR_Status != String(DCRStatus.newDCR.rawValue))
                     {
-                        errorMessage = "Already you have applied leave for \(convertedDate)."
+                        errorMessage = "Already you have applied Not Working for \(convertedDate)."
                     }
                     else
                     {
@@ -228,7 +228,7 @@ class BL_DCR_Leave: NSObject
                             {
                                 if (isHalfADayLeaveAllowed() == false)
                                 {
-                                    errorMessage = "Already you have entered an activity for \(convertedDate). Leave can not be applied for half a day"
+                                    errorMessage = "Already you have entered an activity for \(convertedDate). Not Working can not be applied for half a day"
                                 }
                             }
                             else

@@ -56,7 +56,7 @@ class PrivilegesAndConfigSettings: NSObject
         
         setConfigSettingsDefaultValue()
         
-        defaultDateFomat = getConfigSettingValue(configName: ConfigNames.DATE_DISPLAY_FORMAT).replacingOccurrences(of: "mm", with: "MM")
+        //defaultDateFomat = getConfigSettingValue(configName: ConfigNames.DATE_DISPLAY_FORMAT).replacingOccurrences(of: "mm", with: "MM")
     }
     
     func getPrivilegeValue(privilegeName: PrivilegeNames) -> String

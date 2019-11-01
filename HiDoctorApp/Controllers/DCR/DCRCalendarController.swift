@@ -26,7 +26,6 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     @IBOutlet weak var pickerTextfield: UITextField!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var hidebtnHeightConst: NSLayoutConstraint!
-    
     @IBOutlet var lblNoDcr: UILabel!
     
     var pickerView: UIPickerView!
@@ -74,10 +73,9 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     var date: String = ""
     var dcrVisitidArray: [String] = []
     var Visitid: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         //        calendarView.register(UINib(nibName: "DCRCalendarCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         //        let dictionary = BL_DCRCalendar.sharedInstance.getCPNMonth()
         //        monthArray = dictionary.value(forKey: "monthArray") as! NSArray
@@ -1194,7 +1192,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 
                 if tableViewHeight > tableView.contentSize.height
                 {
-                    variablercpaCellHeight = 0
+                    variablercpaCellHeight = 80
                 }
                 else
                 {
@@ -1207,7 +1205,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         variablercpaCellHeight = rcpaCellHeight
                     }
                 }
-                currentConstraintHeight = currentConstraintHeight + variablercpaCellHeight
+                currentConstraintHeight = currentConstraintHeight + variablercpaCellHeight // 0
                 contentViewHeightConst.constant = currentConstraintHeight
                 
                 //scrollToBottom()

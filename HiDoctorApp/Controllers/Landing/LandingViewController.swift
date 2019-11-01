@@ -12,8 +12,6 @@ import Photos
 
 class LandingViewController: UIViewController, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,onBoardComplete
 {
-    
-    
     @IBOutlet weak var quicknotes: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var userName: UILabel!
@@ -75,7 +73,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         assetDownloadObservers()
         
         self.askPermissionForLocationAccess()
-        setCompanyLogo()
+       // setCompanyLogo()
         
     }
     
@@ -221,7 +219,7 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         let date = UserDefaults.standard.value(forKey: "lastAlertDate") as! String!
         
         let isEqual = (getCurrentDate() == date)
-        
+        setCompanyLogo()
         
         quicknotes.isHidden = true
         if date == nil || !isEqual
@@ -637,7 +635,8 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         
         if let loadedImage = loadImageFromPath(path: filePath)
         {
-            self.logoImageView.image = loadedImage
+            self.logoImageView.imageWithFade = loadedImage
+            
         }
     }
     
@@ -1547,4 +1546,18 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+extension UIImageView {
+    var imageWithFade:UIImage?{
+        get{
+            return self.image
+        }
+        set{
+            UIView.transition(with: self,
+                              duration: 1.0, options: .transitionCrossDissolve, animations: {
+                                self.image = newValue
+            }, completion: nil)
+        }
+    }
 }

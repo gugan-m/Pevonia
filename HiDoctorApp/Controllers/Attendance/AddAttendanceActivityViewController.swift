@@ -208,7 +208,7 @@ class AddAttendanceActivityViewController: UIViewController,selectedActivityList
         else if isSpecialCharacterExist()
         {
             let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Attendance remarks", restrictedVal: restrictedCharacter, viewController: self)
+            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Office remarks", restrictedVal: restrictedCharacter, viewController: self)
         }
         else if ((remarksTxtFld.text?.count)! > attendanceActivityRemarksLength)
         {

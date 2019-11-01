@@ -146,10 +146,10 @@ class AssetsMainStoryListViewController: UIViewController,UITableViewDelegate,UI
         }
         let obj = assetsList[indexPath.section].storyObj
         cell.assetNameLbl.text = checkNullAndNilValueForString(stringData: obj?.Story_Name)
-        cell.assetCountLbl.text = "No of asset : \(assetSubList!.count)"
+        cell.assetCountLbl.text = "No of digital resource : \(assetSubList!.count)"
         
         if let expiryDate = obj?.Effective_To{
-            cell.assetCountLbl.text = "No of asset : \(assetSubList!.count)" + " | " + "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
+            cell.assetCountLbl.text = "No of digital resource : \(assetSubList!.count)" + " | " + "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
         }
         cell.targetLabel.text = "Target - " + BL_StoryModel.sharedInstance.getSpecialitynamesForStory(storyId: (obj?.Story_Id)!)
         
@@ -196,7 +196,7 @@ class AssetsMainStoryListViewController: UIViewController,UITableViewDelegate,UI
             if !self.refreshControl.isRefreshing{
              showCustomActivityIndicatorView(loadingText: "Loading...")
             }
-            BL_MasterDataDownload.sharedInstance.getDigitalAssetsData(masterDataGroupName: "Assets Refresh") { (status) in
+            BL_MasterDataDownload.sharedInstance.getDigitalAssetsData(masterDataGroupName: "Digital Resources Refresh") { (status) in
                 
                 if status == SERVER_SUCCESS_CODE
                 {

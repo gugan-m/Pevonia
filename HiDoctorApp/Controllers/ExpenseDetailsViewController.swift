@@ -112,11 +112,11 @@ class ExpenseDetailsViewController: UIViewController,UITableViewDelegate,UITable
             }
             else if(activity == "L")
             {
-                displayActivity = "Leave"
+                displayActivity = "Not Working"
             }
             else if(activity == "A")
             {
-                displayActivity = "Attendance"
+                displayActivity = "Office"
             }
             cell.infoLbl.text = "\(displayActivity) | \(expenseData.Expense_Type_Name!)"
             cell.expenseAmountLbl.text = "\(expenseData.Expense_Amount!)"
@@ -140,11 +140,11 @@ class ExpenseDetailsViewController: UIViewController,UITableViewDelegate,UITable
         }
         else if(activity == "L")
         {
-            displayActivity = "Leave"
+            displayActivity = "Not Working"
         }
         else if(activity == "A")
         {
-            displayActivity = "Attendance"
+            displayActivity = "Office"
         }
         cell.infoLbl.text = "\(displayActivity) | \(expenseData.Expense_Type_Name!)"
         cell.expenseAmountLbl.text = "\(expenseData.Expense_Amount!)"

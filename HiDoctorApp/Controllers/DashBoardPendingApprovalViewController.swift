@@ -110,12 +110,12 @@ class DashBoardPendingApprovalViewController: UIViewController, UITableViewDeleg
         else if dict.Flag == "L"
         {
             cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Leave"
+            activityName = "Not Working"
         }
         else if dict.Flag == "A"
         {
             cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Attendance"
+            activityName = "Office"
         }
         let dateStr = convertDateIntoString(date: getDateStringInFormatDate(dateString:  dict.Applied_Date, dateFormat: defaultServerDateFormat))
         

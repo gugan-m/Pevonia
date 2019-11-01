@@ -89,12 +89,12 @@ class DCRRejectViewController: UIViewController,UITableViewDelegate, UITableView
         else if obj.Activity == 3
         {
             cell.imgView.image = UIImage(named: "icon-calendar")
-            activityName = "Leave"
+            activityName = "Not Working"
         }
         else if obj.Activity == 2
         {
             cell.imgView.image = UIImage(named: "icon-calendar")
-            activityName = "Attendance"
+            activityName = "Office"
         }
         let dateStr = convertDateIntoString(date: getDateStringInFormatDate(dateString:  obj.Actual_Date, dateFormat: defaultServerDateFormat))
         

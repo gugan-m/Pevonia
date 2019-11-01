@@ -2,11 +2,11 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
-//let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
 let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
@@ -531,8 +531,8 @@ let wsCustomerSpeciality = "CustomerSpeciality/"
 let wsCustomerCategory = "CustomerCategory/"
 
 //MARK:- Story
-let storyPendingAssetDownloadAlert: String = "Some of the assets are yet to download."
-let storyProgressAssetDownloadAlert: String = "Some of the assets are downloading. Please wait.."
+let storyPendingAssetDownloadAlert: String = "Some of the digital resources are yet to download."
+let storyProgressAssetDownloadAlert: String = "Some of the digital resources are downloading. Please wait.."
 
 enum customerEntityInt : Int
 {
@@ -581,7 +581,7 @@ enum ScreenName: String
 }
 
 //MARK :- Format
-var defaultDateFomat: String!
+var defaultDateFomat = "MM/dd/yyyy"
 let defaultDateAndTimeFormat = "dd/MM/yyyy HH:mm a"
 let defaultDataAndTimeServerFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 let dateTimeWithoutMilliSec = "yyyy-MM-dd HH:mm:ss"
@@ -865,8 +865,8 @@ enum OnBoardScreenName : String
 
 //MARK:- DCR Calendar
 let fieldRcpa : String = "Field"
-let attendance : String = "Attendance"
-let leave : String = "Leave"
+let attendance : String = "Office"
+let leave : String = "Not Working"
 let applied : String = "Applied"
 let approved : String = "Approved"
 let drafted : String = "Drafted"
@@ -890,7 +890,7 @@ var appStockiest: String = ""
 var appDoctorPlural: String = ""
 var appChemistPlural: String = ""
 var appStockiestPlural: String = ""
-var appCp: String = "Beat/Patch Name"
+var appCp: String = "Saved Routing Name"
 
 //MARK:- DCR Calendar validation messages
 let activityConfigErrorMsg : String = "You are not allowed to enter more than one activity"
@@ -939,8 +939,8 @@ let accompMissedPrefixErrorMsg : String = "You are missed to select the 'Accompa
 let accompMissedSuffixErrorMsg : String = ". Please select any one of the options"
 
 //MARK:- DCR Doctor visit asset details
-let assetName: String = "Asset name: "
-let assetType: String = "Asset type: "
+let assetName: String = "Digital Resource name: "
+let assetType: String = "Digital Resource type: "
 let viewedPages: String = "Viewed pages: "
 let uniquePages: String = "Unique pages: "
 let viewedDuration: String = "Viewed duration: "
@@ -950,8 +950,8 @@ let defaultTagCount = 4
 
 //MARK:- EDetailing Message
 
-let assetDownloadMessage = "Downloading Asset(s)"
-let htmlDownloadMessage = "Selected asset can be viewed in offline only"
+let assetDownloadMessage = "Downloading Digital Resource(s)"
+let htmlDownloadMessage = "Selected digital resource can be viewed in offline only"
 let ratingSelectMessage = "Please give rating for the asset"
 
 //MARK:- Maximum length
@@ -1000,7 +1000,7 @@ let docTypeId = "com.microsoft.word.doc"
 let docxTypeId = "org.openxmlformats.wordprocessingml.document"
 
 //MARK:- Dashboard
-let assetsEmptyMsg = "No Asset found"
+let assetsEmptyMsg = "No digital resource found"
 let doctorsEmptyMsg = "No Partner's found"
 
 //MARK:- Tour Planner
@@ -1068,13 +1068,13 @@ let ccmNumberPrefix = ""
 let others = "Others"
 
 //MARK:- eDetailing Assets
-let assetInternetDropOffMsg : String = "Unable to download asset now. Please check your network"
-let assetDownloadFailedMsg : String = "Some of the asset downloaded failed. Please try again"
+let assetInternetDropOffMsg : String = "Unable to download digital resource now. Please check your network"
+let assetDownloadFailedMsg : String = "Some of the digital resource downloaded failed. Please try again"
 var uploadAnalyticsDuringDCRRefresh: Bool = false
 var navigateToAttachmentUpload: Bool = false
 
 //MARK:- Asset analytics
-let assetAnalyticsInternetDropOffMsg : String = "Unable to upload asset analytics now. Please check your network"
+let assetAnalyticsInternetDropOffMsg : String = "Unable to upload digital resource analytics now. Please check your network"
 let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload customer feedback analytics now. Please check your network"
 let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload partner visit feedback analytics now. Please check your network"
 
@@ -1409,21 +1409,21 @@ enum TPFlag : Int
 enum DCRActivityName : String
 {
     case fieldRcpa = "Field"
-    case attendance = "Attendance"
-    case leave = "Leave"
+    case attendance = "Office"
+    case leave = "Not Working"
 }
 
 enum TPActivityName : String
 {
     case fieldRcpa = "Field_RCPA"
-    case attendance = "Attendance"
-    case leave = "Leave"
+    case attendance = "Office"
+    case leave = "Not Working"
 }
 
 enum TPMoreName : String
 {
-    case refresh = "PR Refresh"
-    case upload = "PR Upload"
+    case refresh = "Routing Refresh"
+    case upload = "Routing Upload"
 }
 
 enum DCRActivity : Int
@@ -1471,7 +1471,7 @@ let SECONDS = "sec"
 let MINUTES = "min"
 let HOURS = "hrs"
 let CANCEL = "Cancel"
-let specialityDefaults = "Select Speciality Name"
+let specialityDefaults = "Select Position Name"
 let categoryDefaults = "Select Category Name"
 let SERVER_PASSWORD_CHANGE_CODE: Int = 2
 

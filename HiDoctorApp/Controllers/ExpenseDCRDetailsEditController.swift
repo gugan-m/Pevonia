@@ -81,11 +81,11 @@ class ExpenseDCRDetailsEditController: UIViewController,UITextFieldDelegate,UITe
         }
         else if(activity == "L")
         {
-            displayActivity = "Leave"
+            displayActivity = "Not Working"
         }
         else if(activity == "A")
         {
-            displayActivity = "Attendance"
+            displayActivity = "Office"
         }
         
         let getRemarkSize = getTextSize(text: getSelectedExpenseData.Remarks_By_User, fontName: fontRegular, fontSize: 15, constrainedWidth: SCREEN_WIDTH - 28).height
@@ -133,11 +133,11 @@ class ExpenseDCRDetailsEditController: UIViewController,UITextFieldDelegate,UITe
         }
         else if(activity == "L")
         {
-            displayActivity = "Leave"
+            displayActivity = "Not Working"
         }
         else if(activity == "A")
         {
-            displayActivity = "Attendance"
+            displayActivity = "Office"
         }
         
         

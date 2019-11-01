@@ -1280,35 +1280,35 @@ func getPopUpMsg(Flag : Int , status : Int , type : String) -> String
     }
     else if Flag == DCRFlag.attendance.rawValue && status == DCRStatus.approved.rawValue
     {
-        return "Your \(type) Attendance Approved Successfully"
+        return "Your \(type) Office Approved Successfully"
     }
     else if Flag == DCRFlag.attendance.rawValue && status == DCRStatus.unApproved.rawValue
     {
-        return "Your \(type) Attendance Rejected Successfully"
+        return "Your \(type) Office Rejected Successfully"
     }
     else if Flag == DCRFlag.attendance.rawValue && status == 4
     {
-        return "Unable to Approve Attendance.Please Try Again"
+        return "Unable to Approve Office.Please Try Again"
     }
     else if Flag == DCRFlag.attendance.rawValue && status == 5
     {
-        return "Unable to Reject Attendance.Please Try Again"
+        return "Unable to Reject Office.Please Try Again"
     }
     else if Flag == DCRFlag.leave.rawValue && status == DCRStatus.approved.rawValue
     {
-        return "Your \(type) Leave Approved Successfully"
+        return "Your \(type) Not Working Approved Successfully"
     }
     else if Flag == DCRFlag.leave.rawValue && status == DCRStatus.unApproved.rawValue
     {
-        return "Your \(type) Leave Rejected Successfully"
+        return "Your \(type) Not Working Rejected Successfully"
     }
     else if Flag == DCRFlag.leave.rawValue && status == 4
     {
-        return "Unable to Approve Leave Try Again"
+        return "Unable to Approve Not Working Try Again"
     }
     else if Flag == DCRFlag.leave.rawValue && status == 5
     {
-        return "Unable to Reject Leave.Please Try Again"
+        return "Unable to Reject Not Working.Please Try Again"
     }
     
     return ""
@@ -1686,7 +1686,7 @@ func setRoundedCornersForImageVW(imageVw : UIImageView){
 func convertDateIntoServerDisplayformat(date: Date) -> String
 {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd - MMM - yyyy - EEEE"
+    dateFormatter.dateFormat = "MMM - dd - yyyy - EEEE" // "dd - MMM - yyyy - EEEE"
     dateFormatter.timeZone = utcTimeZone
     return dateFormatter.string(from: date)
 }

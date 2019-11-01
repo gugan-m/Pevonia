@@ -86,11 +86,11 @@ class DashboardAssetDetails: UIViewController, UITableViewDelegate, UITableViewD
                     {
                         if self.isDetailed == true
                         {
-                            self.setEmptyState(assetList: [], emptyStateMsg: "No asset have been detailed..")
+                            self.setEmptyState(assetList: [], emptyStateMsg: "No digital resource have been detailed..")
                         }
                         else
                         {
-                            self.setEmptyState(assetList: [], emptyStateMsg: "All assets have been detailed..")
+                            self.setEmptyState(assetList: [], emptyStateMsg: "All digital resources have been detailed..")
                         }
                     }
                 }

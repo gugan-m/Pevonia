@@ -37,7 +37,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
    // var tapGesture = UITapGestureRecognizer()
     var leaveList :[DCRLeaveModel] = []
     
-    let placeHolderForLeaveType : String = "Select Leave Type"
+    let placeHolderForLeaveType : String = "Select Not Working Type"
     
     override func viewDidLoad()
     {
@@ -171,7 +171,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
                             
                             if apiResponseObj.list.count > 0
                             {
-                                showCustomActivityIndicatorView(loadingText: "Saving Leave Details")
+                                showCustomActivityIndicatorView(loadingText: "Saving Not Working Details")
                                 
                                 BL_DCR_Leave.sharedInstance.applyOnlineLeave(startDate: self.startDate, endDate: self.endDate, leaveTypeCode: self.leaveTypeCode, leaveTypeName: self.leaveTypeName, leaveReason: leaveReason!)
                                 { (apiResponseObject : ApiResponseModel) in
@@ -193,7 +193,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
                                     {
                                         if (apiResponseObject.Message == EMPTY)
                                         {
-                                            AlertView.showAlertView(title: errorTitle, message: "Your leave application is not accepted, please try again", viewController: self)
+                                            AlertView.showAlertView(title: errorTitle, message: "Your Not Working application is not accepted, please try again", viewController: self)
                                         }
                                         else
                                         {
@@ -352,33 +352,33 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         }
         else if noOfDays > 7
         {
-            AlertView.showAlertView(title: alertTitle, message: "Leave period should not exceed more than 7 days", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Not Working period should not exceed more than 7 days", viewController: self)
             isValidation = false
         }
         else if selectLeaveType.text == placeHolderForLeaveType
         {
             isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please select leave type", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please select Not Working type", viewController: self)
         }
         else if leaveReason.text?.count == 0
         {
-            AlertView.showAlertView(title: alertTitle, message: "Please enter leave reason", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please enter Not Working reason", viewController: self)
             isValidation = false
         }
         else if condenseWhitespace(stringValue: leaveReason.text!).count == 0
         {
             isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please Enter leave reason", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please Enter Not Working reason", viewController: self)
         }
         else if isSpecialCharacterExist()
         {
             let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Leave reason", restrictedVal: restrictedCharacter, viewController: self)
+            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Not Working reason", restrictedVal: restrictedCharacter, viewController: self)
             isValidation = false
         }
         else if (leaveReason.text?.count)! > leaveReasonMaxLength
         {
-            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Leave reason", maxVal: leaveReasonMaxLength, viewController: self)
+            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Not Working reason", maxVal: leaveReasonMaxLength, viewController: self)
             isValidation = false
         }
         
@@ -507,7 +507,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     private func showSuccessAlert()
     {
-        let alertViewController = UIAlertController (title: successTitle, message: "Leave applied successfully", preferredStyle: .alert)
+        let alertViewController = UIAlertController (title: successTitle, message: "Not Working applied successfully", preferredStyle: .alert)
         
         alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
             _ = self.navigationController?.popViewController(animated: false)
@@ -518,7 +518,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     func successAlert()
     {
-        let alertMessage =  "Leave applied successfully"
+        let alertMessage =  "Not Working applied successfully"
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -532,7 +532,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
+        let alertMessage =  "Your Offline Not Working is ready to submit in Applied/Approved status. Once submit you can not edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
        
         alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -577,7 +577,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
     
     func showAlertToUploadDCR()
     {
-        let alertMessage =  "Your Offline leave is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my DVR' option from the home screen to submit your applied leave."
+        let alertMessage =  "Your Offline Not Working is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my DVR' option from the home screen to submit your applied Not Working."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in

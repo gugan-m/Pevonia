@@ -70,7 +70,6 @@ class BL_DCR_Attendance_Stepper: NSObject
         stepperObjModel.isExpanded = false
         stepperObjModel.leftButtonTitle = ""
         
-        
         let dcrHeaderDetails: DCRHeaderModel? = BL_WorkPlace.sharedInstance.getDCRHeaderDetailForWorkPlace()
         self.dcrHeaderObj = dcrHeaderDetails
         
@@ -1354,7 +1353,7 @@ class BL_DCR_Attendance_Stepper: NSObject
                 }
                 else
                 {
-                    errorMessage = "You need to entry Samples or Activity for every Attendance \(appDoctor)"
+                    errorMessage = "You need to entry Samples or Activity for every Office \(appDoctor)"
                 }
             }
         }

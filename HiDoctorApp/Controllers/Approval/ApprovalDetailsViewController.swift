@@ -1495,7 +1495,7 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         var workStartTime : String = ""
         var workToTime : String = ""
         
-        workPlaceObj.key = "Beat/Patch Name"
+        workPlaceObj.key = "Saved Routing Name"
         
         campaignName = checkNullAndNilValueForString(stringData: dict.object(forKey: "CP_Name") as? String)
         if campaignName == ""

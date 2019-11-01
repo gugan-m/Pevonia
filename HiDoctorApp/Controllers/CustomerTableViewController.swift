@@ -280,7 +280,6 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         for eachCharacter in detailDict.allKeys as! [NSString]
-            
         {
             let arrayOfCharacter = detailDict.object(forKey: eachCharacter) as! NSArray
             let sortedArray = (arrayOfCharacter as NSArray).sorted { (($0 as! CustomerMasterModel).Customer_Name).localizedCaseInsensitiveCompare((($1 as! CustomerMasterModel).Customer_Name) as String) == ComparisonResult.orderedAscending }

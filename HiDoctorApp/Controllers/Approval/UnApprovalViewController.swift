@@ -235,12 +235,12 @@ class UnApprovalViewController: UIViewController, UITableViewDataSource, UITable
         else if dict.Activity == 3
         {
             Cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Leave"
+            activityName = "Not Working"
         }
         else if dict.Activity == 2
         {
             Cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Attendance"
+            activityName = "Office"
         }
         
         let tpDate = getStringInFormatDate(dateString: dict.Actual_Date)
@@ -785,7 +785,7 @@ class UnApprovalViewController: UIViewController, UITableViewDataSource, UITable
             if (isLeaveChecked())
             {
                 
-                AlertView.showAlertView(title: "Alert", message: "Leave Policy is enabled. You are not allowed to Approve/Reject leave from this page. Please go to Leave Approval Screen to Approve/Reject Leave.")
+                AlertView.showAlertView(title: "Alert", message: "Not Working Policy is enabled. You are not allowed to Approve/Reject Not Working from this page. Please go to Not Working Approval Screen to Approve/Reject Not Working.")
             }
             else
             {
@@ -808,7 +808,7 @@ class UnApprovalViewController: UIViewController, UITableViewDataSource, UITable
             if (isLeaveChecked())
             {
                 
-                AlertView.showAlertView(title: "Alert", message: "Leave Policy is enabled. You are not allowed to Approve/Reject leave from this page. Please go to Leave Approval Screen to Approve/Reject Leave.")
+                AlertView.showAlertView(title: "Alert", message: "Not Working Policy is enabled. You are not allowed to Approve/Reject Not Working from this page. Please go to Not Working Approval Screen to Approve/Reject Not Working.")
             }
             else
             {

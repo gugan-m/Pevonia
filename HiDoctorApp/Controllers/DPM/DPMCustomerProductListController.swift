@@ -14,8 +14,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
     @IBOutlet weak var emptyStateLbl: UILabel!
     @IBOutlet weak var searchBar : UISearchBar!
     
-    
-    
     var selectedRegionCode: String!
     var mappingRegionCode: String!
     var selectedType:String!
@@ -26,9 +24,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
     var detailedProductList: [DetailProductMaster] = []
     var selectedMCValue: MCAllDetailsModel!
     
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -287,16 +282,13 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
                         AlertView.showAlertView(title: alertTitle, message: "Deleted Successfully", viewController: self)
                     }
                 })
-                
             }
             else
             {
-                 removeCustomActivityView()
+                removeCustomActivityView()
                 AlertView.showAlertView(title: alertTitle, message: "Problem while delete", viewController: self)
             }
         }
-        
-        
     }
     
     //MARK:-Search Bar Delegate
@@ -316,6 +308,7 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
         self.setDafaults()
         tableView.reloadData()
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
         if (searchBar.text?.count)! > 0
@@ -331,6 +324,7 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
             tableView.reloadData()
         }
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
     }
@@ -347,7 +341,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
                 {
                     return true
                 }
-                
                 return false
             }
             self.customerList = filteredData
@@ -374,7 +367,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
                 {
                     return true
                 }
-                
                 return false
             }
             self.detailedProductList = filteredData
@@ -389,10 +381,6 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
                 self.emptyStateLbl.text = "No list found"
                 self.tableView.isHidden = true
             }
-            
         }
-        
-        
-        
     }
 }

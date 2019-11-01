@@ -129,7 +129,7 @@ class LeaveApprovalViewController: UIViewController, UITableViewDelegate, UITabl
                     {
                         self.endRefresh()
                         self.tableviewLeaveApproval.isHidden = true
-                        self.emptyStateLabel.text = "No Leave data found"
+                        self.emptyStateLabel.text = "No Not Working data found"
                     }
                     
                 }
@@ -208,7 +208,7 @@ class LeaveApprovalViewController: UIViewController, UITableViewDelegate, UITabl
                     {
                         self.endRefresh()
                         self.tableviewLeaveApproval.isHidden = true
-                        self.emptyStateLabel.text = "No Leave data found"
+                        self.emptyStateLabel.text = "No Not Working data found"
                     }
                     
                 }

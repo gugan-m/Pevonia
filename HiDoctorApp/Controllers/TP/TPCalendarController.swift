@@ -99,6 +99,23 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        orientationCalendarReloadData()
+    }
+    
+    func orientationCalendarReloadData()
+    {
+        if selectedDate != nil
+        {
+            BL_TPCalendar.sharedInstance.getTPCalendarModel()
+            calendarView.scrollToDate(Date() as Date, triggerScrollToDateDelegate: false, animateScroll: false)
+            calendarView.scrollDirection = .horizontal
+            calendarView.scrollingMode = .stopAtEachCalendarFrame
+            moveToMonthSegment(date: selectedDate)
+            calendarView.reloadData()
+        }
+    }
+    
     //MARK:- Default functions
     private func setDefaults()
     {
@@ -362,7 +379,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                         self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: 2)
                         self.navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPAttendanceStepperVCID)
                     }
-                    else if(title == leave)
+                    else if(title == "Not Working")
                     {
                         self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: 3)
                         self.navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPLeaveEntryVcID)
@@ -471,7 +488,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPStepperVCID)
         }
-        else if tpActivityLbl.text == "Attendance"
+        else if tpActivityLbl.text == "Office"
         {
             BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: selectedDateString, tpFlag: TPFlag.attendance.rawValue)
             
@@ -489,7 +506,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     {
         var holidayName: String = ""
         let tourPlannerHeaderModelData:TourPlannerHeader? = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: selectedDateString)
-        emptyStateDateLbl.text = convertDateIntoString(date: selectedDate)
+       // emptyStateDateLbl.text = convertDateIntoString(date: selectedDate)
         emptyStateLbl.text = noTourAvailable
         addBtn.isHidden = false
         editBut.isHidden = false
@@ -596,14 +613,14 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                 {
                     //Attendance
                     outerTableReturnCounr = 2
-                    tpActivityLbl.text = "Attendance"
+                    tpActivityLbl.text = "Office"
                     getActivity = 2
                 }
                 else if(activity == 3)
                 {
                     //Leave
                     outerTableReturnCounr = 1
-                    tpActivityLbl.text = "Leave"
+                    tpActivityLbl.text = "Not Working"
                     getActivity = 3
                 }
                 

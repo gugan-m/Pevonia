@@ -297,12 +297,12 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
         else if dict.Activity == 3
         {
             cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Leave"
+            activityName = "Not Working"
         }
         else if dict.Activity == 2
         {
             cell.listIconImg.image = UIImage(named: "icon-calendar")
-            activityName = "Attendance"
+            activityName = "Office"
         }
         let actualDate = convertDateIntoString(date: getDateStringInFormatDate(dateString: dict.Actual_Date , dateFormat: defaultServerDateFormat))
         cell.listContentLbl.text = actualDate + " - " + activityName

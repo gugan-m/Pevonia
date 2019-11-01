@@ -103,7 +103,7 @@ class BL_DCRCalendar: NSObject
     func convertDateIntoDCRDisplayformat(date: Date) -> String
     {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd - MMM - yyyy - EEEE"
+        dateFormatter.dateFormat = "MMM - dd - yyyy - EEEE" // "dd - MMM - yyyy - EEEE"
         dateFormatter.timeZone = utcTimeZone
         return dateFormatter.string(from: date)
     }

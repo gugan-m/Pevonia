@@ -29,7 +29,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     var leaveTypeCode : String = ""
     var leaveTypeId : String = ""
     var isInsertedFromTP: Bool = false
-    let placeHolderForLeaveType : String = "Select Leave Type"
+    let placeHolderForLeaveType : String = "Select Not Working Type"
     
     override func viewDidLoad()
     {
@@ -137,27 +137,27 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         if selectLeaveType.text == placeHolderForLeaveType
         {
             isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please select leave type", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please select Not Working type", viewController: self)
         }
         else if leaveReason.text?.count == 0
         {
-            AlertView.showAlertView(title: alertTitle, message: "Please enter leave reason", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please enter Not Working reason", viewController: self)
             isValidation = false
         }
         else if condenseWhitespace(stringValue: leaveReason.text!).count == 0
         {
             isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please Enter leave reason", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please Enter Not Working reason", viewController: self)
         }
         else if isSpecialCharacterExist()
         {
             let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Leave reason", restrictedVal: restrictedCharacter, viewController: self)
+            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Not Working reason", restrictedVal: restrictedCharacter, viewController: self)
             isValidation = false
         }
         else if (leaveReason.text?.count)! > tpLeaveReasonLength
         {
-            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Leave reason", maxVal: tpLeaveReasonLength, viewController: self)
+            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Not Working reason", maxVal: tpLeaveReasonLength, viewController: self)
             isValidation = false
         }
         
@@ -174,7 +174,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
                 if (filteredArray.count == 0)
                 {
                     isValidation = false
-                    AlertView.showAlertView(title: alertTitle, message: "Please choose a valid leave type", viewController: self)
+                    AlertView.showAlertView(title: alertTitle, message: "Please choose a valid Not Working type", viewController: self)
                 }
             }
         }
@@ -376,7 +376,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Not Working Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -403,7 +403,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmUpdateLeaveAppliedMode()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Not Working Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -431,7 +431,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Leave Application is ready to submit to your manager.\n\n Click 'Upload' to submit leave.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Leave."
+        let alertMessage =  "Your Offline Not Working Application is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Not Working."
         
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)

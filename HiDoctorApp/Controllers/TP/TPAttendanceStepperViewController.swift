@@ -24,7 +24,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         
         self.setSubmitViewHeightConst()
         addBackButtonView()
-        self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Attendance)"
+        self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Office)"
         
         BL_TP_AttendanceStepper.sharedInstance.clearAllArray()
     }
@@ -237,7 +237,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your Offline Office is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -264,7 +264,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Attendance is ready to submit to your manager.\n\n Click 'Upload' to submit Attendance.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Attendance."
+        let alertMessage =  "Your Offline Office is ready to submit to your manager.\n\n Click 'Upload' to submit Office.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Office."
         
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)

@@ -93,7 +93,7 @@ class CreateCpmpetitorProductController: UIViewController,UIPickerViewDataSource
                 if(apiObj.Status == SERVER_SUCCESS_CODE)
                 {
                     BL_CompetitorProducts.sharedInstance.specialityArray = NSMutableArray()
-                    let dict : NSDictionary = [ "Speciality_Code":"0","Speciality_Name" : "Select Speciality"]
+                    let dict : NSDictionary = [ "Speciality_Code":"0","Speciality_Name" : "Select Position"]
                     BL_CompetitorProducts.sharedInstance.specialityArray.add(dict)
                     let specialityListValue = apiObj.list!
                     for specialityValue in specialityListValue
@@ -351,9 +351,9 @@ class CreateCpmpetitorProductController: UIViewController,UIPickerViewDataSource
         {
             AlertView.showAlertView(title: alertTitle, message: "Please enter Product Name", viewController: self)
         }
-        else if(self.speciality.text == EMPTY || self.speciality.text == "Select Speciality")
+        else if(self.speciality.text == EMPTY || self.speciality.text == "Select Position")
         {
-            AlertView.showAlertView(title: alertTitle, message: "Please select speciality", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please select position", viewController: self)
         }
         else if(self.category.text == EMPTY || self.category.text == "Select Category")
         {

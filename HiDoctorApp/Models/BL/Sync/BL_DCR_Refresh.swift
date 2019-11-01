@@ -50,16 +50,16 @@ class BL_DCR_Refresh: NSObject
         static let DCRAttachmentDetails = "DVR Attachment details"
         static let DCRStockiestDetails = "DVR Stockiest details"
         static let DCRExpenseDetails = "DVR Expense details"
-        static let DCRAttendanceActivities = "DVR Attendance activities"
+        static let DCRAttendanceActivities = "DVR Office activities"
         static let DCRUserProducts = "DVR User products"
         static let DCRCallActivity = "DVR Call Activity"
         static let DCRMCActivity = "DVR MC Activity"
-        static let AttendanceDCRCallActivity = "Attendance DVR Call Activity"
-        static let AttendanceDCRMCActivity = "Attendance DVR MC Activity"
+        static let AttendanceDCRCallActivity = "Office DVR Call Activity"
+        static let AttendanceDCRMCActivity = "Office DVR MC Activity"
         static let AssetAnalyticsDetails = "ResourceAnalyticsDetails"
         static let TPUnfreezeDates = "PR Unfreeze Dates"
         static let DCRCompetitor = "DVR COmpetitor Details"
-        static let DCRAttendanceSample = "DVR Attendance Sample Details"
+        static let DCRAttendanceSample = "DVR Office Sample Details"
     }
     
     // MARK:- Public Functions

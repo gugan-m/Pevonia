@@ -409,7 +409,7 @@ class BL_TPCalendar: NSObject
             {
                 callObjectModel = CallObjectModel()
                 callObjectModel.objTitle = "Call Objective"
-                callObjectModel.objName = "Leave"
+                callObjectModel.objName = "Not Working"
                 callObjectDataList.append(callObjectModel)
                 
                 callObjectModel = CallObjectModel()

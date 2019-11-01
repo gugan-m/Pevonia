@@ -966,7 +966,7 @@ extension AssetsPlayerViewController : UITableViewDelegate , UITableViewDataSour
         
             if assetPlayList.isFirstAssetInStory && assetPlayList.isStoryEnabled{
                 cell.storytitleLabel.text = assetPlayList.storyObj.Story_Name
-                cell.storySubtitleLabel.text = "No of asset : \(assetPlayList.storyObj.No_Of_Assets!)"
+                cell.storySubtitleLabel.text = "No of digital resource : \(assetPlayList.storyObj.No_Of_Assets!)"
                 if let expiryDate = assetPlayList.storyObj.Effective_To{
                     cell.expiryDateLabel.text = "Valid till \(convertDateIntoServerDisplayformat(date: expiryDate)) "
                 }

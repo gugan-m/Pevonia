@@ -26,7 +26,7 @@ func showBanner(title:String,subTitle:String,bgColor:UIColor)
 
 func showBanner(title:String,subTitle:String,color:UIColor)
 {
-    banner = Banner(title: title, subtitle: "Asset Downloaded", image: UIImage(named: "Icon"), backgroundColor:color)
+    banner = Banner(title: title, subtitle: "Digital Resource Downloaded", image: UIImage(named: "Icon"), backgroundColor:color)
     banner.dismissesOnTap = false
     banner.show(duration: 3.0)
 }
@@ -42,6 +42,7 @@ func ifBannerIntialized() -> Bool
         return false
     }
 }
+
 func dismissBanner()
 {
     banner.dismiss()

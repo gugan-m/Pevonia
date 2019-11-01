@@ -626,7 +626,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             if ((dashboardAssetList.count == 0 && (index == Index.assetWise || index == 0)) || (dashBoardCustomerWiseList.count == 0 && (index == Index.customerWise || index == 1))) && checkInternetConnectivity()
             {
                 cell.emptyStateView.isHidden = false
-                var emptyStateText = "No Asset Details Found"
+                var emptyStateText = "No digital resource Details Found"
                 if (index == Index.customerWise ||  index == 1)
                 {
                     emptyStateText = "No Customer Details Found"

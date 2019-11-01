@@ -33,9 +33,9 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.navigationItem.title = "Add Flexi \(appDoctor)"
         doctorNameHeader.text = "\(appDoctor) Name"
-        doctorSpecialityHeader.text = "\(appDoctor) Speciality"
+        doctorSpecialityHeader.text = "\(appDoctor) Position"
         recentlyAddedHeader.text = "Recently added (Flexi \(appDoctorPlural))"
-        doctorSpeciality.text = "Select \(appDoctor) Speciality"
+        doctorSpeciality.text = "Select \(appDoctor) Position"
         
         doctorList = BL_DCR_Doctor_Visit.sharedInstance.getFlexiDoctorsList()!
     }
@@ -83,7 +83,7 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else if validSpeciality == false
         {
-            AlertView.showAlertView(title: alertTitle, message: "Please enter the speciality", viewController: self)
+            AlertView.showAlertView(title: alertTitle, message: "Please enter the Position", viewController: self)
         }
         else
         {
