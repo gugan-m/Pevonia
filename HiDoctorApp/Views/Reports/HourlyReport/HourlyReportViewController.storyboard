@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,16 +28,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVZ-Sn-N9n">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UeZ-ru-VIq" userLabel="Wrapper View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4E6-bt-Gbp" userLabel="Table View">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vtz-v7-AzD">
-                                                        <rect key="frame" x="0.0" y="8" width="320" height="401"/>
+                                                        <rect key="frame" x="0.0" y="8" width="320" height="421"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <prototypes>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" id="J0N-q6-O03" userLabel="Header Cell" customClass="HourlyReportTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
@@ -170,14 +168,14 @@
                                                         </connections>
                                                     </tableView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sw0-nR-4Si">
-                                                        <rect key="frame" x="0.0" y="409" width="320" height="1"/>
+                                                        <rect key="frame" x="0.0" y="429" width="320" height="1"/>
                                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="na9-iH-f9X"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyx-82-lBB">
-                                                        <rect key="frame" x="0.0" y="410" width="320" height="50"/>
+                                                        <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="emG-iF-ykf">
                                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
@@ -216,7 +214,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzl-Z5-eq4">
-                                                <rect key="frame" x="8" y="230" width="304" height="0.0"/>
+                                                <rect key="frame" x="8" y="240" width="304" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -359,7 +357,7 @@
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A53-Mz-pE3" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                                    <rect key="frame" x="10" y="10" width="300" height="126"/>
+                                                                                    <rect key="frame" x="10" y="10" width="300" height="150"/>
                                                                                     <subviews>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPO-Xk-RSC" userLabel="Middle View">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="300" height="56"/>
@@ -414,7 +412,7 @@
                                                                                             </constraints>
                                                                                         </view>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8en-lV-QD5" userLabel="Bottom View">
-                                                                                            <rect key="frame" x="0.0" y="56" width="300" height="70"/>
+                                                                                            <rect key="frame" x="0.0" y="56" width="300" height="94"/>
                                                                                             <subviews>
                                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYR-uu-X6O" userLabel="Divider View">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
@@ -424,7 +422,7 @@
                                                                                                     </constraints>
                                                                                                 </view>
                                                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-location" translatesAutoresizingMaskIntoConstraints="NO" id="bIC-bU-sDN">
-                                                                                                    <rect key="frame" x="8" y="23" width="24" height="24"/>
+                                                                                                    <rect key="frame" x="8" y="23" width="24" height="48"/>
                                                                                                     <constraints>
                                                                                                         <constraint firstAttribute="height" constant="24" id="DDa-ux-eZe"/>
                                                                                                         <constraint firstAttribute="width" constant="24" id="oc2-x6-aAN"/>
@@ -437,13 +435,13 @@
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>
                                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQZ-5t-m98" userLabel="Lat Long Value">
-                                                                                                    <rect key="frame" x="40" y="33" width="158" height="14"/>
+                                                                                                    <rect key="frame" x="40" y="33" width="158" height="38"/>
                                                                                                     <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>
                                                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>
                                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ihw-SP-5UI">
-                                                                                                    <rect key="frame" x="202" y="19" width="90" height="28"/>
+                                                                                                    <rect key="frame" x="202" y="43" width="90" height="28"/>
                                                                                                     <constraints>
                                                                                                         <constraint firstAttribute="width" constant="90" id="yUa-js-Z92"/>
                                                                                                     </constraints>
@@ -596,14 +594,14 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="mapMarkerTableViewCell" rowHeight="90" id="Mr1-8G-xGD" customClass="MarkerTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="1" width="320" height="90"/>
+                                                <rect key="frame" x="0.0" y="28" width="320" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mr1-8G-xGD" id="Uhi-pm-3ZG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FdN-qs-G4K">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-work-user" translatesAutoresizingMaskIntoConstraints="NO" id="j4t-ZZ-JQQ" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                     <rect key="frame" x="6" y="6" width="25" height="25"/>
@@ -726,7 +724,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DYp-R9-2VJ">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -755,14 +753,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="uQf-UL-Vl8">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6C-F0-X96" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w2q-0Y-fno">
-                                <rect key="frame" x="166" y="20" width="154" height="152"/>
+                                <rect key="frame" x="166" y="0.0" width="154" height="152"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_maps_markerBlue" translatesAutoresizingMaskIntoConstraints="NO" id="DZr-ob-Brq">
                                         <rect key="frame" x="8" y="16" width="23" height="23"/>
@@ -846,8 +844,8 @@
         <image name="ic_maps_marker" width="27.5" height="39.5"/>
         <image name="ic_maps_markerBlue" width="27" height="39"/>
         <image name="ic_maps_markerGreen" width="27" height="39"/>
-        <image name="icon-location" width="48" height="48"/>
-        <image name="icon-right-arrow" width="48" height="48"/>
+        <image name="icon-location" width="24" height="24"/>
+        <image name="icon-right-arrow" width="24" height="24"/>
         <image name="icon-work-user" width="24" height="24"/>
     </resources>
 </document>

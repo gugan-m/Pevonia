@@ -58,7 +58,7 @@ class AboutUsViewController: UIViewController {
     func setCompanyEmail()
     {
         self.companyEmail.textContainerInset = UIEdgeInsets.zero
-        self.companyEmail.text = "support@swaas.net"
+        self.companyEmail.text = "Pevonia.support@swaas.net"
         self.companyEmail.textContainer.lineFragmentPadding = 0
     }
     

@@ -18,7 +18,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 //let supportEmail : String = "support@swaas.net"
 
 //MARK:- Testing issue email
-let supportEmail : String = "support@swaas.net"
+let supportEmail : String = "Pevonia.support@swaas.net"
 
 //MARK:- App Name
 let appName = "Pevonia CRM"

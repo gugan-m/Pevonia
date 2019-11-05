@@ -20,13 +20,11 @@ struct menuIndex
     static let delete : Int = 6
 }
 
-
 class AssetsListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,AssetsSelectedDelegate
 {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyStateView : UIView!
-    @IBOutlet weak var searchViewHeightConst: NSLayoutConstraint!
     @IBOutlet weak var emptyStateLbl : UILabel!
     @IBOutlet weak var tableViewWidth: NSLayoutConstraint!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -69,7 +67,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         
         if isComingForSelection
         {
-            searchBarHgtConst.constant = 0
+            searchBarHgtConst.constant = 44
             addBarButtonItem()
         }
         self.lblPleaseNote.text = PEV_DIGITAL_ASSET_PLS_LBL
@@ -630,12 +628,12 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
     private func setEmptyStateLbl(type : Int)
     {
         var emptyStateTxt  :String = ""
-        searchViewHeightConst.constant = 44
+        searchBarHgtConst.constant = 44
         
         if type == 1
         {
             emptyStateTxt = "No Digital Resource Found"
-            searchViewHeightConst.constant = 0
+            searchBarHgtConst.constant = 0
         }
         else if type == 2
         {
@@ -644,7 +642,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         else
         {
             emptyStateTxt = "No show list found"
-            searchViewHeightConst.constant = 0
+            searchBarHgtConst.constant = 0
         }
         self.emptyStateLbl.text = emptyStateTxt
     }

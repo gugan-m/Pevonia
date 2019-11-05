@@ -13,7 +13,7 @@ class BL_Password: NSObject
     static let sharedInstance = BL_Password()
     private let REMIND_ME_KEY = "PASSWORD_EXPIRY_NOTIFICATION_REMINDER"
     private let PASSWORD_EXPIRED_NOTIFICATION_KEY = "SkipPassword"
-    private let ACCOUNT_LOCKED_ERROR_MESSAGE = "Your account is locked due to incorrect entry of password. Please contact our support team (support@swaas.net or 044 - 4340 7474) to release the lock."
+    private let ACCOUNT_LOCKED_ERROR_MESSAGE = "Your account is locked due to incorrect entry of password. Please contact our support team (Pevonia.support@swaas.net or 044 - 4340 7474) to release the lock."
     private let PASSWORD_CHANGED_ERROR_MESSAGE = "You have changed your password from some other device. Please confirm your password in order to proceed further"
     private let FIRSTTIME_PASSWORD_CHANGE_ERROR_MESSAGE = "You have to change your password"
     private let CONFIRM_PASSWORD_MESSAGE = "Your account is locked. Please confirm your password to release the lock"

@@ -208,16 +208,16 @@ class ShowHourlyReportDetailViewController: UIViewController, UITableViewDelegat
         cell.syncUpDateTimeLabel.text = objHourlyReport.SyncUp_DateTime
 //        cell.addressLabel.text = objHourlyReport.Doctor_Address
         
-        if (objHourlyReport.Lattitude > 0 && objHourlyReport.Longitude > 0)
-        {
+//        if (objHourlyReport.Lattitude > 0 && objHourlyReport.Longitude > 0)
+//        {
             cell.latitudeLongitudeLabel.text = String(objHourlyReport.Lattitude) + " - " + String(objHourlyReport.Longitude)
             cell.mapButton.isHidden = false
-        }
-        else
-        {
-            cell.latitudeLongitudeLabel.text = NOT_APPLICABLE
-            cell.mapButton.isHidden = true
-        }
+//        }
+//        else
+//        {
+//            cell.latitudeLongitudeLabel.text = NOT_APPLICABLE
+//            cell.mapButton.isHidden = true
+//        }
         
         cell.mapButton.tag = indexPath.row
         

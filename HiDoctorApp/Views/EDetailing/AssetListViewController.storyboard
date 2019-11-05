@@ -584,7 +584,6 @@
                         <outlet property="lblPleaseNote" destination="you-nV-ZAN" id="gIZ-xf-gBp"/>
                         <outlet property="searchBar" destination="62d-HQ-FZE" id="pq3-sA-Keo"/>
                         <outlet property="searchBarHgtConst" destination="Y8w-RC-JuE" id="CNy-sl-NqU"/>
-                        <outlet property="searchViewHeightConst" destination="Y8w-RC-JuE" id="0Fi-CL-9sC"/>
                         <outlet property="tableView" destination="MIR-5l-vMT" id="OVN-mZ-M6P"/>
                     </connections>
                 </viewController>
