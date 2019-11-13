@@ -201,13 +201,22 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
             else if (selectedEntityId == DCR_Stepper_Entity_Id.Work_Time.rawValue)
             {
                 line1Text = "Start time & End time"
-                
-                let startTime = BL_Stepper.sharedInstance.dcrHeaderObj?.Start_Time
-                let endTime = BL_Stepper.sharedInstance.dcrHeaderObj?.End_Time
-                
+                var startTime = ""
+                var endTime = ""
+                let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
+                if doctorObj.Punch_Start_Time!.count != 0 && doctorObj.Punch_End_Time!.count != 0
+                {
+                    startTime =  convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[0].Punch_Start_Time!)
+                    endTime = convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[BL_Stepper.sharedInstance.doctorList.count-1].Punch_End_Time!)
+                } else {
+                    startTime = BL_Stepper.sharedInstance.dcrHeaderObj!.Start_Time!
+                    endTime = BL_Stepper.sharedInstance.dcrHeaderObj!.End_Time!
+                }
+                print(startTime)
+                print(endTime)
                 if (checkNullAndNilValueForString(stringData: startTime) != EMPTY && checkNullAndNilValueForString(stringData: endTime) != EMPTY)
                 {
-                    line2Text = startTime! + " - " + endTime!
+                    line2Text = startTime + " - " + endTime
                 }
                 else
                 {

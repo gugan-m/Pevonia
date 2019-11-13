@@ -973,12 +973,24 @@ func convert12HrTo24Hr(timeString: String) -> String
     }
 }
 
+func convertStringToDate(stringDate: String) -> String
+{
+    let formatter = DateFormatter()
+    formatter.dateFormat = dateTimeWithoutMilliSec
+    let date = formatter.date(from: stringDate)!
+    let worktime_Dateformat = DateFormatter()
+    worktime_Dateformat.dateFormat = timeFormat
+    return worktime_Dateformat.string(from: date)
+}
+
+
 func convertStringToDate(string: String, timeZone: TimeZone, format: String) -> Date
 {
     let formatter = getDateFormatter(formartString: format, timeZone: timeZone)
     formatter.locale = usLocale
     return formatter.date(from: string)!
 }
+
 
 func convertDateToString(date: Date, timeZone: TimeZone, format: String) -> String
 {
