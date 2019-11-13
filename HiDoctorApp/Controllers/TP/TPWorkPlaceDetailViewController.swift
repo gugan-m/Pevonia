@@ -16,6 +16,8 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
     @IBOutlet weak var campaignPlanLbl: UILabel!
     @IBOutlet weak var campaignPlannerHeightConst: NSLayoutConstraint!
     @IBOutlet weak var campaignPlannerView: UIView!
+    @IBOutlet weak var collView_WorkPlace: UICollectionView!
+    @IBOutlet weak var constantCollectionView: NSLayoutConstraint!
     
     var pickerView = UIPickerView()
     var workCategoryList : [WorkCategories] = []
@@ -36,6 +38,7 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        BL_WorkPlace.sharedInstance.selected_Workplace_Array.removeAll()
         self.toggleCPView()
         self.getWorkCategoryList()
         self.addPickerView()
@@ -54,11 +57,23 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         
         self.setFlexiWorkPlace()
         addBackButtonView()
+        self.collView_WorkPlace.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.resignResponderForTxtField()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+          animateCollectionView()
+       }
+       
+       func animateCollectionView() {
+          UIView.animate(withDuration: 0.1) {
+             self.constantCollectionView.constant = CGFloat(BL_WorkPlace.sharedInstance.selected_Workplace_Array.count * 60) + 10
+               self.view.layoutIfNeeded()
+           }
+       }
     
     override func didReceiveMemoryWarning()
     {
@@ -127,7 +142,8 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         
         if (workPlaceLbl.text?.count)! > 0 && workPlaceLbl.text != "Select WorkPlace"
         {
-            workPlaceObj.value = workPlaceLbl.text
+            workPlaceObj.value = BL_WorkPlace.sharedInstance.selected_Workplace_Array.joined(separator: ",")
+          
         }
         else
         {
@@ -259,8 +275,16 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             categoryName = checkNullAndNilValueForString(stringData:tpHeaderObj!.Category_Name)
             
             // Work Place
-            workPlace = checkNullAndNilValueForString(stringData:tpHeaderObj!.Work_Place)
-            
+           
+            if BL_WorkPlace.sharedInstance.selected_Workplace_Array.count == 0{
+                 workPlace = checkNullAndNilValueForString(stringData:tpHeaderObj!.Work_Place)
+            }else {
+                let selcted_arr = checkNullAndNilValueForString(stringData:tpHeaderObj!.Work_Place)
+                BL_WorkPlace.sharedInstance.selected_Workplace_Array = selcted_arr.components(separatedBy: ",")
+                
+                workPlace = BL_WorkPlace.sharedInstance.selected_Workplace_Array[BL_WorkPlace.sharedInstance.selected_Workplace_Array.count - 1]
+            }
+        
             if (categoryName != EMPTY)
             {
                 title = "Edit Work Place Details"
@@ -504,8 +528,14 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             cpname = (cpModelObj?.CP_Name)!
             cpcode = (cpModelObj?.CP_Code)!
         }
-
-        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name": workCategoryObj!.Category_Name, "CP_Name": cpname,"CP_Code": cpcode,"Work_Area": workPlaceLbl.text!, "Category_Code": workCategoryObj!.Category_Code]
+        var multiple_Place = ""
+        if BL_WorkPlace.sharedInstance.selected_Workplace_Array.count != 0{
+           multiple_Place = BL_WorkPlace.sharedInstance.selected_Workplace_Array.joined(separator: ",")
+        } else {
+            multiple_Place = workPlaceLbl.text!
+        }
+        
+        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name": workCategoryObj!.Category_Name, "CP_Name": cpname,"CP_Code": cpcode,"Work_Area": multiple_Place, "Category_Code": workCategoryObj!.Category_Code]
         let objTPHeader: TourPlannerHeader = TourPlannerHeader(dict: dict)
         
         BL_TPStepper.sharedInstance.updateWorkPlaceDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag, workPlaceObj: objTPHeader)
@@ -777,6 +807,8 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             self.validateWorkPlace()
         }
     }
+    
+    
     func showAlertForInvalidCp()
     {
         let alertView = UIAlertController(title: alertTitle, message: "Selected \(appCp) is invalid", preferredStyle: UIAlertControllerStyle.alert)
@@ -792,4 +824,37 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
         self.present(alertView, animated: true, completion: nil)
     }
     
+    func closeWorkplace(sender: UIButton) {
+      if  BL_WorkPlace.sharedInstance.selected_Workplace_Array.count > 1 {
+            BL_WorkPlace.sharedInstance.selected_Workplace_Array.remove(at: sender.tag)
+        }
+        self.animateCollectionView()
+        self.workPlaceLbl.text = BL_WorkPlace.sharedInstance.selected_Workplace_Array[BL_WorkPlace.sharedInstance.selected_Workplace_Array.count-1]
+        self.collView_WorkPlace.reloadData()
+    }
+    
+    
+}
+
+extension  TPWorkPlaceDetailViewController: UICollectionViewDelegate,UICollectionViewDataSource {
+   
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return BL_WorkPlace.sharedInstance.selected_Workplace_Array.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TPMultipleWorkPlaceCell, for: indexPath) as! TPMultipleWorkPlaceCollectionViewCell
+        cell.layer.cornerRadius = 10.0
+        cell.btnClose.tag = indexPath.row
+        cell.lblPlace.text = BL_WorkPlace.sharedInstance.selected_Workplace_Array[indexPath.row] as! String
+        cell.btnClose.addTarget(self, action: #selector(closeWorkplace(sender:)), for: .touchUpInside)
+        return cell
+    }
+    
+    
+}
+extension TPWorkPlaceDetailViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width - 10, height: 42)
+    }
 }

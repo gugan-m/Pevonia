@@ -19,11 +19,10 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
     @IBOutlet weak var toTimeTxtFld: UITextField!
     @IBOutlet weak var campaignPlannerHeightConst: NSLayoutConstraint!
     @IBOutlet weak var campaignPlannerView : UIView!
-    
     @IBOutlet weak var worktimeHeightConstant: NSLayoutConstraint!
-    
     @IBOutlet weak var workTimeView: UIView!
-    
+    @IBOutlet weak var collView_WorkPlace: UICollectionView!
+    @IBOutlet weak var constantCollectionView: NSLayoutConstraint!
     var fromTimePicker = UIDatePicker()
     var toTimePicker = UIDatePicker()
     var pickerView = UIPickerView()
@@ -46,6 +45,7 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        BL_WorkPlace.sharedInstance.selected_Workplace_Array.removeAll()
         self.addTimePicker()
         self.addTapGestureForView()
         self.addPickerView()
@@ -65,16 +65,36 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
                 self.setValuesAccordingToSelectedCP()
             }
         }
-        
         showAlertCaptureLocationCount = 0
         self.setFlexiWorkPlace()
         addBackButtonView()
         self.isComingFromLoad = false
+        self.collView_WorkPlace.reloadData()
+    }
+    
+    func getDynamicWidthofText(textvalue: String) -> CGFloat {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        label.font = UIFont(name: "Halvetica", size: 17)
+        label.numberOfLines = 1
+        label.text = textvalue
+        label.sizeToFit()
+        return label.frame.width
     }
     
     override func viewWillDisappear(_ animated: Bool)
     {
         self.resignResponderForTxtField()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+       animateCollectionView()
+    }
+    
+    func animateCollectionView() {
+       UIView.animate(withDuration: 0.1) {
+          self.constantCollectionView.constant = CGFloat(BL_WorkPlace.sharedInstance.selected_Workplace_Array.count * 60)
+            self.view.layoutIfNeeded()
+        }
     }
     
     override func didReceiveMemoryWarning()
@@ -311,7 +331,16 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
             
             categoryId = dcrHeaderObj?.Category_Id
             categoryName = dcrHeaderObj?.Category_Name
-            workPlace = checkNullAndNilValueForString(stringData: dcrHeaderObj?.Place_Worked)
+            
+            if BL_WorkPlace.sharedInstance.selected_Workplace_Array.count == 0{
+                workPlace = checkNullAndNilValueForString(stringData: dcrHeaderObj?.Place_Worked)
+            } else {
+                let selcted_arr = checkNullAndNilValueForString(stringData:dcrHeaderObj?.Place_Worked)
+                BL_WorkPlace.sharedInstance.selected_Workplace_Array = selcted_arr.components(separatedBy: ",")
+                
+                workPlace = BL_WorkPlace.sharedInstance.selected_Workplace_Array[BL_WorkPlace.sharedInstance.selected_Workplace_Array.count - 1]
+                
+            }
             self.setValueForTimeTextField(fromTime: dcrHeaderObj?.Start_Time, toTime: dcrHeaderObj?.End_Time)
             self.title = "Edit Work Place Details"
         }
@@ -322,7 +351,7 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
                 workPlace = self.getDefaultRegionValue()
                 categoryName = self.getDefaultWorkCategoryValue()
             }
-            self.title = "Add Work Place Details"
+            self.title = "Add  WorkPlace Details"
         }
         
         if !isComingFromAttendanceStepper
@@ -750,8 +779,14 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
             dcrModelObj.Start_Time = EMPTY
             dcrModelObj.End_Time = EMPTY
         }
+        var workPlace = ""
+        if  BL_WorkPlace.sharedInstance.selected_Workplace_Array.count != 0 {
+            workPlace = BL_WorkPlace.sharedInstance.selected_Workplace_Array.joined(separator: ",")
+        } else {
+            workPlace = self.workPlaceLbl.text!
+        }
         dcrModelObj.DCR_Status = String(DCRStatus.drafted.rawValue)
-        dcrModelObj.Place_Worked = self.workPlaceLbl.text
+        dcrModelObj.Place_Worked = workPlace
         
         if workCategoryObj != nil
         {
@@ -800,6 +835,7 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
     {
         self.workPlaceLbl.text = placeObj.placeName
         self.isComingFromPlaceList = true
+        self.collView_WorkPlace.reloadData()
     }
     
     func setFlexiWorkPlace()
@@ -948,7 +984,6 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
             
             self.pickerView.selectRow(index, inComponent: 0, animated: false)
         }
-        
     }
     
     func getWorkCategoryObj(categoryName : String) ->  WorkCategoresObjectModel
@@ -956,5 +991,36 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
         return BL_WorkPlace.sharedInstance.getWorkCategoryObjByCategoryName(workCategoryName: categoryName)!
     }
     
+    func closeWorkplace(sender: UIButton) {
+      if  BL_WorkPlace.sharedInstance.selected_Workplace_Array.count > 1 {
+            BL_WorkPlace.sharedInstance.selected_Workplace_Array.remove(at: sender.tag)
+        }
+        self.animateCollectionView()
+        self.workPlaceLbl.text = BL_WorkPlace.sharedInstance.selected_Workplace_Array[BL_WorkPlace.sharedInstance.selected_Workplace_Array.count-1]
+        self.collView_WorkPlace.reloadData()
+    }
     
+}
+
+extension  WorkPlaceDetailsViewController: UICollectionViewDelegate,UICollectionViewDataSource {
+   
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return BL_WorkPlace.sharedInstance.selected_Workplace_Array.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MultipleWorkPlaceCell, for: indexPath) as! MultipleWorkPlaceCollectionViewCell
+        cell.layer.cornerRadius = 10.0
+        cell.btnClose.tag = indexPath.row
+        cell.lblPlace.text = BL_WorkPlace.sharedInstance.selected_Workplace_Array[indexPath.row] as! String
+        cell.btnClose.addTarget(self, action: #selector(closeWorkplace(sender:)), for: .touchUpInside)
+        return cell
+    }
+    
+    
+}
+extension WorkPlaceDetailsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width - 10, height: 42)
+    }
 }

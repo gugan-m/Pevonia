@@ -22,7 +22,7 @@ class TPUploadSelectionViewController: UIViewController,UITableViewDelegate,UITa
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.navigationItem.title = "\(PEV_TP) Upload"
+        self.navigationItem.title = "Routing Upload"
         uploadList = BL_TPUpload.sharedInstance.getMonthWisePendingTPCount()
         updateViews()
         addBackButtonView()

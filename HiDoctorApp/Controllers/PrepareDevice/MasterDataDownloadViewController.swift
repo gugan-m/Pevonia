@@ -42,7 +42,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
         static let CpTpDetails = "\(appCp) Details"
         static let SFCAccompanistData = "SFC & Ride Along Data"
         static let MenuData = "Menu Data"
-        static let DigitalAssets = "Digital Resource"
+        static let DigitalAssets = "Digital Assets"
         static let MarketContent = "Market Content"
     }
     
@@ -368,7 +368,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
     
     func downloadDigitalAssetsData()
     {
-        showCustomActivityIndicatorView(loadingText: "Downloading \(apiStatus.DigitalAssets)...")
+        showCustomActivityIndicatorView(loadingText: "Downloading \(MasterDataDownloadName.DigitalAssets)...")
         
         BL_MasterDataDownload.sharedInstance.getDigitalAssetsData(masterDataGroupName: masterDataGroupName.DigitalAssets.rawValue, completion: { (status) in
             if status == SERVER_SUCCESS_CODE
@@ -378,19 +378,19 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
                 if BL_DCR_Doctor_Visit.sharedInstance.getStoryEnabledPrivVal().lowercased() == PrivilegeValues.YES.rawValue.lowercased()
                 {
                     BL_MasterDataDownload.sharedInstance.getStoryData(masterDataGroupName: masterDataGroupName.DigitalAssets.rawValue, completion: { (status) in
-                        self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: apiStatus.DigitalAssets))
+                        self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: MasterDataDownloadName.DigitalAssets))
                     })
                 }
                 else
                 {
-                    self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: apiStatus.DigitalAssets))
+                    self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: MasterDataDownloadName.DigitalAssets))
                 }
                 WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: apiStatus.DigitalAssets), completion: { (apiObj) in
                 })
             }
             else
             {
-                self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: apiStatus.DigitalAssets))
+                self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: MasterDataDownloadName.DigitalAssets))
             }
         })
     }
@@ -445,7 +445,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
     func reloadTableView()
     {
         lastSyncDateTimeList = BL_MasterDataDownload.sharedInstance.masterDataDownloadTime()
-        
+        print(lastSyncDateTimeList)
         self.tableView.reloadData()
     }
     

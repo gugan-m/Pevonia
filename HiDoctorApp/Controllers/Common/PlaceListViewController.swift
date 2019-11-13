@@ -80,7 +80,7 @@ class PlaceListViewController: UIViewController , UITableViewDelegate , UITableV
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         
@@ -194,6 +194,9 @@ class PlaceListViewController: UIViewController , UITableViewDelegate , UITableV
             
         } else
         {
+            if !BL_WorkPlace.sharedInstance.selected_Workplace_Array.contains(placeObj.placeName) {
+            BL_WorkPlace.sharedInstance.selected_Workplace_Array.append(placeObj.placeName)
+            }
             self.delegate?.setSelectedWorkPlace(placeObj:placeObj)
             _ = navigationController?.popViewController(animated: false)
         }

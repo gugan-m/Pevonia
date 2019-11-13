@@ -2,11 +2,11 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
-let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
+//let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
 let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
@@ -15,7 +15,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
 //MARK:- Development  email issue
-//let supportEmail : String = "support@swaas.net"
+//let supportEmail : String = "Pevonia.support@swaas.net"
 
 //MARK:- Testing issue email
 let supportEmail : String = "Pevonia.support@swaas.net"
@@ -78,6 +78,8 @@ let ChemistDaySB = "ChemistDay"
 //MARK:- Collection view cell identifier
 let landingCellIdentifier = "landingItem"
 let AssetsPlayerCellIdentifier = "AssetsPlayerCell"
+let MultipleWorkPlaceCell = "MultipleWorkPlaceCell"
+let TPMultipleWorkPlaceCell = "TPMultipleWorkPlaceCell"
 
 //MARK:- Tableview cell identifier
 let dropdownCellIdentifier = "dropdownCell"
@@ -127,6 +129,7 @@ let TPAccompanistCell = "TPAccompanistCell"
 let DoctorSampleTVCell = "doctorSampleTVCell"
 let TPAttendanceTVCell = "TPAttendanceTableViewCell"
 let NotesCellVcID = "NotesCellVcID"
+
 
 
 //MARK:- View controller Ids
@@ -505,8 +508,8 @@ let liked : String = "Liked"
 let disLiked : String = "Disliked"
 let average : String = "Average"
 let invalid : String = "Invalid"
-let firstAssetToast = "you're at the first asset"
-let lastAssetToast = "you're at the last asset"
+let firstAssetToast = "you're at the first Digital Resource"
+let lastAssetToast = "you're at the last Digital Resource"
 let wsVisitFeedback = "Visit/Feedback"
 
 //MARK:- ChemistDay
@@ -581,7 +584,7 @@ enum ScreenName: String
 }
 
 //MARK :- Format
-var defaultDateFomat = "MM/dd/yyyy"
+var defaultDateFomat = String()
 let defaultDateAndTimeFormat = "dd/MM/yyyy HH:mm a"
 let defaultDataAndTimeServerFormat = "yyyy-MM-dd HH:mm:ss.SSS"
 let dateTimeWithoutMilliSec = "yyyy-MM-dd HH:mm:ss"
@@ -952,7 +955,7 @@ let defaultTagCount = 4
 
 let assetDownloadMessage = "Downloading Digital Resource(s)"
 let htmlDownloadMessage = "Selected digital resource can be viewed in offline only"
-let ratingSelectMessage = "Please give rating for the asset"
+let ratingSelectMessage = "Please give rating for the Digital Resource"
 
 //MARK:- Maximum length
 let flexiPlaceMaxLength = 100
@@ -1172,6 +1175,7 @@ enum PrivilegeNames: String
      case DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE = "DOCTOR_VISITS_CAPTURE_CONTROLS_IN_ATTENDANCE"
     case TP_FIELD_CAPTURE_CONTROLS = "TP_FIELD_CAPTURE_CONTROLS"
     case TP_ATTENDANCE_CAPTURE_CONTROLS = "TP_ATTENDANCE_CAPTURE_CONTROLS"
+    case ALLOW_GROUP_EDETAILING = "ALLOW_GROUP_EDETAILING"
 }
 
 enum PrivilegeValues: String
@@ -1632,6 +1636,7 @@ struct Constants
         static let POBDetailCell : String = "detailTableViewCell"
         static let POBAmountDetailsCell :String = "AmountDetailsTableViewCell"
         static let RCPAListCell :String = "rcpaListCell"
+        static let GroupeDetailingCell : String = "groupEdetailCell"
         }
     
     struct CollectionViewIdentifier

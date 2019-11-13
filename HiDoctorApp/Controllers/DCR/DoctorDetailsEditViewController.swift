@@ -888,7 +888,7 @@ class DoctorDetailsEditViewController: UIViewController,UITableViewDataSource,UI
         }
         else if(doctorDataList[section].dataList[row].controlType == controlValues.Picker)
         {
-            if(doctorDataList[section].dataList[row].headerTitle == "Speciality")
+            if(doctorDataList[section].dataList[row].headerTitle == "Position")
             {
                 let name = BL_DoctorList.sharedInstance.customerSpecialityArray.value(forKey: "Speciality_Name") as! NSArray
                 let code = BL_DoctorList.sharedInstance.customerSpecialityArray.value(forKey: "Speciality_Code") as! NSArray

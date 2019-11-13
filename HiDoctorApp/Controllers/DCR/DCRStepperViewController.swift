@@ -866,9 +866,12 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         else
         {
-            if (entityId == DCR_Stepper_Entity_Id.Accompanist.rawValue || entityId == DCR_Stepper_Entity_Id.WorkPLace.rawValue || entityId == DCR_Stepper_Entity_Id.Chemist.rawValue || entityId == DCR_Stepper_Entity_Id.Stockist.rawValue || entityId == DCR_Stepper_Entity_Id.Expense.rawValue || entityId == DCR_Stepper_Entity_Id.Work_Time.rawValue)
+            if (entityId == DCR_Stepper_Entity_Id.Accompanist.rawValue || entityId == DCR_Stepper_Entity_Id.Chemist.rawValue || entityId == DCR_Stepper_Entity_Id.Stockist.rawValue || entityId == DCR_Stepper_Entity_Id.Expense.rawValue || entityId == DCR_Stepper_Entity_Id.Work_Time.rawValue)
             {
                 return BL_Stepper.sharedInstance.getCommonCellHeight(selectedIndex: selectedIndex)
+            }
+            else if entityId == DCR_Stepper_Entity_Id.WorkPLace.rawValue {
+                 return BL_Stepper.sharedInstance.getCommonCellHeight(selectedIndex: selectedIndex)// + 20
             }
             else if (entityId == DCR_Stepper_Entity_Id.SFC.rawValue)
             {

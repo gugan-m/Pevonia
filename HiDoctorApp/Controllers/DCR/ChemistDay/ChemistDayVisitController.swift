@@ -690,7 +690,7 @@ class ChemistDayVisitController: UIViewController,UITextFieldDelegate {
                             else
                             {
                                 removeCustomActivityView()
-                                AlertView.showAlertView(title: alertTitle, message: "DCR Date is not a current date", viewController: self)
+                                AlertView.showAlertView(title: alertTitle, message: "DVR Date is not a current date", viewController: self)
                             }
                         }
                         else

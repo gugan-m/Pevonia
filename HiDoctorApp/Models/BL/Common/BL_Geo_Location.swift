@@ -38,17 +38,17 @@ class BL_Geo_Location: NSObject
             return getGeoLocaitonValidationModel(status: PROCEED_TO_DCR, doctorLocation: nil, remarks: AUTO_SKIP_USER_LOCATION_NOT_FOUND)
         }
         
-//        if (doctorLocationsList.count == 0)
-//        {
-//            if (isGeoFencingEnabled())
-//            {
-//                return getGeoLocaitonValidationModel(status: PROCEED_TO_DCR, doctorLocation: nil, remarks: AUTO_SKIP_ADDRESS_NOT_FOUND)
-//            }
-//            else
-//            {
-//                return getGeoLocaitonValidationModel(status: PROCEED_TO_DCR, doctorLocation: nil, remarks: EMPTY)
-//            }
-//        }
+        if (doctorLocationsList.count == 0)
+        {
+            if (isGeoFencingEnabled())
+            {
+                return getGeoLocaitonValidationModel(status: PROCEED_TO_DCR, doctorLocation: nil, remarks: AUTO_SKIP_ADDRESS_NOT_FOUND)
+            }
+            else
+            {
+                return getGeoLocaitonValidationModel(status: PROCEED_TO_DCR, doctorLocation: nil, remarks: EMPTY)
+            }
+        }
         
         for objDoctorLocation in doctorLocationsList
         {

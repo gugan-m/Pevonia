@@ -37,7 +37,7 @@ enum UserListScreenName : String
 }
 
 class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
-    
+
     @IBOutlet weak var refreshLabelHeightConst: NSLayoutConstraint!
     @IBOutlet weak var refreshlabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!

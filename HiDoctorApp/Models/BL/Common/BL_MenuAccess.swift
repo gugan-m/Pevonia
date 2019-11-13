@@ -486,6 +486,22 @@ class BL_MenuAccess: NSObject
             return false
         }
     }
+    
+    func is_Group_eDetailing_Allowed()  -> Bool
+    {
+        
+        let privValue = PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.ALLOW_GROUP_EDETAILING)
+        
+        if (privValue == PrivilegeValues.YES.rawValue)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
     func is_Punch_In_Out_Enabled()  -> Bool
     {
         

@@ -710,19 +710,20 @@
 		CE1551D822F44CF80049252D /* HourlyReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1551D522F44CF80049252D /* HourlyReportModel.swift */; };
 		CE1551D922F44CF80049252D /* BussinessPotential.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1551D622F44CF80049252D /* BussinessPotential.swift */; };
 		CE1551DA22F44CF80049252D /* TravelTrackingReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1551D722F44CF80049252D /* TravelTrackingReport.swift */; };
-		CE1551DC22F44D210049252D /* CalendarView_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1551DB22F44D200049252D /* CalendarView_iOS.framework */; };
-		CE1551DD22F44D210049252D /* CalendarView_iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE1551DB22F44D200049252D /* CalendarView_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CE1551E022F45D270049252D /* HopitalAccountNumberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1551DF22F45D240049252D /* HopitalAccountNumberModel.swift */; };
+		F10D76F72373FE130083A0AD /* GroupEdetailingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D76F62373FE130083A0AD /* GroupEdetailingCell.swift */; };
 		F1149126230A883A006873A5 /* LeaveApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1149124230A8839006873A5 /* LeaveApprovalViewController.swift */; };
 		F1149127230A883A006873A5 /* LeaveApproveAndRejectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1149125230A883A006873A5 /* LeaveApproveAndRejectViewController.swift */; };
 		F1149129230A8863006873A5 /* LeaveAttachmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1149128230A8863006873A5 /* LeaveAttachmentModel.swift */; };
 		F114912B230A8945006873A5 /* PevoniaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F114912A230A8945006873A5 /* PevoniaConstants.swift */; };
+		F11BDF832375C0BC0017ABBE /* MultipleWorkPlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11BDF822375C0BB0017ABBE /* MultipleWorkPlaceCollectionViewCell.swift */; };
 		F12B8E4F21DDF50C0077FA37 /* DPMMappingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12B8E4E21DDF50B0077FA37 /* DPMMappingViewController.swift */; };
 		F13102A521D612A400823488 /* DPMCustomerProductListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13102A421D612A400823488 /* DPMCustomerProductListController.swift */; };
 		F13102A721D9F2D600823488 /* DMPMappedListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13102A621D9F2D200823488 /* DMPMappedListController.swift */; };
 		F139B20E21D35050004F3DC8 /* DPMMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139B20D21D35050004F3DC8 /* DPMMainViewController.swift */; };
 		F139B21121D39AB5004F3DC8 /* BL_DoctorProductMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = F139B21021D39AB5004F3DC8 /* BL_DoctorProductMapping.swift */; };
 		F13BBB0220E120780017ED07 /* AttendanceSampleReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BBB0120E120770017ED07 /* AttendanceSampleReportViewController.swift */; };
+		F14296512376C23100149340 /* GridContinuesCoolectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14296502376C23100149340 /* GridContinuesCoolectionViewLayout.swift */; };
 		F14324B422F31A3D00C71E28 /* calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F14324B322F31A3D00C71E28 /* calendar.storyboard */; };
 		F14324B622F31A7000C71E28 /* NotesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14324B522F31A7000C71E28 /* NotesModel.swift */; };
 		F14324BB22F31A9000C71E28 /* NotesKnowYourCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14324B722F31A8D00C71E28 /* NotesKnowYourCalendar.swift */; };
@@ -768,20 +769,6 @@
 			remoteInfo = HiDoctorApp;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		CE1551DE22F44D210049252D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CE1551DD22F44D210049252D /* CalendarView_iOS.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1700527020D25830000AED7B /* AddDetailedCompetitorProductController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDetailedCompetitorProductController.swift; sourceTree = "<group>"; };
@@ -1522,16 +1509,19 @@
 		CE1551D722F44CF80049252D /* TravelTrackingReport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelTrackingReport.swift; sourceTree = "<group>"; };
 		CE1551DB22F44D200049252D /* CalendarView_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CalendarView_iOS.framework; sourceTree = "<group>"; };
 		CE1551DF22F45D240049252D /* HopitalAccountNumberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HopitalAccountNumberModel.swift; sourceTree = "<group>"; };
+		F10D76F62373FE130083A0AD /* GroupEdetailingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupEdetailingCell.swift; sourceTree = "<group>"; };
 		F1149124230A8839006873A5 /* LeaveApprovalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveApprovalViewController.swift; path = Approval/LeaveApprovalViewController.swift; sourceTree = "<group>"; };
 		F1149125230A883A006873A5 /* LeaveApproveAndRejectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveApproveAndRejectViewController.swift; path = Approval/LeaveApproveAndRejectViewController.swift; sourceTree = "<group>"; };
 		F1149128230A8863006873A5 /* LeaveAttachmentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveAttachmentModel.swift; sourceTree = "<group>"; };
 		F114912A230A8945006873A5 /* PevoniaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PevoniaConstants.swift; sourceTree = "<group>"; };
+		F11BDF822375C0BB0017ABBE /* MultipleWorkPlaceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleWorkPlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		F12B8E4E21DDF50B0077FA37 /* DPMMappingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMMappingViewController.swift; sourceTree = "<group>"; };
 		F13102A421D612A400823488 /* DPMCustomerProductListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMCustomerProductListController.swift; sourceTree = "<group>"; };
 		F13102A621D9F2D200823488 /* DMPMappedListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMPMappedListController.swift; sourceTree = "<group>"; };
 		F139B20D21D35050004F3DC8 /* DPMMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPMMainViewController.swift; sourceTree = "<group>"; };
 		F139B21021D39AB5004F3DC8 /* BL_DoctorProductMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BL_DoctorProductMapping.swift; sourceTree = "<group>"; };
 		F13BBB0120E120770017ED07 /* AttendanceSampleReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceSampleReportViewController.swift; sourceTree = "<group>"; };
+		F14296502376C23100149340 /* GridContinuesCoolectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridContinuesCoolectionViewLayout.swift; sourceTree = "<group>"; };
 		F14324B322F31A3D00C71E28 /* calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = calendar.storyboard; sourceTree = "<group>"; };
 		F14324B522F31A7000C71E28 /* NotesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesModel.swift; sourceTree = "<group>"; };
 		F14324B722F31A8D00C71E28 /* NotesKnowYourCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesKnowYourCalendar.swift; sourceTree = "<group>"; };
@@ -1572,7 +1562,6 @@
 				840AF2801EEEDD60005955BC /* AudioToolbox.framework in Frameworks */,
 				F14324D222F3329200C71E28 /* EventKit.framework in Frameworks */,
 				840AF27E1EEEDD58005955BC /* AVFoundation.framework in Frameworks */,
-				CE1551DC22F44D210049252D /* CalendarView_iOS.framework in Frameworks */,
 				840A8CD51EDBEE72005AA7AC /* CloudKit.framework in Frameworks */,
 				C09064E4856B9BB3B65973A7 /* Pods_HiDoctorApp.framework in Frameworks */,
 			);
@@ -2935,6 +2924,7 @@
 				6C4BB0191EA8D478001104EB /* OTC */,
 				ADD50C391EA4A39D006509B1 /* FollowUps */,
 				BA1E5DD81E02D00700AE2710 /* DCRGeneralRemarksViewController.swift */,
+				F10D76F62373FE130083A0AD /* GroupEdetailingCell.swift */,
 				BA92325D1DF9941A0098FFEB /* LeaveEntryDropDownViewController.swift */,
 				6CAAB3BA1DF91F40002E0AA5 /* AddCompetitorProductViewController.swift */,
 				BA7DF7FD1DEFF57B00E1D876 /* DoctorAccompanistListViewController.swift */,
@@ -2951,6 +2941,8 @@
 				B1C83BE61DCE1C43000065A8 /* DCRCalendarController.swift */,
 				B1C83BEB1DCE1D2D000065A8 /* DCRCalendarCellView.swift */,
 				6C60A5071DD998CA00D49C9C /* WorkPlaceDetailsViewController.swift */,
+				F11BDF822375C0BB0017ABBE /* MultipleWorkPlaceCollectionViewCell.swift */,
+				F14296502376C23100149340 /* GridContinuesCoolectionViewLayout.swift */,
 				6CEF86E11DDB2EBE00B72E27 /* CampaignPlannerListViewController.swift */,
 				B15CA8041DDB6B7900576CEE /* FieldRCPACell.swift */,
 				B15CA80A1DDB6BE800576CEE /* AttendanceCell.swift */,
@@ -3364,7 +3356,6 @@
 				49DDFE8124BB600C0D9CBFCC /* [CP] Embed Pods Frameworks */,
 				8A1A4034AEF80721E7047EF7 /* [CP] Copy Pods Resources */,
 				ADC4EBA61E3F287500182340 /* ShellScript */,
-				CE1551DE22F44D210049252D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3425,7 +3416,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 35HT8SAUJ7;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -4056,6 +4047,7 @@
 				B19D2B961EA9F554004B7436 /* AttachmentViewController.swift in Sources */,
 				ADB979CC1DC8AFAB007B1FCE /* ConfigSettingsModel.swift in Sources */,
 				6C00D54D1E433A4200773F85 /* DoctorListViewController.swift in Sources */,
+				F10D76F72373FE130083A0AD /* GroupEdetailingCell.swift in Sources */,
 				841E2C4C1F7406B800FF19D4 /* DAL_SFC.swift in Sources */,
 				6C2604221EC96B3000081CD9 /* DashboardPSHeaderModel.swift in Sources */,
 				AD9280451F3DABA300934E91 /* TPUploadSelectionViewController.swift in Sources */,
@@ -4088,6 +4080,7 @@
 				B12A437E1EFBD7120072D5A7 /* CloseButton.swift in Sources */,
 				694AF55020B1CE4A005F747F /* ComplaintDetailViewController.swift in Sources */,
 				B1E1DF2C1F5967ED007B1546 /* MessageAttachmentCollectionViewCell.swift in Sources */,
+				F11BDF832375C0BC0017ABBE /* MultipleWorkPlaceCollectionViewCell.swift in Sources */,
 				ADADCB661DEE876100509C9E /* BL_DCR_Doctor_Visit.swift in Sources */,
 				84C595B61F175AA00064B490 /* CustomGestureRecognizer.swift in Sources */,
 				69A01B7420C0E77200C788B9 /* IceFeedbackHistoryViewController.swift in Sources */,
@@ -4181,6 +4174,7 @@
 				F14324E022F333D000C71E28 /* CalendarView+Extensions.swift in Sources */,
 				B1EA25951DF997EB006E705C /* DoctorVisitStepperCommon.swift in Sources */,
 				6CB5E6D21E4460080050365F /* DoctorDetailsListTableViewCell.swift in Sources */,
+				F14296512376C23100149340 /* GridContinuesCoolectionViewLayout.swift in Sources */,
 				6C2711162018A05C006EF3D0 /* MasterDataDownloadAlertViewController.swift in Sources */,
 				ADB979D81DCC2DFC007B1FCE /* DetailProductMaster.swift in Sources */,
 				AD9CF9B01DD1DA7600B4E7C5 /* DCRStockistVisitModel.swift in Sources */,
@@ -4493,9 +4487,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HiDoctorApp/HiDOCTOR.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4507,7 +4501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = DevPevonia;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/HiDoctorApp-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -4521,9 +4515,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HiDoctorApp/HiDOCTOR.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4535,7 +4529,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = DevPevonia;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/HiDoctorApp-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

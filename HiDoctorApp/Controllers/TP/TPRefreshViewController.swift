@@ -28,7 +28,7 @@ class TPRefreshViewController: UIViewController,UIPickerViewDelegate,UIPickerVie
         getMonthList()
         addTapGestureForView()
         monthYearTextField.text = monthList[2] as? String
-        self.title = "\(PEV_TP) Refresh"
+        self.title = "Routing Refresh"
         // Do any additional setup after loading the view.
     }
 

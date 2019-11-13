@@ -1182,7 +1182,7 @@ class AssetsPlayerChildViewController: UIViewController  {
         
         if AssetsDataManager.sharedManager.currentIndex != AssetsDataManager.sharedManager.childControllersList.count - 1{
             
-            alertViewController.addAction(UIAlertAction(title: "Next asset", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: "Next Digital Resource", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.delegate?.didTapNext()
             }))
         }
@@ -1244,18 +1244,63 @@ class AssetsPlayerChildViewController: UIViewController  {
     {
         assetObj.MC_Story_Id = currentAssetObj.assetObj.mc_StoryId as NSNumber
         assetObj.Doc_Type = currentAssetObj.assetObj.docType
-        analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObj)
+        analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObj, customerObj: BL_AssetModel.sharedInstance.getCustomerObjByCustomerCode())
+        
+        if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed() && BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count != 0
+        {
+            self.insert_GroupAnalytics(count: 0, assetObject: assetObj)
+        }
+        
         print("analytics" , analyticsId)
         
         if isComingFromMandatoryStory && assetObj.Played_Time_Duration > 0 && assetObj.MC_Story_Id != AssetsDataManager.sharedManager.previousStoryId  {
             AssetsDataManager.sharedManager.previousStoryId = assetObj.MC_Story_Id
-            let customerObj =  BL_AssetModel.sharedInstance.getCustomerObjByCustomerCode()
-            let dict = ["Story_Id" : assetObj.MC_Story_Id, "DA_Code" : currentAssetObj.assetObj.daCode, "Customer_Code" : customerObj?.Customer_Code ?? 0 , "Customer_Region_Code" : customerObj?.Region_Code ?? 0 , "TimeZone" : getCurrentTimeZone() , "Is_Synched" : 0 ] as [String : Any]
+            let groupCount = 0
+                // checking for group Edetailing
+            
+            
+                let customerObj =  BL_AssetModel.sharedInstance.getCustomerObjByCustomerCode()
+                               let dict = ["Story_Id" : assetObj.MC_Story_Id, "DA_Code" : currentAssetObj.assetObj.daCode, "Customer_Code" : customerObj?.Customer_Code ?? 0 , "Customer_Region_Code" : customerObj?.Region_Code ?? 0 , "TimeZone" : getCurrentTimeZone() , "Is_Synched" : 0 ] as [String : Any]
+                               let storyAssetObj = StoryAssetAnalytics(dict: dict as NSDictionary)
+                               DBHelper.sharedInstance.insertMasterStoryAnalytics(analyticsObj: storyAssetObj)
+                               AssetsDataManager.sharedManager.isStoryTracked = true
+            
+                if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed() && BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count != 0
+                {
+                self.insert_GroupEdetailing_AssetDetail(count: groupCount)
+            
+            }
+        }
+        //  sessionId = BL_AssetModel.sharedInstance.getAssetAnalyticsById(analyticsId: analyticsId).Session_Id
+    }
+    
+    
+    func insert_GroupAnalytics(count: Int,assetObject: AssetAnalyticsDetail){
+        var arr_Count = count
+        if arr_Count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count{
+            return
+        } else {
+             analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObject, customerObj: BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_Count])
+           arr_Count = arr_Count + 1
+            self.insert_GroupAnalytics(count: arr_Count, assetObject: assetObject)
+        }
+    }
+    
+    
+    func insert_GroupEdetailing_AssetDetail(count: Int){
+        var arr_Count = count
+        if arr_Count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count{
+            return
+        } else {
+            let num =  currentAssetObj.assetObj.mc_StoryId as NSNumber
+            let cus_Data = BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_Count]
+            let dict = ["Story_Id" : num, "DA_Code" : currentAssetObj.assetObj.daCode, "Customer_Code" : cus_Data.Customer_Code ?? 0 , "Customer_Region_Code" : cus_Data.Region_Code ?? 0 , "TimeZone" : getCurrentTimeZone() , "Is_Synched" : 0 ] as [String : Any]
             let storyAssetObj = StoryAssetAnalytics(dict: dict as NSDictionary)
             DBHelper.sharedInstance.insertMasterStoryAnalytics(analyticsObj: storyAssetObj)
             AssetsDataManager.sharedManager.isStoryTracked = true
+           arr_Count = arr_Count + 1
+            self.insert_GroupEdetailing_AssetDetail(count: arr_Count)
         }
-        //  sessionId = BL_AssetModel.sharedInstance.getAssetAnalyticsById(analyticsId: analyticsId).Session_Id
     }
     
     private func updateAssetObj(assetObj : AssetAnalyticsDetail)

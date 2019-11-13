@@ -545,8 +545,6 @@ class AssetsPlayerViewController: UIViewController , ReaderViewControllerDelegat
     }
     
     @IBAction func didTapTheListBtn(_ sender: Any) {
-        
-        
         previousBtn.isHidden = true
         nextBtn.isHidden = true
         var i = 0
@@ -614,7 +612,7 @@ class AssetsPlayerViewController: UIViewController , ReaderViewControllerDelegat
     {
         
         self.navigationController?.isNavigationBarHidden = false
-        // UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         AssetsDataManager.sharedManager.isStoryTracked = false
 
         self.navigationController?.popViewController(animated: false)
@@ -1218,7 +1216,7 @@ extension AssetsPlayerViewController : UIScrollViewDelegate {
             if leftEdge < 0 {
                 leftEdge = leftEdge * (-1)
                 if scrollView.contentOffset.x < leftEdge{
-                    showToastViewWithShortTime(toastText: "you're at the first asset")
+                    showToastViewWithShortTime(toastText: "you're at the first Digital Resource")
                 }
             }
         }else if AssetsDataManager.sharedManager.currentIndex == assetsArray.count - 1 && !didScreenOrientationChange{
@@ -1227,7 +1225,7 @@ extension AssetsPlayerViewController : UIScrollViewDelegate {
             if rightEdge < 0 {
                 rightEdge = rightEdge * (-1)
                 if scrollView.contentOffset.x > rightEdge{
-                    showToastViewWithShortTime(toastText: "you're at the last asset")
+                    showToastViewWithShortTime(toastText: "you're at the last digital resource")
                     //showAvailablityForNextStory()
                 }
             }
@@ -1267,7 +1265,7 @@ extension AssetsPlayerViewController{
         if AssetsDataManager.sharedManager.currentIndex != self.controllersList.count-1 && self.autoPlayBtn.tag == 1{
             if AssetsDataManager.sharedManager.currentIndex == timerIndex{
                 
-                let alertViewController = UIAlertController(title: title, message: "Would you like to forward next assets?", preferredStyle: UIAlertControllerStyle.alert)
+                let alertViewController = UIAlertController(title: title, message: "Would you like to forward next digital resource?", preferredStyle: UIAlertControllerStyle.alert)
                 alertViewController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default)
                 { action -> Void in
                     self.checkForNextAsset()

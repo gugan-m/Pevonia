@@ -20,6 +20,7 @@ class BL_AssetModel: NSObject
     var punchin = ""
     var punchutc = ""
     var punchstatus = 2
+    var selected_CustomersForEdetailing: [CustomerMasterModel] = []
     
     static let sharedInstance : BL_AssetModel =
     {
@@ -599,9 +600,8 @@ class BL_AssetModel: NSObject
         return downloadStatus
     }
     
-    func insertAssetAnalytics(analyticsObj : AssetAnalyticsDetail) -> Int
+    func insertAssetAnalytics(analyticsObj : AssetAnalyticsDetail ,customerObj: CustomerMasterModel?) -> Int
     {
-        let customerObj = getCustomerObjByCustomerCode()
         if(BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
         {
             if (isfromDcrPunchIn)
@@ -688,6 +688,9 @@ class BL_AssetModel: NSObject
                 }
             }
         }
+        
+        
+        
         
         return DBHelper.sharedInstance.insertAssetAnalytics(assetObj: analyticsObj)
     }

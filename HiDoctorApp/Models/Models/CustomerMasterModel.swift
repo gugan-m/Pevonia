@@ -38,7 +38,7 @@ class CustomerMasterModel: Record
     var noOfPrescription: String = EMPTY
     var potentialPrescription: String =  EMPTY
     var Hospital_Account_Number: String?
-    
+     
     
     init(dict: NSDictionary)
     {

@@ -2341,11 +2341,6 @@ class BL_DCR_Doctor_Visit: NSObject
             
             let objDoctorVisitTracker = DoctorVisitTrackerModel(dict: trackerDict)
             
-            
-            
-            
-            
-            
             BL_MenuAccess.sharedInstance.getCheckUserExist(viewController: viewController, completion: { (objApiResponse) in
                 if (objApiResponse.list.count > 0)
                 {
@@ -2633,7 +2628,7 @@ class BL_DCR_Doctor_Visit: NSObject
                let punchtime =  BL_DoctorList.sharedInstance.punchInTime
                 let dict1: NSDictionary = ["DCR_Visit_Tracker_Id": objTracker.DCR_Doctor_Visit_Tracker_Id, "DCR_Actual_Date": convertDateIntoServerStringFormat(date: objTracker.DCR_Actual_Date), "Visit_Id": objTracker.DCR_Doctor_Visit_Id, "DCR_Id": objTracker.DCR_Id, "Doctor_Region_Code": doctorRegionCode, "Doctor_Code": doctorCode, "MDL_Number": mdlNumber, "Hospital_Name": Hospital_Name, "Category_Code": categoryCode]
                 
-                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": punchtime, "Modified_Entity": BL_DoctorList.sharedInstance.modifyEntity, "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D"]
+                let dict2: NSDictionary = ["Lattitude": Double(latitude)!, "Longitude": Double(longitude)!, "Doctor_Visit_Date_Time": punchtime, "Modified_Entity": BL_DoctorList.sharedInstance.modifyEntity, "Doctor_Name": objTracker.Doctor_Name, "Speciality_Name": objTracker.Speciality_Name!, "Doctor_Id": 0, "Line_Of_Business": 2, "POB_Amount": Double(pobAmount!),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
                 
                 var combinedAttributes : NSMutableDictionary!
                 combinedAttributes = NSMutableDictionary(dictionary: dict1)
@@ -3815,7 +3810,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         lockDCRMsg += "\n"
                     }
                     
-                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DCR is in lock status"
+                    lockDCRMsg += "\( dict.value(forKey: "Employee_Name") as! String)'s DVR is in lock status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Lock_Status)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3844,7 +3839,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noDCRMsg += "\n"
                     }
                     
-                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DCR"
+                    noDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String) has not entered DVR"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3878,7 +3873,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         noApprovedDCRMsg += "\n"
                     }
                     
-                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is not in approved status"
+                    noApprovedDCRMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is not in approved status"
                     
                     updateAccompanistDownloadStatus(userCodes: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
                     //DBHelper.sharedInstance.updateDCRInheritanceDoneForAccompanist(userCode: dict.value(forKey: "Acc_User_Code") as! String, dcrId: getDCRId(), status: Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Download_Error)
@@ -3921,7 +3916,7 @@ class BL_DCR_Doctor_Visit: NSObject
                         successMsg += "\n"
                     }
                     
-                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DCR is downloaded"
+                    successMsg += "\(dict.value(forKey: "Employee_Name") as! String)'s DVR is downloaded"
                 }
             }
         }

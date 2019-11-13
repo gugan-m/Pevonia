@@ -2494,6 +2494,7 @@ class WebServiceHelper: NSObject
     
     func syncMasterDataDownloadDetails(postData:[String:Any],completion: @escaping (_ apiResponseObject: ApiResponseModel) -> ())
     {
+        print(postData)
         let urlString = wsRootUrl + "DCRHeaderApi/SaveMasterData"
         
         WebServiceWrapper.sharedInstance.postApi(urlString: urlString, dataDictionary: postData, stringData: nil, screenName: ScreenName.Empty) { (apiResponseObject) in

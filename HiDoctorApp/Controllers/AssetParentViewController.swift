@@ -22,7 +22,6 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
     @IBOutlet weak var mandatoryStoryView: UIView!
     @IBOutlet weak var selectionView: UIView!
     
-    
     var assetViewController : AssetsListViewController!
     var storyViewController : AssetsMainStoryListViewController!
     var showViewController : AssetShowListViewController!
@@ -232,7 +231,13 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
         
         alertViewController.addAction(UIAlertAction(title: "Check Out", style: UIAlertActionStyle.default, handler: { alertAction in
             //function
+            
+            
+            
             DBHelper.sharedInstance.updatepunchendtime(Customercode: obj.Customer_Code, regioncode:obj.Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
+            
+            
+            
             let list = DBHelper.sharedInstance.getDCRDoctorVisitid(dcrId: dcrId, doctorcode: code)
             var doctorvisitid = 0
             if (list != nil && list.count > 0 )
@@ -241,6 +246,11 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             }
             self.updatepunchout(dcrID: dcrId, visitid: doctorvisitid, doctorcode: code )
             BL_DoctorList.sharedInstance.punchInTime = ""
+            
+            if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed() && BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count != 0 {
+                self.update_GroupPunchOutTime(count: 0, dcrId: dcrId, code: code)
+            }
+            
             if self.isComingFromTP || self.isComingFromDigitalAssets || self.isComingFromDCR
             {
                 self.navigationController?.popViewController(animated: true)
@@ -254,6 +264,26 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
         
         self.present(alertViewController, animated: true, completion: nil)
     }
+    
+    func update_GroupPunchOutTime(count:Int,dcrId: Int,code: String) {
+        var arr_count = count
+        if arr_count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count{
+            return
+        } else {
+            DBHelper.sharedInstance.updatepunchendtime(Customercode: BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_count].Customer_Code, regioncode:BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_count].Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
+            let list = DBHelper.sharedInstance.getDCRDoctorVisitid(dcrId: dcrId, doctorcode: code)
+            var doctorvisitid = 0
+            if (list != nil && list.count > 0 )
+            {
+                doctorvisitid = list[0].DCR_Doctor_Visit_Id
+            }
+            self.updatepunchout(dcrID: dcrId, visitid: doctorvisitid, doctorcode: code )
+            BL_DoctorList.sharedInstance.punchInTime = ""
+            arr_count = arr_count + 1
+            self.update_GroupPunchOutTime(count: arr_count, dcrId: dcrId, code: code)
+        }
+    }
+    
     
     func updatepunchout(dcrID: Int, visitid: Int, doctorcode: String)
     {

@@ -25,7 +25,7 @@ class BL_DCR_Refresh: NSObject
     
     struct apiMessageName
     {
-        static let DCRLockLeave = "DVR Lock leave"
+        static let DCRLockLeave = "DVR Lock Not Working"
         static let DCRCalendarData = "DVR Calendar"
         static let DCRHeaderData = "DVR Header"
         static let DCRAccompanistData = "DVR Ride Along"
@@ -58,7 +58,7 @@ class BL_DCR_Refresh: NSObject
         static let AttendanceDCRMCActivity = "Office DVR MC Activity"
         static let AssetAnalyticsDetails = "ResourceAnalyticsDetails"
         static let TPUnfreezeDates = "PR Unfreeze Dates"
-        static let DCRCompetitor = "DVR COmpetitor Details"
+        static let DCRCompetitor = "DVR Competitor Details"
         static let DCRAttendanceSample = "DVR Office Sample Details"
     }
     

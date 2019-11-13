@@ -3348,6 +3348,15 @@ class DBHelper: NSObject
         return objCustomerMaster
     }
     
+    func getCustomerListForGroupEDetailing(accountType: String) -> [CustomerMasterModel]?
+       {
+           var objCustomerMaster : [CustomerMasterModel]?
+           
+           try? dbPool.read { db in
+            objCustomerMaster = try CustomerMasterModel.fetchAll(db, "SELECT * FROM \(MST_CUSTOMER_MASTER) WHERE Customer_Entity_Type = ? AND Hospital_Name = ?",arguments:["DOCTOR",accountType])
+           }
+           return objCustomerMaster
+       }
     
     func insertDCRDoctorVisit(dcrDoctorVisitObj: DCRDoctorVisitModel) -> Int
     {

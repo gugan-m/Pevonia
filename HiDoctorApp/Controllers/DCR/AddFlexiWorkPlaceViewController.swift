@@ -60,7 +60,9 @@ class AddFlexiWorkPlaceViewController: UIViewController,UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let flexiWorkPlaceObj = flexiWorkPlaceList[indexPath.row]
-        
+       if !BL_WorkPlace.sharedInstance.selected_Workplace_Array.contains(flexiWorkPlaceObj.Flexi_Place_Name) {
+       BL_WorkPlace.sharedInstance.selected_Workplace_Array.append(flexiWorkPlaceObj.Flexi_Place_Name)
+       }
         if navigationScreenname == addTravelFromPlace || navigationScreenname == addTravelToPlace
         {
             navigateToTravelledPlaces(placeName: flexiWorkPlaceObj.Flexi_Place_Name)
@@ -101,6 +103,9 @@ class AddFlexiWorkPlaceViewController: UIViewController,UITableViewDelegate, UIT
         {
             let trimmedText = RemoveUnwantedSpaceInString(value: workPlaceTxtFld.text!)
             BL_WorkPlace.sharedInstance.saveFlexiWorkPlace(placeName: trimmedText)
+            if !BL_WorkPlace.sharedInstance.selected_Workplace_Array.contains(trimmedText) {
+              BL_WorkPlace.sharedInstance.selected_Workplace_Array.append(trimmedText)
+            }
             if navigationScreenname == addTravelFromPlace || navigationScreenname == addTravelToPlace
             {
                 navigateToTravelledPlaces(placeName: trimmedText)

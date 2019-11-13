@@ -23,6 +23,9 @@ class BL_DoctorList: NSObject
     var doctorDataList:[DoctorListModel] = []
     var punchInTime : String = ""
     var modifyEntity : Int = 0
+    
+    var selectedCustomer: CustomerMasterModel?
+    
     func getDoctorDataList(isEdit:Bool) -> [DoctorListModel]
     {
         var doctorDataList : [DoctorListModel] = []
@@ -669,6 +672,10 @@ class BL_DoctorList: NSObject
     }
     
     //MARK:- DB Functions
+    
+    func getDoctorListForGroupEdetailing(type: String) -> [CustomerMasterModel]? {
+        return DBHelper.sharedInstance.getCustomerListForGroupEDetailing(accountType: type)
+    }
     
     func getDoctorPersonalInfo() -> CustomerMasterPersonalInfo?
     {

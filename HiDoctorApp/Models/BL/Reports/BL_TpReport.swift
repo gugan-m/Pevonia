@@ -369,20 +369,20 @@ class BL_TpReport: NSObject
         var workCategory : String = ""
         var workPlace : String = ""
        
-        if type != 2
-        {
-            workPlaceObj.key = "Campaign Plan"
-            
-            campaignName = checkNullAndNilValueForString(stringData: dict.object(forKey: "CP_Name") as? String)
-            if campaignName == ""
-            {
-                campaignName = NOT_APPLICABLE
-            }
-            
-            workPlaceObj.value = campaignName
-            workPlaceList.append(workPlaceObj)
-            
-        }
+//        if type != 2
+//        {
+//            workPlaceObj.key = "Campaign Plan"
+//
+//            campaignName = checkNullAndNilValueForString(stringData: dict.object(forKey: "CP_Name") as? String)
+//            if campaignName == ""
+//            {
+//                campaignName = NOT_APPLICABLE
+//            }
+//
+//            workPlaceObj.value = campaignName
+//            workPlaceList.append(workPlaceObj)
+//
+//        }
         
         workPlaceObj = StepperWorkPlaceModel()
         workPlaceObj.key = "Work Category"

@@ -491,9 +491,12 @@ class TPStepperViewController: UIViewController, UITableViewDelegate, UITableVie
             {
                 return BL_TPStepper.sharedInstance.getAccompanistCellHeight(selectedIndex: index)
             }
-            if ( index == 1 || index == 2 )
+            if  index == 1
             {
                 return BL_TPStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+            }
+            else if index == 2{
+                return BL_TPStepper.sharedInstance.getCommonCellHeight(selectedIndex: index) //+ 20
             }
             else if (index == 3)
             {

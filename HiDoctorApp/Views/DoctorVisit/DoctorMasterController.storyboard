@@ -32,7 +32,7 @@
                                 <segments>
                                     <segment title="ALL"/>
                                     <segment title="PR"/>
-                                    <segment title="Beat/Patch"/>
+                                    <segment title="Saved Routing"/>
                                 </segments>
                                 <connections>
                                     <action selector="segControlAction:" destination="0r5-Ad-fcF" eventType="valueChanged" id="ffq-UY-R3e"/>
@@ -53,11 +53,11 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yt-fc-Gaj">
                                 <rect key="frame" x="0.0" y="147" width="320" height="421"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-stepper-cycle" translatesAutoresizingMaskIntoConstraints="NO" id="tK8-fP-ug0" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="148" y="198.5" width="24" height="24"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smallcar" translatesAutoresizingMaskIntoConstraints="NO" id="tK8-fP-ug0" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
+                                        <rect key="frame" x="128" y="178.5" width="64" height="64"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="892-7G-yib">
-                                        <rect key="frame" x="20" y="242.5" width="280" height="0.0"/>
+                                        <rect key="frame" x="20" y="262.5" width="280" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1713,8 +1713,8 @@
     <resources>
         <image name="icon-eDetail" width="35" height="35"/>
         <image name="icon-right-arrow" width="24" height="24"/>
-        <image name="icon-stepper-cycle" width="24" height="24"/>
         <image name="icon-stepper-down-arrow" width="24" height="24"/>
         <image name="icon-stepper-two-user" width="24" height="24"/>
+        <image name="smallcar" width="64" height="64"/>
     </resources>
 </document>

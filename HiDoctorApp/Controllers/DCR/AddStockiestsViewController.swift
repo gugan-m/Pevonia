@@ -466,7 +466,7 @@ class AddStockiestsViewController: UIViewController , UITextFieldDelegate {
         
         date = dcrDateVal
         
-        self.dcrDateLbl.text = "DCR Date :\(date)"
+        self.dcrDateLbl.text = "DVR Date :\(date)"
     }
     
     

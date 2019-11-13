@@ -264,8 +264,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Office is ready to submit to your manager.\n\n Click 'Upload' to submit Office.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Office."
-        
+        let alertMessage =  "Your Offline Office is ready to submit to your manager.\n\n Click 'Upload' to submit Office.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR calendar screen to submit your applied Office."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         

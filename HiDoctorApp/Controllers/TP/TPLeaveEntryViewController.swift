@@ -431,7 +431,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Not Working Application is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively,you can use 'PR Upload'option from the PR calendar screen to submit your applied Not Working."
+        let alertMessage =  "Your Offline Not Working Application is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR calendar screen to submit your applied Not Working."
         
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)

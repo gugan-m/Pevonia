@@ -278,7 +278,11 @@ class BL_TPCalendar: NSObject
     func convertDateIntoDCRDisplayformat(date: Date) -> String
     {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MMM-yyyy ( EEEE )"
+        if defaultDateFomat == ConfigValues.dd_mm_yyyy.rawValue {
+            dateFormatter.dateFormat = "dd-MMM-yyyy ( EEEE )"
+        } else {
+           dateFormatter.dateFormat = "MMM-dd-yyyy ( EEEE )"
+        }
         dateFormatter.timeZone = utcTimeZone
         return dateFormatter.string(from: date)
     }
@@ -360,7 +364,7 @@ class BL_TPCalendar: NSObject
             {
                 callObjectModel = CallObjectModel()
                 callObjectModel.objTitle = "Call Objective"
-                callObjectModel.objName = "Attendance"
+                callObjectModel.objName = "Office"
                 callObjectDataList.append(callObjectModel)
                 
                 callObjectModel = CallObjectModel()

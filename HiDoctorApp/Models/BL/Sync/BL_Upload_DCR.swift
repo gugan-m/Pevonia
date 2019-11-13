@@ -45,7 +45,7 @@ class BL_Upload_DCR: NSObject
             }
             else if model.Flag == DCRFlag.leave.rawValue
             {
-                uploadModel.flagLabel = "L"
+                uploadModel.flagLabel = "N"
             }
             uploadDetail.append(uploadModel)
         }

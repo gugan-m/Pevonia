@@ -506,13 +506,14 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     {
         var holidayName: String = ""
         let tourPlannerHeaderModelData:TourPlannerHeader? = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: selectedDateString)
-       // emptyStateDateLbl.text = convertDateIntoString(date: selectedDate)
+        
         emptyStateLbl.text = noTourAvailable
         addBtn.isHidden = false
         editBut.isHidden = false
         deleteBut.isHidden = false
         bottomHeaderSeperatorView.isHidden = false
-        
+         tpDateLbl.text = BL_TPCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: selectedDate)
+        emptyStateDateLbl.text = BL_TPCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: selectedDate)
         if tourPlannerHeaderModelData != nil
         {
             TPModel.sharedInstance.tpEntryId = tourPlannerHeaderModelData!.TP_Entry_Id
@@ -527,9 +528,9 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                 emptyStateWrapper.isHidden = true
                 scrollView.isHidden = false
                 addBtn.isHidden = true
-                
-                tpDateLbl.text = convertDateIntoString(date: selectedDate)
-                
+                 
+               
+                //BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: selectedDate)
                 // Applied
                 if tourPlannerHeaderModelData!.Status == TPStatus.applied.rawValue
                 {

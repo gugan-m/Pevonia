@@ -637,8 +637,8 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             if segmentControl.selectedSegmentIndex == 0
             {
                 let date = convertDateIntoString(date: getCurrentDateAndTime())
-                
-                emptyStateTxt = "No PR \(appDoctorPlural) found for Today (\( date))"
+                //"No PR \(appDoctorPlural) found for Today (\( date))"
+                emptyStateTxt = "No PR \(appDoctorPlural) found for Today"
             }
             else
             {
@@ -663,8 +663,8 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             if segmentControl.selectedSegmentIndex == 0
             {
                 let date = convertDateIntoServerDisplayformat(date: getCurrentDateAndTime())
-                
-                emptyStateTxt = "No PR \(appDoctorPlural) found for Today (\( date)). Clear your search and try again."
+                //"No PR \(appDoctorPlural) found for Today (\( date)). Clear your search and try again."
+                emptyStateTxt = "No PR \(appDoctorPlural) found for Today. Clear your search and try again."
             }
             else
             {
@@ -1083,6 +1083,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         if let detailViewController = self.delegate as? DoctorDetailsViewController
         {
             let userList = userCurrentList[indexPath.section].userList[indexPath.row]
+            BL_DoctorList.sharedInstance.selectedCustomer = userList
             BL_DoctorList.sharedInstance.regionCode = userList.Region_Code
             BL_DoctorList.sharedInstance.customerCode = userList.Customer_Code
             BL_DoctorList.sharedInstance.doctorTitle = userList.Customer_Name
@@ -1171,8 +1172,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func selectSingleAddress(indexPath: IndexPath, customerAddressList: [CustomerAddressModel], currentLocation: GeoLocationModel)
-    {
-        let customerName = userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
+    {       let customerName = userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
         
         if (self.doctorListPageSource == Constants.Doctor_List_Page_Ids.Customer_List)
         {
@@ -1196,6 +1196,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 proceedDCR(indexPath: indexPath, currentLocation: currentLocation, objGeoValidation: objGeoValidation)
             }
+            
         }
         else if (self.doctorListPageSource == Constants.Doctor_List_Page_Ids.Mark_Doctor_Location)
         {

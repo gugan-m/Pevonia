@@ -829,7 +829,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
             }
             else if selectedIndex == 1
             {
-                emptyStateImage.image = UIImage(named: "icon-stepper-cycle")
+                emptyStateImage.image = UIImage(named: "smallcar")
                 text = " No \(appCp) \(appDoctorPlural) available"
             }
             self.searchBarHeightConst.constant = 0
@@ -969,8 +969,6 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     
     func filterSelectedList()
     {
-        
-        
         if (TPModel.sharedInstance.tpStatus == 3){
             let selectedList = BL_TPStepper.sharedInstance.getTPSelectedDoctorDetails(TP_Entry_Id: TPModel.sharedInstance.tpEntryId) as [TourPlannerDoctor]
             if(selectedList.count != 0)
@@ -1039,8 +1037,6 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 let time = stringFromDate(date1: apiModel.Download_Date)
                 self.refreshLabel.text = "Last Modified: \(date) \(time)"
                 self.refreshLabelHeightConst.constant = 16
-                
-                
             }
             else
             {

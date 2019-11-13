@@ -663,7 +663,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
         
         BL_Upload_DCR.sharedInstance.downloadExpenseData(completion: { (status) in
             removeCustomActivityView()
-            showToastView(toastText: "Updated expense data downloaded. The DVR is in draft mode. Please edit & resubmit the DCR")
+            showToastView(toastText: "Updated expense data downloaded. The DVR is in draft mode. Please edit & resubmit the DVR")
         })
     }
     

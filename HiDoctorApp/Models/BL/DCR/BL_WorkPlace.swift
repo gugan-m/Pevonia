@@ -12,6 +12,8 @@ class BL_WorkPlace: NSObject
 {
     static let sharedInstance : BL_WorkPlace = BL_WorkPlace()
     
+    var selected_Workplace_Array: [String] = []
+    
     // MARK:- Public Functions
     func checkToShowCpDropDown(dcrId: String) -> Bool
     {

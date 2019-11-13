@@ -944,7 +944,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             if myarray.contains(showListObj.assetDetail.daCode){
                 DBHelper.sharedInstance.removeAssetFromShowListbyDaCode(daCode: showListObj.assetDetail.daCode)
             }else{
-                showToastView(toastText: "You don't have the privilege to remove this asset.")
+                showToastView(toastText: "You don't have the privilege to remove this digital resource.")
                 return
             }
             
@@ -973,7 +973,7 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             if myarray.contains(showListObj.assetDetail.daCode){
                DBHelper.sharedInstance.removeAssetFromShowListbyDaCode(daCode: showListObj.assetDetail.daCode)
             }else{
-                showToastView(toastText: "You don't have the privilege to remove this asset.")
+                showToastView(toastText: "You don't have the privilege to remove this digital resource.")
                 return
             }
             
