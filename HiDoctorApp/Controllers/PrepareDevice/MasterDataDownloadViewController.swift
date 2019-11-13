@@ -76,6 +76,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
         let detailDict = masterDataList.object(at: indexPath.row) as? NSDictionary
         let apiName = detailDict?["title"] as? String
         
+        
         if (apiName == "Doctor/Customer Data")
         {
             cell.titleLbl.text = "\(appDoctor) Data"
@@ -89,7 +90,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
             cell.titleLbl.text = apiName
         }
         
-        let lastSynTime = getLastSyncDataTime(groupName: apiName!)
+        let lastSynTime = getLastSyncDataTime(groupName: self.setAPIName(apiname: apiName!))
         if lastSynTime != ""
         {
             cell.detailLbl.text = "Last Sync Date : \(lastSynTime)"
@@ -167,6 +168,35 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
                 "title":MasterDataDownloadName.MarketContent,
                 "date":"Last Sync Date : 12-11-2016 17:11:82"
                 ])
+        }
+    }
+    
+    func setAPIName(apiname: String) -> String {
+        switch apiname {
+        case MasterDataDownloadName.DownloadAllMasterData:
+            return masterDataGroupName.DownloadAllMasterData.rawValue
+        case MasterDataDownloadName.SystemSettings:
+            return masterDataGroupName.SystemSettings.rawValue
+        case MasterDataDownloadName.HolidayData:
+            return masterDataGroupName.HolidayData.rawValue
+        case MasterDataDownloadName.DoctorData:
+            return masterDataGroupName.DoctorData.rawValue
+        case MasterDataDownloadName.ExpenseData:
+            return masterDataGroupName.ExpenseData.rawValue
+        case MasterDataDownloadName.ProductData:
+            return masterDataGroupName.ProductData.rawValue
+        case MasterDataDownloadName.CpTpDetails:
+            return masterDataGroupName.CpTpDetails.rawValue
+        case MasterDataDownloadName.SFCAccompanistData:
+            return masterDataGroupName.SFCAccompanistData.rawValue
+        case MasterDataDownloadName.MenuData:
+            return masterDataGroupName.MenuData.rawValue
+        case MasterDataDownloadName.DigitalAssets:
+            return masterDataGroupName.DigitalAssets.rawValue
+        case MasterDataDownloadName.MarketContent:
+            return masterDataGroupName.MarketContent.rawValue
+        default:
+            return ""
         }
     }
     
