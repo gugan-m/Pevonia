@@ -94,8 +94,8 @@ class AssetsStoryMainTableViewCell : UITableViewCell,UICollectionViewDataSource,
         }
         
         cell.thumbnailImg.image = thumnailImg
-        
-        cell.assetDescriptionLbl.text = "\(String(format: "%.2f", assetObj.daSize)) MB | \(getDocTypeVal(docType : assetObj.docType)) | \(downloadedStatus)"
+        let size = (assetObj.Total_Measure ?? "0") + " " + assetObj.Measured_Unit
+        cell.assetDescriptionLbl.text = "\(String(format: "%.2f", assetObj.daSize)) MB | \(getDocTypeVal(docType : assetObj.docType)) | \(size) | \(downloadedStatus)"
         
         return cell
     }

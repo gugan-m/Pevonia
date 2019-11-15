@@ -33,7 +33,7 @@ class DBHelper: NSObject
     
     func updateApiDownloadDetail(apiName : String, masterDataGroupName: String)
     {
-        executeQuery(query: "UPDATE \(MST_API_DOWNLOAD_DETAIL) SET Download_Status = 1 WHERE Api_Name = '\(apiName)' AND Master_Data_Group_Name = '\(masterDataGroupName)'")
+        executeQuery(query: "UPDATE \(MST_API_DOWNLOAD_DETAILS) SET Download_Status = 1 WHERE Api_Name = '\(apiName)' AND Master_Data_Group_Name = '\(masterDataGroupName)'")
     }
     
     func getLastIncompleteApiDetails() -> ApiDownloadDetailModel?
@@ -41,7 +41,7 @@ class DBHelper: NSObject
         var returnObj: ApiDownloadDetailModel? = nil
         
         try? dbPool.write({ db in
-            if let rowValue = try ApiDownloadDetailModel.fetchOne(db, "SELECT * FROM \(MST_API_DOWNLOAD_DETAIL) WHERE Download_Status = ?", arguments: [0])
+            if let rowValue = try ApiDownloadDetailModel.fetchOne(db, "SELECT * FROM \(MST_API_DOWNLOAD_DETAILS) WHERE Download_Status = ?", arguments: [0])
             {
                 returnObj = rowValue
             }
@@ -170,7 +170,7 @@ class DBHelper: NSObject
         var masterDataList: [ApiDownloadDetailModel]? = nil
         
         try? dbPool.write({ db in
-            masterDataList = try ApiDownloadDetailModel.fetchAll(db, "SELECT Master_Data_Group_Name,MAX(Download_Date) AS Download_Date FROM \(MST_API_DOWNLOAD_DETAIL) WHERE Download_Status = ? GROUP BY Master_Data_Group_Name", arguments: [1])
+            masterDataList = try ApiDownloadDetailModel.fetchAll(db, "SELECT Master_Data_Group_Name,MAX(Download_Date) AS Download_Date FROM \(MST_API_DOWNLOAD_DETAILS) WHERE Download_Status = ? GROUP BY Master_Data_Group_Name", arguments: [1])
         })
         
         return masterDataList

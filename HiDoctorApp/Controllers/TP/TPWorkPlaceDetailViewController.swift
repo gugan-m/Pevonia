@@ -276,9 +276,7 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             
             // Work Place
            
-            if BL_WorkPlace.sharedInstance.selected_Workplace_Array.count == 0{
-                 workPlace = checkNullAndNilValueForString(stringData:tpHeaderObj!.Work_Place)
-            }else {
+            if tpHeaderObj!.Work_Place!.count != 0 {
                 let selcted_arr = checkNullAndNilValueForString(stringData:tpHeaderObj!.Work_Place)
                 BL_WorkPlace.sharedInstance.selected_Workplace_Array = selcted_arr.components(separatedBy: ",")
                 
@@ -339,6 +337,7 @@ class TPWorkPlaceDetailViewController: UIViewController ,UIPickerViewDelegate,UI
             if (TPModel.sharedInstance.tpFlag == TPFlag.fieldRcpa.rawValue)
             {
                 workPlace = getDefaultRegionValue()
+                BL_WorkPlace.sharedInstance.selected_Workplace_Array.append(workPlace!)
             }
             else if (TPModel.sharedInstance.tpFlag == TPFlag.attendance.rawValue)
             {

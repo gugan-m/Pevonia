@@ -650,19 +650,41 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     func group_HourlyReport(count: Int) {
+        
         var arr_count:Int = count
-            let data = self.selected_similarCustomerList[arr_count]
+        let data = self.selected_similarCustomerList[arr_count]
+        
+        var dcrId = 0
+        let convertedDate = getStringInFormatDate(dateString: getCurrentDate())
+        let dcrDetail = DBHelper.sharedInstance.getDCRIdforDCRDate(dcrDate: convertedDate)
+        if dcrDetail.count > 0
+        {
+            dcrId = dcrDetail[0].DCR_Id
+        }
+        let doctorCheck = DBHelper.sharedInstance.getAllDetailsWith(dcrId: dcrId, customerCode: selected_similarCustomerList[arr_count].Customer_Code, regionCode: selected_similarCustomerList[arr_count].Region_Code)
+        if doctorCheck == nil
+        {
             showCustomActivityIndicatorView(loadingText: "Check-in for \(data.Customer_Name!)")
             self.insertDoctorVisitTracker_GroupEdetailing(cus_code: data.Customer_Code, region_Code: data.Region_Code, completion: { (status) in
-                if arr_count == self.selected_similarCustomerList.count-1 {
-                    removeCustomActivityView()
-                    self.deleteShowList()
-                    getAppDelegate().allocateRootViewController(sbName: Constants.StoaryBoardNames.AssetsListSb, vcName: AssetParentVCID)
-                } else {
-                    arr_count = arr_count+1
+               if arr_count == self.selected_similarCustomerList.count-1 {
+                   removeCustomActivityView()
+                   self.deleteShowList()
+                   getAppDelegate().allocateRootViewController(sbName: Constants.StoaryBoardNames.AssetsListSb, vcName: AssetParentVCID)
+               } else {
+                       arr_count = arr_count + 1
+                       self.group_HourlyReport(count: arr_count)
+               }
+            })
+        } else {
+            if arr_count == self.selected_similarCustomerList.count-1 {
+                removeCustomActivityView()
+                self.deleteShowList()
+                getAppDelegate().allocateRootViewController(sbName: Constants.StoaryBoardNames.AssetsListSb, vcName: AssetParentVCID)
+            } else {
+                    arr_count = arr_count + 1
                     self.group_HourlyReport(count: arr_count)
-                }
-             })
+            }
+        }
     }
     
     private func moveToNextScreen()
@@ -673,7 +695,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
             if(checkInternetConnectivity())
             {
                 var count = 0
-                if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed(){
+                if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed() && self.selected_similarCustomerList.count != 0 {
                     
                     if  self.selected_similarCustomerList.count != 0 {
                         showCustomActivityIndicatorView(loadingText: "Loading...")
@@ -762,11 +784,29 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
             }))
             self.present(alertViewController, animated: true, completion: nil)
         } else {
-             selected_similarCustomerList = self.similarCustomerList.filter{ $0.isSelected == true  }
+            
+            
+            selected_similarCustomerList = self.similarCustomerList.filter{ $0.isSelected == true  }
             BL_AssetModel.sharedInstance.selected_CustomersForEdetailing = selected_similarCustomerList
-            print(selected_similarCustomerList.count)
-            self.checkin()
-        }
+            var dcrId = 0
+            let convertedDate = getStringInFormatDate(dateString: getCurrentDate())
+            let dcrDetail = DBHelper.sharedInstance.getDCRIdforDCRDate(dcrDate: convertedDate)
+            if dcrDetail.count > 0
+            {
+                dcrId = dcrDetail[0].DCR_Id
+            }
+            let doctorCheck = DBHelper.sharedInstance.getAllDetailsWith(dcrId: dcrId, customerCode: BL_DoctorList.sharedInstance.customerCode, regionCode: BL_DoctorList.sharedInstance.regionCode)
+            if doctorCheck == nil
+            {
+                
+                           
+                           print(selected_similarCustomerList.count)
+                           self.checkin()
+            } else {
+                    self.group_HourlyReport(count: 0)
+              }
+                                       
+         }
     }
     
     @IBAction func cancelAction_GroupEdeailing(_ sender: UIButton) {

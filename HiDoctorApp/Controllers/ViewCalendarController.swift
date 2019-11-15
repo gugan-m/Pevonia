@@ -274,8 +274,8 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         let temp: String = self.date
         let year: String = String(temp.suffix(4))
         let tempmonth: String = String(temp.prefix(5))
-        let month: String = String(tempmonth.suffix(2))
-        let day: String = String(tempmonth.prefix(2))
+        let day: String = String(tempmonth.suffix(2))
+        let month: String = String(tempmonth.prefix(2))
         self.date = year + "-" + month + "-" + day
         print("Did Select: \(self.date)")
         self.datelabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date:date)

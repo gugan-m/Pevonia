@@ -1310,7 +1310,7 @@
                                         </constraints>
                                         <segments>
                                             <segment title="ALL"/>
-                                            <segment title="Beat/Patch "/>
+                                            <segment title="Saved Routing"/>
                                         </segments>
                                         <connections>
                                             <action selector="segControlAction:" destination="d2B-h9-hTh" eventType="valueChanged" id="HPt-ZZ-oc5"/>

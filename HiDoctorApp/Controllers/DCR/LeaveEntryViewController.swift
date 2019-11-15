@@ -318,7 +318,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         var fromDateMonth: String?
         let dateAsString = fromDateLbl.text
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = defaultDateFomat//"dd/MM/yyyy"
         if let date = dateFormatter.date(from: dateAsString!) {
             dateFormatter.dateFormat = "MM yyyy"
             print("date is \(dateFormatter.string(from: date))")
@@ -330,7 +330,7 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         var toDateMonth: String?
         let toDateAsString = toDatelbl.text
         let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "dd/MM/yyyy"
+        dateFormatter1.dateFormat = defaultDateFomat//"dd/MM/yyyy"
         if let todate = dateFormatter1.date(from: toDateAsString!) {
             dateFormatter1.dateFormat = "MM yyyy"
             print("date is \(dateFormatter1.string(from: todate))")

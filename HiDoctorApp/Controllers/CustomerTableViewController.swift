@@ -1354,7 +1354,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         if (objGeoValidation.Customer_Location != nil)
         {
             self.customerLocation = objGeoValidation.Customer_Location
-            //BL_Geo_Location.sharedInstance.updateCustomerLocation(customerLocation: objGeoValidation.Customer_Location!)
+            BL_Geo_Location.sharedInstance.updateCustomerLocation(customerLocation: objGeoValidation.Customer_Location!, pageSource: Constants.Geo_Fencing_Page_Names.EDETAILING)
         }
         self.autoMoveToEDetailingPage = true
         self.tapEventForiPad()

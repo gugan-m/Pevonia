@@ -332,15 +332,13 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
             categoryId = dcrHeaderObj?.Category_Id
             categoryName = dcrHeaderObj?.Category_Name
             
-            if BL_WorkPlace.sharedInstance.selected_Workplace_Array.count == 0{
-                workPlace = checkNullAndNilValueForString(stringData: dcrHeaderObj?.Place_Worked)
-            } else {
-                let selcted_arr = checkNullAndNilValueForString(stringData:dcrHeaderObj?.Place_Worked)
+            if dcrHeaderObj?.Place_Worked?.count != 0 {
+              let selcted_arr = checkNullAndNilValueForString(stringData:dcrHeaderObj?.Place_Worked)
                 BL_WorkPlace.sharedInstance.selected_Workplace_Array = selcted_arr.components(separatedBy: ",")
                 
                 workPlace = BL_WorkPlace.sharedInstance.selected_Workplace_Array[BL_WorkPlace.sharedInstance.selected_Workplace_Array.count - 1]
-                
             }
+            
             self.setValueForTimeTextField(fromTime: dcrHeaderObj?.Start_Time, toTime: dcrHeaderObj?.End_Time)
             self.title = "Edit Work Place Details"
         }
@@ -359,9 +357,10 @@ class WorkPlaceDetailsViewController: UIViewController,UIPickerViewDelegate,UIPi
             self.setSelectedRowInPicker(categoryName: categoryName)
             self.setValueToWorkCategoryObj(categoryId: categoryId, categoryName: categoryName)
             
-            if workPlace == ""
+            if workPlace == nil || workPlace == ""
             {
                 self.workPlaceLbl.text =  self.getDefaultRegionValue()
+            BL_WorkPlace.sharedInstance.selected_Workplace_Array.append(self.getDefaultRegionValue())
             }
             else
             {

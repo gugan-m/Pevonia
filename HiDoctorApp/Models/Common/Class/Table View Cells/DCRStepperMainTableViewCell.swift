@@ -203,11 +203,19 @@ class DCRStepperMainTableViewCell: UITableViewCell, UITableViewDelegate, UITable
                 line1Text = "Start time & End time"
                 var startTime = ""
                 var endTime = ""
-                let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
-                if doctorObj.Punch_Start_Time!.count != 0 && doctorObj.Punch_End_Time!.count != 0
-                {
-                    startTime =  convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[0].Punch_Start_Time!)
-                    endTime = convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[BL_Stepper.sharedInstance.doctorList.count-1].Punch_End_Time!)
+                let doctorObj = BL_Stepper.sharedInstance.doctorList
+                if doctorObj.count > 0 {
+                    if doctorObj[0].Punch_Start_Time!.count != 0  {
+                        startTime =  convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[0].Punch_Start_Time!)
+                    } else {
+                         startTime = BL_Stepper.sharedInstance.dcrHeaderObj!.Start_Time!
+                    }
+                    
+                    if doctorObj[doctorObj.count - 1].Punch_End_Time!.count != 0 {
+                         endTime = convertStringToDate(stringDate: BL_Stepper.sharedInstance.doctorList[BL_Stepper.sharedInstance.doctorList.count-1].Punch_End_Time!)
+                    } else {
+                        endTime = BL_Stepper.sharedInstance.dcrHeaderObj!.End_Time!
+                    }
                 } else {
                     startTime = BL_Stepper.sharedInstance.dcrHeaderObj!.Start_Time!
                     endTime = BL_Stepper.sharedInstance.dcrHeaderObj!.End_Time!

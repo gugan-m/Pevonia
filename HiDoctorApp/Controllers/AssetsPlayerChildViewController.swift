@@ -1277,7 +1277,7 @@ class AssetsPlayerChildViewController: UIViewController  {
     
     func insert_GroupAnalytics(count: Int,assetObject: AssetAnalyticsDetail){
         var arr_Count = count
-        if arr_Count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count{
+        if arr_Count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count {
             return
         } else {
              analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObject, customerObj: BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_Count])

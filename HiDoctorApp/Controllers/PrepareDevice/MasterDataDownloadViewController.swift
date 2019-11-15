@@ -261,11 +261,23 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
     func downloadAllMasterData()
     {
         showCustomActivityIndicatorView(loadingText: "Downloading \(apiStatus.DownloadAllMasterData)...")
-//        CustomActivityIndicator.sharedInstance.loadingText = "Downloading \(apiStatus.DownloadAllMasterData.rawValue)..."
-//       CustomActivityIndicator.sharedInstance.showCustomActivityIndicatorView()
-        BL_MasterDataDownload.sharedInstance.dowloadAllData(masterDataGroupName: masterDataGroupName.DownloadAllMasterData.rawValue, completion: { (status) in
+        BL_MasterDataDownload.sharedInstance.dowloadAllData(masterDataGroupName1: masterDataGroupName.DownloadAllMasterData.rawValue, completion: { (status) in
             if(status == SERVER_SUCCESS_CODE)
             {
+                
+               if BL_DCR_Doctor_Visit.sharedInstance.getStoryEnabledPrivVal().lowercased() == PrivilegeValues.YES.rawValue.lowercased()
+                {
+                    self.downloadMarketContentData()
+                }
+            
+                let apiDownloadDetail:NSMutableDictionary = NSMutableDictionary()
+                       
+                       apiDownloadDetail.setValue(masterDataGroupName.DownloadAllMasterData.rawValue, forKey: "Api_Name")
+                       apiDownloadDetail.setValue(masterDataGroupName.DownloadAllMasterData.rawValue, forKey: "Master_Data_Group_Name")
+                       apiDownloadDetail.setValue(getCurrentDateAndTime(), forKey: "Download_Date")
+                       apiDownloadDetail.setValue(1, forKey: "Download_Status")
+                DBHelper.sharedInstance.insertApiDownloadDetail(dict: apiDownloadDetail)
+                
                 BL_MasterDataDownload.sharedInstance.autoDownload = false
                 WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: apiStatus.DownloadAllMasterData), completion: { (apiObj) in
                    self.showToast(toastText: self.getErrorMessageForStatus(statusCode: status, dataName: apiStatus.DownloadAllMasterData))

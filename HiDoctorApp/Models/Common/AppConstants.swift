@@ -6,12 +6,12 @@ import Foundation
 
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
-let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
+//let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
 let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
 // use this url for production but not for live.
-//let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
 //MARK:- Development  email issue
@@ -688,7 +688,7 @@ let TRAN_TP_UNFREEZE_DATES = "tran_TP_Unfreeze_Dates"
 let MST_DFC = "mst_DFC"
 let MST_USER_PRODUCT = "mst_User_Products"
 let MST_SAMPLE_BATCH_MAPPING = "mst_Sample_Batch_Mapping"
-let MST_API_DOWNLOAD_DETAIL = "mst_API_Download_Details"
+//let MST_API_DOWNLOAD_DETAIL = "mst_API_Download_Details"
 let MST_ACCOMPANIST = "mst_Accompanist"
 let TRAN_DCR_CALENDAR_HEADER = "tran_DCR_Calendar_Header"
 let TRAN_DCR_HEADER = "tran_DCR_Header"

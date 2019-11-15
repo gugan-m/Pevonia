@@ -27,7 +27,6 @@ class UserPerDayReportsViewController: UIViewController, UITableViewDelegate, UI
         self.setCurrentList()
     }
     
-    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

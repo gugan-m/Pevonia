@@ -34,10 +34,14 @@ class AssetHeader: Record
     var ud_StoryId = 0
     var displayIndex = 1
     var Asset_Id: Int!
-
+    var Total_Measure: String!
+    var Measured_Unit: String!
+    
     init(dict: NSDictionary)
     {
         self.daCode = dict.value(forKey: "DA_Code") as! Int
+         self.Total_Measure = dict.value(forKey: "Total_Measure") as! String
+         self.Measured_Unit = dict.value(forKey: "Measured_Unit") as! String
         if let name = dict.value(forKey: "DA_Name") as? String
         {
             self.daName = name
@@ -175,7 +179,8 @@ class AssetHeader: Record
         tagValue = row["Tag_Value"]
         Html_Start_Page = row["Html_Start_Page"]
         Asset_Id = row["Asset_Id"]
-        
+      Total_Measure = row["Total_Measure"]
+        Measured_Unit = row["Measured_Unit"]
         super.init(row: row)
     }
     
@@ -199,6 +204,8 @@ class AssetHeader: Record
         container["Number_Of_Parts"] = noOfParts
         container["Total_Duration_In_Seconds"] = duration
         container["Asset_Id"] = Asset_Id
+        container["Total_Measure"] = Total_Measure
+        container["Measured_Unit"] = Measured_Unit
     }
     
 //    var persistentDictionary: [String : DatabaseValueConvertible?]

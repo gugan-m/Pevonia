@@ -232,7 +232,7 @@ class DAL_TP_Stepper: NSObject {
         
         try? dbPool.read
             { db in
-            apiModel = try ApiDownloadDetailModel.fetchOne(db, "SELECT * FROM \(MST_API_DOWNLOAD_DETAIL) WHERE Api_Name = ? ORDER BY Download_Date DESC LIMIT 1" , arguments: [apiname])!
+            apiModel = try ApiDownloadDetailModel.fetchOne(db, "SELECT * FROM \(MST_API_DOWNLOAD_DETAILS) WHERE Api_Name = ? ORDER BY Download_Date DESC LIMIT 1" , arguments: [apiname])!
         }
       return apiModel!
     }

@@ -475,33 +475,37 @@ class BL_MasterDataDownload: NSObject
         }
     }
     
-    func dowloadAllData(masterDataGroupName: String, completion: @escaping (Int) -> ())
+    func dowloadAllData(masterDataGroupName1: String, completion: @escaping (Int) -> ())
     {
-        self.downloadSystemSettings(masterDataGroupName: masterDataGroupName) { (status) in
+        self.downloadSystemSettings(masterDataGroupName: masterDataGroupName.SystemSettings.rawValue) { (status) in
             if (status == SERVER_SUCCESS_CODE)
             {
-                self.downloadHolidayData(masterDataGroupName: masterDataGroupName) { (status) in
+                self.downloadHolidayData(masterDataGroupName: masterDataGroupName.HolidayData.rawValue) { (status) in
                     if (status == SERVER_SUCCESS_CODE)
                     {
-                        self.downloadCustomerData(masterDataGroupName: masterDataGroupName) { (status) in
+                        self.downloadCustomerData(masterDataGroupName: masterDataGroupName.DoctorData.rawValue) { (status) in
                             if (status == SERVER_SUCCESS_CODE)
                             {
-                                self.downloadExpenseData(masterDataGroupName: masterDataGroupName) { (status) in
+                                self.downloadExpenseData(masterDataGroupName: masterDataGroupName.ExpenseData.rawValue) { (status) in
                                     if (status == SERVER_SUCCESS_CODE)
                                     {
-                                        self.downloadProductData(masterDataGroupName: masterDataGroupName) { (status) in
+                                        self.downloadProductData(masterDataGroupName: masterDataGroupName.ProductData.rawValue) { (status) in
                                             if (status == SERVER_SUCCESS_CODE)
                                             {
-                                                self.downloadCPTPData(masterDataGroupName: masterDataGroupName) { (status) in
+                                                self.downloadCPTPData(masterDataGroupName: masterDataGroupName.CpTpDetails.rawValue) { (status) in
                                                     if (status == SERVER_SUCCESS_CODE)
                                                     {
-                                                        self.downloadSFCAndAccompanistData(masterDataGroupName: masterDataGroupName) { (status) in
+                                                        self.downloadSFCAndAccompanistData(masterDataGroupName: masterDataGroupName.SFCAccompanistData.rawValue) { (status) in
                                                             if (status == SERVER_SUCCESS_CODE)
                                                             {
-                                                                self.getDigitalAssetsData(masterDataGroupName: masterDataGroupName) { (status) in
+                                                                self.getDigitalAssetsData(masterDataGroupName: masterDataGroupName.DigitalAssets.rawValue) { (status) in
                                                                     if (status == SERVER_SUCCESS_CODE)
                                                                     {
-                                                                        self.allDataContd(masterDataGroupName: masterDataGroupName, completion: { (status) in
+                                                                        self.allDataContd(masterDataGroupName: masterDataGroupName.MenuData.rawValue, completion: { (status) in
+                                                                            
+                                                                            
+                                                                            
+                                                                            
                                                                             completion(status)
                                                                         })
                                                                     }

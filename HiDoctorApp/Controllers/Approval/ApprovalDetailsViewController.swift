@@ -294,6 +294,9 @@ class ApprovalDetailsViewController: UIViewController, UITableViewDelegate, UITa
         {
                 if approvalDetail.sectionViewType == SectionHeaderType.Travel || approvalDetail.sectionType == TpSectionHeaderType.Travel
                 {
+                    if indexPath.section == 2 || indexPath.section == 5 || indexPath.section == 6 {
+                        return 0
+                    }
                     return BL_Approval.sharedInstance.getSFCCellHeight(dataList: dataList) + defaultHeight
                 }
                 else if approvalDetail.sectionViewType == SectionHeaderType.DoctorVisit

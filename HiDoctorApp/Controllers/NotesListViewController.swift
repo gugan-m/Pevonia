@@ -409,11 +409,11 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         if(isnotes)
         {
-            return 60
+            return 70
         }
         else
         {
-            return 100
+            return 110
         }
     }
     @objc func updatestatus(sender:UIButton)

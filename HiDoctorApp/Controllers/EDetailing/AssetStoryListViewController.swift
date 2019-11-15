@@ -151,8 +151,8 @@ class AssetStoryListViewController:  UIViewController,UITableViewDelegate,UITabl
         }
         
         cell.assetsImg.image = thumnailImg
-        
-        cell.assetsDetailLbl.text = "\(String(format: "%.2f", assetsObj.daSize)) MB | \(getDocTypeVal(docType : assetsObj.docType)) | \(downloadedStatus)"
+        let size = (assetsObj.Total_Measure ?? "0") + " " + assetsObj.Measured_Unit
+        cell.assetsDetailLbl.text = "\(String(format: "%.2f", assetsObj.daSize)) MB | \(getDocTypeVal(docType : assetsObj.docType)) | \(size) | \(downloadedStatus)"
         cell.menuBtn.isUserInteractionEnabled = true
         cell.videoPlayBackView.constant = 0
         cell.activityIndicatorWidth.constant = 0

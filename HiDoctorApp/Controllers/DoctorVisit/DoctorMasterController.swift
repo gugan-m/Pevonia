@@ -803,11 +803,8 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
             var model : [DCRDoctorVisitModel] = []
             model = DBHelper.sharedInstance.getDCRDoctorVisitPunchTimeValidation(dcrId: DCRModel.sharedInstance.dcrId)
             
-            
-            
-            
-            
             let doctorCheck = DBHelper.sharedInstance.checkDoctorVisitforDoctorId(doctorCode: userCurrentList[indexPath.section].userList[indexPath.row].Customer_Code, regionCode: userCurrentList[indexPath.section].userList[indexPath.row].Region_Code)
+            
             if doctorCheck == 0
             {
                 let currentLocation = getCurrentLocaiton()
@@ -831,7 +828,120 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                         
                         if (objGeoValidation.Customer_Location != nil)
                         {
-                            confirmCustomerAddressAlert(indexPath: indexPath, currentLocaiton: currentLocation, objGeoValidation: objGeoValidation)
+                           // confirmCustomerAddressAlert(indexPath: indexPath, currentLocaiton: currentLocation, objGeoValidation: objGeoValidation)
+                            
+                            
+                            let objCustomer = userCurrentList[indexPath.section].userList[indexPath.row]
+                                   let customerName = objCustomer.Customer_Name!
+                                   
+                                   let alertViewController = UIAlertController(title: alertTitle, message: "We have not found any location info for \(appDoctor). Are you at \(customerName)'s location now ? \n\n Tap on YES button to update the current location as \(customerName)'s location \n\n Tap on NO button not to update any location info and proceed further", preferredStyle: UIAlertControllerStyle.alert)
+                                   
+                                   alertViewController.addAction(UIAlertAction(title: "YES", style: UIAlertActionStyle.default, handler: { alertAction in
+                                    
+                if (objGeoValidation.Customer_Location != nil)
+                {
+                    BL_Geo_Location.sharedInstance.updateCustomerLocation(customerLocation: objGeoValidation.Customer_Location!, pageSource: Constants.Geo_Fencing_Page_Names.DCR)
+                }
+                
+                                    if(model != nil && model.count > 0)
+                                    {
+                                        let doctorobj : DCRDoctorVisitModel = model[0]
+                                        let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
+                                        //let indexpath = sender.tag
+                                        let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                        
+                                        alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                                            alertViewController.dismiss(animated: true, completion: nil)
+                                        }))
+                                        
+                                        alertViewController.addAction(UIAlertAction(title: "Go to modify", style: UIAlertActionStyle.default, handler: { alertAction in
+                                            //function
+                                            self.navigateToNextScreen(stoaryBoard: doctorMasterSb, viewController: doctorVisitModifyVcID)
+                                            
+                                            alertViewController.dismiss(animated: true, completion: nil)
+                                        }))
+                                        
+                                        self.present(alertViewController, animated: true, completion: nil)
+                                    }
+                                    else
+                                    {
+                                        
+                                        let doctorCheck = DBHelper.sharedInstance.checkDoctorVisitforDoctorId(doctorCode: self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Code, regionCode: self.userCurrentList[indexPath.section].userList[indexPath.row].Region_Code)
+                                        if doctorCheck == 0
+                                        {
+                                            let currentLocation = getCurrentLocaiton()
+                                            let initialAlert = "Check-in time for " + self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
+                                            //let indexpath = sender.tag
+                                            let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                            
+                                            alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                alertViewController.dismiss(animated: true, completion: nil)
+                                            }))
+                                            
+                                            alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                //function
+                                                self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
+                                                alertViewController.dismiss(animated: true, completion: nil)
+                                            }))
+                                            
+                                            self.present(alertViewController, animated: true, completion: nil)
+                                        }
+                                    }
+                                       alertViewController.dismiss(animated: true, completion: nil)
+                                   }))
+                                   
+                                   alertViewController.addAction(UIAlertAction(title: "NO", style: UIAlertActionStyle.default, handler: { alertAction in
+                                     
+                                    if(model != nil && model.count > 0)
+                                                                       {
+                                                                           let doctorobj : DCRDoctorVisitModel = model[0]
+                                                                           let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
+                                                                           //let indexpath = sender.tag
+                                                                           let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                                                           
+                                                                           alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                                               alertViewController.dismiss(animated: true, completion: nil)
+                                                                           }))
+                                                                           
+                                                                           alertViewController.addAction(UIAlertAction(title: "Go to modify", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                                               //function
+                                                                               self.navigateToNextScreen(stoaryBoard: doctorMasterSb, viewController: doctorVisitModifyVcID)
+                                                                               
+                                                                               alertViewController.dismiss(animated: true, completion: nil)
+                                                                           }))
+                                                                           
+                                                                           self.present(alertViewController, animated: true, completion: nil)
+                                                                       }
+                                                                       else
+                                                                       {
+                                                                           
+                                                                           let doctorCheck = DBHelper.sharedInstance.checkDoctorVisitforDoctorId(doctorCode: self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Code, regionCode: self.userCurrentList[indexPath.section].userList[indexPath.row].Region_Code)
+                                                                           if doctorCheck == 0
+                                                                           {
+                                                                               let currentLocation = getCurrentLocaiton()
+                                                                               let initialAlert = "Check-in time for " + self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + self.userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name
+                                                                               //let indexpath = sender.tag
+                                                                               let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                                                                               
+                                                                               alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                                                   alertViewController.dismiss(animated: true, completion: nil)
+                                                                               }))
+                                                                               
+                                                                               alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
+                                                                                   //function
+                                                                                   self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
+                                                                                   alertViewController.dismiss(animated: true, completion: nil)
+                                                                               }))
+                                                                               
+                                                                               self.present(alertViewController, animated: true, completion: nil)
+                                                                           }
+                                                                       }
+                                    
+                                          alertViewController.dismiss(animated: true, completion: nil)
+                                      }))
+                            
+                            self.present(alertViewController, animated: true, completion: nil)
+                                 
                         }
                         else
                         {
@@ -888,6 +998,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                 {
                     moveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
                 }
+            } else {
+                let name = userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name!
+                showToastViewWithShortTime(toastText: "\(name) is already added")
             }
             
         }
@@ -916,6 +1029,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                         navigationController.popViewController(animated: false)
                         navigationController.pushViewController(vc, animated: false)
                     }
+                } else {
+                    let name = userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name!
+                    showToastViewWithShortTime(toastText: "\(name) is already added")
                 }
                 
             }
@@ -944,6 +1060,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                     {
                         moveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
                     }
+                }else {
+                    let name = userCurrentList[indexPath.section].userList[indexPath.row].Customer_Name!
+                    showToastViewWithShortTime(toastText: "\(name) is already added")
                 }
             }
             else

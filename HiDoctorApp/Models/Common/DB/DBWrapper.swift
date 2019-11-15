@@ -27,7 +27,7 @@ func setupDatabase(_ application: UIApplication) throws
         createTableString = "CREATE TABLE IF NOT EXISTS \(MST_CUSTOMER_MASTER_PERSONAL_INFO) (" + "Customer_Code TEXT," + "Region_Code  TEXT," + "DOB DATE," + "Anniversary_Date DATE," + "Mobile_Number TEXT," + "Alternate_Number TEXT," + "Assistant_Number TEXT," + "Registration_Number TEXT," + "Email_Id TEXT," + "Blob_Photo_Url TEXT," + "Hospital_Name TEXT," + "Hospital_Address TEXT," + "Notes TEXT" + ")"
         try db.execute(createTableString)
         
-        createTableString = "CREATE TABLE IF NOT EXISTS mst_API_Download_Details (" + "Api_Name TEXT," + "Master_Data_Group_Name TEXT," + "Download_Date TEXT," + "Download_Status INTEGER" + ")"
+        createTableString = "CREATE TABLE IF NOT EXISTS \(MST_API_DOWNLOAD_DETAILS) (" + "Api_Name TEXT," + "Master_Data_Group_Name TEXT," + "Download_Date TEXT," + "Download_Status INTEGER" + ")"
         try db.execute(createTableString)
         
         createTableString = "CREATE TABLE IF NOT EXISTS mst_Privileges (" + "Privilege_Name TEXT," + "Privilege_Value TEXT" + ")"
@@ -250,7 +250,7 @@ func setupDatabase(_ application: UIApplication) throws
         
         var createTableString = ""
         
-        createTableString = "CREATE TABLE IF NOT EXISTS \(MST_ASSET_HEADER) (" + "DA_Code INTEGER PRIMARY KEY," + "DA_Name TEXT," + "Doc_Type INTEGER," + "Is_Downloadable INTEGER," + "Is_Viewable INTEGER," + "Is_Shareable INTEGER," + "Thumbnail_Url TEXT," + "DA_Size_In_MB FLOAT," + "Is_Downloaded INTEGER," + "DA_FileName TEXT," + "Effective_From DATE," + "Effective_To DATE," + "DA_Description TEXT," + "Number_Of_Parts INTEGER," + "Total_Duration_In_Seconds INTEGER," + "DA_Online_Url TEXT," + "Html_Start_Page TEXT" + ")"
+        createTableString = "CREATE TABLE IF NOT EXISTS \(MST_ASSET_HEADER) (" + "DA_Code INTEGER PRIMARY KEY," + "DA_Name TEXT," + "Doc_Type INTEGER," + "Is_Downloadable INTEGER," + "Is_Viewable INTEGER," + "Is_Shareable INTEGER," + "Thumbnail_Url TEXT," + "DA_Size_In_MB FLOAT," + "Is_Downloaded INTEGER," + "DA_FileName TEXT," + "Effective_From DATE," + "Effective_To DATE," + "DA_Description TEXT," + "Number_Of_Parts INTEGER," + "Total_Duration_In_Seconds INTEGER," + "DA_Online_Url TEXT," + "Html_Start_Page TEXT," + "Total_Measure TEXT," + "Measured_Unit TEXT" + ")"
         try db.execute(createTableString)
         
         createTableString = "CREATE TABLE IF NOT EXISTS \(MST_ASSET_TAG_DETAILS) (" + "Id INTEGER PRIMARY KEY AUTOINCREMENT," + "DA_Code INTEGER," + "Tag_Type INTEGER," + "Tag_Value TEXT," + "Tag_Code TEXT" + ")"
@@ -970,6 +970,17 @@ func setupDatabase(_ application: UIApplication) throws
             createTableString = "ALTER TABLE \(MST_ASSET_HEADER) ADD Asset_Id INTEGER"
             try db.execute(createTableString)
         }
+//        if (!checkIsColumnExist(rowList: rows, columnName: "Total_Measure"))
+//        {
+//            createTableString = "ALTER TABLE \(MST_ASSET_HEADER) ADD Total_Measure TEXT"
+//            try db.execute(createTableString)
+//        }
+//        if (!checkIsColumnExist(rowList: rows, columnName: "Measured_Unit"))
+//        {
+//            createTableString = "ALTER TABLE \(MST_ASSET_HEADER) ADD Measured_Unit TEXT"
+//            try db.execute(createTableString)
+//        }
+        
         
         try dbPool.read { db in
             rows = try Row.fetchAll(db, "PRAGMA table_info('\(MST_MC_STORY_HEADER)')")

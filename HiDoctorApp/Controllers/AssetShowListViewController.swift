@@ -213,9 +213,9 @@ class AssetShowListViewController : UIViewController,UITableViewDelegate,UITable
             {
                 getThumbnailImageForUrl(imageUrl: thumbanailUrl, indexPath: indexPath)
             }
-            
+            let size = (assetsObj.Total_Measure ?? "0") + " " + assetsObj.Measured_Unit
             cell.assetsImg.image = thumnailImg
-            cell.assetsDetailLbl.text = "\(String(format: "%.2f", assetsObj.daSize)) MB | \(getDocTypeVal(docType : assetsObj.docType)) | \(downloadedStatus)"
+            cell.assetsDetailLbl.text = "\(String(format: "%.2f", assetsObj.daSize)) MB | \(getDocTypeVal(docType : assetsObj.docType)) | \(size) | \(downloadedStatus)"
             cell.menuBtn.isUserInteractionEnabled = true
             cell.videoPlayBackView.constant = 0
             cell.activityIndicatorWidth.constant = 0
