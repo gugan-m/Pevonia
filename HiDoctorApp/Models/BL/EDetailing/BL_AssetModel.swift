@@ -13,7 +13,7 @@ class BL_AssetModel: NSObject
     var showList : [ShowListModel] = []
     var assetList : [AssetHeader] = []
     var thumbailImage : [String : UIImage] = [:]
-    var detailedCustomerId : Int = 0
+    var detailedCustomerId : Int = 1
     var isForDigitalAssets = false
     var isfromDcrPunchIn = false
     var punchout = ""

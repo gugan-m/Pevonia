@@ -222,7 +222,14 @@ class BL_Upload_DCR: NSObject
             var latitude: String = EMPTY
             var longitude: String = EMPTY
             var generalRemarks: String = EMPTY
+            var Unapprove_Reason: String?
             
+            if (dcrHeaderObj.Unapprove_Reason != nil)
+            {
+                Unapprove_Reason = dcrHeaderObj.Unapprove_Reason
+            } else {
+                Unapprove_Reason = ""
+            }
             if (dcrHeaderObj.DCR_Entered_Date != nil)
             {
                 enteredDate = convertDateIntoServerStringFormat(date: dcrHeaderObj.DCR_Entered_Date)
@@ -279,7 +286,7 @@ class BL_Upload_DCR: NSObject
             {
                 generalRemarks = dcrHeaderObj.DCR_General_Remarks!
             }
-             let appVersion = getCurrentAppVersion()
+            let appVersion = getCurrentAppVersion()
             let arrayData = appVersion.components(separatedBy: "(")
             let versionName = arrayData[0]
             let versionCode = arrayData[1].components(separatedBy: ")")[0]
@@ -291,7 +298,7 @@ class BL_Upload_DCR: NSObject
             
             let dict2: NSDictionary = ["Category_Name": categoryName, "Travelled_KMS": 0, "CP_Code": cpCode, "CP_Id": cpId,"CP_Name" : cpName, "Start_Time": startTime, "End_Time": endTime, "Approved_By": NSNull(), "Approved_Date": NSNull()]
             
-            let dict3: NSDictionary = ["Unapprove_Reason": NSNull(), "Type": leaveTypeCode, "Reason": leaveReason, "Lattitude": latitude, "Longitude": longitude, "Region_Code": getRegionCode(), "Source_Of_Entry": "iOS", "DCR_General_Remarks": generalRemarks]
+            let dict3: NSDictionary = ["Unapprove_Reason": Unapprove_Reason, "Type": leaveTypeCode, "Reason": leaveReason, "Lattitude": latitude, "Longitude": longitude, "Region_Code": getRegionCode(), "Source_Of_Entry": "iOS", "DCR_General_Remarks": generalRemarks]
             
             let dict4: NSDictionary = ["IsTPFrozenData": dcrHeaderObj.Is_TP_Frozen,"versionName":versionName,"versionCode":versionCode,"UTC_DateTime":getUTCDateForPunch(),"Entered_TimeZone":getcurrenttimezone(),"Entered_OffSet":getOffset(),"Created_DateTime":getCurrentDateAndTimeString()]
             

@@ -46,6 +46,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     
     override func viewDidLoad()
     {
+        DBHelper.sharedInstance.deletelDoctorVisitTracker()
         BL_AssetModel.sharedInstance.selected_CustomersForEdetailing = []
         super.viewDidLoad()
     }
