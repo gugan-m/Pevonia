@@ -17,6 +17,8 @@ let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //MARK:- Development  email issue
 //let supportEmail : String = "Pevonia.support@swaas.net"
 
+
+let helpFilesURL = "https://helpfiles.hdsfa.com"
 //MARK:- Testing issue email
 let supportEmail : String = "Pevonia.support@swaas.net"
 

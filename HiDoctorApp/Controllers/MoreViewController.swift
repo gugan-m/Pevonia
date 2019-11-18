@@ -419,6 +419,13 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         dataList.append(moreDescObj)
         
         moreDescObj = MoreListDescriptionModel()
+        moreDescObj.stoaryBoardName = mainSb
+               moreDescObj.viewControllerIdentifier = webViewVCID
+               moreDescObj.icon = "icon-HelpFiles"
+               moreDescObj.descriptionTxt = "Help Files"
+               dataList.append(moreDescObj)
+        
+        moreDescObj = MoreListDescriptionModel()
         moreDescObj.stoaryBoardName = MoreViewMasterSb
         moreDescObj.viewControllerIdentifier = LogoutVcID
         moreDescObj.icon = "icon_logout"
@@ -860,6 +867,13 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
             vc.isComingFromDigitalAssets = true
             self.navigationController?.pushViewController(vc, animated: true)
 
+        }
+        else if stoaryBoardName == mainSb {
+            let sb = UIStoryboard(name: stoaryBoardName, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: viewController) as! WebViewController
+            vc.siteURL = helpFilesURL
+            vc.webViewTitle = "Help Files"
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         else if stoaryBoardName != ""
         {
