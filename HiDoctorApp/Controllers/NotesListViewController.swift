@@ -330,7 +330,13 @@ class NotesListViewController: UIViewController, UITableViewDelegate, UITableVie
                 //cell.Date.text = "Created Date: " + "\(temp.value(forKey: "Created_DateTime") as! String)"
                 
                 cell.Description.text = "\(temp.value(forKey: "Tasks_Description") as! String)"
-                cell.date.text = model.value(forKey: "Task_Due_Date") as! String
+               let inputFormatter = DateFormatter()
+               inputFormatter.dateFormat = "dd/MM/yyyy"
+                
+                let date = model.value(forKey: "Task_Due_Date") as! String
+                let taskDate = stringDateFormat(date1:inputFormatter.date(from:date)!)
+                
+                cell.date.text = taskDate
                 if(model.value(forKey: "Task_Status")  != nil)
                 {
                     cell.status.setTitle(model.value(forKey: "Task_Status") as! String, for: .normal)

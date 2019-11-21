@@ -5964,7 +5964,11 @@ class DBHelper: NSObject
         try? dbPool.read { db in
             detailedId = (try Int.fetchOne(db, "SELECT MAX(Customer_Detailed_Id) FROM \(TRAN_ASSET_ANALYTICS_DETAILS) WHERE Customer_Code = ? AND Customer_Region_Code = ? AND DATE(Detailed_DateTime) = DATE('\(detailingDate)')", arguments: [customerCode,customerRegionCode]))
         }
-        return detailedId
+        if detailedId == nil {
+            return 0
+        } else {
+            return detailedId
+        }
     }
     
     func updateAnalyticsByAnalyticsId(analyticsId : Int,analyticsObj :AssetAnalyticsDetail)

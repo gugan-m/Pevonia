@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
 
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
@@ -11,7 +11,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
 // use this url for production but not for live.
-let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
+//let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
 //MARK:- Development  email issue

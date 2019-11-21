@@ -422,27 +422,40 @@ class LoginViewController: UIViewController
     
     func navigateToNextScreen()
     {
-        let alertViewController = UIAlertController(title: nil, message: Display_Messages.LOGIN_DATA_DOWNLOAD.DATA_DOWNLOAD_ALERT, preferredStyle: UIAlertControllerStyle.alert)
-        alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-            
-            DBHelper.sharedInstance.updateLoginCompleted()
-            BL_InitialSetup.sharedInstance.setUserAndCompanyDetails()
-            let appDelegate = getAppDelegate()
-            BL_InitialSetup.sharedInstance.checkCodeOfConduct { (response) in
-                if(response)
-                {
-                    appDelegate.allocateConductAsRoot()
-                }
-                else
-                {
-                    appDelegate.allocatePrepareAsRoot()
-                }
+        DBHelper.sharedInstance.updateLoginCompleted()
+        BL_InitialSetup.sharedInstance.setUserAndCompanyDetails()
+        let appDelegate = getAppDelegate()
+        BL_InitialSetup.sharedInstance.checkCodeOfConduct { (response) in
+            if(response)
+            {
+                appDelegate.allocateConductAsRoot()
             }
-            
-            alertViewController.dismiss(animated: true, completion: nil)
-        }))
-       
-        self.present(alertViewController, animated: true, completion: nil)
+            else
+            {
+                appDelegate.allocatePrepareAsRoot()
+            }
+        }
+//        let alertViewController = UIAlertController(title: nil, message: Display_Messages.LOGIN_DATA_DOWNLOAD.DATA_DOWNLOAD_ALERT, preferredStyle: UIAlertControllerStyle.alert)
+//        alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
+//
+//            DBHelper.sharedInstance.updateLoginCompleted()
+//            BL_InitialSetup.sharedInstance.setUserAndCompanyDetails()
+//            let appDelegate = getAppDelegate()
+//            BL_InitialSetup.sharedInstance.checkCodeOfConduct { (response) in
+//                if(response)
+//                {
+//                    appDelegate.allocateConductAsRoot()
+//                }
+//                else
+//                {
+//                    appDelegate.allocatePrepareAsRoot()
+//                }
+//            }
+//
+//            alertViewController.dismiss(animated: true, completion: nil)
+//        }))
+//
+//        self.present(alertViewController, animated: true, completion: nil)
     }
     
     func saveImageToFile(image:UIImage)

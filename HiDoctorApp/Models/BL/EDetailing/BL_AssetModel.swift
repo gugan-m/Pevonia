@@ -13,7 +13,9 @@ class BL_AssetModel: NSObject
     var showList : [ShowListModel] = []
     var assetList : [AssetHeader] = []
     var thumbailImage : [String : UIImage] = [:]
+    var DETAIL_CUSTOMER_ID: Int = 1
     var detailedCustomerId : Int = 1
+    var detailedCustomerId_Arr: [Int] = []
     var isForDigitalAssets = false
     var isfromDcrPunchIn = false
     var punchout = ""
@@ -602,6 +604,8 @@ class BL_AssetModel: NSObject
     
     func insertAssetAnalytics(analyticsObj : AssetAnalyticsDetail ,customerObj: CustomerMasterModel?) -> Int
     {
+        
+        
         if(BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
         {
             if (isfromDcrPunchIn)

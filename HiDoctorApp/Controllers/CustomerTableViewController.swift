@@ -546,8 +546,7 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
                         BL_DoctorList.sharedInstance.customerCode = userList.Customer_Code
                         BL_DoctorList.sharedInstance.doctorTitle = userList.Customer_Name
                         
-                        detailViewController.isEmptyState = false
-                        
+                        detailViewController.isEmptyState = true
                         self.delegate?.customerSelected()
                     }
                     else

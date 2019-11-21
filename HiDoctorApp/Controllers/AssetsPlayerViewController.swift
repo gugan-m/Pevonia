@@ -104,6 +104,7 @@ class AssetsPlayerViewController: UIViewController , ReaderViewControllerDelegat
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         settingBtn.isHidden = true
+    
         removeVersionToastView()
         // Create page view controller
         self.pageVC = self.storyboard?.instantiateViewController(withIdentifier: "PageViewController") as! UIPageViewController

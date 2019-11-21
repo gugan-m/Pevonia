@@ -54,9 +54,10 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
-        hideGroupEdetail_View()
         loadDefaultData()
     }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         let account_Type = BL_DoctorList.sharedInstance.selectedCustomer?.Hospital_Name ?? ""
@@ -81,7 +82,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
         {
             self.tableView.estimatedRowHeight = 2000
             self.setDoctorProfileImg()
-            
+            self.viewGroupEdetailing.isHidden = true
             self.title = BL_DoctorList.sharedInstance.doctorTitle
             
             if (isCustomerMasterEdit && doctorListPageSource != Constants.Doctor_List_Page_Ids.Mark_Doctor_Location)
@@ -422,6 +423,12 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     
     @IBAction func eDetailingAction(_ sender: Any)
     {
+        BL_AssetModel.sharedInstance.detailedCustomerId = 0
+        BL_AssetModel.sharedInstance.detailedCustomerId_Arr.removeAll()
+        BL_AssetModel.sharedInstance.DETAIL_CUSTOMER_ID = BL_AssetModel.sharedInstance.detailedCustomerId
+        BL_AssetModel.sharedInstance.detailedCustomerId = DBHelper.sharedInstance.getMaxCustomerDetailedId(customerCode: BL_DoctorList.sharedInstance.customerCode, customerRegionCode: BL_DoctorList.sharedInstance.regionCode, detailingDate: getCurrentDate())! + 1
+        
+         BL_AssetModel.sharedInstance.DETAIL_CUSTOMER_ID = BL_AssetModel.sharedInstance.detailedCustomerId
         
         if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed(){
             
@@ -662,6 +669,10 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
         {
             dcrId = dcrDetail[0].DCR_Id
         }
+   
+        let  cus_id = DBHelper.sharedInstance.getMaxCustomerDetailedId(customerCode: selected_similarCustomerList[arr_count].Customer_Code, customerRegionCode: selected_similarCustomerList[arr_count].Region_Code,detailingDate: getCurrentDate())! + 1
+        BL_AssetModel.sharedInstance.detailedCustomerId_Arr.append(cus_id)
+        
         let doctorCheck = DBHelper.sharedInstance.getAllDetailsWith(dcrId: dcrId, customerCode: selected_similarCustomerList[arr_count].Customer_Code, regionCode: selected_similarCustomerList[arr_count].Region_Code)
         if doctorCheck == nil
         {
@@ -859,7 +870,7 @@ extension DoctorDetailsViewController: CustomerDelegate
                 let customer_Id = BL_DoctorList.sharedInstance.selectedCustomer?.Customer_Id ?? 0
                 self.similarCustomerList = BL_DoctorList.sharedInstance.getDoctorListForGroupEdetailing(type: account_Type)!
                 self.similarCustomerList = self.similarCustomerList.filter{$0.Customer_Id != customer_Id}
-                       hideGroupEdetail_View()
+                    //   hideGroupEdetail_View()
             }
         }
        

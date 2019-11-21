@@ -112,7 +112,6 @@ class AssetsPlayerChildViewController: UIViewController  {
         self.view.addSubview(htmlWebkitView)
     
         // Do any additional setup after loading the view.
-        
         audioPlayerControlsView.isHidden = true
         videoContainerView.isHidden = true
         audioContainerView.isHidden = true
@@ -1244,6 +1243,9 @@ class AssetsPlayerChildViewController: UIViewController  {
     {
         assetObj.MC_Story_Id = currentAssetObj.assetObj.mc_StoryId as NSNumber
         assetObj.Doc_Type = currentAssetObj.assetObj.docType
+        
+         BL_AssetModel.sharedInstance.detailedCustomerId = BL_AssetModel.sharedInstance.DETAIL_CUSTOMER_ID
+        
         analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObj, customerObj: BL_AssetModel.sharedInstance.getCustomerObjByCustomerCode())
         
         if BL_MenuAccess.sharedInstance.is_Group_eDetailing_Allowed() && BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count != 0
@@ -1280,6 +1282,8 @@ class AssetsPlayerChildViewController: UIViewController  {
         if arr_Count == BL_AssetModel.sharedInstance.selected_CustomersForEdetailing.count {
             return
         } else {
+          
+            BL_AssetModel.sharedInstance.detailedCustomerId =  BL_AssetModel.sharedInstance.detailedCustomerId_Arr[arr_Count]
              analyticsId = BL_AssetModel.sharedInstance.insertAssetAnalytics(analyticsObj: assetObject, customerObj: BL_AssetModel.sharedInstance.selected_CustomersForEdetailing[arr_Count])
            arr_Count = arr_Count + 1
             self.insert_GroupAnalytics(count: arr_Count, assetObject: assetObject)
