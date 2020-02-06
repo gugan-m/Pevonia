@@ -1006,7 +1006,7 @@ let docxTypeId = "org.openxmlformats.wordprocessingml.document"
 
 //MARK:- Dashboard
 let assetsEmptyMsg = "No digital resource found"
-let doctorsEmptyMsg = "No Partner's found"
+let doctorsEmptyMsg = "No Contact's found"
 
 //MARK:- Tour Planner
 let meetingPoint = "Meeting Point"
@@ -1080,8 +1080,8 @@ var navigateToAttachmentUpload: Bool = false
 
 //MARK:- Asset analytics
 let assetAnalyticsInternetDropOffMsg : String = "Unable to upload digital resource analytics now. Please check your network"
-let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload customer feedback analytics now. Please check your network"
-let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload partner visit feedback analytics now. Please check your network"
+let feedbackAnalyticsInternetDropOffMsg: String = "Unable to upload contact feedback analytics now. Please check your network"
+let docVisitFeedbackAnalyticsInternetDropOffMsg: String = "Unable to upload contact visit feedback analytics now. Please check your network"
 
 let privilegeKeyName = "Privilege_Name"
 let privilegeValueName = "Privilege_Value"
@@ -2068,7 +2068,7 @@ struct Display_Messages
         static let ACCOMPANIST_VALIDATION_ERROR_MESSAGE: String = "@ACC_USER has entered DVR and marked you as Ride Along in \(appDoctor) visits. Hence you can't mark this Ride Along for independent call"
         static let ACCOMPANIST_VALIDATION_USER_OFFLINE_MESSAGE: String = "You are offline. Please turn on internet, hence system can validate the chosen Ride Along DVR for DVR inheritance"
         static let ACCOMPANIST_VALIDATION_API_ERROR_MESSAGE: String = "Sorry. Unable to validate the Ride Along. Please try again later."
-        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as Ride Along. But you have not inherited any of the Partner."
+        static let NO_INHERITED_DOCTOR_SUBMIT_DCR_VALIDATION: String = "You have added @ACC_USER as Ride Along. But you have not inherited any of the Contacts."
         static let APP_FORCE_UPDATE_MESSAGE: String = "New version is available in app store. Please download and try again."
     }
     
@@ -2083,12 +2083,12 @@ struct Display_Messages
     
     struct DCR_DOCTOR_VISIT
     {
-        static let EDETAILED_DOCTOR_REMOVE_BUT_ANALYTICS_SYNCED: String = "The partner record is already synched up and cannot be deleted"
+        static let EDETAILED_DOCTOR_REMOVE_BUT_ANALYTICS_SYNCED: String = "The contact record is already synched up and cannot be deleted"
     }
     
     struct LOGIN_DATA_DOWNLOAD
     {
-       static let DATA_DOWNLOAD_ALERT: String = "Since Pevonia CRM SFA is a CRM tool, the app needs to download all the partner related data, partner routing details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
+       static let DATA_DOWNLOAD_ALERT: String = "Since Pevonia CRM SFA is a CRM tool, the app needs to download all the contact related data, partner routing details and other related information. This will require additional 5MB of data download. Please tap on OK button to proceed."
     }
     
     struct Landing_Alert_Message

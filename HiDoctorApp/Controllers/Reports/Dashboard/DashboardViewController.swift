@@ -619,7 +619,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             if (index == Index.customerWise ||  index == 1)
             {
                 cell.dashboardAssetList = dashBoardCustomerWiseList
-                headerTitle = "Customer Wise"
+                headerTitle = "Contact Wise"
             }
             cell.headerTitle.text = headerTitle
             
@@ -629,7 +629,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 var emptyStateText = "No digital resource Details Found"
                 if (index == Index.customerWise ||  index == 1)
                 {
-                    emptyStateText = "No Customer Details Found"
+                    emptyStateText = "No Contact Details Found"
                 }
                 cell.emptyStateLbl.text = emptyStateText
             }

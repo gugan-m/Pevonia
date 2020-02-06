@@ -19,7 +19,7 @@
         var searchType: Int = 0
         var searchId: Bool = true
         var placeHolderUser = "Enter user name"
-        var placeHolderRegion = "Enter region name"
+        var placeHolderRegion = "Enter territory name"
         var delegate : searchResultListDelegate?
         var customerStatus: Int = 1
         

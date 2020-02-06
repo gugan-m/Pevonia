@@ -773,7 +773,7 @@ class CommonApprovalAttendanceControllerViewController: UIViewController,UITable
             showToastView(toastText: "Problem in getting Activity Details")
             
         case AttendanceHeaderType.Doctor.rawValue :
-            showToastView(toastText: "Problem in getting Partner Sample Details")
+            showToastView(toastText: "Problem in getting Contact Sample Details")
             
         case SectionHeaderType.Expense.rawValue :
             

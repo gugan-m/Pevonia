@@ -53,12 +53,12 @@ class ComplaintFormViewController: UIViewController,UITextViewDelegate {
             }
             else
             {
-                selectedCustomerName.text = "Select Customer"
+                selectedCustomerName.text = "Select Contact"
             }
         }
         else
         {
-            selectedCustomerName.text = "Select Customer"
+            selectedCustomerName.text = "Select Contact"
         }
         problemTxt.text = BL_Customer_Complaint.sharedInstance.customerProblemText
         remarTxtx.text = BL_Customer_Complaint.sharedInstance.customerRemarkText
@@ -195,7 +195,7 @@ class ComplaintFormViewController: UIViewController,UITextViewDelegate {
         }
         if(complaintCustomerName == "")
         {
-            AlertView.showAlertView(title: errorTitle, message: "Please Select Customer", viewController: self)
+            AlertView.showAlertView(title: errorTitle, message: "Please Select Contact", viewController: self)
         }
         else if checkNullAndNilValueForString(stringData: problemTxt.text).count > flexiPlaceMaxLength
         {

@@ -202,7 +202,7 @@ class DashboardDoctorMissedRegionsViewController: UIViewController, UITableViewD
             {
                 return true
             }
-            self.emptyLbl.text = "No Region found. Please clear the search and try again."
+            self.emptyLbl.text = "No Territory found. Please clear the search and try again."
             self.searchView.isHidden = false
             return false
         }

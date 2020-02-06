@@ -53,8 +53,8 @@ class BL_Approval: NSObject
         {
             var approvalObject = ApprovalAttendanceListModel()
             
-            approvalObject.sectionTitle = ["Work Place Details","Travel Details", "Activity Details","Partner Sample Details","Expenses Details"][index]
-            approvalObject.emptyStateText = ["No work place details available","No travel details available","No activity available","No Partner Samples available","No expenses available"][index]
+            approvalObject.sectionTitle = ["Work Place Details","Travel Details", "Activity Details","Contact Sample Details","Expenses Details"][index]
+            approvalObject.emptyStateText = ["No work place details available","No travel details available","No activity available","No Contact Samples available","No expenses available"][index]
             approvalObject.titleImage = ["icon-stepper-work-area","icon-map-mark","icon-stepper-work-area","icon-stepper-two-user","ic_Currency"][index]
             approvalObject.sectionViewType = AttendanceHeaderType.init(rawValue: index)!
             approvalDataList.append(approvalObject)

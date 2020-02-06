@@ -111,7 +111,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_MenuAccess.sharedInstance.isCustomerMasterScreenAvailable())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Partner"
+            moreHeaderObj.sectionTitle = "Contact"
             moreDescObj.icon = "icon-doctor"
             moreDescObj.descriptionTxt = customerMasterEdit
             moreDescObj.stoaryBoardName = commonListSb
@@ -124,7 +124,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         {
             moreHeaderObj = MoreListHeaderModel()
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Partner"
+            moreHeaderObj.sectionTitle = "Contact"
             
             moreDescObj.stoaryBoardName = commonListSb
             moreDescObj.viewControllerIdentifier = "DPM"
@@ -136,7 +136,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_Geo_Location.sharedInstance.isGeoLocationMandatoryPrivEnabled() && BL_Geo_Location.sharedInstance.doesUserHasLocationEditPermission())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Partner"
+            moreHeaderObj.sectionTitle = "Contact"
             moreDescObj.icon = "icon-location"
             moreDescObj.descriptionTxt = markDoctorLocation
             moreDescObj.stoaryBoardName = commonListSb
@@ -147,7 +147,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (BL_MenuAccess.sharedInstance.isCustomerComplaintAvailable())
         {
             moreDescObj = MoreListDescriptionModel()
-            moreHeaderObj.sectionTitle = "Partner"
+            moreHeaderObj.sectionTitle = "Contact"
             moreDescObj.icon = "icon-doctor"
             moreDescObj.descriptionTxt = doctorComplaint
             moreDescObj.stoaryBoardName = commonListSb
@@ -979,22 +979,16 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
                             {
                                 if okValue == true
                                 {
-                                    let sb = UIStoryboard(name: mainSb, bundle: nil)
-                                    //let vc = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                                    let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                                    let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
+                                    DispatchQueue.main.async {
                                     
+                                    let sb = UIStoryboard(name: mainSb, bundle: nil)
+                                    let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
                                     VC1.siteURL = "https://betkennect.xyz/appx#load=app&pref=wlc_incentulator&token=\(token)"
                                    // VC1.isFromKennect = true
                                     VC1.webViewTitle = "Money Tree"
                                     
-                                    
-                               
-                                    self.present(navController, animated:false, completion: nil)
-                                    
-                                    //self.navigationController?.pushViewController(vc, animated: true)
-                                    //getAppDelegate().root_navigation.pushViewController(vc, animated: true)
-                                    
+                                self.navigationController?.pushViewController(VC1, animated: true)
+                                    }
                                 }else{
                                     AlertView.showAlertView(title: errorTitle, message: "Invalid Token", viewController: self)
                                 }
@@ -1088,61 +1082,72 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     strmdmUrl = strDetailss[self.Index].MdmMenuUrl
                                 }
                                 
-                                if (strmdmUrl.contains("https://"))
+                                if (strmdmUrl.contains("http://"))
                                 {
                                     
                                     let FinalUrl = "\(strmdmUrl)\(str!)" as String
                                  print(FinalUrl)
-                                    
-                                    let sb = UIStoryboard(name: mainSb, bundle: nil)
-                                    let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                                    let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
-                                    
-                                    VC1.siteURL = FinalUrl 
-                                    
-                                    if BL_MenuAccess.sharedInstance.isKennectAvailable()
-                                    {
-                                        VC1.webViewTitle = strDetailss[self.Index - 1].Menu_Name
-                                    }
-                                    
-                                    else
-                                    {
-                                        VC1.webViewTitle = strDetailss[self.Index].Menu_Name
-                                    }
-                                    
-                                    
-                                    
-                                    self.present(navController, animated:false, completion: nil)
+                                    DispatchQueue.main.async {
+                                       let sb = UIStoryboard(name: mainSb, bundle: nil)
+                                        let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
+                                        VC1.siteURL = FinalUrl
+                                        if BL_MenuAccess.sharedInstance.isKennectAvailable()
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index - 1].Menu_Name
+                                        }
+                                        else
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index].Menu_Name
+                                        }
+                                        self.navigationController?.pushViewController(VC1, animated: true)
+                                       }
                                 }
-                                
-                                else
+                                else if (strmdmUrl.contains("https://"))
                                 {
-                                    
-                                    
+                                    let FinalUrl = "\(strmdmUrl)\(str!)" as String
+                                    DispatchQueue.main.async {
+                                        let sb = UIStoryboard(name: mainSb, bundle: nil)
+                                        let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
+                                        
+                                        VC1.siteURL = FinalUrl
+                                        
+                                        if BL_MenuAccess.sharedInstance.isKennectAvailable()
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index - 1].Menu_Name
+                                        }
+                                            
+                                        else
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index].Menu_Name
+                                        }
+                                        self.navigationController?.pushViewController(VC1, animated: true)
+                                    }
+                                } else {
                                     let companyUrl = companyObj!.companyURL
                                     let url = "https://" + companyUrl! + "/"
                                     let FinalUrl = url + "\(strmdmUrl)\(str!)" as String
-                                    
-                                    let sb = UIStoryboard(name: mainSb, bundle: nil)
-                                    let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                                    let navController = UINavigationController(rootViewController: VC1) // Creating a navigation controller with VC1 at the root of the navigation stack.
-                                    
-                                    VC1.siteURL = FinalUrl
-                                    
-                                    if BL_MenuAccess.sharedInstance.isKennectAvailable()
-                                    {
-                                        VC1.webViewTitle = strDetailss[self.Index - 1].Menu_Name
-                                    }
+                                    DispatchQueue.main.async {
+                                        let sb = UIStoryboard(name: mainSb, bundle: nil)
+                                        let VC1 = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
                                         
-                                    else
-                                    {
-                                        VC1.webViewTitle = strDetailss[self.Index].Menu_Name
-                                    }
+                                        VC1.siteURL = FinalUrl
+                                        
+                                        if BL_MenuAccess.sharedInstance.isKennectAvailable()
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index - 1].Menu_Name
+                                        }
+                                            
+                                        else
+                                        {
+                                            VC1.webViewTitle = strDetailss[self.Index].Menu_Name
+                                        }
+                                        self.navigationController?.pushViewController(VC1, animated: true)
                                     
-                                    self.present(navController, animated:false, completion: nil)
                                 }
-                                
-                            }else{
+                            }
+                        }
+                          else
+                            {
                                 
                             }
                         }

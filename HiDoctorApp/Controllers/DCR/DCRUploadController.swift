@@ -365,7 +365,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func doWorkPlaceLengthValidaiton(model: DCRUploadDetail) -> Bool
     {
-        if model.flagLabel == "F" || model.flagLabel == "A"
+        if model.flagLabel == "F" || model.flagLabel == "O"
         {
             let dcrHeaderList = DBHelper.sharedInstance.getDCRHeaderForUpload(dcrId: model.dcrId)
             for dcrHeaderObj in dcrHeaderList
@@ -386,7 +386,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     
     private func doAttendanceRemarksLengthValidation(model: DCRUploadDetail) -> Bool
     {
-        if model.flagLabel == "A"
+        if model.flagLabel == "O"
         {
             let attendanceActivities = DBHelper.sharedInstance.getDCRAttendanceActivitiesForUpload(dcrId: model.dcrId)
             for attendanceActivity in attendanceActivities

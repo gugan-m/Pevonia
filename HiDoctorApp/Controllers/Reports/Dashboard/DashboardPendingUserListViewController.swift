@@ -253,7 +253,7 @@ class DashboardPendingUserListViewController: UIViewController,UITableViewDelega
         }
         else
         {
-            userListCell.userDesignation.text = "Region: " + (dictObj.Region_Name)!
+            userListCell.userDesignation.text = "Territory: " + (dictObj.Region_Name)!
         }
         
         userListCell.userCount.text = String(dictObj.Count)

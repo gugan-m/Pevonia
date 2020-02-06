@@ -40,8 +40,24 @@ class AssetHeader: Record
     init(dict: NSDictionary)
     {
         self.daCode = dict.value(forKey: "DA_Code") as! Int
-         self.Total_Measure = dict.value(forKey: "Total_Measure") as! String
-         self.Measured_Unit = dict.value(forKey: "Measured_Unit") as! String
+        
+        if let TotalMeasure = dict.value(forKey: "Total_Measure") as? String
+               {
+                   self.Total_Measure = TotalMeasure
+               }
+               else
+               {
+                   self.Total_Measure = ""
+        }
+        
+        if let MeasuredUnit = dict.value(forKey: "Measured_Unit") as? String
+               {
+                   self.Measured_Unit = MeasuredUnit
+               }
+               else
+               {
+                   self.Measured_Unit = ""
+        }
         if let name = dict.value(forKey: "DA_Name") as? String
         {
             self.daName = name

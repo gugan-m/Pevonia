@@ -347,7 +347,7 @@ class PlaceListViewController: UIViewController , UITableViewDelegate , UITableV
                 }
                 else
                 {
-                    showToastView(toastText: "Unable to load the customer data")
+                    showToastView(toastText: "Unable to load the contact data")
                 }
             })
         }

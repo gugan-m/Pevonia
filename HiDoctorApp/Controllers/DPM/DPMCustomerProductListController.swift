@@ -18,8 +18,8 @@ class DPMCustomerProductListController: UIViewController,UITableViewDataSource,U
     var mappingRegionCode: String!
     var selectedType:String!
     var selectedMode: String!
-    var customerToProd = "Partner product mapping"
-    var productToCust = "Product partner mapping"
+    var customerToProd = "Contact product mapping"
+    var productToCust = "Product contact mapping"
     var customerList: [CustomerMasterModel] = []
     var detailedProductList: [DetailProductMaster] = []
     var selectedMCValue: MCAllDetailsModel!

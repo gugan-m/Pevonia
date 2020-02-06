@@ -96,7 +96,7 @@ class ApprovalInnerTableViewCell: UITableViewCell, UITableViewDelegate, UITableV
             let dict = dataList[indexPath.row] as! NSDictionary
             
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.ApprovalDoctorVisitCell, for: indexPath) as! ApprovalDoctorVisitTableViewCell
-            cell.doctorNameLbl.text = "PartnerName: \(checkNullAndNilValueForString(stringData: dict.object(forKey: "Doctor_Name") as? String))"
+            cell.doctorNameLbl.text = "ContactName: \(checkNullAndNilValueForString(stringData: dict.object(forKey: "Doctor_Name") as? String))"
             cell.descriptionLbl.text = getDoctorVisitDetails(dict: dict)
             cell.sepViewHgtConstant.constant = 0.5
             cell.outerView.layer.masksToBounds = true

@@ -131,7 +131,6 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         if selectedIndex == 0
         {
             self.navigationItem.rightBarButtonItems = [refreshBtn]
-            
             if let list = BL_TP_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: regionCode)
             {
                 doctorMasterList = list
@@ -911,7 +910,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     {
         if checkInternetConnectivity()
         {
-            showCustomActivityIndicatorView(loadingText: "Loading customer data...")
+            showCustomActivityIndicatorView(loadingText: "Loading contact data...")
             
             BL_MasterDataDownload.sharedInstance.downloadCustomerData(masterDataGroupName: EMPTY, completion: { (status) in
                 removeCustomActivityView()
@@ -923,7 +922,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 }
                 else
                 {
-                    showToastView(toastText: "Unable to load the customer data")
+                    showToastView(toastText: "Unable to load the contact data")
                 }
             })
         }

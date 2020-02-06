@@ -44,7 +44,7 @@ class ExpenseClaimSFCListViewController: UIViewController,UITableViewDelegate,UI
         if(expenseSFCData.SFC_Visit_Count != nil && expenseSFCData.Actual_Visit_Count != nil)
         {
             cell.detailLabel.text = "Visit Count : \(expenseSFCData.SFC_Visit_Count!)  |  Actual Count: \(expenseSFCData.Actual_Visit_Count!)"
-            cell.regionName.text = "Region Name : \(expenseSFCData.Region_Name!)"
+            cell.regionName.text = "Territory Name : \(expenseSFCData.Region_Name!)"
             if(expenseSFCData.Trend == "Exceed")
             {
                 cell.trendLabel.textColor = UIColor.red

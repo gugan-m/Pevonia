@@ -1035,7 +1035,7 @@ class BL_TPStepper: NSObject
         {
             if (checkNullAndNilValueForString(stringData: objTPHeader?.Meeting_Place) == EMPTY)
             {
-                errorMessage = "Please enter meeting place"
+                errorMessage = "Please enter Account"
                 return errorMessage
             }
             
@@ -1112,7 +1112,7 @@ class BL_TPStepper: NSObject
                 
                 if (filtered.count == 0)
                 {
-                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your region or any of the Ride Along region"
+                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your territory or any of the Ride Along territory"
                     break
                 }
             }

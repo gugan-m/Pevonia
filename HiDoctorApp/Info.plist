@@ -57,7 +57,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Pevonia CRM needs access to your camera, so that you can upload your bills, documents and any other supporting attachments. Please tap on “OK” to access the camera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Pevonia CRM needs your location, so that Partner’s location can be saved to your Partner Master. Please tap on “Allow” to capture the location</string>
+	<string>Pevonia CRM needs your location, so that contact’s location can be saved to your Contact Master.Please tap on “Allow” to capture the location</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Pevonia CRM needs permission to write photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -87,10 +87,6 @@
 		<string>SF-UI-Text-SemiboldItalic.otf</string>
 		<string>SF-UI-Text-Ultrathin.otf</string>
 		<string>SF-UI-Text-UltrathinItalic.otf</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<false/>

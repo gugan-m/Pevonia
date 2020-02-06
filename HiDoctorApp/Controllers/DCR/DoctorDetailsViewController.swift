@@ -64,7 +64,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
         let customer_Id = BL_DoctorList.sharedInstance.selectedCustomer?.Customer_Id ?? 0
         self.similarCustomerList = BL_DoctorList.sharedInstance.getDoctorListForGroupEdetailing(type: account_Type)!
         self.similarCustomerList = self.similarCustomerList.filter{$0.Customer_Id != customer_Id}
-        self.labelTitle.text = "Do you want to add other Partner(s)?\n\nPlease select the Partner(s) from the below list and click ADD\n\n If you don't want to add other Partner(s),click on CANCEL to proceed."
+        self.labelTitle.text = "Do you want to add other Contact(s)?\n\nPlease select the Contact(s) from the below list and click ADD\n\n If you don't want to add other Contact(s),click on CANCEL to proceed."
     }
     
     func showGroupEdetail_View() {
@@ -789,7 +789,7 @@ class DoctorDetailsViewController: UIViewController,UITableViewDelegate,UITableV
     @IBAction func addAction_GroupEdetailing(_ sender: UIButton) {
         
         if !canAllowUserToGroupEdetailing() {
-            let alertViewController = UIAlertController(title: "Add Partner(s)", message: "Please select the Partner(s) from the list", preferredStyle: UIAlertControllerStyle.alert)
+            let alertViewController = UIAlertController(title: "Add Contact(s)", message: "Please select the Contact(s) from the list", preferredStyle: UIAlertControllerStyle.alert)
             
             alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: { alertAction in
                  alertViewController.dismiss(animated: true, completion: nil)

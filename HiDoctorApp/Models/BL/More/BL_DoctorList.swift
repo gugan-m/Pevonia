@@ -87,7 +87,7 @@ class BL_DoctorList: NSObject
             
             // Region Name
             dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = "Region Name"
+            dataListObj.headerTitle = "Territory Name"
             dataListObj.value = doctorDetailObj!.Region_Name
             doctorOfficialList.append(dataListObj)
             
@@ -308,7 +308,7 @@ class BL_DoctorList: NSObject
             
             // Region Name
             dataListObj = DoctorDataListModel()
-            dataListObj.headerTitle = "Region Name"
+            dataListObj.headerTitle = "Territory Name"
             dataListObj.value = doctorDetailObj!.Region_Name
             dataListObj.isEditable = false
             dataListObj.isMandatory = true

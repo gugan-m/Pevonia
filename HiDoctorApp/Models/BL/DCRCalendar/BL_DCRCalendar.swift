@@ -350,11 +350,11 @@ class BL_DCRCalendar: NSObject
                             {
                                 if(model.Acc_Region_Name != nil && model.Acc_Region_Name != EMPTY)
                                 {
-                                    tpPreFillAlert.append("Selected Region: \(model.Acc_Region_Name ?? EMPTY)  is inactive")
+                                    tpPreFillAlert.append("Selected Territory: \(model.Acc_Region_Name ?? EMPTY)  is inactive")
                                 }
                                 else
                                 {
-                                tpPreFillAlert.append("One of the Selected Ride Along Region is inactive")
+                                tpPreFillAlert.append("One of the Selected Ride Along territory is inactive")
                                 }
                                 insertData = false
                             }
@@ -1713,15 +1713,15 @@ class BL_DCRCalendar: NSObject
         
         if (oldUserName == VACANT || oldUserName == NOT_ASSIGNED) && (newUserName != VACANT && newUserName != NOT_ASSIGNED)
         {
-            message = "During the PR creation, \(regionName) was VACANT and \(newUserName) has been assigned to this region recently. However, this call is marked as an independent call. You may modify it."
+            message = "During the PR creation, \(regionName) was VACANT and \(newUserName) has been assigned to this territory recently. However, this call is marked as an independent call. You may modify it."
         }
         else if (oldUserName != VACANT && oldUserName != NOT_ASSIGNED) && (newUserName == VACANT || newUserName == NOT_ASSIGNED)
         {
-            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) region. As of now, it is VACANT. Hence, it is assumed that you are using this region only for \(appDoctor) visits (i.e. Independent Call)."
+            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) territory. As of now, it is VACANT. Hence, it is assumed that you are using this territory only for \(appDoctor) visits (i.e. Independent Call)."
         }
         else if (oldUserName != VACANT && oldUserName != NOT_ASSIGNED) && (newUserName != VACANT && newUserName != NOT_ASSIGNED)
         {
-            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) region. However, \(newUserName) has been assigned to this region recently. Hence, it is assumed that you are accompanying \(newUserName) for this \(appDoctor) visits."
+            message = "During the PR creation, \(oldUserName) was assigned to \(regionName) territory. However, \(newUserName) has been assigned to this territory recently. Hence, it is assumed that you are accompanying \(newUserName) for this \(appDoctor) visits."
         }
         
         return message

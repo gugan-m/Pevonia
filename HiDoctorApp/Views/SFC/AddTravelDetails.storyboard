@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,11 +21,11 @@
             <objects>
                 <viewController storyboardIdentifier="addTravelDetailVcId" id="9Hi-fx-KLL" customClass="AddTravelDetailsController" customModule="HiDOCTOR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rDd-pd-j8k">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQh-Hg-Asr">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f8q-TE-goo">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="416"/>
@@ -50,7 +48,6 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="EEy-iC-6LL"/>
                                                                 </constraints>
-                                                                <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <connections>
@@ -78,7 +75,6 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="wVj-dc-vz6"/>
                                                                 </constraints>
-                                                                <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                                 <connections>
@@ -202,7 +198,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="iTo-BM-YIn"/>
                                                 </constraints>
-                                                <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done"/>
                                                 <connections>
@@ -277,7 +272,7 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLr-fz-w8C">
-                                <rect key="frame" x="0.0" y="603" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="0.0"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="E0r-0c-aE0"/>
@@ -323,7 +318,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7uq-FW-H00" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pNt-x0-ukE">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -344,7 +339,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Multiple SFC(s) are found. Please choose particular SFC combination" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFQ-7x-38n">
-                                <rect key="frame" x="10" y="64" width="355" height="40"/>
+                                <rect key="frame" x="10" y="44" width="355" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bY4-Yx-zjv"/>
                                 </constraints>
@@ -353,7 +348,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5Vt-Qn-pR9">
-                                <rect key="frame" x="10" y="104" width="355" height="563"/>
+                                <rect key="frame" x="10" y="84" width="355" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="travelSuggestionCell" rowHeight="200" id="vjq-C8-F7n" customClass="TravelModeSuggestionCell" customModule="HiDOCTOR" customModuleProvider="target">
@@ -366,10 +361,10 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1h-o7-uFz" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
                                                     <rect key="frame" x="10" y="10" width="335" height="158"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-Qd-YXE">
-                                                            <rect key="frame" x="10" y="10" width="95" height="14"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Territory Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-Qd-YXE">
+                                                            <rect key="frame" x="10" y="10" width="110" height="14"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="95" id="307-Gy-VlZ"/>
+                                                                <constraint firstAttribute="width" constant="110" id="307-Gy-VlZ"/>
                                                                 <constraint firstAttribute="height" constant="14" id="xqD-WE-fbX"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
@@ -377,7 +372,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GAp-Ke-zlK">
-                                                            <rect key="frame" x="115" y="10" width="210" height="14"/>
+                                                            <rect key="frame" x="130" y="10" width="195" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="14" id="98J-tD-7fT"/>
                                                             </constraints>
@@ -560,7 +555,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YLE-fN-7qg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AH6-Ro-m7a">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -575,7 +570,7 @@
     </scenes>
     <resources>
         <image name="icon-direction" width="18" height="18"/>
-        <image name="icon-drop-down-arrow" width="48" height="48"/>
+        <image name="icon-drop-down-arrow" width="24" height="24"/>
         <image name="icon-fromToMarker" width="10" height="60"/>
         <image name="icon-routemarker" width="10" height="40"/>
     </resources>

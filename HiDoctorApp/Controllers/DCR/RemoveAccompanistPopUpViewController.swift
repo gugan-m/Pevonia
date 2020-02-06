@@ -26,7 +26,7 @@ class RemoveAccompanistPopUpViewController: UIViewController {
     {
         self.line1TxtLbl.attributedText = getHtmlAttributedString(htmlString :"\(getBodyTagString())You are trying to remove <b>\(dcrAccompanistObj.Employee_Name!)</b> from the Ride Along list</body>")
         
-        self.line2TxtLbl.attributedText = getHtmlAttributedString(htmlString : "\(getBodyTagString())1. If any visit of \(appDoctor)/\(appChemist) that belong to this Ride Along/region is available in this DVR, system will remove the \(appDoctor)/\(appChemist) visit.<br/>2. If you have marked this Ride Along/region name in \(appDoctor) Ride Along, those records will be removed.<br/>3. The CP, SFC records and visit of \(appChemist) who belongs to this Ride Along/region name will be removed.<br/>Click <b>OK</b> to continue<br/>Click <b>CANCEL</b> to retain this Ride Along/region and related \(appDoctor)/\(appChemist) visits.")
+        self.line2TxtLbl.attributedText = getHtmlAttributedString(htmlString : "\(getBodyTagString())1. If any visit of \(appDoctor)/\(appChemist) that belong to this Ride Along/territory is available in this DVR, system will remove the \(appDoctor)/\(appChemist) visit.<br/>2. If you have marked this Ride Along/territory name in \(appDoctor) Ride Along, those records will be removed.<br/>3. The CP, SFC records and visit of \(appChemist) who belongs to this Ride Along/territory name will be removed.<br/>Click <b>OK</b> to continue<br/>Click <b>CANCEL</b> to retain this Ride Along/territory and related \(appDoctor)/\(appChemist) visits.")
     }
     
     @IBAction func okBtnAction(_ sender: AnyObject)

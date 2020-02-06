@@ -10,21 +10,21 @@ import Foundation
 
 //   ************ For Pevonia *************
 
- let PEV_CUSTOMER_MASTER =  "Partner Master File"
+ let PEV_CUSTOMER_MASTER =  "Contact Master File"
  let PEV_DIGITAL_ASSETS =  "Digital Resources"
  let PEV_ACCOMPANIST =  "Ride Along"
  let PEV_DOCTOR_PRODUCT_MAPPING =  "Products"
- let PEV_MARK_DOCTOR_LOCATION = "Partner Location"
+ let PEV_MARK_DOCTOR_LOCATION = "Contact Location"
  let PEV_SEND_YOUR_ISSUES_TO_SUPPORT =  "Help Desk"
  let PEV_DAILY_CALL_REPORT =  "Daily Visit Report"
- let PEV_DOCTOR =  "Partner Contacts"
+ let PEV_DOCTOR =  "Contacts"
  let PEV_TOUR_PLAN =  "Partner Routing"
 let PEV_UPLOAD_MY_DCR =  "Upload my DVRs"
 let PEV_DCR_ENTRY =  "DVR Entry"
 let PEV_DCR_REFRESH = "DVR Refresh"
-let PEV_DIGITAL_ASSET_PLS_LBL = "Please note that you must use this section for viewing and practicing the \(PEV_DIGITAL_ASSETS). This section MUST NOT be used for detailing for partners .If you want to detail to partner, please click on 'Go to detailing section'below"
+let PEV_DIGITAL_ASSET_PLS_LBL = "Please note that you must use this section for viewing and practicing the \(PEV_DIGITAL_ASSETS). This section MUST NOT be used for detailing for contacts .If you want to detail to contact, please click on 'Go to detailing section'below"
 let PEV_HOSPITAL_NAME = "Account Name"
-let PEV_HOSPITAL_ADDRESS =  "Meeting Place"
+let PEV_HOSPITAL_ADDRESS =  "Accounts"
 let PEV_DCR = "DVR"
 let PEV_TP = "PR"
 

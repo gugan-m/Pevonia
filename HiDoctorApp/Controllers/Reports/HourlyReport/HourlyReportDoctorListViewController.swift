@@ -39,7 +39,7 @@ class HourlyReportDoctorListViewController: UIViewController,UITableViewDelegate
         tableView.estimatedRowHeight = 500
         setDefaultListToCurrentList()
         addCustomBackButtonToNavigationBar()
-        searchBar.placeholder = "Search UserID / employees / region"
+        searchBar.placeholder = "Search UserID / employees / territory"
         
     }
 

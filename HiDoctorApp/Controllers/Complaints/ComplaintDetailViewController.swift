@@ -44,7 +44,7 @@ class ComplaintDetailViewController: UIViewController {
         problemLbl.text = complaintValue.Problem_Short_Description
         remarkLbl.text = complaintValue.Problem_Description
         customerNameLbl.text = "Name: " + complaintValue.Customer_Name
-        regionLbl.text = "Region: " + complaintValue.Region_Name
+        regionLbl.text = "Territory: " + complaintValue.Region_Name
         var type = String()
         if(complaintValue.Customer_Entity_Type.lowercased() == "doctor")
         {

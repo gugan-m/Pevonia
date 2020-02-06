@@ -225,9 +225,9 @@
                                                                                                         </connections>
                                                                                                     </tableView>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-hg-rwj">
-                                                                                                        <rect key="frame" x="138" y="183" width="117" height="28"/>
+                                                                                                        <rect key="frame" x="135" y="183" width="120" height="28"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
-                                                                                                        <state key="normal" title="REMOVE PARTNER">
+                                                                                                        <state key="normal" title="REMOVE CONTACT">
                                                                                                             <color key="titleColor" red="0.31564596140000001" green="0.6921270356" blue="0.71500566710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                         </state>
                                                                                                     </button>

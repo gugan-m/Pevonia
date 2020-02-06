@@ -44,7 +44,7 @@ class ComplaintListViewController: UIViewController,UITableViewDelegate,UITableV
         let complaintValue = self.complaintList[indexPath.row]
         
         cell.customerName.text = "Name: " + complaintValue.Customer_Name
-        cell.regionLbl.text = "Region: " + complaintValue.Region_Name
+        cell.regionLbl.text = "Territory: " + complaintValue.Region_Name
         let datevalue = complaintValue.Complaint_Date.components(separatedBy: " ")
         if(datevalue.count > 0)
         {
