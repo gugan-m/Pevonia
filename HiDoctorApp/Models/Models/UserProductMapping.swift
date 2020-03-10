@@ -26,7 +26,7 @@ class UserProductMapping: Record
     var dcrId :Int = 0
     var visitId : Int = 0
     var sampleId : Int = 0
-    
+    var Selected_Quantity : Int = 0
     init(dict: NSDictionary)
     {
         self.Product_Id = dict.value(forKey: "Product_Id") as! Int

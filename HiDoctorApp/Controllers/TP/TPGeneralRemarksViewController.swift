@@ -66,12 +66,12 @@ func validation() -> Bool
         AlertView.showAlertView(title: alertTitle, message: "Please enter your remarks", viewController: self)
         isValidation = false
     }
-    else if isSpecialCharacterExist()
-    {
-        let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-        AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Remarks", restrictedVal: restrictedCharacter, viewController: self)
-        isValidation = false
-    }
+//    else if isSpecialCharacterExist()
+//    {
+//        let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
+//        AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Remarks", restrictedVal: restrictedCharacter, viewController: self)
+//        isValidation = false
+//    }
     else if (remarksTextView.text.count > generalRemarksLength)
     {
         AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Remarks", maxVal: tpRemarksLength, viewController: self)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,7 +31,7 @@
                                     <constraint firstAttribute="height" constant="40" id="gcQ-Rx-H1H"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                                <state key="normal" title="SUBMIT DVR">
+                                <state key="normal" title="COMPLETE MY DVR">
                                     <color key="titleColor" red="0.0" green="0.58823529411764708" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -313,8 +313,8 @@
                                                                                         <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                                         <subviews>
-                                                                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lph-G7-1kX" userLabel="Doctor Wrapper View">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="318" height="119.5"/>
+                                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lph-G7-1kX" userLabel="Doctor Wrapper View">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="318" height="120"/>
                                                                                                 <subviews>
                                                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-stepper-two-user" translatesAutoresizingMaskIntoConstraints="NO" id="dnX-B6-ocG" userLabel="Section Header Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
                                                                                                         <rect key="frame" x="4" y="4" width="24" height="24"/>
@@ -323,13 +323,13 @@
                                                                                                             <constraint firstAttribute="width" constant="24" id="aA2-2J-hV6"/>
                                                                                                         </constraints>
                                                                                                     </imageView>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIi-rm-ggT" userLabel="Visit Mode Label">
-                                                                                                        <rect key="frame" x="259" y="6" width="58" height="14.5"/>
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIi-rm-ggT" userLabel="Visit Mode Label">
+                                                                                                        <rect key="frame" x="284.5" y="6" width="32.5" height="14.5"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="12"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYi-D1-82u" userLabel="Doctor Name Label">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYi-D1-82u" userLabel="Doctor Name Label">
                                                                                                         <rect key="frame" x="36" y="6" width="232" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
@@ -347,8 +347,8 @@
                                                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
-                                                                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0HG-XK-aP9" userLabel="Divider View">
-                                                                                                        <rect key="frame" x="0.0" y="118.5" width="318" height="1"/>
+                                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0HG-XK-aP9" userLabel="Divider View">
+                                                                                                        <rect key="frame" x="0.0" y="119" width="318" height="1"/>
                                                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="1" id="9vF-Uh-qiR"/>
@@ -1074,6 +1074,8 @@
                     <navigationItem key="navigationItem" title="Submit your remarks" id="yWs-3C-UXE"/>
                     <connections>
                         <outlet property="contentView" destination="Yth-d4-Z57" id="K0C-C6-ZQ1"/>
+                        <outlet property="lblGeneralRemarksHeader" destination="zcv-pq-fQA" id="dEs-6O-6fB"/>
+                        <outlet property="lblpreviousRemarkHeader" destination="FGJ-5f-Azn" id="okO-zJ-S7p"/>
                         <outlet property="prevRemarks" destination="VIP-3R-S9J" id="a1i-9f-yvm"/>
                         <outlet property="remarksTxt" destination="KYo-bc-H5B" id="FVp-Nj-UmJ"/>
                         <outlet property="scrollView" destination="zuA-Uc-yZe" id="4BL-tB-YOB"/>

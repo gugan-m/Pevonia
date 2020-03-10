@@ -131,7 +131,12 @@ let TPAccompanistCell = "TPAccompanistCell"
 let DoctorSampleTVCell = "doctorSampleTVCell"
 let TPAttendanceTVCell = "TPAttendanceTableViewCell"
 let NotesCellVcID = "NotesCellVcID"
-
+let TPFieldHeaderCell = "TPFieldHeaderCell"
+let TPFieldFooterCell = "TPFieldFooterCell"
+let TPField_MeetingObjectiveCell = "TPFieldMeetingObjectiveCell"
+let TPField_RideAlongcell = "TPFieldRideAlongCell"
+let TPField_WorkCategoryCell = "TPFieldWorkCategoryCell"
+let TPRemarkCell = "TPRemarkCell"
 
 
 //MARK:- View controller Ids
@@ -1575,6 +1580,7 @@ struct Constants
         static let TpReportSectionHeaderCell : String = "tpReportSectionHeaderCell"
         static let AccompanistPopUpCell : String = "accompanistPopUpCell"
         static let DoctorListCell : String = "DoctorListCell"
+        static let TPDoctorListCell : String = "TPDoctorListCell"
         static let DoctorListDetailsSectionCell : String = "DoctorListDetailsSectionCell"
         static let DoctorListDetailsCell : String = "DoctorListDetailsCell"
         static let DashBoardUserListCell : String = "DashBoardUserListCell"

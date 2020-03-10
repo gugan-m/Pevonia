@@ -35,20 +35,33 @@ class BL_TPStepper: NSObject
     func generateDataArray()
     {
         clearAllArray()
-        
-        getAccompanistData()
-        getMeetingPointDetails()
-        getWorkPlaceDetails()
-        
-        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
-            getPlaceDetails()
-        }
-        
+        getDoctorsCount()
         getDoctorDetails()
-        getGeneralRemarks()
+        getAccompanistData()
+//        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+//            getPlaceDetails()
+//        }
         
-        determineButtonStatus()
+        getWorkPlaceDetails()
+        getGeneralRemarks()
+       // determineButtonStatus()
     }
+    
+    func generateProspectDataArray()
+        {
+            clearAllArray()
+          //  getDoctorsCount()
+           // getDoctorDetails()
+            getAccompanistData()
+    //        if PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.TP_FIELD_CAPTURE_CONTROLS) == PrivilegeValues.TP_FIELD_CAPTURE_VALUE.rawValue {
+    //            getPlaceDetails()
+    //        }
+            
+            getWorkPlaceDetails()
+            getGeneralRemarks()
+           // determineButtonStatus()
+        }
+    
 
     //MARK:-- Height Functions
     func getEmptyStateHeight(selectedIndex: Int) -> CGFloat
@@ -425,17 +438,17 @@ class BL_TPStepper: NSObject
             return errorMessage
         }
         
-        errorMessage = doAllWorkPlaceValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllWorkPlaceValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doAllSFCValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllSFCValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
         errorMessage = doAllCustomerValidations()
         if (errorMessage != EMPTY)
@@ -471,18 +484,34 @@ class BL_TPStepper: NSObject
         generalRemarks = ""
     }
     
-    private func getAccompanistData()
+    private func getDoctorsCount()
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "\(PEV_ACCOMPANIST) Details"
-        stepperObjModel.emptyStateTitle = "\(PEV_ACCOMPANIST) Details"
-        stepperObjModel.emptyStateSubTitle = "Update details of the person who worked with you"
+        stepperObjModel.sectionTitle = "Whom Am I Going To Meet"
+        stepperObjModel.emptyStateTitle = "Whom Am I Going To Meet"
+        stepperObjModel.emptyStateSubTitle = "No.of.contacts planned for the day"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
+        stepperObjModel.leftButtonTitle = "Add Contact"
+        
+        stepperDataList.append(stepperObjModel)
+    }
+    
+    private func getAccompanistData()
+    {
+        let stepperObjModel: DCRStepperModel = DCRStepperModel()
+        
+        stepperObjModel.sectionTitle = "Whom Am I Going With"
+        stepperObjModel.emptyStateTitle = "Whom Am I Going With"
+        stepperObjModel.emptyStateSubTitle = "I am going alone / I will be accompained by"
+        stepperObjModel.doctorEmptyStateTitle = ""
+        stepperObjModel.doctorEmptyStatePendingCount = ""
+        stepperObjModel.sectionIconName = "icon-stepper-two-user"
+        stepperObjModel.isExpanded = false
+        stepperObjModel.leftButtonTitle = "Add Ride Along"
         
         self.accompanistList = []
         self.objTPHeader = BL_TPCalendar.sharedInstance.getTPData(date: TPModel.sharedInstance.tpDateString)
@@ -501,14 +530,14 @@ class BL_TPStepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "Meeting Point Details"
-        stepperObjModel.emptyStateTitle = "Meeting Point Details"
-        stepperObjModel.emptyStateSubTitle = "Update the meeting point details"
+        stepperObjModel.sectionTitle = "Plan"
+        stepperObjModel.emptyStateTitle = "Plan"
+        stepperObjModel.emptyStateSubTitle = ""
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-work-area"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "REMOVE"
+        stepperObjModel.leftButtonTitle = ""
         
         self.meetingPlaceList = []
         
@@ -565,9 +594,9 @@ class BL_TPStepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "Work Place Details"
-        stepperObjModel.emptyStateTitle = "Work Place Details"
-        stepperObjModel.emptyStateSubTitle = "Update your day work category, place and time"
+        stepperObjModel.sectionTitle = "Work Category"
+        stepperObjModel.emptyStateTitle = "Work Category"
+        stepperObjModel.emptyStateSubTitle = ""
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-work-area"
@@ -638,41 +667,41 @@ class BL_TPStepper: NSObject
     
     private func getPlaceDetails()
     {
-        let stepperObjModel: DCRStepperModel = DCRStepperModel()
-        
-        stepperObjModel.sectionTitle = "Place Details"
-        stepperObjModel.emptyStateTitle = "Place Details"
-        stepperObjModel.emptyStateSubTitle = "Update your work travel details here"
-        stepperObjModel.doctorEmptyStateTitle = ""
-        stepperObjModel.doctorEmptyStatePendingCount = ""
-        stepperObjModel.sectionIconName = "icon-stepper-sfc"
-        stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD"
-        
-        self.placesList = []
-        
-        let sfcList = getTPSelectedTravelPlacesDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
-        
-        if (sfcList != nil)
-        {
-            self.placesList = sfcList!
-        }
-        
-        stepperObjModel.recordCount = self.placesList.count
-        stepperDataList.append(stepperObjModel)
+//        let stepperObjModel: DCRStepperModel = DCRStepperModel()
+//
+//        stepperObjModel.sectionTitle = "Who Am I Going With"
+//        stepperObjModel.emptyStateTitle = "Who Am I Going With"
+//        stepperObjModel.emptyStateSubTitle = "I am going Alone/I will be accompained by"
+//        stepperObjModel.doctorEmptyStateTitle = ""
+//        stepperObjModel.doctorEmptyStatePendingCount = ""
+//        stepperObjModel.sectionIconName = "icon-stepper-sfc"
+//        stepperObjModel.isExpanded = false
+//        stepperObjModel.leftButtonTitle = "Add Ride Along"
+//
+//        self.placesList = []
+//
+//        let sfcList = getTPSelectedTravelPlacesDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
+//
+//        if (sfcList != nil)
+//        {
+//            self.placesList = sfcList!
+//        }
+//
+//        stepperObjModel.recordCount = self.placesList.count
+//        stepperDataList.append(stepperObjModel)
     }
     
     private func getDoctorDetails()
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = ""
-        stepperObjModel.emptyStateTitle = "\(appDoctor) & inputs"
-        stepperObjModel.emptyStateSubTitle = "Update your \(appDoctor) visit details here"
-        stepperObjModel.doctorEmptyStateTitle = "\(appDoctor) & inputs"
+        stepperObjModel.sectionTitle = "Plan"
+        stepperObjModel.emptyStateTitle = "Plan"
+        stepperObjModel.emptyStateSubTitle = ""
+        stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD \(appDoctor.uppercased())"
+        stepperObjModel.leftButtonTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         
         if (TPModel.sharedInstance.tpStatus == 3){
@@ -768,7 +797,7 @@ class BL_TPStepper: NSObject
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-remarks"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = ""
+        stepperObjModel.leftButtonTitle = "Add Remarks"
         
         generalRemarks = EMPTY
         

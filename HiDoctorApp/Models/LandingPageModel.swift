@@ -42,7 +42,7 @@ class LandingPageModel: NSObject
             titleObj.titleId = 3
             break
         case 4:
-            titleObj.title = "Reports"
+            titleObj.title = "Work History"
             titleObj.titleImg = "ic_report_Unselected"
             titleObj.titleId = 4
             break
@@ -115,8 +115,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,7,2,4,1,5,3,6]
-        let indexList = [0,2,1,12,7,5,9,6] //DCR,TP,Approval,Dashboard,Reports,Upload DCR,Alerts,More
-        
+       // let indexList = [0,2,1,12,7,5,9,6] //DCR,TP,Approval,Dashboard,Reports,Upload DCR,Alerts,More
+        let indexList = [0,2,1,3,7,5,9,6]
         for index in indexList{
             landingList.append(getMenuForId(id: index))
         }
@@ -143,8 +143,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,7,2,9,1,5,3,6]
-        let indexList = [0,2,1,12,7,5,9,6] //DCR,TP,Approval,Dashboard,Doctor/Customer,Upload DCR,Alerts,More
-        
+       // let indexList = [0,2,1,12,7,5,9,6] //DCR,TP,Approval,Dashboard,Doctor/Customer,Upload DCR,Alerts,More
+        let indexList = [0,2,1,3,7,5,9,6] //DCR,TP,Approval,Dashboard,Doctor/Customer,Upload DCR,Alerts,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))
@@ -171,8 +171,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,7,8,3,6]
-        let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
-        
+        //let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
+        let indexList = [0,2,7,3,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))
@@ -200,8 +200,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,7,9,3,6]
-        let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
-        
+       // let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
+        let indexList = [0,2,7,3,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
         for index in indexList{
             landingList.append(getMenuForId(id: index))
         }
@@ -274,8 +274,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,1,8,7,10,3,6]
-        let indexList = [0,2,1,7,12,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
-        
+        //let indexList = [0,2,1,7,12,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
+        let indexList = [0,2,1,7,3,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))
@@ -289,8 +289,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,1,8,7,9,3,6]
-        let indexList = [0,2,1,7,12,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
-        
+       // let indexList = [0,2,1,7,12,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
+        let indexList = [0,2,1,7,3,4,5,9,8,6] //DCR,TP,Approval,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,Master data download,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))
@@ -304,8 +304,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,7,8,3,6]
-        let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
-        
+       // let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
+        let indexList = [0,2,7,3,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))
@@ -319,8 +319,8 @@ class LandingPageModel: NSObject
         var landingList = [LandingPageModel]()
         
         //        let indexList = [0,4,2,5,7,9,3,6]
-        let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
-        
+        //let indexList = [0,2,7,12,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
+        let indexList = [0,2,7,3,4,5,9,6] //DCR,TP,Doctor/Customer,Dashboard,Reports,Upload DCR,Alerts,More
         for index in indexList
         {
             landingList.append(getMenuForId(id: index))

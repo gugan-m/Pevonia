@@ -12,7 +12,8 @@ class DCRGeneralRemarksViewController: UIViewController, UITextViewDelegate
 {
     @IBOutlet weak var prevRemarks: UILabel!
     @IBOutlet weak var remarksTxt: UITextView!
-    
+    @IBOutlet weak var lblGeneralRemarksHeader: UILabel!
+    @IBOutlet weak var lblpreviousRemarkHeader: UILabel!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var submitBtn: UIButton!
@@ -23,19 +24,11 @@ class DCRGeneralRemarksViewController: UIViewController, UITextViewDelegate
     var placeHolder : String = "Add your general remarks here"
     var isForTpStepper = false
     var isForTpAttendanceStepper = false
-
+    var ifFromDCRAttendence: Bool = false
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        remarksTxt.text = placeHolder
-        remarksTxt.textColor = UIColor.lightGray
-        submitBtn.layer.cornerRadius = 5
-        remarksTxt.layer.borderWidth = 1
-        remarksTxt.layer.borderColor = UIColor.lightGray.cgColor
-        remarksTxt.layer.cornerRadius = 4
-        
         self.addTapGestureForView()
         self.addKeyBoardObserver()
         addBackButtonView()
@@ -57,7 +50,27 @@ class DCRGeneralRemarksViewController: UIViewController, UITextViewDelegate
             remarksTxt.textColor = UIColor.black
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if ifFromDCRAttendence {
+            self.placeHolder = "Add your task here"
+            self.lblpreviousRemarkHeader.text = "Previous Task"
+            self.lblGeneralRemarksHeader.text = "Today's Task"
+            self.title = "Submit your task"
+        } else {
+            placeHolder = "Add your general remarks here"
+            self.lblpreviousRemarkHeader.text = "Previous Remarks"
+            self.lblGeneralRemarksHeader.text = "General Remarks"
+            self.title = "Submit your remarks"
+        }
+        remarksTxt.text = placeHolder
+        remarksTxt.textColor = UIColor.lightGray
+        submitBtn.layer.cornerRadius = 5
+        remarksTxt.layer.borderWidth = 1
+        remarksTxt.layer.borderColor = UIColor.lightGray.cgColor
+        remarksTxt.layer.cornerRadius = 4
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -94,12 +107,12 @@ class DCRGeneralRemarksViewController: UIViewController, UITextViewDelegate
             AlertView.showAlertView(title: alertTitle, message: "Please enter your remarks", viewController: self)
             isValidation = false
         }
-        else if isSpecialCharacterExist()
-        {
-            let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Remarks", restrictedVal: restrictedCharacter, viewController: self)
-            isValidation = false
-        }
+            //        else if isSpecialCharacterExist()
+            //        {
+            //            let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
+            //            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Remarks", restrictedVal: restrictedCharacter, viewController: self)
+            //            isValidation = false
+            //        }
         else if (remarksTxt.text.count > generalRemarksLength)
         {
             AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Remarks", maxVal: generalRemarksLength, viewController: self)
@@ -203,12 +216,12 @@ class DCRGeneralRemarksViewController: UIViewController, UITextViewDelegate
     }
     
     /*func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n"
-        {
-            textView.resignFirstResponder()
-        }
-        return true
-    }*/
+     if text == "\n"
+     {
+     textView.resignFirstResponder()
+     }
+     return true
+     }*/
     func addDoneButtonOnKeyboard()
     {
         let doneToolbar = getToolBar()

@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 protocol UserListButtonActionDelegate {
     func setButtonActionForItem(type:String)
 }

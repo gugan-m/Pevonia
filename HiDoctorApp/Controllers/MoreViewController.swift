@@ -119,6 +119,18 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
             dataList.append(moreDescObj)
         }
         
+        if (BL_MenuAccess.sharedInstance.isQuickNotesAvailable())
+        {
+    
+            moreDescObj = MoreListDescriptionModel()
+            moreHeaderObj.sectionTitle = "Contact"
+            moreDescObj.icon = "notes"
+            moreDescObj.descriptionTxt = "Notes Diary"
+            moreDescObj.stoaryBoardName = "calendar"
+            moreDescObj.viewControllerIdentifier = "pevoniaVCid"
+            dataList.append(moreDescObj)
+            
+        }
         
         if(BL_MenuAccess.sharedInstance.isDPMAvailable())
         {
@@ -418,13 +430,13 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
         moreDescObj.descriptionTxt = "Change password"
         dataList.append(moreDescObj)
         
-        moreDescObj = MoreListDescriptionModel()
-        moreDescObj.stoaryBoardName = mainSb
-               moreDescObj.viewControllerIdentifier = webViewVCID
-               moreDescObj.icon = "icon-HelpFiles"
-               moreDescObj.descriptionTxt = "Help Files"
-               dataList.append(moreDescObj)
-        
+//        moreDescObj = MoreListDescriptionModel()
+//        moreDescObj.stoaryBoardName = mainSb
+//               moreDescObj.viewControllerIdentifier = webViewVCID
+//               moreDescObj.icon = "icon-HelpFiles"
+//               moreDescObj.descriptionTxt = "Help Files"
+//               dataList.append(moreDescObj)
+//
         moreDescObj = MoreListDescriptionModel()
         moreDescObj.stoaryBoardName = MoreViewMasterSb
         moreDescObj.viewControllerIdentifier = LogoutVcID

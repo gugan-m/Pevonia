@@ -385,11 +385,74 @@ class TPStepperMainTableViewCell: UITableViewCell ,UITableViewDelegate, UITableV
     
     @IBAction func viewAccompanistTP(_ sender: UIButton)
     {
-        TPStepperViewController().navigateToAccompanistVC()
+        //TPStepperViewController().navigateToAccompanistVC()
     }
     
     @IBAction func copyAccompanistTpDetails(_ sender: Any)
     {
         
+    }
+}
+
+
+class  TPFieldStepperHeaderCell: UITableViewCell {
+
+    @IBOutlet weak var lblSectionCount: UILabel!
+    @IBOutlet weak var lblSectionTitle: UILabel!
+    @IBOutlet weak var lblectionSubTitle: UILabel!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+}
+
+class  TPFieldStepperFooterCell: UITableViewCell {
+    
+    @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class  TPFieldMeetingObjectiveCell: UITableViewCell {
+    
+    @IBOutlet weak var txtContactName: UILabel!
+    @IBOutlet weak var txtContactDetails: UILabel!
+    @IBOutlet weak var btnRemoveDoctor: UIButton!
+   
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class  TPFieldWorkCategoryCell: UITableViewCell {
+    
+    @IBOutlet weak var txtWorkCategory: UITextField!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class  TPFieldRideAlongCell: UITableViewCell {
+   
+    @IBOutlet weak var lblAccompanist: UILabel!
+    @IBOutlet weak var btnRemoveRideAlong: UIButton!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class  TPFieldRemarksCell: UITableViewCell {
+    
+    @IBOutlet weak var txtViewRemarks: UITextView!
+    @IBOutlet weak var consTextViewHeight: NSLayoutConstraint!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
     }
 }

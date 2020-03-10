@@ -42,6 +42,10 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var tpHeaderHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tpBtmWrapper1: UIView!
     
+    @IBOutlet weak var bg_BlurView: UIView!
+    @IBOutlet weak var planning_alertView: UIView!
+    @IBOutlet weak var lblPlanningHeader: UILabel!
+    
     var pickerView: UIPickerView!
     var selectedRow: Int = -1
     var outerTableReturnCounr: Int = 0
@@ -67,7 +71,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     //MARK:- Application Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.planning_alertView.layer.cornerRadius = 10.0
         selectedDate = getServerFormattedDate(date: getCurrentDateAndTime())
         // Do any additional setup after loading the view.
     }
@@ -329,6 +333,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         selectedDateString = convertDateIntoServerStringFormat(date: selectedDate)
         self.calendarCellClickAction()
         loadTPDetails()
+        
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState)
@@ -502,13 +507,61 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    @IBAction func act_ClosePlanning(_ sender: UIButton) {
+        self.hidePlanningPopup()
+    }
+    
+    @IBAction func act_Field(_ sender: UIButton) {
+        self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: TPFlag.fieldRcpa.rawValue)
+        self.navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPStepperVCID)
+    }
+    
+    @IBAction func act_Prospect(_ sender: UIButton) {
+        self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: TPFlag.fieldRcpa.rawValue)
+        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: TPStepperVCID) as! TPStepperViewController
+        vc.isProspect = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func act_Office(_ sender: UIButton) {
+        self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: 2)
+        self.navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPAttendanceStepperVCID)
+    }
+    
+    @IBAction func act_NotWorking(_ sender: UIButton) {
+        self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: 3)
+        self.navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPLeaveEntryVcID)
+    }
+    
+    func showPlanningPopup(selectedDate: String) {
+       // let newButtonWidth: CGFloat = 60
+        self.planning_alertView.isHidden = false
+        self.bg_BlurView.isHidden = false
+        self.lblPlanningHeader.text = "Planning for " + selectedDate
+        UIView.animate(withDuration: 0.5, //1
+            delay: 0.0, //2
+            usingSpringWithDamping:0.1, //3
+            initialSpringVelocity: 3, //4
+            options: UIView.AnimationOptions.curveEaseInOut, //5
+            animations: ({ //6
+               // self.planning_alertView.frame = CGRect(x: 0, y: 0, width: newButtonWidth, height: newButtonWidth)
+                self.planning_alertView.center = self.view.center
+        }), completion: nil)
+    }
+    
+    func hidePlanningPopup() {
+        self.planning_alertView.isHidden = true
+        self.bg_BlurView.isHidden = true
+    }
+    
     func loadTPDetails()
     {
         var holidayName: String = ""
         let tourPlannerHeaderModelData:TourPlannerHeader? = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: selectedDateString)
         
         emptyStateLbl.text = noTourAvailable
-        addBtn.isHidden = false
+        //addBtn.isHidden = false
         editBut.isHidden = false
         deleteBut.isHidden = false
         bottomHeaderSeperatorView.isHidden = false
@@ -527,7 +580,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             {
                 emptyStateWrapper.isHidden = true
                 scrollView.isHidden = false
-                addBtn.isHidden = true
+              //  addBtn.isHidden = true
                  
                
                 //BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: selectedDate)
@@ -631,11 +684,11 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             {
                 if(BL_TPCalendar.sharedInstance.isCPVisitFrequencyEnabled())
                 {
-                    addBtn.isHidden = false
+                    //addBtn.isHidden = false
                 }
                 else
                 {
-                    addBtn.isHidden = true
+                    //addBtn.isHidden = true
                 }
                 if (tourPlannerHeaderModelData!.Is_Holiday == 1)
                 {
@@ -659,7 +712,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             emptyStateWrapper.isHidden = false
             scrollView.isHidden = true
             emptyStateHeaderView.backgroundColor = TPCellColor.draftedBgColor.color
-            
+            self.showPlanningPopup(selectedDate: selectedDateString)
             holidayName = yetToPlan
         }
         

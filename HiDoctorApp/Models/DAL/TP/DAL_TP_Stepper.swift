@@ -51,6 +51,16 @@ class DAL_TP_Stepper: NSObject {
         })
     }
     
+    func deleteSelectedAccompanists(tp_Entry_Id: Int,Acc_Code: String)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try TourPlannerAccompanist.fetchOne(db, "DELETE FROM \(TRAN_TP_ACCOMPANIST) WHERE TP_Entry_Id = ? AND Acc_User_Code = ?" , arguments: [tp_Entry_Id,Acc_Code])
+            {
+                try! rowValue.delete(db)
+            }
+        })
+    }
+    
     //MARK:- Delete TP
     func deleteTP(tpEntryId: Int)
     {

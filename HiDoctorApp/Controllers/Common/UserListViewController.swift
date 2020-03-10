@@ -74,6 +74,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var selectedUserDetail: SelectedUserDetailsDelegate?
     var lockSelectedUserCode = String()
     var isTPFreeze : Bool = false
+    var accompanistDataPendingList: [DCRAccompanistModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +95,10 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+       
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -209,17 +214,17 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             {
                 if accompanistObj.isSelected  == false
                 {
-                    if selectedAccompanyList.count < 4
-                    {
+//                    if selectedAccompanyList.count < 4
+//                    {
                         accompanistObj.isSelected = true
                         selectedAccompanyList.add(accompanistObj)
                         toggleTickButton()
-                    }
-                    else
-                    {
-                        accompanistObj.isSelected = false
-                        AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four Ride Along only", viewController: self)
-                    }
+//                    }
+//                    else
+//                    {
+//                        accompanistObj.isSelected = false
+//                        AlertView.showAlertView(title: alertTitle, message: "You are allowed to choose maximum of four Ride Along only", viewController: self)
+//                    }
                 }
                 else
                 {
@@ -493,6 +498,48 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         }
         
+        else if navigationScreenName == "TPFieldStepper" {
+            if accompanistObj.isSelected  == false
+            {
+                    accompanistObj.isSelected = true
+                    selectedAccompanyList.add(accompanistObj)
+            }
+            else
+            {
+                accompanistObj.isSelected = false
+                
+                if selectedAccompanyList.count > 0
+                {
+                    selectedAccompanyList.remove(accompanistObj)
+                }
+            }
+            toggleTickButton()
+            self.setButtonTextColor()
+            tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+        }
+        else if navigationScreenName ==  "TPFieldStepperAddRideALong"
+        {
+            if accompanistObj.isSelected  == false
+            {
+                    accompanistObj.isSelected = true
+                    selectedAccompanyList.add(accompanistObj)
+            }
+            else
+            {
+                accompanistObj.isSelected = false
+                
+                if selectedAccompanyList.count > 0
+                {
+                    selectedAccompanyList.remove(accompanistObj)
+                }
+            }
+            toggleTickButton()
+            self.setButtonTextColor()
+            tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+            
+        }
+        
+        
     }
     
     private func getSortedList(userWrapperList : [UserMasterWrapperModel])
@@ -532,6 +579,15 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.navigationItem.rightBarButtonItems = [nextBtn]
             }
 
+        }  else if navigationScreenName == "TPFieldStepper" {
+            
+            let filtered = userCurrentList.filter{
+                $0.isSelected == true
+            }
+            if (filtered.count > 0)
+            {
+                self.navigationItem.rightBarButtonItems = [nextBtn]
+            }
         }
     }
     
@@ -885,6 +941,13 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 userWrapperList  = convertToUserMasterModel(accompanistList:accompanistList!)
             }
         }
+        else if navigationScreenName == "TPFieldStepper" {
+             self.addBarButtonItem()
+             userWrapperList =  convertToUserMasterModel(accompanistList: BL_PrepareMyDeviceAccompanist.sharedInstance.getAllAccompanists()!)
+        } else if navigationScreenName == "TPFieldStepperAddRideALong"{
+            self.addBarButtonItem()
+            userWrapperList =  convertToUserMasterModel(accompanistList: BL_PrepareMyDeviceAccompanist.sharedInstance.getAllAccompanists()!)
+        }
         
         if navigationScreenName != UserListScreenName.MessageUserList.rawValue && navigationScreenName != UserListScreenName.LockReleaseList.rawValue
         {
@@ -940,7 +1003,6 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return userList
         
     }
-    
     
     func convertToUserModel(accompanistList : [DCRAccompanistModel] ) -> [UserMasterWrapperModel]
     {
@@ -1036,6 +1098,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         wrapObj.userObj = userObj
         userWrapperList.insert(wrapObj, at: 0)
     }
+    
     func addBarButtonItem()
     {
         nextBtn = UIBarButtonItem(image: UIImage(named: "icon-done"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(nextScreenBtnAction))
@@ -1107,9 +1170,84 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let getSelectedList = doneButtonAction()
             messageUserListDelegate?.setSelectedMessageUserList(accompanistObj: getSelectedList,isFromCc: self.isFromCC )
             self.navigationController?.popViewController(animated: true)
+        } else if navigationScreenName == "TPFieldStepper" {
+            showLoader()
+            let arr = doneButtonAction()
+            print("currentAccList",doneButtonAction())
+            self.getAccompanistDataPendingList(userList:arr)
+            let accList = accompanistDataDownloadPendingUsersList()
+            BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
+            BL_TPStepper.sharedInstance.downloadAccompanistData(selectedAccompanistList: accList){ (status) in
+
+                if (status == SERVER_SUCCESS_CODE)
+                {
+                    WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from PR"), completion: { (apiObj) in
+                        self.hideLoader()
+                    self.showToast(message: "\(PEV_ACCOMPANIST) data downloaded successfully")
+                    BL_TPStepper.sharedInstance.getAccompanistDataPendingList()
+                        
+
+                    })
+                }
+                else
+                {
+                    self.showToast(message: "Error while downloading accompanist data. Please try again later")
+                }
+            }
         }
     }
     
+    private func getPostData(sectionName: String) -> [String: Any]
+    {
+        let postData :[String:Any] = ["Company_Code":getCompanyCode(),"User_Code":getUserCode(),"Section_Name":sectionName,"Download_Date":getCurrentDateAndTimeString(),"Downloaded_Acc_Region_Codes":BL_PrepareMyDeviceAccompanist.sharedInstance.getRegionCodeStringWithOutQuotes()]
+
+        return postData
+    }
+    
+    private func showLoader()
+       {
+           showCustomActivityIndicatorView(loadingText: "Downloading data. Please wait...")
+       }
+
+       private func hideLoader()
+       {
+           removeCustomActivityView()
+       }
+
+       private func showToast(message: String)
+       {
+           showToastView(toastText: message)
+       }
+    
+    func getAccompanistDataPendingList(userList: [UserMasterWrapperModel])
+    {
+        accompanistDataPendingList = []
+        for tpAccompanistObj in userList
+        {
+            let downloadStatus = BL_DCR_Accompanist.sharedInstance.isAccompanistDataAvailable(userCode: tpAccompanistObj.userObj.User_Code!, regionCode: tpAccompanistObj.userObj.Region_Code!)
+            
+//            if (downloadStatus != 1)
+//            {
+                let dict: NSDictionary = ["DCR_Id": 0, "Acc_Region_Code": tpAccompanistObj.userObj.Region_Code, "Acc_User_Code": tpAccompanistObj.userObj.User_Code, "Acc_User_Name": tpAccompanistObj.userObj.User_Name, "Acc_User_Type_Name": tpAccompanistObj.userObj.User_Type_Name, "Is_Customer_Data_Inherited": Constants.DCR_Inheritance_Acc_Data_Downloaded_IDs.Yet_To_Download]
+                let dcrAccompObj: DCRAccompanistModel = DCRAccompanistModel(dict: dict)
+                
+                dcrAccompObj.Employee_Name = tpAccompanistObj.userObj.Employee_name
+                dcrAccompObj.Region_Name = tpAccompanistObj.userObj.Region_Name
+                dcrAccompObj.isAccompanistDataDownloadLater = false
+                
+                accompanistDataPendingList.append(dcrAccompObj)
+           // }
+        }
+    }
+    
+    func accompanistDataDownloadPendingUsersList() -> [DCRAccompanistModel]
+    {
+        let filteredArray = accompanistDataPendingList.filter{
+            $0.isAccompanistDataDownloadLater == false
+        }
+        return filteredArray
+    }
+  
     func filterSelectedList()
     {
         var selectedList : [UserMasterWrapperModel] = []

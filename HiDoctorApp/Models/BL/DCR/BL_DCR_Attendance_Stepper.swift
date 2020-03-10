@@ -354,9 +354,9 @@ class BL_DCR_Attendance_Stepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "General Remarks"
-        stepperObjModel.emptyStateTitle = "General Remarks"
-        stepperObjModel.emptyStateSubTitle = "Update your general remarks here"
+        stepperObjModel.sectionTitle = "Task I did today"
+        stepperObjModel.emptyStateTitle = "Task I did today"
+        stepperObjModel.emptyStateSubTitle = "Update your task here"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-remarks"

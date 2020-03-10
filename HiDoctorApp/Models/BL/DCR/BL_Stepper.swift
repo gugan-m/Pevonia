@@ -714,14 +714,14 @@ class BL_Stepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "\(PEV_ACCOMPANIST) Details"
-        stepperObjModel.emptyStateTitle = "\(PEV_ACCOMPANIST) Details"
+        stepperObjModel.sectionTitle = "My Team's Partner Details"
+        stepperObjModel.emptyStateTitle = "My Team's Partner Details"
         stepperObjModel.emptyStateSubTitle = "Update details of the person who worked with you"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD RIDE ALONG"
+        stepperObjModel.leftButtonTitle = "ADD PARTNER"
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.Accompanist.rawValue
         
         let dcrAccompanistList = BL_DCR_Accompanist.sharedInstance.getDCRAccompanistList()

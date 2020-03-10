@@ -1513,8 +1513,8 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.showTitle = flag
         if flag == true
         {
-            searchBarWrapper.frame = CGRect(x: 10.0, y: 0.0, width: (self.view.frame.size.width - 20.0), height: 44.0)
-            searchBar.frame = CGRect(x: 0.0, y: 0.0, width: searchBarWrapper.frame.size.width, height: 44.0)
+            searchBarWrapper.frame = CGRect(x: 50.0, y: 0.0, width: (self.view.frame.size.width - 20.0), height: 44.0)
+            searchBar.frame = CGRect(x: 0.0, y: 0.0, width: searchBarWrapper.frame.size.width - 40 , height: 44.0)
             self.navigationItem.rightBarButtonItems = nil
             self.title = ""
             searchBar.becomeFirstResponder()

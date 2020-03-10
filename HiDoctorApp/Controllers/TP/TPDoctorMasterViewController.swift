@@ -896,6 +896,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         else
         {
             let userSelectedList = doneButtonAction()
+            BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
             BL_TPStepper.sharedInstance.insertTPSelectedDoctorDetails(selectedDoctorsList: userSelectedList)
             for controller in self.navigationController!.viewControllers as Array {
                 if controller.isKind(of: TPStepperViewController.self){

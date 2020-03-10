@@ -833,7 +833,10 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
     
     private func navigateToAddGeneralRemarks()
     {
-        navigateToNextScreen(stoaryBoard: dcrStepperSb, viewController:DCRGeneralRemarksVcID )
+         let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+         let vc = sb.instantiateViewController(withIdentifier: DCRGeneralRemarksVcID) as! DCRGeneralRemarksViewController
+         vc.ifFromDCRAttendence = true
+         self.navigationController?.pushViewController(vc, animated: true)
     }
     private func navigateToAdd_Details(){
         if(isManager())
@@ -863,6 +866,7 @@ class AttendanceStepperViewController: UIViewController,UITableViewDelegate, UIT
         let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DCRGeneralRemarksVcID) as! DCRGeneralRemarksViewController
         vc.isModifyPage = true
+        vc.ifFromDCRAttendence = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

@@ -605,7 +605,10 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
     
     private func navigateToAddGeneralRemarks()
     {
-        navigateToNextScreen(stoaryBoard: dcrStepperSb, viewController:DCRGeneralRemarksVcID )
+        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: DCRGeneralRemarksVcID) as! DCRGeneralRemarksViewController
+        vc.ifFromDCRAttendence = false
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func navigateToEditGeneralRemarks()
@@ -613,6 +616,7 @@ class DCRStepperViewController: UIViewController, UITableViewDelegate, UITableVi
         let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DCRGeneralRemarksVcID) as! DCRGeneralRemarksViewController
         vc.isModifyPage = true
+        vc.ifFromDCRAttendence = false
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

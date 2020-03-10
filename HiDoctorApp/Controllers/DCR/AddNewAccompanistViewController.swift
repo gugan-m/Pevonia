@@ -84,9 +84,9 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     
     private func validateAccompanistDetails()
     {
-        if self.accompanistNameLbl.text == "Select Ride Along"
+        if self.accompanistNameLbl.text == "My Team's Partner"
         {
-            showAlertView(message: "Please select Ride Along")
+            showAlertView(message: "Please select your Team's Partner")
         }
         else
         {
@@ -100,7 +100,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
         {
             if self.isIndePendent == "1"
             {
-                let errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with this Ride Along name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
+                let errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with my Team's Partner name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
                 let alertViewController = UIAlertController(title: infoTitle, message: errorMsg, preferredStyle: UIAlertControllerStyle.alert)
                 
                 alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
@@ -150,7 +150,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
             var errorMsg: String = EMPTY
             var isOnlyForDoctor: String = self.isIndePendent
             
-            errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with this Ride Along name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
+            errorMsg  = "All the \(appDoctor) visit of this DVR will be marked as 'Accompanied Call' with my Team's Partner name.If you wish to mark any visit as independent visit, please go to the \(appDoctor) visit screen and modify that \(appDoctor) visit"
             
             if (BL_DCR_Doctor_Visit.sharedInstance.isDCRInheritanceEnabled())
             {
@@ -355,11 +355,11 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
     
     func setAccompanistDetails()
     {
-        var accompanistName : String = "Select Ride Along"
+        var accompanistName : String = "My Team's Partner"
         var startTime : String = ""
         var endTime : String = ""
         var isSelected : Bool = false
-        var navigationTitle = "Add New Ride Along"
+        var navigationTitle = "Add My Team's Partner"
         var saveBtnTitle : String = "SUBMIT"
         
         self.accompanitsView.alpha = 1.0
@@ -368,7 +368,7 @@ class AddNewAccompanistViewController: UIViewController,SelectedAccompanistDetai
         
         if modifyAccompanistObj != nil && isComingFromModifyPage
         {
-            navigationTitle = "Edit Ride Along"
+            navigationTitle = "Edit My Team's Partner"
             saveBtnTitle = "SAVE"
             self.accompanitsView.alpha = 0.5
             self.selectAccompanitsBtnAction.isUserInteractionEnabled = false

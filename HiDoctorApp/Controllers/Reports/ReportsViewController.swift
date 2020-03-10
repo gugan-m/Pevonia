@@ -24,7 +24,7 @@ class ReportsViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         self.tableData()
         addBackButtonView()
-        self.title = "Reports"
+        self.title = "Work History"
     }
 
     override func didReceiveMemoryWarning() {
