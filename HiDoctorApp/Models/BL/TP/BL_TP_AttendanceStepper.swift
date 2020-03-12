@@ -30,14 +30,14 @@ class BL_TP_AttendanceStepper: NSObject
         clearAllArray()
         stepperDataList.removeAll()
         
-        getWorkPlaceDetails()
-        if isTravelEnabled() {
-           getPlaceDetails()
-        }
+       // getWorkPlaceDetails()
+//        if isTravelEnabled() {
+//           getPlaceDetails()
+//        }
         getActivityDetails()
         getGeneralRemarks()
         
-        determineButtonStatus()
+ //       determineButtonStatus()
     }
     
     //MARK:-- Height Functions
@@ -197,17 +197,17 @@ class BL_TP_AttendanceStepper: NSObject
     {
         var errorMessage: String = EMPTY
         
-        errorMessage = doAllWorkPlaceValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllWorkPlaceValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doAllSFCValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllSFCValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
         errorMessage = doActivityValidation()
         if (errorMessage != EMPTY)
@@ -334,6 +334,8 @@ class BL_TP_AttendanceStepper: NSObject
         stepperObjModel.isExpanded = false
         stepperObjModel.leftButtonTitle = "ADD"
         
+         self.objTPHeader = BL_TPCalendar.sharedInstance.getTPData(date: TPModel.sharedInstance.tpDateString)
+        
         if (checkNullAndNilValueForString(stringData: self.objTPHeader?.Activity_Name) != EMPTY)
         {
             stepperObjModel.recordCount = 1
@@ -358,6 +360,8 @@ class BL_TP_AttendanceStepper: NSObject
         stepperObjModel.sectionIconName = "icon-stepper-remarks"
         stepperObjModel.isExpanded = false
         stepperObjModel.leftButtonTitle = ""
+        
+        self.objTPHeader = BL_TPCalendar.sharedInstance.getTPData(date: TPModel.sharedInstance.tpDateString)
         
         if (checkNullAndNilValueForString(stringData: objTPHeader?.Remarks) != EMPTY)
         {
@@ -572,6 +576,8 @@ class BL_TP_AttendanceStepper: NSObject
     
     func updateAttendanceActivity(objActivity: ProjectActivityMaster)
     {
+        insertTourPlannerHeader()
+        setSelectedTpDataInContext(date: TPModel.sharedInstance.tpDateString ,tpFlag: TPModel.sharedInstance.tpFlag)
         DAL_TP_Stepper.sharedInstance.updateAttendanceActivity(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, activityCode: objActivity.Activity_Code, activityName: objActivity.Activity_Name, projectCode: objActivity.Project_Code)
     }
     

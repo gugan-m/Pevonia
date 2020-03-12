@@ -44,7 +44,12 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     
     override func viewWillAppear(_ animated: Bool)
     {
+        if isProspect == true {
+           BL_TPStepper.sharedInstance.generateProspectDataArray()
+        } else {
             BL_TPStepper.sharedInstance.generateDataArray()
+        }
+        
         setWorkPlace()
         reloadTableView()
         //        showAlertCaptureLocationCount = 0
@@ -298,37 +303,63 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     //MARK:-- Button Action Helper Methods
     private func addNewEntry(index: Int)
     {
-        switch index {
-        case 0:
-            navigateToAddContact()
-        case 1:
-            break
-        case 2:
-            navigateToAddUser()
-        case 3:
-            break
-        case 4:
-            navigateToAddGeneralRemarks()
-        default:
-            break
+        if isProspect == true {
+            switch index {
+                       case 0:
+                           navigateToAddUser()
+                       case 1:
+                           break
+                       case 2:
+                           navigateToAddGeneralRemarks()
+                       default:
+                           break
+                       }
+        } else {
+            switch index {
+            case 0:
+                navigateToAddContact()
+            case 1:
+                break
+            case 2:
+                navigateToAddUser()
+            case 3:
+                break
+            case 4:
+                navigateToAddGeneralRemarks()
+            default:
+                break
+            }
         }
     }
     //
     private func modifyEntry(index: Int)
     {
-        switch index {
-        case 0:
-            navigateToAddContact()
-        case 1:
-            break
-        case 2:
-            navigateToAddContact()
-        case 3:
-            break
-        case 4:
-            navigateToEditGeneralRemarks()
-        default:
-            break
+        if isProspect == true {
+            switch index {
+                       case 0:
+                           navigateToAddContact()
+                       case 1:
+                           break
+                       case 2:
+                           navigateToEditGeneralRemarks()
+                       default:
+                           break
+                       }
+        } else {
+            switch index {
+            case 0:
+                navigateToAddContact()
+            case 1:
+                break
+            case 2:
+                navigateToAddContact()
+            case 3:
+                break
+            case 4:
+                navigateToEditGeneralRemarks()
+            default:
+                break
+            }
         }
     }
     //
@@ -991,13 +1022,16 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     
     func setWorkPlace() {
         if TPModel.sharedInstance.tpEntryId != -1 {
-            if let obj: TourPlannerHeader =  DAL_TP_Stepper.sharedInstance.getWorkPlaceDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)! {
-                if obj.Category_Name != nil{
-                    selectedWorkPlace = obj.Category_Name!
+            if let category: TourPlannerHeader =  DAL_TP_Stepper.sharedInstance.getWorkPlaceDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)! {
+                if category.Category_Name != nil{
+                    selectedWorkPlace = category.Category_Name!
                 }
-                if obj.Remarks != nil {
-                    generalText = obj.Remarks!
-                }
+               
+            }
+            if let Remarksobj: TourPlannerHeader =  DAL_TP_Stepper.sharedInstance.getGeneralRemarks(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)! {
+                if Remarksobj.Remarks != nil {
+                    generalText = Remarksobj.Remarks!
+                 }
             }
         }
     }
@@ -1024,70 +1058,89 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     //------> Display Cells
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 1
-        {
-            let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
-            let doctorObj = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
-            MeetingObjCell.txtContactName.text = doctorObj.Customer_Name
-            var line2Text: String = ""
-            
-            if doctorObj.Hospital_Name! != ""{
-                line2Text = doctorObj.Hospital_Name! + " | "
+        
+        if isProspect == true {
+            if indexPath.section == 0 {
+                let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
+                           RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
+                           RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+                           return RideAlongCell
+            } else if indexPath.section == 1 {
+                let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
+                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
+                return WorkCaregoryCell
+            } else if indexPath.section == 2  {
+                let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
+                remarksCell.txtViewRemarks.attributedText = NSAttributedString(string: generalText)
+                remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
+                return remarksCell
             } else {
-                line2Text = doctorObj.Hospital_Name!
+                return UITableViewCell.init()
             }
-            
-            if doctorObj.Speciality_Name! != ""{
-                line2Text = (doctorObj.Speciality_Name)! + " | "
-            }
-            
-            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+        } else {
+            if indexPath.section == 1
             {
-                line2Text = doctorObj.Category_Name! + " | "
+                let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
+                let doctorObj = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
+                MeetingObjCell.txtContactName.text = doctorObj.Customer_Name
+                var line2Text: String = ""
+                
+                if doctorObj.Hospital_Name! != ""{
+                    line2Text = doctorObj.Hospital_Name! + " | "
+                } else {
+                    line2Text = doctorObj.Hospital_Name!
+                }
+                
+                if doctorObj.Speciality_Name! != ""{
+                    line2Text = (doctorObj.Speciality_Name)! + " | "
+                }
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                {
+                    line2Text = doctorObj.Category_Name! + " | "
+                }
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
+                {
+                    if (line2Text != "")
+                    {
+                        line2Text = line2Text + doctorObj.Region_Name!
+                    }
+                    else
+                    {
+                        line2Text = doctorObj.Region_Name!
+                    }
+                }
+                MeetingObjCell.txtContactDetails.text = line2Text
+                MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
+                return MeetingObjCell
             }
-            
-            if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
+            else if indexPath.section == 2
             {
-                if (line2Text != "")
-                {
-                    line2Text = line2Text + doctorObj.Region_Name!
-                }
-                else
-                {
-                    line2Text = doctorObj.Region_Name!
-                }
+                let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
+                RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
+                RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+                return RideAlongCell
             }
-            MeetingObjCell.txtContactDetails.text = line2Text
-            MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
-            return MeetingObjCell
-        }
-        else if indexPath.section == 2
-        {
-            let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
-            RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
-            RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
-            return RideAlongCell
-        }
-        else if indexPath.section == 3
-        {
-            let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
-            WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
-            WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
-            return WorkCaregoryCell
-        }
-        else if indexPath.section == 4
-        {
-            let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
-            let data = Data(generalText.utf8)
-            if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                remarksCell.txtViewRemarks.attributedText = attributedString
+            else if indexPath.section == 3
+            {
+                let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
+                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
+                return WorkCaregoryCell
             }
-            remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
-            return remarksCell
-        }
-        else
-        {
-            return UITableViewCell.init()
+            else if indexPath.section == 4
+            {
+                let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
+                remarksCell.txtViewRemarks.attributedText = NSAttributedString(string: generalText)
+                remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
+                return remarksCell
+            }
+            else
+            {
+                return UITableViewCell.init()
+            }
         }
     }
     
@@ -1100,68 +1153,117 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     //------> Total number of rows in each section
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 0
-        } else if section == 1 {
-            return BL_TPStepper.sharedInstance.doctorList.count
-        } else if section == 2 {
-            return BL_TPStepper.sharedInstance.accompanistList.count
-        } else if section == 3 {
-            return 1
-        } else if section == 4 {
-            return 1
+        if isProspect == true {
+            if section == 0 {
+                return BL_TPStepper.sharedInstance.accompanistList.count
+            } else if section == 1 {
+                return 1
+            } else if section == 2 {
+                return 1
+            } else {
+                return 0
+            }
         } else {
-            return 0
+            if section == 0 {
+                return 0
+            } else if section == 1 {
+                return BL_TPStepper.sharedInstance.doctorList.count
+            } else if section == 2 {
+                return BL_TPStepper.sharedInstance.accompanistList.count
+            } else if section == 3 {
+                return 1
+            } else if section == 4 {
+                return 1
+            } else {
+                return 0
+            }
         }
     }
     
     //------> To display header view.
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
-        headerCell.lblSectionTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].sectionTitle
-        if section == 0 {
-            let subTitle = NSMutableAttributedString()
-            let hdr = NSMutableAttributedString(string: BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle)
-            let count = NSMutableAttributedString(string: "  \(BL_TPStepper.sharedInstance.doctorList.count)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black,NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)])
-            subTitle.append(hdr)
-            subTitle.append(count)
-            headerCell.lblectionSubTitle.attributedText = subTitle
-        } else {
+        
+        if isProspect == true {
+            let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
+            headerCell.lblSectionTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].sectionTitle
+                      
             headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
+                    
+                       switch section {
+                       case 0:
+                           if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                               headerCell.lblSectionCount.backgroundColor = default_Blue
+                           } else {
+                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                           }
+                       case 1:
+                           if self.selectedWorkPlace.count != 0 {
+                               headerCell.lblSectionCount.backgroundColor = default_Blue
+                           } else {
+                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                           }
+                       case 2:
+                           if self.generalText.count != 0 {
+                               headerCell.lblSectionCount.backgroundColor = default_Blue
+                           } else {
+                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                           }
+                       default:
+                           break
+                       }
+                       headerCell.lblSectionCount.text = "\(section + 1)"
+                       return headerCell
+        } else {
+            let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
+            headerCell.lblSectionTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].sectionTitle
+            if section == 0 {
+                let subTitle = NSMutableAttributedString()
+                let hdr = NSMutableAttributedString(string: BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle)
+                let count = NSMutableAttributedString(string: "  \(BL_TPStepper.sharedInstance.doctorList.count)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black,NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)])
+                subTitle.append(hdr)
+                subTitle.append(count)
+                headerCell.lblectionSubTitle.attributedText = subTitle
+            } else {
+                headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
+            }
+            switch section {
+            case 0:
+                if BL_TPStepper.sharedInstance.doctorList.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 1:
+                if BL_TPStepper.sharedInstance.doctorList.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 2:
+                if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 3:
+                if self.selectedWorkPlace.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 4:
+                if self.generalText.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            default:
+                break
+            }
+            headerCell.lblSectionCount.text = "\(section + 1)"
+            return headerCell
         }
-        switch section {
-        case 0:
-            if BL_TPStepper.sharedInstance.doctorList.count != 0 {
-                headerCell.lblSectionCount.backgroundColor = default_Blue
-            } else {
-                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-            }
-        case 1:
-            if BL_TPStepper.sharedInstance.doctorList.count != 0 {
-                headerCell.lblSectionCount.backgroundColor = default_Blue
-            } else {
-                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-            }
-        case 2:
-            if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
-                headerCell.lblSectionCount.backgroundColor = default_Blue
-            } else {
-                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-            }
-        case 3:
-            if self.selectedWorkPlace.count != 0 {
-                headerCell.lblSectionCount.backgroundColor = default_Blue
-            } else {
-                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-            }
-        case 4:
-            break
-        default:
-            break
-        }
-        headerCell.lblSectionCount.text = "\(section + 1)"
-        return headerCell
     }
     
     //------> To display footer view.
@@ -1171,10 +1273,31 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     footerCell.leftButton.setTitle(BL_TPStepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
         footerCell.leftButton.tag = section
         footerCell.rightButton.tag = section
-        if section == 4 {
-            footerCell.rightButton.isHidden = false
+        
+        if isProspect == true {
+            if section == 2 {
+                if generalText.count != 0 {
+                footerCell.rightButton.isHidden = false
+                footerCell.leftButton.isHidden = true
+                } else {
+                footerCell.rightButton.isHidden = true
+                footerCell.leftButton.isHidden = false
+                }
+            } else {
+                footerCell.rightButton.isHidden = true
+            }
         } else {
-            footerCell.rightButton.isHidden = true
+            if section == 4 {
+                if generalText.count != 0 {
+                footerCell.rightButton.isHidden = false
+                footerCell.leftButton.isHidden = true
+                } else {
+                footerCell.rightButton.isHidden = true
+                footerCell.leftButton.isHidden = false
+                }
+            } else {
+                footerCell.rightButton.isHidden = true
+            }
         }
         return footerCell
     }
@@ -1182,46 +1305,86 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     //------> Set height for each row.
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 0
-        } else if indexPath.section == 1 {
-            return 70
-        } else if indexPath.section == 2 {
-            return 40
-        } else if indexPath.section == 3 {
-            return 50
-        } else if indexPath.section == 4 {
-            if generalText.count != 0 {
-                return 60
+        
+        if isProspect == true {
+             if indexPath.section == 0 {
+                return 40
+            } else if indexPath.section == 1 {
+                return 50
+            } else if indexPath.section == 2 {
+                if generalText.count != 0 {
+                    return 60
+                } else {
+                    return 0
+                }
             } else {
                 return 0
             }
         } else {
-            return 0
+            if indexPath.section == 0 {
+                return 0
+            } else if indexPath.section == 1 {
+                return 70
+            } else if indexPath.section == 2 {
+                return 40
+            } else if indexPath.section == 3 {
+                return 50
+            } else if indexPath.section == 4 {
+                if generalText.count != 0 {
+                    return 60
+                } else {
+                    return 0
+                }
+            } else {
+                return 0
+            }
         }
     }
     
     //------> Set height for each footer.
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 60
-        } else if section == 1 {
-            return 0
-        } else if section == 2 {
-            return 60
-        } else if section == 3 {
-            return 0
-        } else if section == 4 {
-            return 60
+        if isProspect == true {
+            if section == 0 {
+                return 60
+            } else if section == 1 {
+                return 0
+            } else if section == 2 {
+                return 60
+            } else {
+                return 0
+            }
         } else {
-            return 0
+            if section == 0 {
+                return 60
+            } else if section == 1 {
+                return 0
+            } else if section == 2 {
+                return 60
+            } else if section == 3 {
+                return 0
+            } else if section == 4 {
+                return 60
+            } else {
+                return 0
+            }
         }
     }
     
     //------> Set height for each header.
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+       if isProspect == true {
+       if section == 0 {
+            return 90
+        } else if section == 1 {
+            return 40
+        } else if section == 2 {
+            return 50
+        } else {
+            return 0
+        }
+       } else {
         if section == 0 {
             return 90
         } else if section == 1 {
@@ -1235,15 +1398,20 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
         } else {
             return 0
         }
+      }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-            let vc:TPMeetingObjectiveViewController = sb.instantiateViewController(withIdentifier: "TPMeetingObjectiveViewController") as! TPMeetingObjectiveViewController
-            vc.objDoctor = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
-            vc.userDCRProductList = BL_TPStepper.sharedInstance.doctorList[indexPath.row].sampleList1
-            self.navigationController?.pushViewController(vc, animated: true)
+        if isProspect == true {
+            
+        } else {
+            if indexPath.section == 1 {
+                let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                let vc:TPMeetingObjectiveViewController = sb.instantiateViewController(withIdentifier: "TPMeetingObjectiveViewController") as! TPMeetingObjectiveViewController
+                vc.objDoctor = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
+                vc.userDCRProductList = BL_TPStepper.sharedInstance.doctorList[indexPath.row].sampleList1
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

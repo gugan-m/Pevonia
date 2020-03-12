@@ -134,12 +134,13 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     {
         var isValidation: Bool = true
         
-        if selectLeaveType.text == placeHolderForLeaveType
-        {
-            isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please select Not Working type", viewController: self)
-        }
-        else if leaveReason.text?.count == 0
+//        if selectLeaveType.text == placeHolderForLeaveType
+//        {
+//            isValidation = false
+//            AlertView.showAlertView(title: alertTitle, message: "Please select Not Working type", viewController: self)
+//        }
+//        else
+        if leaveReason.text?.count == 0
         {
             AlertView.showAlertView(title: alertTitle, message: "Please enter Not Working reason", viewController: self)
             isValidation = false
@@ -161,23 +162,23 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
             isValidation = false
         }
         
-        if (isValidation)
-        {
-            let leaveTypes = BL_DCR_Leave.sharedInstance.getLeaveTypes()
-            
-            if (leaveTypes != nil)
-            {
-                let filteredArray = leaveTypes!.filter{
-                    $0.Leave_Type_Name.uppercased() == selectLeaveType.text!.uppercased()
-                }
-                
-                if (filteredArray.count == 0)
-                {
-                    isValidation = false
-                    AlertView.showAlertView(title: alertTitle, message: "Please choose a valid Not Working type", viewController: self)
-                }
-            }
-        }
+//        if (isValidation)
+//        {
+//            let leaveTypes = BL_DCR_Leave.sharedInstance.getLeaveTypes()
+//
+//            if (leaveTypes != nil)
+//            {
+//                let filteredArray = leaveTypes!.filter{
+//                    $0.Leave_Type_Name.uppercased() == selectLeaveType.text!.uppercased()
+//                }
+//
+//                if (filteredArray.count == 0)
+//                {
+//                    isValidation = false
+//                    AlertView.showAlertView(title: alertTitle, message: "Please choose a valid Not Working type", viewController: self)
+//                }
+//            }
+//        }
         
         return isValidation
     }
@@ -386,7 +387,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         }))
         
         alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-            BL_TPStepper.sharedInstance.updateTourPlannerLeave(tpEntryId: TPModel.sharedInstance.tpEntryId, leave_type_code: self.leaveTypeCode, leave_type: self.selectLeaveType.text!, leave_reason: self.leaveReason.text!)
+            BL_TPStepper.sharedInstance.updateTourPlannerLeave(tpEntryId: TPModel.sharedInstance.tpEntryId, leave_type_code: self.leaveTypeCode, leave_type: "Approved in Paycom", leave_reason: self.leaveReason.text!)
             if(!BL_TPUpload.sharedInstance.isSFCMinCountValidInTP())
             {
                 self.showAlertToUploadTP()

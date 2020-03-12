@@ -504,8 +504,8 @@ class BL_TPStepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "Whom Am I Going With"
-        stepperObjModel.emptyStateTitle = "Whom Am I Going With"
+        stepperObjModel.sectionTitle = "Who Am I Going With"
+        stepperObjModel.emptyStateTitle = "Who Am I Going With"
         stepperObjModel.emptyStateSubTitle = "I am going alone / I will be accompained by"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""

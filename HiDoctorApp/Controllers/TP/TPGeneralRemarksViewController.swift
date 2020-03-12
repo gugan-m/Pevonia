@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RichEditorView
 
 class TPGeneralRemarksViewController: UIViewController,UITextViewDelegate
 {
@@ -47,12 +48,13 @@ override func didReceiveMemoryWarning() {
 //MARK:- Function to save remarks
 @IBAction func submitAction(_ sender: Any) {
     let formValidation : Bool = validation()
-    
+    print(remarksTextView.text!)
+    print(remarksTextView.attributedText)
     if formValidation
     {
-      BL_TPStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: remarksTextView.text!)
+        let str = "\(remarksTextView.text!)"
+        BL_TPStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: str)
     }
-    
     _ = navigationController?.popViewController(animated: false)
 }
     

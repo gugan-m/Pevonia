@@ -78,47 +78,53 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         let stepperObj = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[indexPath.row]
         let index = indexPath.row
         
-        if (stepperObj.recordCount == 0)
-        {
-            return BL_TP_AttendanceStepper.sharedInstance.getEmptyStateHeight(selectedIndex: index)
-        }
-        else
-        {
-            if (index == 0 || index == 2)
-            {
-                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-                } else {
-                    if index == 0 {
-                         return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-                    } else {
-                        return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
-                    }
-                }
+        if index == 0 {
+              return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+            } else {
+                 return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
             }
-            else if (index == 1)
-            {
-                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-                    return BL_TP_AttendanceStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
-                } else {
-                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-                }
-                
-            }
-            else if (index == 3)
-            {
-                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-                     return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
-                } else {
-                    return 0
-                }
-               
-            }
-            else
-            {
-                return 0
-            }
-        }
+        
+//        if (stepperObj.recordCount == 0)
+//        {
+//            return BL_TP_AttendanceStepper.sharedInstance.getEmptyStateHeight(selectedIndex: index)
+//        }
+//        else
+//        {
+//            if (index == 0 || index == 2)
+//            {
+//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+//                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+//                } else {
+//                    if index == 0 {
+//                         return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+//                    } else {
+//                        return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+//                    }
+//                }
+//            }
+//            else if (index == 1)
+//            {
+//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+//                    return BL_TP_AttendanceStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
+//                } else {
+//                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+//                }
+//
+//            }
+//            else if (index == 3)
+//            {
+//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
+//                     return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
+//                } else {
+//                    return 0
+//                }
+//
+//            }
+//            else
+//            {
+//                return 0
+//            }
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -138,7 +144,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         }
         
         let rowIndex = indexPath.row
-        let objStepperModel: DCRStepperModel = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[rowIndex]
+        var objStepperModel: DCRStepperModel = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[rowIndex]
         
         cell.selectedIndex = rowIndex
         
@@ -150,7 +156,15 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         {
             cell.emptyStateSectionTitleLabel.text = objStepperModel.emptyStateTitle
             cell.emptyStateSubTitleLabel.text = objStepperModel.emptyStateSubTitle
-            cell.emptyStateAddButton.isHidden = !objStepperModel.showEmptyStateAddButton
+            if indexPath.row == 0 {
+                cell.emptyStateAddButton.isHidden = false
+            } else {
+               if BL_TP_AttendanceStepper.sharedInstance.stepperDataList[0].recordCount != 0 {
+                    cell.emptyStateAddButton.isHidden = false
+                } else {
+                    cell.emptyStateAddButton.isHidden = true
+                }
+            }
             cell.emptyStateView.isHidden = false
             cell.cardView.isHidden = true
             cell.cardView.clipsToBounds = true
@@ -162,10 +176,8 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
             cell.emptyStateView.isHidden = true
             cell.cardView.isHidden = false
             cell.cardView.clipsToBounds = false
-            
-            cell.rightButton.isHidden = !objStepperModel.showRightButton
-            cell.leftButton.isHidden = !objStepperModel.showLeftButton
-            
+            cell.rightButton.isHidden = false
+            cell.leftButton.isHidden = true
             cell.parentTableView = tableView
             cell.childTableView.reloadData()
             
@@ -322,13 +334,16 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
             switch index
             {
             case 0:
-                navigateToAddWorkPlaceDetails()
+               // navigateToAddWorkPlaceDetails()
+                 navigateToAddActivityDetails()
             case 1:
-                navigateToAddTravelPlace()
-            case 2:
-                navigateToAddActivityDetails()
+              //  navigateToAddTravelPlace()
+                navigateToAddGeneralRemarks()//
+            case 2: break
+              //  navigateToAddActivityDetails()
             case 3:
-                navigateToAddGeneralRemarks()
+               // navigateToAddGeneralRemarks()
+                break
             default:
                 print(1)
             }
@@ -336,11 +351,14 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
             switch index
             {
             case 0:
-                navigateToAddWorkPlaceDetails()
-            case 1:
+                //navigateToAddWorkPlaceDetails()
                 navigateToAddActivityDetails()
-            case 2:
+            case 1:
                 navigateToAddGeneralRemarks()
+               // navigateToAddActivityDetails()
+            case 2:
+                break
+                //navigateToAddGeneralRemarks()
             default:
                 print(1)
             }
@@ -353,9 +371,11 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
             switch index
             {
             case 0:
-                navigateToEditWorkPlaceDetails()
+                //navigateToEditWorkPlaceDetails()
+                navigateToEditActiviytDetails()
             case 1:
-                navigateToEditTravelPlace()
+                //navigateToEditTravelPlace()
+                navigateToEditGeneralRemarks()
             case 2:
                 navigateToEditActiviytDetails()
             case 3:
@@ -367,11 +387,13 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
             switch index
             {
             case 0:
-                navigateToEditWorkPlaceDetails()
-            case 1:
+               // navigateToEditWorkPlaceDetails()
                 navigateToEditActiviytDetails()
-            case 2:
+            case 1:
+               // navigateToEditActiviytDetails()
                 navigateToEditGeneralRemarks()
+            case 2: break
+               // navigateToEditGeneralRemarks()
             default:
                 print(1)
             }
@@ -448,26 +470,26 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     private func setSubmitViewHeightConst()
     {
-        
-      if  BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
-        if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY && BL_TP_AttendanceStepper.sharedInstance.placesList.count > 0)
-        {
-            self.submitViewHgtConst.constant = 40
-        }
-        else
-        {
-            self.submitViewHgtConst.constant = 0
-        }
-           } else {
-        if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY)
-        {
-            self.submitViewHgtConst.constant = 40
-        }
-        else
-        {
-            self.submitViewHgtConst.constant = 0
-        }
-        }
+      self.submitViewHgtConst.constant = 40
+//      if  BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
+//        if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY && BL_TP_AttendanceStepper.sharedInstance.placesList.count > 0)
+//        {
+//            self.submitViewHgtConst.constant = 40
+//        }
+//        else
+//        {
+//            self.submitViewHgtConst.constant = 0
+//        }
+//           } else {
+//        if (checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Category_Name) != EMPTY && checkNullAndNilValueForString(stringData: BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name) != EMPTY)
+//        {
+//            self.submitViewHgtConst.constant = 40
+//        }
+//        else
+//        {
+//            self.submitViewHgtConst.constant = 0
+//        }
+//        }
         
         
     }
