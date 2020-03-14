@@ -8,39 +8,37 @@
 
 import UIKit
 
-class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource
+class TPAttendanceStepperViewController: UIViewController
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitViewHgtConst: NSLayoutConstraint!
     
     // MARK:- Variables
+    var pickerView = UIPickerView()
+    var selectedActivity = ""
+    var generalRemarks = ""
+    var activityList : [ProjectActivityMaster] = []
     var stepperDataList: [DCRStepperModel] = []
+    var projectObj : ProjectActivityMaster?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
         removeVersionToastView()
-        
+        pickerView.delegate = self
         self.setSubmitViewHeightConst()
         addBackButtonView()
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Office)"
-        
+       activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
         BL_TP_AttendanceStepper.sharedInstance.clearAllArray()
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         BL_TP_AttendanceStepper.sharedInstance.generateDataArray()
-        
         reloadTableView()
-        
-        if (BL_TP_AttendanceStepper.sharedInstance.isSFCUpdated)
-        {
-            BL_TP_AttendanceStepper.sharedInstance.isSFCUpdated = false
-            
-            showToastView(toastText: "Your SFC updated")
-        }
+      selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
+        generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks 
     }
     
     override func didReceiveMemoryWarning()
@@ -63,173 +61,110 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     }
     
     // MARK:- Table View Delegates
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
-        return 1
-    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return BL_TP_AttendanceStepper.sharedInstance.stepperDataList.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        let stepperObj = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[indexPath.row]
-        let index = indexPath.row
-        
-        if index == 0 {
-              return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-            } else {
-                 return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
-            }
-        
-//        if (stepperObj.recordCount == 0)
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+//    {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: TPAttendanceTVCell) as! TPAttendanceTableViewCell
+//
+//        // Round View
+//        cell.roundView.layer.cornerRadius = 12.5 //cell.roundView.frame.height / 2
+//        cell.roundView.layer.masksToBounds = true
+//        cell.stepperNumberLabel.text = String(indexPath.row + 1)
+//
+//        // Vertical view
+//        cell.verticalView.isHidden = false
+//        if (indexPath.row == BL_TP_AttendanceStepper.sharedInstance.stepperDataList.count - 1)
 //        {
-//            return BL_TP_AttendanceStepper.sharedInstance.getEmptyStateHeight(selectedIndex: index)
+//            cell.verticalView.isHidden = true
 //        }
-//        else
+//
+//        let rowIndex = indexPath.row
+//        var objStepperModel: DCRStepperModel = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[rowIndex]
+//
+//        cell.selectedIndex = rowIndex
+//
+//        cell.cardView.isHidden = true
+//        cell.emptyStateView.isHidden = true
+//        cell.emptyStateView.clipsToBounds = true
+//
+//        if (objStepperModel.recordCount == 0)
 //        {
-//            if (index == 0 || index == 2)
-//            {
-//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-//                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
+//            cell.emptyStateSectionTitleLabel.text = objStepperModel.emptyStateTitle
+//            cell.emptyStateSubTitleLabel.text = objStepperModel.emptyStateSubTitle
+//            if indexPath.row == 0 {
+//                cell.emptyStateAddButton.isHidden = false
+//            } else {
+//               if BL_TP_AttendanceStepper.sharedInstance.stepperDataList[0].recordCount != 0 {
+//                    cell.emptyStateAddButton.isHidden = false
 //                } else {
-//                    if index == 0 {
-//                         return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-//                    } else {
-//                        return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
-//                    }
+//                    cell.emptyStateAddButton.isHidden = true
 //                }
 //            }
-//            else if (index == 1)
-//            {
-//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-//                    return BL_TP_AttendanceStepper.sharedInstance.getSFCCellHeight(selectedIndex: index)
-//                } else {
-//                    return BL_TP_AttendanceStepper.sharedInstance.getCommonCellHeight(selectedIndex: index)
-//                }
+//            cell.emptyStateView.isHidden = false
+//            cell.cardView.isHidden = true
+//            cell.cardView.clipsToBounds = true
+//            cell.roundView.backgroundColor = UIColor(red: 158/255, green: 158/255, blue: 158/255, alpha: 1)
+//        }
+//        else if objStepperModel.recordCount > 0
+//        {
+//            cell.sectionTitleLabel.text = objStepperModel.sectionTitle
+//            cell.emptyStateView.isHidden = true
+//            cell.cardView.isHidden = false
+//            cell.cardView.clipsToBounds = false
+//            cell.rightButton.isHidden = false
+//            cell.leftButton.isHidden = true
+//            cell.parentTableView = tableView
+//            cell.childTableView.reloadData()
 //
-//            }
-//            else if (index == 3)
-//            {
-//                if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled(){
-//                     return BL_TP_AttendanceStepper.sharedInstance.getGeneralRemarksCellHeight(selectedIndex: index)
-//                } else {
-//                    return 0
-//                }
+//            cell.roundView.backgroundColor = UIColor(red: 63/255, green: 81/255, blue: 181/255, alpha: 1.0)
+//            cell.leftButton.setTitle(objStepperModel.leftButtonTitle, for: UIControlState.normal)
 //
+//            cell.commonSectionTitleHeightConstraint.constant = 30
+//            cell.sectionTitleView.isHidden = false
+//        }
+//
+//        cell.sectionTitleImageView.image = UIImage(named: objStepperModel.sectionIconName)
+//        cell.sectionToggleImageView.isHidden = true
+//        cell.sectionToggleImageView.clipsToBounds = true
+//
+//        if (objStepperModel.recordCount > 1)
+//        {
+//            if (objStepperModel.isExpanded == true)
+//            {
+//                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-up-arrow")
 //            }
 //            else
 //            {
-//                return 0
+//                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-down-arrow")
 //            }
+//
+//            cell.sectionToggleImageView.isHidden = false
+//            cell.sectionToggleImageView.clipsToBounds = false
 //        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TPAttendanceTVCell) as! TPAttendanceTableViewCell
-        
-        // Round View
-        cell.roundView.layer.cornerRadius = 12.5 //cell.roundView.frame.height / 2
-        cell.roundView.layer.masksToBounds = true
-        cell.stepperNumberLabel.text = String(indexPath.row + 1)
-        
-        // Vertical view
-        cell.verticalView.isHidden = false
-        if (indexPath.row == BL_TP_AttendanceStepper.sharedInstance.stepperDataList.count - 1)
-        {
-            cell.verticalView.isHidden = true
-        }
-        
-        let rowIndex = indexPath.row
-        var objStepperModel: DCRStepperModel = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[rowIndex]
-        
-        cell.selectedIndex = rowIndex
-        
-        cell.cardView.isHidden = true
-        cell.emptyStateView.isHidden = true
-        cell.emptyStateView.clipsToBounds = true
-        
-        if (objStepperModel.recordCount == 0)
-        {
-            cell.emptyStateSectionTitleLabel.text = objStepperModel.emptyStateTitle
-            cell.emptyStateSubTitleLabel.text = objStepperModel.emptyStateSubTitle
-            if indexPath.row == 0 {
-                cell.emptyStateAddButton.isHidden = false
-            } else {
-               if BL_TP_AttendanceStepper.sharedInstance.stepperDataList[0].recordCount != 0 {
-                    cell.emptyStateAddButton.isHidden = false
-                } else {
-                    cell.emptyStateAddButton.isHidden = true
-                }
-            }
-            cell.emptyStateView.isHidden = false
-            cell.cardView.isHidden = true
-            cell.cardView.clipsToBounds = true
-            cell.roundView.backgroundColor = UIColor(red: 158/255, green: 158/255, blue: 158/255, alpha: 1)
-        }
-        else if objStepperModel.recordCount > 0
-        {
-            cell.sectionTitleLabel.text = objStepperModel.sectionTitle
-            cell.emptyStateView.isHidden = true
-            cell.cardView.isHidden = false
-            cell.cardView.clipsToBounds = false
-            cell.rightButton.isHidden = false
-            cell.leftButton.isHidden = true
-            cell.parentTableView = tableView
-            cell.childTableView.reloadData()
-            
-            cell.roundView.backgroundColor = UIColor(red: 63/255, green: 81/255, blue: 181/255, alpha: 1.0)
-            cell.leftButton.setTitle(objStepperModel.leftButtonTitle, for: UIControlState.normal)
-            
-            cell.commonSectionTitleHeightConstraint.constant = 30
-            cell.sectionTitleView.isHidden = false
-        }
-        
-        cell.sectionTitleImageView.image = UIImage(named: objStepperModel.sectionIconName)
-        cell.sectionToggleImageView.isHidden = true
-        cell.sectionToggleImageView.clipsToBounds = true
-        
-        if (objStepperModel.recordCount > 1)
-        {
-            if (objStepperModel.isExpanded == true)
-            {
-                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-up-arrow")
-            }
-            else
-            {
-                cell.sectionToggleImageView.image = UIImage(named: "icon-stepper-down-arrow")
-            }
-            
-            cell.sectionToggleImageView.isHidden = false
-            cell.sectionToggleImageView.clipsToBounds = false
-        }
-        
-        cell.moreView.isHidden = true
-        cell.moreView.clipsToBounds = true
-        cell.moreViewHeightConstraint.constant = 0
-        cell.buttonViewHeight.constant = 20
-        
-        if (objStepperModel.isExpanded == false && objStepperModel.recordCount > 1)
-        {
-            cell.moreView.isHidden = false
-            cell.moreView.clipsToBounds = false
-            cell.moreViewHeightConstraint.constant = 20
-        }
-        else
-        {
-            cell.buttonViewHeight.constant = 20
-        }
-        
-        cell.sectionCoverButton.tag = rowIndex
-        cell.leftButton.tag = rowIndex
-        cell.rightButton.tag = rowIndex
-        cell.emptyStateAddButton.tag = rowIndex
-        
-        return cell
-    }
+//
+//        cell.moreView.isHidden = true
+//        cell.moreView.clipsToBounds = true
+//        cell.moreViewHeightConstraint.constant = 0
+//        cell.buttonViewHeight.constant = 20
+//
+//        if (objStepperModel.isExpanded == false && objStepperModel.recordCount > 1)
+//        {
+//            cell.moreView.isHidden = false
+//            cell.moreView.clipsToBounds = false
+//            cell.moreViewHeightConstraint.constant = 20
+//        }
+//        else
+//        {
+//            cell.buttonViewHeight.constant = 20
+//        }
+//
+//        cell.sectionCoverButton.tag = rowIndex
+//        cell.leftButton.tag = rowIndex
+//        cell.rightButton.tag = rowIndex
+//        cell.emptyStateAddButton.tag = rowIndex
+//
+//        return cell
+//    }
     
     //MARK: - Button Action
     
@@ -249,11 +184,11 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Office is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your PR Plan for Office is ready to submit in Applied status. Once submit you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
             
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -276,16 +211,16 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Office is ready to submit to your manager.\n\n Click 'Upload' to submit Office.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR calendar screen to submit your applied Office."
+        let alertMessage =  "Your PR Plan for Office is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
             _ = self.navigationController?.popViewController(animated: true)
             alertViewController.dismiss(animated: true, completion: nil)
         }))
         
-        alertViewController.addAction(UIAlertAction(title: "UPLOAD", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
             self.navigateToUploadTP()
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -300,10 +235,10 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
-    @IBAction func emptyStateAddBtnAction(_ sender: AnyObject)
-    {
-        addNewEntry(index: sender.tag)
-    }
+//    @IBAction func emptyStateAddBtnAction(_ sender: AnyObject)
+//    {
+//        addNewEntry(index: sender.tag)
+//    }
     
     @IBAction func AddBtnAction(_ sender: AnyObject)
     {
@@ -315,17 +250,17 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         modifyEntry(index: sender.tag)
     }
     
-    @IBAction func SectionExpandBtnAction(_ sender: UIButton)
-    {
-        let index = sender.tag
-        let stepperObj = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[index]
-        
-        if (stepperObj.recordCount > 1)
-        {
-            stepperObj.isExpanded = !stepperObj.isExpanded
-            reloadTableViewAtIndexPath(index: index)
-        }
-    }
+//    @IBAction func SectionExpandBtnAction(_ sender: UIButton)
+//    {
+//        let index = sender.tag
+//        let stepperObj = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[index]
+//
+//        if (stepperObj.recordCount > 1)
+//        {
+//            stepperObj.isExpanded = !stepperObj.isExpanded
+//            reloadTableViewAtIndexPath(index: index)
+//        }
+//    }
     
     //MARK:-- Button Action Helper Methods
     private func addNewEntry(index: Int)
@@ -333,9 +268,9 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
             switch index
             {
-            case 0:
+            case 0: break
                // navigateToAddWorkPlaceDetails()
-                 navigateToAddActivityDetails()
+                // navigateToAddActivityDetails()
             case 1:
               //  navigateToAddTravelPlace()
                 navigateToAddGeneralRemarks()//
@@ -350,9 +285,7 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         } else {
             switch index
             {
-            case 0:
-                //navigateToAddWorkPlaceDetails()
-                navigateToAddActivityDetails()
+            case 0: break
             case 1:
                 navigateToAddGeneralRemarks()
                // navigateToAddActivityDetails()
@@ -370,9 +303,9 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         if BL_TP_AttendanceStepper.sharedInstance.isTravelEnabled() {
             switch index
             {
-            case 0:
+            case 0: break
                 //navigateToEditWorkPlaceDetails()
-                navigateToEditActiviytDetails()
+               // navigateToEditActiviytDetails()
             case 1:
                 //navigateToEditTravelPlace()
                 navigateToEditGeneralRemarks()
@@ -386,9 +319,9 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
         } else {
             switch index
             {
-            case 0:
+            case 0: break
                // navigateToEditWorkPlaceDetails()
-                navigateToEditActiviytDetails()
+               // navigateToEditActiviytDetails()
             case 1:
                // navigateToEditActiviytDetails()
                 navigateToEditGeneralRemarks()
@@ -510,5 +443,118 @@ class TPAttendanceStepperViewController: UIViewController ,UITableViewDelegate, 
     @objc func backButtonClicked()
     {
         _ = navigationController?.popViewController(animated: false)
+    }
+}
+
+
+extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int
+    {
+        return BL_TP_AttendanceStepper.sharedInstance.stepperDataList.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceActivityCell")  as! TPAttendanceActivityCell
+            cell.txtselectActivity.inputView = self.pickerView
+            cell.txtselectActivity.text = selectedActivity
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceRemarkCell")  as! TPAttendanceRemarkCell
+            cell.remarkTxtView.text = generalRemarks
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if indexPath.row == 0 {
+              return 60
+            } else {
+            if generalRemarks.count != 0 {
+                return 120
+            } else {
+               return 0
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceHeaderCell") as! TPAttendanceHeaderCell
+        let hdrObj = BL_TP_AttendanceStepper.sharedInstance.stepperDataList[section]
+        cell.lblHeaderTitle.text = hdrObj.sectionTitle
+        cell.lblHeaderSubTitle.text = ""
+        cell.lblCount.text = "\(section + 1)"
+        if hdrObj.recordCount == 0 {
+            cell.bgRoundView.backgroundColor = UIColor.lightGray
+        } else {
+            cell.bgRoundView.backgroundColor = UIColor(red: 63/255, green: 81/255, blue: 181/255, alpha: 1.0)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceFooterCell") as! TPAttendanceFooterCell
+        cell.leftBtn.tag = section
+        cell.rightBtn.tag = section
+        cell.leftBtn.setTitle("Add Remarks", for: .normal)
+        cell.rightBtn.setTitle("Edit", for: .normal)
+        if section == 1 {
+            if generalRemarks.count != 0 {
+                cell.leftBtn.isHidden = true
+                cell.rightBtn.isHidden = false
+            } else {
+                cell.leftBtn.isHidden = false
+                cell.rightBtn.isHidden = true
+            }
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 40
+        } else {
+            return 40
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        } else {
+            return 60
+        }
+    }
+}
+
+extension TPAttendanceStepperViewController : UIPickerViewDelegate , UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return activityList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return activityList[row].Activity_Name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedActivity = activityList[row].Activity_Name
+        let dict:NSDictionary = ["Activity_Code":activityList[row].Activity_Code,"Activity_Name":activityList[row].Activity_Name,"Project_Code":activityList[row].Project_Code!,"Project_Name":EMPTY]
+        
+        projectObj = ProjectActivityMaster(dict: dict)
+        BL_TP_AttendanceStepper.sharedInstance.updateAttendanceActivity(objActivity: projectObj!)
+        self.tableView.reloadData()
     }
 }

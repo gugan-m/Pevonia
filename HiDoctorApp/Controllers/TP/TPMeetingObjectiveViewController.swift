@@ -47,13 +47,14 @@ class TPMeetingObjectiveViewController: UIViewController {
         let val = userDCRProductList
         print(userDCRProductList)
         self.txtMeetingObjective.inputView = self.pickerview
+        self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Field)"
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if objDoctor != nil {
             let subTitle = NSMutableAttributedString()
-            let hdr = NSMutableAttributedString(string: "Meeting Objective for\n")
+            let hdr = NSMutableAttributedString(string: "Manage Meeting Plan for\n")
             let contactName = NSMutableAttributedString(string: objDoctor!.Customer_Name ?? "", attributes: [NSAttributedStringKey.foregroundColor: UIColor.darkGray,NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)])
                        subTitle.append(hdr)
                        subTitle.append(contactName)

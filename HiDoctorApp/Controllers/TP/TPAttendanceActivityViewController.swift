@@ -20,6 +20,7 @@ class TPAttendanceActivityViewController: UIViewController ,selectedActivityList
     var modifyActivityObj : TourPlannerHeader?
     var isComingFromModify : Bool = false
     
+    
     //MARK:- ViewController Lifecycle
     override func viewDidLoad()
     {

@@ -30,7 +30,7 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         //        removeVersionToastView()
         //        super.viewDidLoad()
         if isProspect == true {
-            self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Prospect)"
+            self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Prospecting)"
         } else {
             self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Field)"
         }
@@ -288,8 +288,8 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         
         let sb = UIStoryboard(name: commonListSb, bundle: nil)
         let vc:UserListViewController = sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
-        vc.navigationScreenName = TPStepperVCID
-        vc.navigationTitle = "User Selection"
+        vc.navigationScreenName = "TPFieldStepper"
+        vc.navigationTitle = "Whose Contacts ?"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -297,7 +297,7 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         let accom_sb = UIStoryboard(name: commonListSb, bundle: nil)
         let accom_vc = accom_sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
         accom_vc.navigationScreenName = "tpAccomanist"
-        accom_vc.navigationTitle = "User Selection"
+        accom_vc.navigationTitle = "Choose Ride Along"
         self.navigationController?.pushViewController(accom_vc, animated: false)
     }
     //MARK:-- Button Action Helper Methods
@@ -423,11 +423,18 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     //
         func showAlertToConfirmAppliedMode()
         {
-            let alertMessage =  "Your Offline PR is ready to submit in Applied status. Once submitted you can not edit your PR.\n\n Press 'Ok' to submit PR.\n OR \n Press 'Cancel'."
+            var alertMessage = ""
+            if isProspect == true {
+                alertMessage =  "Your PR Plan for Prospecting will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+            } else {
+                alertMessage =  "Your PR Plan for Field will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+            }
+            
+             
     
             let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
     
-            alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
                 alertViewController.dismiss(animated: true, completion: nil)
             }))
     
@@ -451,16 +458,20 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     
         func showAlertToUploadDCR()
         {
-            let alertMessage =  "Your Offline PR is ready to submit to your manager.\n\n Click 'Upload' to submit PR.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my PR' option from the PR calendar screen to submit your applied PR."
-    
+            var alertMessage = ""
+            if isProspect == true {
+                alertMessage = "Your PR Plan for Prospecting is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
+            } else {
+                alertMessage = "Your PR Plan for Field is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
+            }
             let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
     
-            alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
               _ = self.navigationController?.popViewController(animated: true)
                 alertViewController.dismiss(animated: true, completion: nil)
             }))
     
-            alertViewController.addAction(UIAlertAction(title: "UPLOAD", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
                 self.navigateToUploadTP()
                 alertViewController.dismiss(animated: true, completion: nil)
             }))
@@ -1193,8 +1204,10 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                        switch section {
                        case 0:
                            if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                            headerCell.lblectionSubTitle.text = ""
                                headerCell.lblSectionCount.backgroundColor = default_Blue
                            } else {
+                            headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
                                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
                            }
                        case 1:
@@ -1242,8 +1255,10 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 }
             case 2:
                 if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                    headerCell.lblectionSubTitle.text = ""
                     headerCell.lblSectionCount.backgroundColor = default_Blue
                 } else {
+                    headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
                     headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
                 }
             case 3:

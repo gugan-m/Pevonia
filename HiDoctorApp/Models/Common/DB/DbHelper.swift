@@ -2991,6 +2991,16 @@ class DBHelper: NSObject
         return chemistMasterList
     }
     
+    func getTPCustomerMasterList(customerEntityType: String) -> [CustomerMasterModel]?
+    {
+        var customerMasterList : [CustomerMasterModel]?
+        
+        try? dbPool.read { db in
+            customerMasterList = try CustomerMasterModel.fetchAll(db, "SELECT * FROM \(MST_CUSTOMER_MASTER) WHERE UPPER(Customer_Entity_Type) = ? ORDER BY Customer_Name",arguments:[customerEntityType])
+        }
+        
+        return customerMasterList
+    }
     
     func getCustomerMasterListOrderBy(regionCode: String, customerEntityType: String,orderBy : String) -> [CustomerMasterModel]?
     {

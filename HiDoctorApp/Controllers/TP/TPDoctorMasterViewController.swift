@@ -25,8 +25,8 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     var selectedIndex : Int! = 1
     var constrainedWidth : CGFloat!
     var cellIdentifier : String!
-    var regionCode : String!
-    var regionName : String!
+    var regionCode : String! = ""
+    var regionName : String! = ""
     var suffixConfigVal : [String]!
     var doctorMasterList : [CustomerMasterModel] = []
     var currentList : [CustomerMasterModel] = []
@@ -46,7 +46,6 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
     var isfromnotes: Bool = false
     var list: [String] = []
     var showOrganisation: String?
-    
     
     override func viewDidLoad()
     {
@@ -81,7 +80,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 DAL_TP_Stepper.sharedInstance.changeTPStatusToDraft(tpEntryId: TPModel.sharedInstance.tpEntryId)
             }
             
-            self.navigationItem.title = "\(appDoctorPlural) List"
+            self.navigationItem.title = "Choose \(appDoctorPlural)"
             
             addBarButtonItem()
             addRefreshBtn()
@@ -130,12 +129,25 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         
         if selectedIndex == 0
         {
-            self.navigationItem.rightBarButtonItems = [refreshBtn]
-            if let list = BL_TP_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: regionCode)
-            {
-                doctorMasterList = list
-                self.refreshLabelHeightConst.constant = 16
+            if regionCode.count != 0 {
+                self.navigationItem.rightBarButtonItems = [refreshBtn]
+                if let list = BL_TP_Doctor_Visit.sharedInstance.getTPDoctorMasterList()
+                    
+                {
+                    doctorMasterList = list
+                    self.refreshLabelHeightConst.constant = 16
+                }
+            } else {
+                self.navigationItem.rightBarButtonItems = [refreshBtn]
+                if let list = BL_TP_Doctor_Visit.sharedInstance.getTPDoctorMasterList()
+                    
+                {
+                    doctorMasterList = list
+                    self.refreshLabelHeightConst.constant = 16
+                }
             }
+            
+            
         }
             
         else if selectedIndex == 1

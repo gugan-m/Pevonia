@@ -580,11 +580,11 @@ class LeaveEntryViewController: UIViewController, UITextViewDelegate,leaveEntryL
         let alertMessage =  "Your Offline Not Working is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively, you can use 'Upload my DVR' option from the home screen to submit your applied Not Working."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
-        alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
             _ = self.navigationController?.popViewController(animated: true)
             alertViewController.dismiss(animated: true, completion: nil)
         }))
-        alertViewController.addAction(UIAlertAction(title: "UPLOAD", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
             self.navigateToUploadDCR(enabledAutoSync: false)
             alertViewController.dismiss(animated: true, completion: nil)
         }))

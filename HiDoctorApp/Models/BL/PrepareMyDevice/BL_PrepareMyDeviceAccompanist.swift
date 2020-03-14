@@ -93,6 +93,27 @@ class BL_PrepareMyDeviceAccompanist: NSObject
         }
     }
     
+    func getTPCustomerData(regionCodeArr: [String], completion: @escaping (Int) -> ())
+       {
+           WebServiceHelper.sharedInstance.getAccompanistCustomerData(accompanistRegionCodeArray: regionCodeArr) { (apiResponseObj) in
+               if (apiResponseObj.Status == SERVER_SUCCESS_CODE)
+               {
+                _ = self.getTPCustomerDataCallBack(regionCodeArr: regionCodeArr, apiResponseObj: apiResponseObj)
+                   completion(SERVER_SUCCESS_CODE)
+               }
+               else
+               {
+                   completion(apiResponseObj.Status)
+               }
+           }
+       }
+    
+    
+    
+    
+    
+    
+    
     func getAccDetailedProductData(completion: @escaping (Int) -> ())
     {
         let regionCodes = getAccompanistRegionCodes()
@@ -469,6 +490,36 @@ class BL_PrepareMyDeviceAccompanist: NSObject
         
         return true
     }
+    
+    private func getTPCustomerDataCallBack(regionCodeArr: [String], apiResponseObj: ApiResponseModel) -> Bool
+    {
+        var regionCodes: String = EMPTY
+        let regionCodeArray = regionCodeArr
+        
+        for regCode in regionCodeArray
+        {
+            regionCodes = regionCodes + "'" + regCode + "',"
+        }
+        
+        if (regionCodes != EMPTY)
+        {
+            regionCodes = regionCodes.substring(to: regionCodes.index(before: regionCodes.endIndex))
+        }
+        
+        deleteCustomerMasterData(regionCodes: regionCodes)
+        
+        if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
+        {
+            DBHelper.sharedInstance.insertCustomerMaster(array: apiResponseObj.list)
+        }
+        return true
+    }
+    
+    
+    
+    
+    
+    
     
     private func getSFCDataCallBack(isCalledFromMasterDataDownload: Bool, apiResponseObj: ApiResponseModel) -> Bool
     {

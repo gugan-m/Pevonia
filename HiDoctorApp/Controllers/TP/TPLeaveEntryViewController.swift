@@ -45,6 +45,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         let tpDate = TPModel.sharedInstance.tpDate
         txtCount.text = "\(String(0))/\(tpLeaveReasonLength)"
         startDate = tpDate!
+        self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Not Working)"
         fromDateLbl.text = stringDateFormat(date1: tpDate!)
         fromDateLbl.isEnabled = false
         leaveReason.delegate = self
@@ -377,11 +378,11 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your Offline Not Working Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your PR Plan for Not Working will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
             
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -404,11 +405,12 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     }
     func showAlertToConfirmUpdateLeaveAppliedMode()
     {
-        let alertMessage =  "Your Offline Not Working Application is ready to submit in Applied status. Once submit you can not edit your PR.\n\n Press 'OK' to submit PR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your PR Plan for Not Working will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        alertViewController.addAction(UIAlertAction(title: "CANCEL", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
             
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -432,17 +434,16 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     
     func showAlertToUploadTP()
     {
-        let alertMessage =  "Your Offline Not Working Application is ready to submit to your manager.\n\n Click 'Upload' to submit Not Working.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR calendar screen to submit your applied Not Working."
         
-        
+        let alertMessage = "Your PR Plan for Not Working is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
-        alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
             _ = self.navigationController?.popViewController(animated: true)
             alertViewController.dismiss(animated: true, completion: nil)
         }))
         
-        alertViewController.addAction(UIAlertAction(title: "UPLOAD", style: UIAlertActionStyle.default, handler: { alertAction in
+        alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
             self.navigateToUploadTP()
             alertViewController.dismiss(animated: true, completion: nil)
         }))

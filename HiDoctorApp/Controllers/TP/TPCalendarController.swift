@@ -4,7 +4,7 @@
 //
 //  Created by Vijay on 21/07/17.
 //  Copyright © 2017 swaas. All rights reserved.
-//
+//defaultDateFomat
 
 import UIKit
 import JTAppleCalendar
@@ -712,7 +712,8 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             emptyStateWrapper.isHidden = false
             scrollView.isHidden = true
             emptyStateHeaderView.backgroundColor = TPCellColor.draftedBgColor.color
-            self.showPlanningPopup(selectedDate: selectedDateString)
+            let selectedDateDisplay =  convertDateIntoString(date: self.selectedDate)
+            self.showPlanningPopup(selectedDate: selectedDateDisplay)
             holidayName = yetToPlan
         }
         

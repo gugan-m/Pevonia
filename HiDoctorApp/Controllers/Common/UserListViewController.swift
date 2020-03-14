@@ -178,26 +178,45 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
             else
             {
-                if userValueobj.isSelected
-                {
-                    cell.imgView.image = UIImage(named: "icon-tick")
-                }
-                else
-                {
-                    cell.imgView.image = UIImage(named: "icon-unselected")
-                }
-                if userValueobj.isReadOnly
-                {
-                    cell.imgView.image = UIImage(named: "icon-selected")
+                if navigationScreenName == "TPFieldStepper" {
                     
+                    if indexPath.row == 0 {
+                        cell.imgView.isHidden = true
+                    } else {
+                        cell.imgView.isHidden = false
+                        if userValueobj.isSelected
+                        {
+                            cell.imgView.image = UIImage(named: "icon-tick")
+                        }
+                        else
+                        {
+                            cell.imgView.image = UIImage(named: "icon-unselected")
+                        }
+                        if userValueobj.isReadOnly
+                        {
+                            cell.imgView.image = UIImage(named: "icon-selected")
+                            
+                        }
+                    }
+                } else {
+                    cell.imgView.isHidden = false
+                    if userValueobj.isSelected
+                    {
+                        cell.imgView.image = UIImage(named: "icon-tick")
+                    }
+                    else
+                    {
+                        cell.imgView.image = UIImage(named: "icon-unselected")
+                    }
+                    if userValueobj.isReadOnly
+                    {
+                        cell.imgView.image = UIImage(named: "icon-selected")
+                        
+                    }
                 }
-                
             }
-            
-            
             cell.selectionStyle = .none
         }
-        
         return cell
     }
     
@@ -513,6 +532,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     selectedAccompanyList.remove(accompanistObj)
                 }
             }
+            nextBtn = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(nextScreenBtnAction))
             toggleTickButton()
             self.setButtonTextColor()
             tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
@@ -581,13 +601,13 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
         }  else if navigationScreenName == "TPFieldStepper" {
             
-            let filtered = userCurrentList.filter{
-                $0.isSelected == true
-            }
-            if (filtered.count > 0)
-            {
+//            let filtered = userCurrentList.filter{
+//                $0.isSelected == true
+//            }
+//            if (filtered.count > 0)
+//            {
                 self.navigationItem.rightBarButtonItems = [nextBtn]
-            }
+          //  }
         }
     }
     
@@ -932,7 +952,6 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.emptyStateLbl.text = "No Internet Connection Please Check your connection"
             }
         }
-        
         else if navigationScreenName == UserListScreenName.LeaveAccompanistList.rawValue
         {
             let accompanistList = BL_HourlyReport.sharedInstance.getAllChildUser()
@@ -942,16 +961,28 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
         }
         else if navigationScreenName == "TPFieldStepper" {
-             self.addBarButtonItem()
-             userWrapperList =  convertToUserMasterModel(accompanistList: BL_PrepareMyDeviceAccompanist.sharedInstance.getAllAccompanists()!)
-        } else if navigationScreenName == "TPFieldStepperAddRideALong"{
+             nextBtn = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.plain, target: self, action: #selector(nextScreenBtnAction))
+             toggleTickButton()
+            userWrapperList = BL_TP_Doctor_Visit.sharedInstance.convertToTPDoctorVisitUserModel()!
+            let selectedDoctorList = BL_TPStepper.sharedInstance.doctorList
+            for doctor in selectedDoctorList {
+                for num in 0..<userWrapperList.count{
+                    if doctor.Region_Code == userWrapperList[num].userObj.Region_Code {
+                        userWrapperList[num].isSelected = true
+                    } else {
+                        userWrapperList[num].isSelected = false
+                    }
+                }
+            }
+            self.tableView.reloadData()
+        } else if navigationScreenName == "TPFieldStepperAddRideALong" {
             self.addBarButtonItem()
             userWrapperList =  convertToUserMasterModel(accompanistList: BL_PrepareMyDeviceAccompanist.sharedInstance.getAllAccompanists()!)
         }
         
         if navigationScreenName != UserListScreenName.MessageUserList.rawValue && navigationScreenName != UserListScreenName.LockReleaseList.rawValue
         {
-        changeCurrentArray(list: userWrapperList , type : 1)
+           changeCurrentArray(list: userWrapperList , type : 1)
         }
     }
     
@@ -1171,29 +1202,41 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             messageUserListDelegate?.setSelectedMessageUserList(accompanistObj: getSelectedList,isFromCc: self.isFromCC )
             self.navigationController?.popViewController(animated: true)
         } else if navigationScreenName == "TPFieldStepper" {
-            showLoader()
-            let arr = doneButtonAction()
-            print("currentAccList",doneButtonAction())
-            self.getAccompanistDataPendingList(userList:arr)
-            let accList = accompanistDataDownloadPendingUsersList()
-            BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
-            BL_TPStepper.sharedInstance.downloadAccompanistData(selectedAccompanistList: accList){ (status) in
-
-                if (status == SERVER_SUCCESS_CODE)
-                {
-                    WebServiceHelper.sharedInstance.syncMasterDataDownloadDetails(postData: self.getPostData(sectionName: "Download Accompanist from PR"), completion: { (apiObj) in
-                        self.hideLoader()
-                    self.showToast(message: "\(PEV_ACCOMPANIST) data downloaded successfully")
-                    BL_TPStepper.sharedInstance.getAccompanistDataPendingList()
-                        
-
-                    })
-                }
-                else
-                {
-                    self.showToast(message: "Error while downloading accompanist data. Please try again later")
+            
+            var regionArr:[String] = [String]()
+            let filteredArr = userCurrentList.filter{
+                           $0.isSelected == true
+            }
+            for item in filteredArr {
+                regionArr.append(item.userObj.Region_Code)
+            }
+            print(regionArr)
+            let regionCodeArr =  Array(Set(regionArr))
+            print(regionCodeArr)
+            if filteredArr.count == 0 {
+                let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
+                            vc.regionCode = getRegionCode()
+                            self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                showLoader()
+                BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
+                  BL_PrepareMyDeviceAccompanist.sharedInstance.getTPCustomerData(regionCodeArr: regionCodeArr) { (status) in
+                  if (status == SERVER_SUCCESS_CODE)
+                  {
+                      let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                      let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
+                      self.navigationController?.pushViewController(vc, animated: true)
+                     self.hideLoader()
+                  }
+                  else
+                  {
+                      self.hideLoader()
+                  }
                 }
             }
+            
+            
         }
     }
     

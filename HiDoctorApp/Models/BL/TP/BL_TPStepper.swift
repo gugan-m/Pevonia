@@ -490,7 +490,7 @@ class BL_TPStepper: NSObject
         
         stepperObjModel.sectionTitle = "Whom Am I Going To Meet"
         stepperObjModel.emptyStateTitle = "Whom Am I Going To Meet"
-        stepperObjModel.emptyStateSubTitle = "No.of.contacts planned for the day"
+        stepperObjModel.emptyStateSubTitle = "Number of Contacts planned "
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
@@ -506,7 +506,7 @@ class BL_TPStepper: NSObject
         
         stepperObjModel.sectionTitle = "Who Am I Going With"
         stepperObjModel.emptyStateTitle = "Who Am I Going With"
-        stepperObjModel.emptyStateSubTitle = "I am going alone / I will be accompained by"
+        stepperObjModel.emptyStateSubTitle = "I am going alone"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"

@@ -232,3 +232,53 @@ class TPAttendanceTableViewCell: UITableViewCell , UITableViewDelegate, UITableV
         }
     }
 }
+
+
+class TPAttendanceHeaderCell: UITableViewCell
+{
+    @IBOutlet weak var lblCount: UILabel!
+    @IBOutlet weak var lblHeaderTitle: UILabel!
+    @IBOutlet weak var lblHeaderSubTitle: UILabel!
+    @IBOutlet weak var bgRoundView: UIView!
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+
+}
+
+class TPAttendanceFooterCell: UITableViewCell
+{
+    @IBOutlet weak var leftBtn: UIButton!
+    @IBOutlet weak var rightBtn: UIButton!
+    
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+
+}
+
+class TPAttendanceRemarkCell: UITableViewCell
+{
+    @IBOutlet weak var remarkTxtView: UITextView!
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+
+}
+
+class TPAttendanceActivityCell: UITableViewCell
+{
+    @IBOutlet weak var txtselectActivity: UITextField!
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+
+}
