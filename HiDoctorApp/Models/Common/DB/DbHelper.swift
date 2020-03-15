@@ -5083,6 +5083,13 @@ class DBHelper: NSObject
         })
     }
     
+    func insertTPAttachmentDetail(dcrAttachmentModel: TPAttachmentModel)
+    {
+        try? dbPool.write({ db in
+            try dcrAttachmentModel.insert(db)
+        })
+    }
+
     func getAttachmentDetails(dcrId: Int, doctorVisitId: Int) -> [DCRAttachmentModel]?
     {
         var dcrAttachmentList: [DCRAttachmentModel]?
@@ -5093,6 +5100,29 @@ class DBHelper: NSObject
         
         return dcrAttachmentList
     }
+    
+    func getTPAttachmentDetails(tpId: Int, doctor_Code: String) -> [TPAttachmentModel]?
+       {
+           var tpAttachmentList: [TPAttachmentModel]?
+           
+           try? dbPool.read ({ db in
+               tpAttachmentList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ? AND Doctor_Code = ?", arguments : [tpId, doctor_Code])
+           })
+           
+           return tpAttachmentList
+       }
+    
+    func getTPAttachmentList(tpId: Int) -> [TPAttachmentModel]?
+    {
+        var tpAttachmentList: [TPAttachmentModel]?
+        
+        try? dbPool.read ({ db in
+        tpAttachmentList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ?", arguments : [tpId])
+        })
+        
+        return tpAttachmentList
+    }
+    
     
     func getLeaveAttachmentDetails(dcrDate: String) -> [DCRLeaveModel]?
     {
@@ -5114,6 +5144,17 @@ class DBHelper: NSObject
             }
         })
     }
+    
+    func deleteTpAttachment(tp_ID: Int,attachment_Name: String)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRAttachmentModel.fetchOne(db, "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ? AND Uploaded_File_Name = ?", arguments : [tp_ID,attachment_Name])
+            {
+                try! rowValue.delete(db)
+            }
+        })
+    }
+    
     func insertNotesAttachmentDetail(dcrAttachmentModel: NotesAttachment)
     {
         try? dbPool.write({ db in
@@ -5209,6 +5250,17 @@ class DBHelper: NSObject
         return modelList
     }
     
+    func getPendingTPAttachmentToUpload() -> [TPAttachmentModel]
+    {
+        var modelList : [TPAttachmentModel] = []
+        
+        try? dbPool.read ({ db in
+            modelList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id != '' AND Blob_URL = '' AND Uploaded_File_Name != '' AND Is_Success = -1 LIMIT \(maxConcurrentOperationCount)")
+        })
+        
+        return modelList
+    }
+
     func leaveAttachmentsToUpload() -> [DCRLeaveModel]
     {
         var modelList : [DCRLeaveModel] = []
@@ -5241,6 +5293,18 @@ class DBHelper: NSObject
             }
         })
     }
+    
+    func updateTPAttachmentBlobUrl(attachmentId: Int, blobUrl: String)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try TPAttachmentModel.fetchOne(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Doctor_Attachment_Id = ?", arguments: [attachmentId])
+            {
+                rowValue.attachmentBlobUrl = blobUrl
+                try! rowValue.update(db)
+            }
+        })
+    }
+    
     
     func updateLeaveAttachmentBlobUrl(attachmentId: Int, blobUrl: String)
     {
@@ -5312,6 +5376,20 @@ class DBHelper: NSObject
         return count
     }
     
+    func getFailureTPAttachmentCount() -> Int
+    {
+        var count: Int = 0
+        
+        try? dbPool.read { db in
+            count = try Int.fetchOne(db, "SELECT COUNT(*) FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id != '' AND Blob_URL = '' AND Uploaded_File_Name != '' AND Is_Success = 0")!
+        }
+        
+        return count
+    }
+    
+    
+    
+    
     func getFailureLeaveAttachmentCount() -> Int
     {
         var count: Int = 0
@@ -5339,6 +5417,12 @@ class DBHelper: NSObject
         executeQuery(query: "UPDATE \(TRAN_DCR_DOCTOR_VISIT_ATTACHMENT) SET Is_Success = -1 WHERE DCR_Doctor_Visit_Code != '' AND Blob_Url = '' AND Is_Success = 0")
     }
     
+    func updateFailureTPAttachmentStatus()
+       {
+           executeQuery(query: "UPDATE \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) SET Is_Success = -1 WHERE DCR_Doctor_Visit_Code != '' AND Blob_Url = '' AND Is_Success = 0")
+       }
+    
+    
     func getUploadableAttachments() -> [DCRAttachmentModel]
     {
         var modelList: [DCRAttachmentModel] = []
@@ -5349,6 +5433,21 @@ class DBHelper: NSObject
         
         return modelList
     }
+    
+    func getUploadableTPAttachments() -> [TPAttachmentModel]
+    {
+        var modelList: [TPAttachmentModel] = []
+        
+        try? dbPool.read ({ db in
+            modelList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id != '' AND Blob_URL = '' AND Uploaded_File_Name != ''")
+        })
+        
+        return modelList
+    }
+    
+    
+    
+    
     
     func getLeaveUploadableAttachments(dcrDate: String) -> [DCRLeaveModel]
     {

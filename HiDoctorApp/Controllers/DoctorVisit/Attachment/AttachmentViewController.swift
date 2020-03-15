@@ -18,7 +18,8 @@ class AttachmentViewController: UIViewController, UITableViewDelegate, UITableVi
     var  isFromNotes = false
     var attachmentList : [DCRAttachmentModel] = []
     var leaveAttachmentList : [DCRLeaveModel] = []
-
+    var tpattachmentList: [TPAttachmentModel] = []
+    
     //MARK:- Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +66,6 @@ class AttachmentViewController: UIViewController, UITableViewDelegate, UITableVi
             leaveAttachmentList = attachmentArr!
         }
         }
-        
         else
        {
         let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)

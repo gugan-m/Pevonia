@@ -139,3 +139,73 @@ class DCRAttachmentModel: Record
 //        ]
 //    }
 }
+
+
+class TPAttachmentModel: Record
+{
+    var attachmentId: Int?
+    var attachmentSize: String?
+    var isSuccess: Int!
+    var isFileDownloaded: Int!
+    var tpChecksumId: Int?
+    var tpDoctorId: Int?
+    var tpDoctorCode: String?
+    var tpDoctorRegionCode: String?
+    var attachmentBlobUrl: String?
+    var tpId: Int!
+    var attachmentName: String?
+    
+    
+    init(dict: NSDictionary)
+    {
+        self.tpId = (dict.value(forKey: "TP_Id") as! Int)
+        self.tpChecksumId = (dict.value(forKey: "Check_Sum_Id") as! Int)
+        self.tpDoctorId = (dict.value(forKey: "TP_Doctor_Id") as! Int)
+        self.attachmentName = dict.value(forKey: "Uploaded_File_Name") as? String
+        self.attachmentBlobUrl = dict.value(forKey: "Blob_URL") as? String
+        self.tpDoctorCode = dict.value(forKey: "Doctor_Code") as? String
+        self.tpDoctorRegionCode = dict.value(forKey: "Doctor_Region_Code") as? String
+       if let id = dict.value(forKey: "TP_Doctor_Attachment_Id") as? Int{
+            self.attachmentId = id
+       } else {
+        self.attachmentId = 0
+        }
+        if let success = dict.value(forKey: "Is_Success") as? Int {
+            self.isSuccess = success
+        } else {
+            self.isSuccess = 0
+        }
+        super.init()
+    }
+    
+    override class var databaseTableName: String
+    {
+        return TRAN_TP_DOCTOR_VISIT_ATTACHMENT
+    }
+    
+    required init(row: Row)
+    {
+        tpChecksumId = row["Check_Sum_Id"]
+        tpDoctorId = row["TP_Doctor_Id"]
+        tpId = row["TP_Id"]
+        attachmentName = row["Uploaded_File_Name"]
+        attachmentBlobUrl = row["Blob_URL"]
+        tpDoctorCode = row["Doctor_Code"]
+        tpDoctorRegionCode = row["Doctor_Region_Code"]
+        attachmentId = row["TP_Doctor_Attachment_Id"]
+        isSuccess = row["Is_Success"]
+        super.init(row: row)
+    }
+    override func encode(to container: inout PersistenceContainer) {
+        
+        container["Check_Sum_Id"] =  tpChecksumId
+        container["TP_Doctor_Id"] =  tpDoctorId
+        container["TP_Id"] =  tpId
+        container["Uploaded_File_Name"] = attachmentName
+        container["Blob_URL"] =  attachmentBlobUrl
+        container["Doctor_Code"] =  tpDoctorCode
+        container["Doctor_Region_Code"] =  tpDoctorRegionCode
+        container["TP_Doctor_Attachment_Id"] = attachmentId
+        container["Is_Success"] = isSuccess
+    }
+}

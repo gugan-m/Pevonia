@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Photos
+import AssetsLibrary
+import MobileCoreServices
 
-class TPMeetingObjectiveViewController: UIViewController {
+
+class TPMeetingObjectiveViewController: UIViewController ,UINavigationControllerDelegate, UIDocumentPickerDelegate {
     
     //MARK:- Outlets
     @IBOutlet weak var lblMeetingObjective: UILabel!
@@ -22,6 +26,7 @@ class TPMeetingObjectiveViewController: UIViewController {
     @IBOutlet weak var tblSelectedSample: UITableView!
     @IBOutlet weak var SelectedListHeaderView: UIView!
     @IBOutlet weak var selectedListView: UITableView!
+    @IBOutlet weak var cons_AttachmentHeight: NSLayoutConstraint!
     
     //MARK:- Variables
     var meetingObjectiveList: [CallObjectiveModel] = []
@@ -34,6 +39,7 @@ class TPMeetingObjectiveViewController: UIViewController {
     var searchtext = ""
     var objDoctor : StepperDoctorModel?
     var userDCRProductList : [DCRSampleModel] = []
+    var attachmentList : [TPAttachmentModel] = []
     
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
@@ -62,6 +68,8 @@ class TPMeetingObjectiveViewController: UIViewController {
         } else {
             self.lblMeetingObjective.text = ""
         }
+        self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+         self.tblAttachments.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,8 +145,119 @@ class TPMeetingObjectiveViewController: UIViewController {
     }
     
     func show_AddActionSheet() {
-        
+        showiCloudActionSheet()
     }
+    
+    @IBAction func removeAttachment(_ sender: UIButton) {
+        let attachment_Name = self.attachmentList[sender.tag].attachmentName
+        let alertController = UIAlertController(title: "\(attachment_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            let filename = self.attachmentList[sender.tag].attachmentName ?? ""
+            Bl_Attachment.sharedInstance.deleteTPAttachment(id: TPModel.sharedInstance.tpEntryId, fileName: filename)
+            self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: self.objDoctor!.Customer_Code)!
+            self.tblAttachments.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showiCloudActionSheet()
+    {
+        let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let iCloudDrive = UIAlertAction(title: "iCloud Library", style: .default, handler: {
+            (alert: UIAlertAction) -> Void in
+            self.uploadFilesFromiCloud()
+        })
+        actionSheetController.addAction(iCloudDrive)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
+            (alert: UIAlertAction) -> Void in
+            
+        })
+        actionSheetController.addAction(cancelAction)
+        
+        if SwifterSwift().isPhone
+        {
+            self.present(actionSheetController, animated: true, completion: nil)
+        }
+        else
+        {
+            if let currentPopoverpresentioncontroller = actionSheetController.popoverPresentationController{
+                currentPopoverpresentioncontroller.sourceView = self.view
+                currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
+                currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
+                self.present(actionSheetController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    //MARK:- Get Image using iCloud Drive
+    private func uploadFilesFromiCloud()
+    {
+        let value1 = [String(kUTTypePDF),String(kUTTypeImage),String(kUTTypeSpreadsheet), String(kUTTypeBMP)]
+        let value2 = [String(kUTTypeTIFF), String(kUTTypeZipArchive),String(kUTTypeText),docxTypeId,docTypeId]
+        var valueType: [String] = []
+        valueType.append(contentsOf: value1)
+        valueType.append(contentsOf: value2)
+        
+        let documentPickerController = UIDocumentPickerViewController(documentTypes:valueType, in: .import)
+        documentPickerController.delegate = self
+        documentPickerController.navigationController?.navigationBar.topItem?.title = " "
+        
+        self.present(documentPickerController, animated: true, completion: nil)
+    }
+    
+    //MARK:- Document picker delegates
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL)
+    {
+        var fileCount = Int()
+        fileCount = self.attachmentList.count
+        if fileCount < maxFileUploadCount
+        {
+            if let getData = NSData(contentsOf: url)
+            {
+                var fileSize = Float(getData.length)
+                fileSize = fileSize/(1024*1024)
+                if fileSize > maxFileSize
+                {
+                    AlertView.showAlertView(title: "Alert", message: "File size should not exceed \(maxFileSize) MB")
+                }
+                else
+                {
+                    let urlPath = url.path
+                    let fileSplittedString = urlPath.components(separatedBy: "/")
+                    if fileSplittedString.count > 0
+                    {
+                        let fileName = fileSplittedString.last!
+                        
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "ddMMyyyyhhmmssSSS"
+                        let timestamp:String = formatter.string(from: getCurrentDateAndTime())
+                        let modifiedFileName = "\(timestamp)-\(fileName)"
+                        let fileSize = Bl_Attachment.sharedInstance.convertToBytes(number: fileSize)
+                        Bl_Attachment.sharedInstance.saveAttachmentFile(fileData: getData as Data, fileName: modifiedFileName)
+                        Bl_Attachment.sharedInstance.insertTPAttachment(attachmentName: modifiedFileName, doctor_Id: 0, doctor_Code: objDoctor!.Customer_Code, doctor_Regioncode: objDoctor!.Region_Code)
+                    }
+                    self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+                    self.tblAttachments.reloadData()
+                }
+                
+            }
+        }
+        else
+        {
+                     AlertView.showAlertView(title: alertTitle, message: "You can not upload more than \(maxFileUploadCount) files")
+                }
+    }
+
+    
     
     @IBAction func act_stepper(_ sender: UIStepper) {
         
@@ -242,7 +361,8 @@ extension TPMeetingObjectiveViewController: UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tblAttachments
         {
-           return 1
+            self.cons_AttachmentHeight.constant = CGFloat(self.attachmentList.count * 50)
+            return self.attachmentList.count
         }
         else if tableView == tblSelectedSample
         {
@@ -261,9 +381,10 @@ extension TPMeetingObjectiveViewController: UITableViewDelegate,UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        if tableView == tblAttachments
        {
-          let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjAttachmentcell")
-          cell?.textLabel!.text = "attachment123.png"
-          return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjAttachmentcell") as! TpMeetingObjAttachmentcell
+        cell.lblAttachmentName.text = self.attachmentList[indexPath.row].attachmentName
+        cell.btnDelete.tag = indexPath.row
+        return cell
        }
        else if tableView == tblSelectedSample
        {
@@ -306,6 +427,19 @@ extension TPMeetingObjectiveViewController: UITableViewDelegate,UITableViewDataS
            return 70
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == tblAttachments
+        {
+            let sb = UIStoryboard(name: mainSb, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
+            vc.webViewTitle = self.attachmentList[indexPath.row].attachmentName
+            let redirectUrl = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: self.attachmentList[indexPath.row].attachmentName!)
+            vc.siteURL = redirectUrl
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
 }
 
 //MARK:- Search Bar Delegate Methods
@@ -354,6 +488,9 @@ extension TPMeetingObjectiveViewController: UISearchBarDelegate {
 //MARK:- Table View Cell Class
 
 class TpMeetingObjAttachmentcell : UITableViewCell {
+    
+    @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var lblAttachmentName: UILabel!
     
     override class func awakeFromNib() {
         super.awakeFromNib()

@@ -490,6 +490,7 @@ let wsCheckDCRExist : String = "CheckDCRExist/"
 //MARK:- Doctor Visit Tracker
 let wsInsertDoctorVisitTracker: String = "InsertDoctorVisitTracker/"
 let wsUploadDCRAttachment: String = "DCRDoctorVisit/Attachment/Upload/"
+let wsUploadTPAttachment: String = "TP/DoctorAttachment/Upload/"
 let wsUploadChemistAttachment: String = "DCRChemistVisit/Attachment/Upload/"
 let wsUploadLeaveAttachment: String = "DCRDoctorVisit/UploadLeaveAttachment/"
 
@@ -640,6 +641,7 @@ enum DatabaseMigrationString : String
     case ADDRESS = "Address"
     case ATTACHMENT = "Attachment"
     case ACCOUNTNUMBER = "AccountNumber"
+    case TPATTACHMENT = "TPAttachment"
 }
 
 enum masterDataGroupName : String
@@ -734,6 +736,7 @@ let TRAN_DCR_DOCTOR_VISIT_POB_DETAILS = "tran_DCR_Doctor_Visit_POB_Details"
 let TRAN_DCR_DOCTOR_VISIT_POB_HEADER = "tran_DCR_Doctor_Visit_POB_Header"
 let TRAN_DCR_DOCTOR_VISIT_POB_REMARKS = "tran_DCR_Doctor_Visit_POB_Remarks"
 let TRAN_DCR_DOCTOR_VISIT_ATTACHMENT = "tran_DCR_Doctor_Visit_Attachment"
+let TRAN_TP_DOCTOR_VISIT_ATTACHMENT = "tran_TP_Doctor_Visit_Attachment"
 let TRAN_PS_Header = "tran_PS_Header"
 let TRAN_PS_ProductDetails = "tran_PS_Product_Details"
 let TRAN_PS_Collection_Values = "tran_PS_Collection_Values"

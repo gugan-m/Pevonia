@@ -117,7 +117,7 @@ class BL_TPUpload: NSObject
     
     private func getUploadData(tpEntryId: Int, objTPHeader: TourPlannerHeader) -> NSArray
     {
-        let dict: NSDictionary = ["lstTPHeaderStaging": getHeaderList(tpEntryId: tpEntryId, objTPHeader: objTPHeader), "lstTPAccompanist": getAccompanistList(tpEntryId: tpEntryId), "lstTpSFCStaging": getSFCList(tpEntryId: tpEntryId) , "lstTPDoctorsStaging": getDoctorList(tpEntryId: tpEntryId), "lstTPProductsStaging": getProductList(tpEntryId: tpEntryId)]
+        let dict: NSDictionary = ["lstTPHeaderStaging": getHeaderList(tpEntryId: tpEntryId, objTPHeader: objTPHeader), "lstTPAccompanist": getAccompanistList(tpEntryId: tpEntryId), "lstTpSFCStaging": getSFCList(tpEntryId: tpEntryId) , "lstTPDoctorsStaging": getDoctorList(tpEntryId: tpEntryId), "lstTPProductsStaging": getProductList(tpEntryId: tpEntryId),"lstTPDoctorAttachmentStaging":getAttchmentList(tpEntryId: tpEntryId)]
         
         let dataArray: NSArray = [dict]
         
@@ -129,7 +129,7 @@ class BL_TPUpload: NSObject
         let dataArray : NSMutableArray = []
         for tpHeaderObj in tpHeaderList
         {
-            let dict: NSDictionary = ["lstTPHeaderStaging": getHeaderList(tpEntryId: tpHeaderObj.TP_Entry_Id, objTPHeader: tpHeaderObj), "lstTPAccompanist": getAccompanistList(tpEntryId: tpHeaderObj.TP_Entry_Id ), "lstTpSFCStaging": getSFCList(tpEntryId: tpHeaderObj.TP_Entry_Id) , "lstTPDoctorsStaging": getDoctorList(tpEntryId: tpHeaderObj.TP_Entry_Id), "lstTPProductsStaging": getProductList(tpEntryId: tpHeaderObj.TP_Entry_Id)]
+            let dict: NSDictionary = ["lstTPHeaderStaging": getHeaderList(tpEntryId: tpHeaderObj.TP_Entry_Id, objTPHeader: tpHeaderObj), "lstTPAccompanist": getAccompanistList(tpEntryId: tpHeaderObj.TP_Entry_Id ), "lstTpSFCStaging": getSFCList(tpEntryId: tpHeaderObj.TP_Entry_Id) , "lstTPDoctorsStaging": getDoctorList(tpEntryId: tpHeaderObj.TP_Entry_Id), "lstTPProductsStaging": getProductList(tpEntryId: tpHeaderObj.TP_Entry_Id),"lstTPDoctorAttachmentStaging":getAttchmentList(tpEntryId: tpHeaderObj.TP_Entry_Id)]
             
             dataArray.add(dict)
             
@@ -390,6 +390,47 @@ class BL_TPUpload: NSObject
         
         return resultList
     }
+    
+    private func getAttchmentList(tpEntryId: Int) -> NSMutableArray
+    {
+        let tpAttachmentList = DAL_TP_Stepper.sharedInstance.getTPAttachmentList(tpId: tpEntryId)
+        let resultList: NSMutableArray = []
+        
+        for objAttachment in tpAttachmentList!
+        {
+            var doctorCode: String = EMPTY
+            var regionCode: String = EMPTY
+            
+            if (checkNullAndNilValueForString(stringData: objAttachment.tpDoctorCode) != EMPTY)
+            {
+                doctorCode = objAttachment.tpDoctorCode!
+            }
+            
+            if (checkNullAndNilValueForString(stringData: objAttachment.tpDoctorRegionCode) != EMPTY)
+            {
+                regionCode = objAttachment.tpDoctorRegionCode!
+            }
+            
+            let dict1: NSDictionary = [
+                   "TP_Id": objAttachment.tpId,
+                   "Check_Sum_Id": objAttachment.tpChecksumId ?? 0,
+                   "TP_Doctor_Id": 0,
+                   "Uploaded_File_Name": objAttachment.attachmentName ?? "",
+                   "Blob_URL": NSNull()]
+            let dict2: NSDictionary = ["Doctor_Code": doctorCode, "Doctor_Region_Code": regionCode]
+            var combinedAttributes : NSMutableDictionary!
+            combinedAttributes = NSMutableDictionary(dictionary: dict1)
+            combinedAttributes.addEntries(from: dict2 as! [AnyHashable : Any])
+            combinedAttributes = replaceEmptyStringToNullValues(combinedAttributes: combinedAttributes)
+            
+            resultList.add(combinedAttributes)
+        }
+        
+        return resultList
+    }
+    
+    
+    
     
     private func replaceEmptyStringToNullValues(combinedAttributes: NSMutableDictionary) -> NSMutableDictionary
     {

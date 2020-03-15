@@ -20,6 +20,13 @@ class Bl_Attachment: NSObject
         DBHelper.sharedInstance.insertAttachmentDetail(dcrAttachmentModel: attachmentModel)
     }
     
+    func insertTPAttachment(attachmentName: String, doctor_Id: Int, doctor_Code: String, doctor_Regioncode:String)
+    {
+        let dict : NSDictionary = ["TP_Id": TPModel.sharedInstance.tpEntryId, "Check_Sum_Id": 0, "TP_Doctor_Id": doctor_Id, "Uploaded_File_Name": attachmentName, "Blob_URL": "", "Doctor_Code": doctor_Code, "Doctor_Region_Code": doctor_Regioncode]
+        let tpAttachmentModel = TPAttachmentModel.init(dict: dict)
+        DBHelper.sharedInstance.insertTPAttachmentDetail(dcrAttachmentModel: tpAttachmentModel)
+    }
+    
     func insertChemistAttachment(attachmentName: String, attachmentSize: String)
     {
         let dict : NSDictionary = ["DCR_Id": DCRModel.sharedInstance.dcrId, "DCR_Chemist_Day_Visit_Id": ChemistDay.sharedInstance.chemistVisitId, "Blob_Url": "", "Uploaded_File_Name": attachmentName, "DCR_Actual_Date": DCRModel.sharedInstance.dcrDateString,"IsFile_Downloaded": 1]
@@ -47,6 +54,11 @@ class Bl_Attachment: NSObject
     func getDCRAttachment(dcrId: Int, doctorVisitId: Int) -> [DCRAttachmentModel]?
     {
         return DBHelper.sharedInstance.getAttachmentDetails(dcrId: dcrId, doctorVisitId: doctorVisitId)
+    }
+    
+    func getTPAttachment(tpId: Int, doctor_Code: String) -> [TPAttachmentModel]?
+    {
+        return DBHelper.sharedInstance.getTPAttachmentDetails(tpId: tpId, doctor_Code: doctor_Code)
     }
     
     func getDCRChemistAttachment(dcrId: Int, chemistVisitId: Int) -> [DCRChemistAttachment]?
@@ -82,6 +94,12 @@ class Bl_Attachment: NSObject
 //        return leaveAttachmentList
 //    }
 //
+    func deleteTPAttachment(id: Int, fileName: String)
+    {
+        DBHelper.sharedInstance.deleteTpAttachment(tp_ID: id,attachment_Name: fileName)
+        deleteAttachmentFile(fileName: fileName)
+    }
+
     func deleteAttachment(id: Int, fileName: String)
     {
         DBHelper.sharedInstance.deleteAttachment(attachmentId: id)
@@ -149,6 +167,21 @@ class Bl_Attachment: NSObject
         let modelList : [DCRAttachmentModel] = attachmentModel
         let filteredArray = modelList.filter{
             $0.attachmentId == id && $0.isChemistAttachment == isChemistAttachment
+        }
+        
+        if (filteredArray.count > 0)
+        {
+            filteredArray.first!.isSuccess = status
+        }
+        
+        return modelList
+    }
+    
+    func updateTPAttachmentStatus(id: Int, status: Int, attachmentModel: [TPAttachmentModel]) -> [TPAttachmentModel]
+    {
+        let modelList : [TPAttachmentModel] = attachmentModel
+        let filteredArray = modelList.filter{
+            $0.attachmentId == id
         }
         
         if (filteredArray.count > 0)

@@ -18,6 +18,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     @IBOutlet weak var startUploadBtn: UIButton!
     @IBOutlet weak var backToCalHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var btnUploadAttachment: UIButton!
     //MARK:- Variable
     var navigationTitle : String = ""
     var uploadList:[TourPlannerHeader] = []
@@ -641,6 +642,16 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         startUploadBtn.setTitle("UPLOAD", for: .normal)
     }
     
+    @IBAction func act_UploadAttachment(_ sender: UIButton) {
+         let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.AttachmentUploadVCID) as! DCRAttachmentUploadController
+        vc.isfromTP = true
+        self.navigationController!.pushViewController(vc, animated: true)
+        
+    }
+    
+    
+    
     @IBAction func backToCalendarAction(_ sender: Any)
     {
         if let navigationController = self.navigationController
@@ -654,12 +665,22 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     
     func showBackButton()
     {
+        let attachmentList = DBHelper.sharedInstance.getUploadableTPAttachments()
+        
         if startUploadBtn.title(for: .normal) == "COMPLETED"
         {
-            backToCalHeightConstraint.constant = 50
+            if attachmentList.count != 0{
+                backToCalHeightConstraint.constant = 0
+                self.btnUploadAttachment.isHidden = false
+            } else {
+                self.btnUploadAttachment.isHidden = true
+                backToCalHeightConstraint.constant = 50
+            }
+            
         }
         else
         {
+            self.btnUploadAttachment.isHidden = true
            backToCalHeightConstraint.constant = 0
         }
     }

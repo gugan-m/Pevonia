@@ -36,6 +36,203 @@ class BL_AttachmentOperation: NSObject
         }
     }
     
+    func initiateTPOperation()
+    {
+        let filteredFileList = DBHelper.sharedInstance.getPendingTPAttachmentToUpload()
+        
+        if statusList.count > 0
+        {
+            statusList = []
+        }
+        
+        for model in filteredFileList
+        {
+            let statusModel = FileStatus()
+            statusModel.fileId = model.attachmentId
+            statusModel.status = false
+            statusList.append(statusModel)
+            
+            print("Image upload starts")
+            TPimageUpload(model: model)
+        }
+    }
+    
+    
+    
+    func TPimageUpload(model: TPAttachmentModel)
+    {
+        let filePath = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: model.attachmentName!)
+        if filePath != ""
+        {
+            if let getFileData = NSData(contentsOfFile: filePath)
+            {
+                if checkInternetConnectivity()
+                {
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "ddMMyyyyhhmmssSSS"
+                    let _:String = formatter.string(from: getCurrentDateAndTime())
+                    let outputFilename = "\(model.attachmentName!)"
+                    
+                    var fileExtension: String!
+                    let fileSplittedString = model.attachmentName?.components(separatedBy: ".")
+                    if (fileSplittedString?.count)! > 0
+                    {
+                        fileExtension = fileSplittedString?.last
+                    }
+                    else
+                    {
+                        fileExtension = png
+                    }
+                   
+                    let urlString = wsRootUrl + wsUploadTPAttachment + "\(getCompanyCode())/" + "\(getUserCode())/" + getRegionCode()
+                    print("URL \(urlString)")
+                    let request = NSMutableURLRequest(url: NSURL(string: urlString)! as URL)
+                    request.httpMethod = "POST"
+                    request.timeoutInterval = 60.0
+                    
+                    let boundary = generateBoundaryString()
+                    request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                    
+                    // Post parameters
+                    let attachmentInfo : [String : Any] = ["TP_Id": model.tpId, "TP_Doctor_Id": model.tpDoctorCode, "Uploaded_File_Name": model.attachmentName]
+                    let attachmentArr: NSMutableArray = NSMutableArray()
+                    attachmentArr.add(attachmentInfo)
+                    
+                    var attachmentJson : String = ""
+                    if let json = try? JSONSerialization.data(withJSONObject: attachmentArr, options: []) {
+                        if let content = String(data: json, encoding: String.Encoding.utf8) {
+                            // here `content` is the JSON dictionary containing the String
+                            print(content)
+                            attachmentJson = content
+                        }
+                    }
+                    
+                    let params = ["TPDoctorVisitAttachmentInfo": attachmentJson, "localFileName": outputFilename]
+                    print("Params \(params)")
+                    
+                    var body = Data()
+                    
+                    for (key, value) in params {
+                        body.append("--\(boundary)\r\n")
+                        body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+                        body.append("\(value)\r\n")
+                    }
+                    
+                    body.append("--\(boundary)\r\n")
+                    body.append("Content-Disposition: form-data; name=\"DCRDoctorVisitFile\"; filename=\"\(outputFilename)\"\r\n")
+                    let contentType = Bl_Attachment.sharedInstance.getFileContentType(fileExtension: fileExtension)
+                    body.append("Content-Type: \(contentType)\r\n\r\n")
+                    body.append(getFileData as Data)
+                    body.append("\r\n")
+                    
+                    body.append("--\(boundary)--\r\n")
+                    
+                    request.httpBody = body
+                    
+                    let session = URLSession(configuration: URLSessionConfiguration.default)
+                    var task = URLSessionDataTask()
+                    
+                    let blockOperation = BlockOperation(block: {
+                        
+                        task = session.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+                            
+                            OperationQueue.main.addOperation({
+                                
+                                if error != nil
+                                {
+                                    let getError = error as NSError?
+                                    print("Service error \(String(describing: getError?.code))")
+                                    if getError?.code == -1009
+                                    {
+                                        self.showInternetErrorToast()
+                                    }
+                                    else
+                                    {
+                                        self.updateFailureStatus(model: model)
+                                    }
+                                }
+                                else
+                                {
+                                    if data != nil
+                                    {
+                                        if let response = response as? HTTPURLResponse , 200...299 ~= response.statusCode
+                                        {
+                                            print(response)
+                                            if let json = try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)
+                                            {
+                                                print(json)
+                                                if let jsonDict = json as? NSDictionary
+                                                {
+                                                    if let listarray = jsonDict.value(forKey: "list") as? NSArray
+                                                    {
+                                                        if listarray.count > 0
+                                                        {
+                                                            let dictionary = listarray[0] as! NSDictionary
+                                                            let blobUrl = dictionary["Blob_URL"] as! String
+                                                            DBHelper.sharedInstance.updateTPAttachmentBlobUrl(attachmentId: model.attachmentId!, blobUrl: blobUrl)
+                                                            self.updateSuccessStatus(model: model)
+                                                        }
+                                                        else
+                                                        {
+                                                            self.updateFailureStatus(model: model)
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        self.updateFailureStatus(model: model)
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    self.updateFailureStatus(model: model)
+                                                }
+                                            }
+                                            else
+                                            {
+                                                self.updateFailureStatus(model: model)
+                                            }
+                                        }
+                                        else
+                                        {
+                                            self.updateFailureStatus(model: model)
+                                        }
+                                    }
+                                    else
+                                    {
+                                        self.updateFailureStatus(model: model)
+                                    }
+                                }
+                                
+                            })
+                        }
+                        
+                        task.resume()
+                    })
+                    
+                    queue.addOperation(blockOperation)
+                }
+                else
+                {
+                    print("No internet connection")
+                    self.showInternetErrorToast()
+                }
+            }
+            else
+            {
+                print("Invalid file data")
+                self.updateFailureStatus(model: model)
+            }
+        }
+        else
+        {
+            print("File path is empty")
+            self.updateFailureStatus(model: model)
+        }
+    }
+    
+    
+    
+    
     func imageUpload(model: DCRAttachmentModel)
     {
         let filePath = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: model.attachmentName!)
@@ -433,6 +630,22 @@ class BL_AttachmentOperation: NSObject
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
     }
     
+    func updateFailureStatus(model: TPAttachmentModel)
+    {
+        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 0)
+        self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
+        let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 0]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+    }
+    
+    func updateSuccessStatus(model: TPAttachmentModel)
+    {
+        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 1)
+        self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
+        let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 1]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+    }
+    
     func showInternetErrorToast()
     {
         if self.statusList.count > 0
@@ -467,6 +680,34 @@ class BL_AttachmentOperation: NSObject
             }
         }
     }
+    
+    func updateTPStatusInitiateOperation(fileId: Int)
+    {
+        self.updateFileStatus(fileId: fileId)
+        
+        if self.checkFileStatusCompleted()
+        {
+            print("Cycle completed")
+            if DBHelper.sharedInstance.getPendingTPAttachmentToUpload().count > 0
+            {
+                self.initiateTPOperation()
+            }
+            else
+            {
+                if self.statusList.count > 0
+                {
+                    self.statusList = []
+                }
+                
+                if DBHelper.sharedInstance.getFailureTPAttachmentCount() > 0
+                {
+                    showAttachmentToastView(text: attachmentFailedMsg)
+                }
+            }
+        }
+    }
+    
+    
     
     func updateFileStatus(fileId: Int)
     {

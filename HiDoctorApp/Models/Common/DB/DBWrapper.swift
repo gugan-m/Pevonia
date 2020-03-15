@@ -1843,6 +1843,17 @@ func setupDatabase(_ application: UIApplication) throws
         
     }
     
+    var isTPAttachemntRequired: Bool = false
+
+    migrator.registerMigration(DatabaseMigrationString.TPATTACHMENT.rawValue) { db in
+        var createTableString = ""
+        createTableString = "CREATE TABLE IF NOT EXISTS \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) (" + "TP_Id INTEGER," + "Check_Sum_Id INTEGER," + "TP_Doctor_Id INTEGER," + "Uploaded_File_Name TEXT," + "Blob_URL TEXT," + "Doctor_Code TEXT," + "Doctor_Region_Code TEXT," + "Is_Success INTEGER," + "TP_Doctor_Attachment_Id INTEGER" + ")"
+        try db.execute(createTableString)
+       
+        isTPAttachemntRequired = true
+        
+    }
+    
     try migrator.migrate(dbPool)
     
     DatabaseMigration.sharedInstance.doV1Migration()
@@ -1981,6 +1992,11 @@ func setupDatabase(_ application: UIApplication) throws
     if isHospitalInfoRequired
     {
         BL_Version_Upgrade.sharedInstance.insertVersionUpgradeInfo(versionNumber: DatabaseMigrationString.ACCOUNTNUMBER.rawValue, isVersionUpdateCompleted: 0)
+    }
+
+    if isTPAttachemntRequired
+    {
+        BL_Version_Upgrade.sharedInstance.insertVersionUpgradeInfo(versionNumber: DatabaseMigrationString.TPATTACHMENT.rawValue, isVersionUpdateCompleted: 0)
     }
     
     
