@@ -11,6 +11,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 
 //MARK:- Development DEV Configuration Keys
 // use this url for production but not for live.
+//let wsRootUrl: String = "https://test-ios.hidoctor.me/"
 //let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 

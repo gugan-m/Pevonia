@@ -1404,7 +1404,7 @@ class DBHelper: NSObject
         var tourPlannerList : [TourPlannerHeader] = []
         
         try? dbPool.read { db in
-            tourPlannerList = try TourPlannerHeader.fetchAll(db, "SELECT tran_TP_Header.TP_Entry_Id,tran_TP_Header.TP_Id,tran_TP_Header.TP_Date,tran_TP_Header.TP_Day,tran_TP_Header.Activity,tran_TP_Header.Status,tran_TP_Header.CP_Id,tran_TP_Header.CP_Code,tran_TP_Header.CP_Name,tran_TP_Header.Category_Code,tran_TP_Header.Category_Name,tran_TP_Header.Activity_Code,tran_TP_Header.Activity_Name,tran_TP_Header.Project_Code,tran_TP_Header.Work_Place,tran_TP_Header.Meeting_Place,tran_TP_Header.Meeting_Time,tran_TP_Header.UnApprove_Reason,tran_TP_Header.TP_ApprovedBy,tran_TP_Header.Approved_Date,tran_TP_Header.Is_Weekend,tran_TP_Header.Is_Holiday,tran_TP_Header.Remarks,tran_TP_Header.Upload_Message,mst_Work_Category.*, mst_CP_Header.CP_Name FROM tran_TP_Header LEFT JOIN mst_Work_Category ON tran_TP_Header.Category_Code = mst_Work_Category.Category_Code LEFT JOIN mst_CP_Header ON tran_TP_Header.CP_Code = mst_CP_Header.CP_Code WHERE TP_Date = ? AND Activity = ? AND Status = ?", arguments : [date, activity, status])
+            tourPlannerList = try TourPlannerHeader.fetchAll(db, "SELECT tran_TP_Header.TP_Entry_Id,tran_TP_Header.TP_Id,tran_TP_Header.TP_Date,tran_TP_Header.TP_Day,tran_TP_Header.Activity,tran_TP_Header.Status,tran_TP_Header.CP_Id,tran_TP_Header.CP_Code,tran_TP_Header.CP_Name,tran_TP_Header.Category_Code,tran_TP_Header.Category_Name,tran_TP_Header.Activity_Code,tran_TP_Header.Activity_Name,tran_TP_Header.Project_Code,tran_TP_Header.Work_Place,tran_TP_Header.Meeting_Place,tran_TP_Header.Meeting_Time,tran_TP_Header.UnApprove_Reason,tran_TP_Header.TP_ApprovedBy,tran_TP_Header.Approved_Date,tran_TP_Header.Is_Weekend,tran_TP_Header.Is_Holiday,tran_TP_Header.TP_Type,tran_TP_Header.Remarks,tran_TP_Header.Upload_Message,mst_Work_Category.*, mst_CP_Header.CP_Name FROM tran_TP_Header LEFT JOIN mst_Work_Category ON tran_TP_Header.Category_Code = mst_Work_Category.Category_Code LEFT JOIN mst_CP_Header ON tran_TP_Header.CP_Code = mst_CP_Header.CP_Code WHERE TP_Date = ? AND Activity = ? AND Status = ?", arguments : [date, activity, status])
         }
         
         return tourPlannerList
@@ -2483,6 +2483,15 @@ class DBHelper: NSObject
         
         try? dbPool.read { db in
             userProductsList = try UserProductMapping.fetchAll(db ,"SELECT * FROM \(MST_USER_PRODUCT) WHERE DATE('\(dateString)') BETWEEN DATE(Effective_From) AND DATE(Effective_To)")
+        }
+        return userProductsList
+    }
+    func getUserProductsforTP() -> [UserProductMapping]!
+    {
+        var userProductsList : [UserProductMapping]!
+        
+        try? dbPool.read { db in
+            userProductsList = try UserProductMapping.fetchAll(db ,"SELECT * FROM \(MST_USER_PRODUCT)")
         }
         return userProductsList
     }
@@ -4765,7 +4774,7 @@ class DBHelper: NSObject
         
         
         try? dbPool.read { db in
-            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code where TP_Date = ?", arguments: [dateStr])
+            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code,\(TRAN_TP_DOCTOR).Call_Objective_ID,\(TRAN_TP_DOCTOR).Call_Objective_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code  where TP_Date = ?", arguments: [dateStr])
             
         }
         

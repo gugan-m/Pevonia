@@ -274,8 +274,10 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //
     private func updategeneralremarks()
         {
+            
             if (generalText.count > 0)
             {
+                BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = generalText
                 _ = BL_Stepper.sharedInstance.updateDCRGeneralRemarks(remarksTxt: generalText , dcrId : BL_Stepper.sharedInstance.dcrId)
                 showToast(message: "Updated remarks succesfully")
             }
@@ -1326,15 +1328,15 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
             {
                 let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
                 
-                if (BL_Stepper.sharedInstance.getPreviousGeneralRemarks().count > 0)
+                if (BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks != nil )
                 {
                 
-                remarksCell.txtViewRemarks.text = BL_Stepper.sharedInstance.getPreviousGeneralRemarks()
+                    remarksCell.txtViewRemarks.text = BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks
                 }
                 remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 40
+                remarksCell.txtViewRemarks.delegate = self
+                //remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
                 self.generalText = remarksCell.txtViewRemarks.text
-                remarksCell.txtViewRemarks.delegate = self as? UITextViewDelegate
-                remarksCell.txtViewRemarks.inputView = self.general
                 return remarksCell
             }
             else
@@ -1579,10 +1581,19 @@ extension DCRStepperNewViewController: UIPickerViewDelegate,UIPickerViewDataSour
             }
             DBHelper.sharedInstance.updateDCRWorkCategory(dcrHeaderObj: dcrheaderobj)
        
-        self.tableView.reloadData()
+        
         self.view.endEditing(true)
     }
     
+    
 }
+extension DCRStepperNewViewController : UITextViewDelegate {
 
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+         let str = "\(textView.text!)"
+              BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = str
+            generalText = str
+               return true
+    }
+}
 

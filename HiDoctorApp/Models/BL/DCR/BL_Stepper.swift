@@ -717,8 +717,8 @@ class BL_Stepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "Who Did I Go With"
-        stepperObjModel.emptyStateTitle = "Who Did I Go With"
+        stepperObjModel.sectionTitle = "Ride Along"
+        stepperObjModel.emptyStateTitle = "Ride Along"
         stepperObjModel.emptyStateSubTitle = "I am going alone "
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
@@ -926,8 +926,8 @@ class BL_Stepper: NSObject
                 stepperObjModel.doctorEmptyStatePendingCount = stepperObjModel.doctorEmptyStatePendingCount + " | No Pending \(appDoctor) Visit(s)"
             }
         }
-        stepperObjModel.sectionTitle = "Whom Did I Meet"
-        stepperObjModel.emptyStateTitle = "Whom Did I Meet"
+        stepperObjModel.sectionTitle = "Meetings"
+        stepperObjModel.emptyStateTitle = "Meetings"
         stepperObjModel.emptyStateSubTitle = "No.of.contacts met for the day"
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""

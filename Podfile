@@ -18,4 +18,5 @@ target 'HiDoctorApp' do
 	pod 'GoogleMaps'
   	pod 'GooglePlaces'
 	pod 'Charts', :git => ‘https://github.com/danielgindi/Charts.git', :branch => ‘master’
+    pod "RichEditorView"
 end

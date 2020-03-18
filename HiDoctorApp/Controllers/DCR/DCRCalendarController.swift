@@ -9,7 +9,13 @@
 import UIKit
 import JTAppleCalendar
 
-class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, dismissViewDelegate {
+class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, dismissViewDelegate, SSRadioButtonControllerDelegate {
+    
+    
+    func didSelectButton(selectedButton: UIButton?) {
+        
+    }
+    
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
@@ -28,6 +34,43 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     @IBOutlet weak var hidebtnHeightConst: NSLayoutConstraint!
     @IBOutlet var lblNoDcr: UILabel!
     
+    @IBOutlet weak var bg_BlurView: UIView!
+    @IBOutlet weak var planing_alertView: UIView!
+    @IBOutlet weak var lbl_PlanningHeader: UILabel!
+    
+    @IBAction func closepopupaction() {
+    
+    self.hidePlanningPopup()
+    
+    }
+    
+    @IBOutlet weak var Radiobtnfeild: UIButton!
+    @IBOutlet weak var Radiobtnprospect: UIButton!
+    
+    @IBOutlet weak var Radiobtnoffice: UIButton!
+    
+    @IBOutlet weak var Radiobtnnotworking: UIButton!
+    @IBAction func Okbtnactionforpopup() {
+        
+        if (radioButtonController?.selectedButton() == Radiobtnfeild)
+        {
+            moveToNexstScreen(title: DCRActivityName.fieldRcpa.rawValue)
+        }
+        else if (radioButtonController?.selectedButton() == Radiobtnprospect)
+        {
+            moveToNexstScreen(title: DCRActivityName.prospect.rawValue)
+        }
+        else if (radioButtonController?.selectedButton() == Radiobtnoffice)
+        {
+            moveToNexstScreen(title: DCRActivityName.attendance.rawValue)
+        }
+        else if (radioButtonController?.selectedButton() == Radiobtnnotworking)
+        {
+            moveToNexstScreen(title: DCRActivityName.leave.rawValue)
+        }
+        self.hidePlanningPopup()
+    }
+    var buttonArray = [UIButton]()
     var pickerView: UIPickerView!
     var selectedRow: Int = -1
     var monthArray:NSArray = []
@@ -73,6 +116,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     var date: String = ""
     var dcrVisitidArray: [String] = []
     var Visitid: Int = 0
+    var radioButtonController: SSRadioButtonsController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,8 +133,40 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         self.lblNoDcr.text = "No \(PEV_DCR) Entry is available for this day"
         loadCalendar()
         BL_Upload_DCR.sharedInstance.isFromDCRUpload = false
+        self.planing_alertView.layer.cornerRadius = 10.0
+        self.hidePlanningPopup()
+        buttonArray.append(Radiobtnfeild)
+        buttonArray.append(Radiobtnprospect)
+        buttonArray.append(Radiobtnoffice)
+        buttonArray.append(Radiobtnnotworking)
+        Radiobtnnotworking.isEnabled = false
+        Radiobtnoffice.isEnabled = false
+        Radiobtnprospect.isEnabled = false
+        Radiobtnfeild.isEnabled = false
+        radioButtonController = SSRadioButtonsController(buttons: Radiobtnfeild,Radiobtnprospect,Radiobtnoffice,Radiobtnnotworking)
+        radioButtonController!.delegate = self
+        radioButtonController!.shouldLetDeSelect = true
+        radioButtonController?.setButtonsArray(buttonArray)
     }
-    
+    func hidePlanningPopup() {
+        self.planing_alertView.isHidden = true
+        self.bg_BlurView.isHidden = true
+    }
+    func showPlanningPopup(selectedDate: String) {
+        // let newButtonWidth: CGFloat = 60
+         self.planing_alertView.isHidden = false
+         self.bg_BlurView.isHidden = false
+        self.lbl_PlanningHeader.text = "Entering for " + selectedDate.prefix(11)
+         UIView.animate(withDuration: 0.5, //1
+             delay: 0.0, //2
+             usingSpringWithDamping:0.1, //3
+             initialSpringVelocity: 3, //4
+             options: UIView.AnimationOptions.curveEaseInOut, //5
+             animations: ({ //6
+                // self.planning_alertView.frame = CGRect(x: 0, y: 0, width: newButtonWidth, height: newButtonWidth)
+                 self.planing_alertView.center = self.view.center
+         }), completion: nil)
+     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -199,6 +275,19 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         
     }
     func addaction(){
+        Radiobtnnotworking.isEnabled = false
+        Radiobtnoffice.isEnabled = false
+        Radiobtnprospect.isEnabled = false
+        Radiobtnfeild.isEnabled = false
+        Radiobtnnotworking.isSelected = false
+        Radiobtnprospect.isSelected = false
+        Radiobtnoffice.isSelected = false
+        Radiobtnfeild.isSelected = false
+        Radiobtnnotworking.alpha = 0.3
+        Radiobtnprospect.alpha = 0.3
+        Radiobtnoffice.alpha = 0.3
+        Radiobtnfeild.alpha = 0.3
+        
         
         removeVersionToastView()
         
@@ -225,9 +314,9 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 let array:NSArray = BL_DCRCalendar.sharedInstance.dcrCategoryValidation(date: selectedDate)
                 let dcrCategoryMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 
-                for title in array
+                for titles in array
                 {
-                    let categoryAction = UIAlertAction(title: title as? String, style: .default, handler: {
+                    let categoryAction = UIAlertAction(title: titles as? String, style: .default, handler: {
                         (alert: UIAlertAction) -> Void in
                         
                         if (BL_DCRCalendar.sharedInstance.dcrEntryTPApprovalNeeded())
@@ -239,40 +328,84 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                                 {
                                     if modelData[0].Is_WeekEnd == 1 || modelData[0].Is_Holiday == 1
                                     {
-                                        self.showTPDownloadAlert(title: title as! String, showSkip: true)
+                                        self.showTPDownloadAlert(title: titles as! String, showSkip: true)
                                     }
                                     else
                                     {
-                                        self.showTPDownloadAlert(title: title as! String, showSkip: false)
+                                        self.showTPDownloadAlert(title: titles as! String, showSkip: false)
                                     }
                                 }
                                 else
                                 {
-                                    self.activityValidation(title: title as! String)
+                                    self.activityValidation(title: titles as! String)
                                 }
                             }
                             else
                             {
-                                self.activityValidation(title: title as! String)
+                                self.activityValidation(title: titles as! String)
                             }
                         }
                         else if (BL_DCRCalendar.sharedInstance.isTpLockPrivilegeEnabled())
                         {
                             if BL_DCRCalendar.sharedInstance.canShowTPDownloadAlert(selectedDate: self.selectedDate!)
                             {
-                                self.showTPDownloadAlert(title: title as! String, showSkip: true)
+                                self.showTPDownloadAlert(title: titles as! String, showSkip: true)
                             }
                             else
                             {
-                                self.activityValidation(title: title as! String)
+                                self.activityValidation(title: titles as! String)
                             }
                         }
                         else
                         {
-                            self.activityValidation(title: title as! String)
+                            self.activityValidation(title: titles as! String)
                         }
                     })
                     dcrCategoryMenu.addAction(categoryAction)
+                    let tpModelList = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: DCRActivity.fieldRcpa.rawValue, status: TPStatus.approved.rawValue)
+                    if titles as! String == DCRActivityName.fieldRcpa.rawValue || title == "Field_RCPA"
+                    {
+                        
+                        
+                        if tpModelList.count > 0 && tpModelList[0].TpType != "P"
+                        {
+                            
+                            Radiobtnfeild.isSelected = true
+                        }
+                        Radiobtnfeild.isEnabled = true
+                        Radiobtnfeild.alpha = 1
+                    }
+                    else  if titles as! String == DCRActivityName.prospect.rawValue || title == "Field_RCPA"
+                    {
+                        if tpModelList.count > 0 && tpModelList[0].TpType == "P"
+                        {
+                            
+                            Radiobtnprospect.isSelected = true
+                        }
+                        Radiobtnprospect.isEnabled = true
+                        Radiobtnprospect.alpha = 1
+                    }
+                    else if titles as! String == DCRActivityName.attendance.rawValue
+                    {
+                        if tpModelList.count > 0 && tpModelList[0].Activity_Name == DCRActivityName.attendance.rawValue
+                        {
+                            
+                            Radiobtnoffice.isSelected = true
+                        }
+                        Radiobtnoffice.isEnabled = true
+                        Radiobtnoffice.alpha = 1
+                    }
+                    else if titles as! String == DCRActivityName.leave.rawValue
+                    {
+                        if tpModelList.count > 0 && tpModelList[0].Activity_Name != DCRActivityName.attendance.rawValue && tpModelList[0].TpType != "P" && tpModelList[0].TpType != "F"
+                        {
+                            Radiobtnnotworking.isSelected = true
+                        }
+                        Radiobtnnotworking.isEnabled = true
+                        Radiobtnnotworking.alpha = 1
+                    }
+                    
+                    
                 }
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
@@ -282,9 +415,10 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 
                 dcrCategoryMenu.addAction(cancelAction)
                 
+                
                 if SwifterSwift().isPhone
                 {
-                    self.present(dcrCategoryMenu, animated: true, completion: nil)
+                    //self.present(dcrCategoryMenu, animated: true, completion: nil)
                 }
                 else
                 {
@@ -292,7 +426,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         currentPopoverpresentioncontroller.sourceView = self.view
                         currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
                         currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
-                        self.present(dcrCategoryMenu, animated: true, completion: nil)
+                       // self.present(dcrCategoryMenu, animated: true, completion: nil)
                     }
                 }
             }
@@ -727,6 +861,69 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
         }
     }
+    func editaction()
+    {
+    let userStartDate : Date = getUserStartDate()
+           
+           if userStartDate.compare(selectedDate) == .orderedDescending
+           {
+               AlertView.showAlertView(title: alertTitle, message: addDCRErrorMsg, viewController: self)
+           }
+           else
+           {
+               if BL_DCRCalendar.sharedInstance.activityRestrictionValidation(dcrDate: selectedDate)
+               {
+                   showActivityRestrictionAlert()
+               }
+               else
+               {
+                   let detailModel = dcrDetailList[0]
+                   
+                   if !BL_DCRCalendar.sharedInstance.checkIsFutureDate(date: self.selectedDate)
+                   {
+                       if detailModel.dcrFlag != DCRFlag.leave.rawValue
+                       {
+                           let seqValidationMsg :  String = BL_DCRCalendar.sharedInstance.getSequentialEntryValidation(startDate : self.currentStartDate, endDate: self.selectedDate, isEditMode: true)
+                           
+                           if seqValidationMsg != ""
+                           {
+                               AlertView.showAlertView(title: alertTitle, message: seqValidationMsg, viewController: self)
+                               return
+                           }
+                       }
+                   }
+                   
+                   DCRModel.sharedInstance.dcrId = detailModel.dcrId
+                   DCRModel.sharedInstance.dcrDate = selectedDate
+                   DCRModel.sharedInstance.dcrDateString = convertDateIntoServerStringFormat(date: selectedDate)
+                   DCRModel.sharedInstance.dcrFlag = detailModel.dcrFlag
+                   DCRModel.sharedInstance.dcrStatus = detailModel.dcrStatus
+                   DCRModel.sharedInstance.dcrCode = detailModel.dcrCode!
+                   
+                   if detailModel.dcrFlag == DCRFlag.fieldRcpa.rawValue
+                   {
+                       
+                       DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                       DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                       BL_Stepper.sharedInstance.getAccompanistDataPendingList()
+                       BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
+                       self.navigateToNextScreen(storyBoard:dcrStepperSb , viewControllerId: "DCRStepperNew")
+                       
+                   }
+                   else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
+                   {
+                       DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                       DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                       self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: AttendanceStepperVcID)
+                   }
+                   else if detailModel.dcrFlag == DCRFlag.leave.rawValue
+                   {
+                       navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
+                   }
+                   removeVersionToastView()
+               }
+           }
+}
     @IBAction func editBtnAction(_ sender: AnyObject)
     {
         let userStartDate : Date = getUserStartDate()
@@ -829,7 +1026,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
             self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: "DCRStepperNew")
         }
-            if title == DCRActivityName.prospect.rawValue || title == "Field_RCPA"
+            if title == DCRActivityName.prospect.rawValue || title == "Prospect"
             {
                 BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.fieldRcpa.rawValue, selectedDate: self.selectedDate)
                 BL_Stepper.sharedInstance.getAccompanistDataPendingList()
@@ -1192,7 +1389,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             holidayLabel.text = holidayName
         }
         
-        getAddbtnVisiblity()
+        //getAddbtnVisiblity()
         //unApprovedEditHidden = BL_DCRCalendar.sharedInstance.isUnapprovedEditBtnHidden(dcrDate: selectedDate)
         headerLabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: selectedDate)
         
@@ -1263,6 +1460,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     
     @IBAction func showDetailAction(_ sender: AnyObject)
     {
+        editaction()
         let detailModel = dcrDetailList[sender.tag]
         let rowHeight = rowHeightArr.object(at: sender.tag) as! CGFloat
         var unapprovedText = "No Remarks"
@@ -1553,7 +1751,18 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         selectedDate = getServerFormattedDate(date: date)
         
         loadDCRDetails(viewHeight: self.view.frame.size.height - 64.0)
-        addaction()
+        dcrDetailList = BL_DCRCalendar.sharedInstance.getDCRDetails(date: selectedDate)!
+        if (dcrDetailList.count == 0)
+        {
+            addaction()
+            self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )
+        }
+        else if (dcrDetailList.count > 0 && dcrDetailList[0].dcrStatus != 3 && dcrDetailList[0].dcrStatus != 2 && dcrDetailList[0].dcrStatus != 1)
+        {
+            addaction()
+            self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )
+        }
+        
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

@@ -1244,7 +1244,12 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
                    let vc = sb.instantiateViewController(withIdentifier: doctorMasterVcID) as! DoctorMasterController
                    vc.regionCode = getRegionCode()
-                   self.navigationController?.pushViewController(vc, animated: true)
+                
+                 if let navigationController = self.navigationController
+                   {
+                       navigationController.popViewController(animated: false)
+                       navigationController.pushViewController(vc, animated: false)
+                   }
                }
                if filteredArr.count == 0 && !isFromDCR{
                    
@@ -1316,7 +1321,11 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                            let vc = sb.instantiateViewController(withIdentifier: doctorMasterVcID) as! DoctorMasterController
                            vc.isFromDVR = true
                            vc.RegionCodeArr = regionCodeArr
-                           self.navigationController?.pushViewController(vc, animated: true)
+                        if let navigationController = self.navigationController
+                        {
+                            navigationController.popViewController(animated: false)
+                            navigationController.pushViewController(vc, animated: false)
+                        }
                        }
                         else
                        {

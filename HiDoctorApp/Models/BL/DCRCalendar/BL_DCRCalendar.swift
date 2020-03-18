@@ -224,7 +224,8 @@ class BL_DCRCalendar: NSObject
     {
         resignedAccompanists = []
         tpPreFillAlert = []
-        
+        var tpattachlist: [TPAttachmentModel] = []
+        var tpsamplelist: [TourPlannerProduct] = []
         let dictionary : NSMutableDictionary = [:]
         
         dictionary.setValue(convertDateIntoServerStringFormat(date: selectedDate), forKey: "DCR_Actual_Date")
@@ -308,9 +309,9 @@ class BL_DCRCalendar: NSObject
                                 
                                
                                 
-                                let dict1: [String: Any] = ["DCR_Id": "\(dcrId)", "Doctor_Id": doctorObj?.Customer_Id ?? 0, "Doctor_Code": model.Doctor_Code, "Doctor_Region_Code": model.Doctor_Region_Code, "Doctor_Name": model.Doctor_Name, "Speciality_Name": model.Speciality_Name, "MDL_Number": model.MDL_Number ?? "", "Hospital_Name": model.Hospital_Name ?? "", "Category_Code": model.Category_Code ?? ""]
+                    let dict1: [String: Any] = ["DCR_Id": "\(dcrId)", "Doctor_Id": doctorObj?.Customer_Id ?? 0, "Doctor_Code": model.Doctor_Code, "Doctor_Region_Code": model.Doctor_Region_Code, "Doctor_Name": model.Doctor_Name, "Speciality_Name": model.Speciality_Name, "MDL_Number": model.MDL_Number ?? "", "Hospital_Name": model.Hospital_Name ?? "", "Category_Code": model.Category_Code ?? "","Call_Objective_ID":model.Call_Objective_Id,"Call_Objective_Name":model.Call_Objective_Name]
                                 
-                                let dict2: [String: Any] = ["Category_Name": model.Category_Name ?? "", "Visit_Mode": "", "Visit_Time": "", "POB_Amount": 0.0, "Is_CP_Doc": isCPDoc, "Is_Acc_Doctor": isAccDoc, "Remarks": EMPTY, "Lattitude":"", "Longitude": "", "Doctor_Region_Name": doctorObj?.Region_Name ?? "", "Local_Area": "" ?? "", "Sur_Name": "" , "Geo_Fencing_Deviation_Remarks": geoFencingDeviationRemarks, "Geo_Fencing_Page_Source": Constants.Geo_Fencing_Page_Names.EDETAILING]
+                                let dict2: [String: Any] = ["Category_Name": model.Category_Name ?? "", "Visit_Mode": "", "Visit_Time": "", "POB_Amount": 0.0, "Is_CP_Doc": isCPDoc, "Is_Acc_Doctor": isAccDoc, "Remarks": EMPTY, "Lattitude":"", "Longitude": "", "Doctor_Region_Name": doctorObj?.Region_Name ?? "", "Local_Area": "" ?? "", "Sur_Name": "" , "Geo_Fencing_Deviation_Remarks": geoFencingDeviationRemarks, "Geo_Fencing_Page_Source": Constants.Geo_Fencing_Page_Names.EDETAILING,"Call_Objective_ID":model.Call_Objective_Id,"Call_Objective_Name":model.Call_Objective_Name]
                                 
                                 let doctorDict: NSMutableDictionary = [:]
                                 doctorDict.addEntries(from: dict1)
@@ -318,14 +319,53 @@ class BL_DCRCalendar: NSObject
                                 
                                 let doctorVisitObj: DCRDoctorVisitModel = DCRDoctorVisitModel(dict: doctorDict)
                                 let doctorVisitId = DBHelper.sharedInstance.insertDCRDoctorVisit(dcrDoctorVisitObj: doctorVisitObj)
+                    
                                 
                     self.insertEDetailedProducts(customerCode: model.Doctor_Code, regionCode: model.Doctor_Region_Code, doctorVisitId: doctorVisitId, dcrId: dcrId)
                                 
-                                
+                    DBHelper.sharedInstance.getTPAttachmentDetails(tpId: tpId, doctor_Code:  model.Doctor_Code)
                                 
             //                    if (model.Customer_Code == EMPTY) && (model.Customer_Region_Code == EMPTY) && (dcrId == 0)
             //                    {
-                                
+                    // attachement
+                    tpattachlist = DBHelper.sharedInstance.getTPAttachmentDetails(tpId: tpId, doctor_Code:  model.Doctor_Code)!
+                    if(tpattachlist != nil && tpattachlist.count > 0)
+                    {
+                        for i in tpattachlist
+                        {
+                            let dictattach: [String: Any] = ["DCR_Visit_Code": doctorVisitObj.DCR_Doctor_Visit_Code , "DCR_Id": doctorVisitObj.DCR_Id, "DCR_Code": doctorVisitObj.DCR_Code, "Visit_Id": doctorVisitId, "Attachment_Size": "", "Is_Acc_Doctor": "", "Remarks": "", "Lattitude":"", "Longitude": "", "Blob_Url":i.attachmentBlobUrl, "Uploaded_File_Name": i.attachmentName, "DCR_Actual_Date":doctorVisitObj.DCR_Actual_Date, "Doctor_Name": doctorVisitObj.Doctor_Name, "Speciality_Name": doctorVisitObj.Speciality_Name]
+                            let doctorattach : DCRAttachmentModel = DCRAttachmentModel.init(dict: dictattach as NSDictionary)
+                            DBHelper.sharedInstance.insertAttachmentDetail(dcrAttachmentModel: doctorattach)
+                            }
+                    }
+                    
+                    tpsamplelist = DAL_TP_Stepper.sharedInstance.getSelectedSamplesFromTP(tp_ID: tpId, Doctorcode: model.Doctor_Code)
+                    let listuserproduct = DBHelper.sharedInstance.getUserProductsforTP()
+                    var sampleproductlist: [DCRSampleModel] = []
+                    var productid = 0
+                    if (tpsamplelist != nil && tpsamplelist.count > 0)
+                    {
+                        for i in tpsamplelist
+                        {
+                            for j in listuserproduct!
+                            {
+                                if(i.Product_Code == j.Product_Code)
+                                {
+                                    productid = j.Product_Id
+                                }
+                            }
+                            let dictsample: [String: Any] = ["Visit_Id": doctorVisitId , "DCR_Visit_Code": doctorVisitObj.DCR_Doctor_Visit_Code, "DCR_Id": doctorVisitObj.DCR_Id, "DCR_Code": doctorVisitObj.DCR_Code,"Product_Id":productid ,"Product_Code": i.Product_Code, "Product_Name": i.Product_Name, "Quantity_Provided": String(i.Quantity_Provided), "Speciality_Code":doctorObj?.Speciality_Code]
+                            let doctorsample : DCRSampleModel = DCRSampleModel.init(dict: dictsample as NSDictionary)
+                            sampleproductlist.append(doctorsample)
+                            
+                            
+                        }
+                        DBHelper.sharedInstance.insertDCRSampleProducts(sampleList: sampleproductlist)
+                    }
+                    
+                    
+                    
+                    
                                 var list: [DCRAccompanistModel] = []
 
                                 try? dbPool.read { db in
@@ -351,9 +391,28 @@ class BL_DCRCalendar: NSObject
 
                                             }
 
+                    
+                    var dcraccomplist: [TourPlannerAccompanist] = []
 
+                    dcraccomplist = DAL_TP_SFC.sharedInstance.getTPAccompanistListForTP(tpId: tpId)!
+                        if dcraccomplist.count > 0
+                                    {
+                                            for j in dcraccomplist
+                                                   {
+                                                   
+                                                   
+                                                    let dict: NSDictionary = ["DCR_Id": doctorVisitObj.DCR_Id, "Acc_Region_Code": j.Acc_Region_Code, "Acc_User_Code": j.Acc_User_Code , "Acc_User_Name": j.Acc_User_Name, "Acc_User_Type_Name": j.Acc_User_Type_Name, "Employee_Name":j.Acc_Employee_Name,"Visit_ID": doctorVisitId]
+                                                       
+                                                       let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+                                                       DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+                                                       }
+                                    }
                 }
-                                }
+            }
+            
+            
+            
+            // end of doctor insert
            
         }
         

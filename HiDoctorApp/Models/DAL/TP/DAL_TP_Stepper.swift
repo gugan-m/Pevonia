@@ -301,6 +301,16 @@ class DAL_TP_Stepper: NSObject {
         
         return sampleList
     }
+    func getSelectedSamplesFromTP(tp_ID: Int,Doctorcode: String) -> [TourPlannerProduct]
+    {
+        var sampleList: [TourPlannerProduct] = []
+        
+        try? dbPool.read { db in
+            sampleList = try TourPlannerProduct.fetchAll(db, "SELECT * FROM \(TRAN_TP_PRODUCT) WHERE TP_Id = ? AND Doctor_Code = ?", arguments: [tp_ID,Doctorcode])
+        }
+        
+        return sampleList
+    }
     
     func getTPAttachmentList(tpId: Int) -> [TPAttachmentModel]?
     {

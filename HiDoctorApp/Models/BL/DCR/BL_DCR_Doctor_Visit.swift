@@ -71,14 +71,15 @@ class BL_DCR_Doctor_Visit: NSObject
             {
                 self.getAccompanistData()
             }
+            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.detailing)
+            {
+                    self.getDetailProductData()
+            }
             else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.samples)
             {
                 self.getSampleProductData()
             }
-            else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.detailing)
-            {
-                self.getDetailProductData()
-            }
+            
             else if(dynmicOrderData[dynamicArrayValue] == Constants.ChemistDayCaptureValue.assets)
             {
                 self.getAssetData()

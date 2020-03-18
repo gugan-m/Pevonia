@@ -22,6 +22,16 @@ class DAL_TP_SFC: NSObject {
 
         return accompanistList
     }
+    func getTPAccompanistListForTP(tpId: Int) -> [TourPlannerAccompanist]?
+       {
+           var accompanistList: [TourPlannerAccompanist] = []
+           
+           try? dbPool.read { db in
+               accompanistList = try TourPlannerAccompanist.fetchAll(db, "SELECT \(TRAN_TP_ACCOMPANIST).*,mst_Accompanist.Employee_name, mst_Accompanist.Region_Name FROM \(TRAN_TP_ACCOMPANIST) INNER JOIN mst_Accompanist ON \(TRAN_TP_ACCOMPANIST).Acc_Region_Code = mst_Accompanist.Region_Code AND \(TRAN_TP_ACCOMPANIST).Acc_User_Code = mst_Accompanist.User_Code WHERE \(TRAN_TP_ACCOMPANIST).TP_Id = ? ORDER BY mst_Accompanist.Employee_name", arguments: [tpId])
+           }
+
+           return accompanistList
+       }
     
     func getPlaceList(regionCode: String, categoryName: String) -> [SFCMasterModel]?
     {
