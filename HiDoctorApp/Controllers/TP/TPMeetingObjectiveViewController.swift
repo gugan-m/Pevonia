@@ -40,7 +40,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     var objDoctor : StepperDoctorModel?
     var userDCRProductList : [DCRSampleModel] = []
     var attachmentList : [TPAttachmentModel] = []
-     var selectedCallObj : CallObjectiveModel?
+    var selectedCallObj : CallObjectiveModel?
     
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
@@ -53,9 +53,19 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
         self.getSamplesList()
         let val = userDCRProductList
         print(userDCRProductList)
+        setDoneButton()
         self.txtMeetingObjective.inputView = self.pickerview
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Field)"
         // Do any additional setup after loading the view.
+    }
+    
+    func setDoneButton() {
+        let button = UIButton(type: UIButton.ButtonType.custom)
+        button.setImage(UIImage(named: "icon-done"), for: .normal)
+        button.addTarget(self, action:#selector(doneAction), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let barButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = barButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +85,14 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+       saveMeetingObjective()
+    }
+    
+    @objc func doneAction() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func saveMeetingObjective() {
         if selectedSampleArr.count != 0 && objDoctor != nil {
             let currentList = convertToDCRSampleModel(list: selectedSampleArr)
                 BL_TPStepper.sharedInstance.insertSelectedSamples(doctorCode: objDoctor!.Customer_Code, regionCode: objDoctor!.Region_Code, lstDCRSamples: currentList)
@@ -103,7 +121,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
         }
         self.consSelectedTblHeight.constant = selected_thblHeight
         let tbl_Sample_maxy = self.tblSamples.frame.origin.y + self.tblSamples.frame.maxY
-        return CGSize(width: self.view.frame.width, height: selected_thblHeight + tbl_Sample_maxy + serch_listHeight)
+        return CGSize(width: self.view.frame.width, height: selected_thblHeight + tbl_Sample_maxy)
     }
     
     func getMeetingObjective() {

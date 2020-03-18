@@ -1060,12 +1060,15 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         }
         let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name":selectedWorkPlace , "CP_Name": "","CP_Code": "","Work_Area": "Florida", "Category_Code": CategoryCode]
         let objTPHeader: TourPlannerHeader = TourPlannerHeader(dict: dict)
-        
-        if BL_TPStepper.sharedInstance.doctorList.count != 0 {
+         if isProspect == true {
             DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
+         } else {
+            if BL_TPStepper.sharedInstance.doctorList.count != 0 {
+                DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
+            }
         }
+        
     }
-    
 }
 
 extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
@@ -1088,6 +1091,9 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             } else if indexPath.section == 2  {
                 let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
                 remarksCell.txtViewRemarks.attributedText = NSAttributedString(string: generalText)
+                remarksCell.txtViewRemarks.layer.cornerRadius = 5.0
+                remarksCell.txtViewRemarks.layer.borderWidth = 0.5
+                remarksCell.txtViewRemarks.layer.borderColor = UIColor.lightGray.cgColor
                 remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
                 return remarksCell
             } else {
@@ -1149,6 +1155,9 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             {
                 let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
                 remarksCell.txtViewRemarks.attributedText = NSAttributedString(string: generalText)
+                remarksCell.txtViewRemarks.layer.cornerRadius = 5.0
+                remarksCell.txtViewRemarks.layer.borderWidth = 0.5
+                remarksCell.txtViewRemarks.layer.borderColor = UIColor.lightGray.cgColor
                 remarksCell.txtViewRemarks.delegate = self
                 remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
                 return remarksCell
@@ -1430,6 +1439,9 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 let vc:TPMeetingObjectiveViewController = sb.instantiateViewController(withIdentifier: "TPMeetingObjectiveViewController") as! TPMeetingObjectiveViewController
                 vc.objDoctor = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
                 vc.userDCRProductList = BL_TPStepper.sharedInstance.doctorList[indexPath.row].sampleList1
+                let backItem = UIBarButtonItem()
+                backItem.title = "Back"
+                navigationItem.backBarButtonItem = backItem
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
@@ -1451,10 +1463,16 @@ extension TPStepperViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if isProspect == true {
+            if BL_TPStepper.sharedInstance.accompanistList.count == 0{
+                BL_TPStepper.sharedInstance.insertTourPlannerHeader()
+            }
+        }
         selectedWorkPlace = self.workCategory[row]
         self.updateWorkPlaceDetails()
         self.tableView.reloadData()
         self.view.endEditing(true)
+        
     }
     
 }

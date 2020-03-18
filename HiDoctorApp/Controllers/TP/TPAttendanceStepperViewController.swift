@@ -29,15 +29,16 @@ class TPAttendanceStepperViewController: UIViewController
         self.setSubmitViewHeightConst()
         addBackButtonView()
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Office)"
-       activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
-        BL_TP_AttendanceStepper.sharedInstance.clearAllArray()
+        activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
+        
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
+        BL_TP_AttendanceStepper.sharedInstance.clearAllArray()
         BL_TP_AttendanceStepper.sharedInstance.generateDataArray()
         reloadTableView()
-      selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
+        selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
         generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks 
     }
     
@@ -468,6 +469,9 @@ extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDat
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceRemarkCell")  as! TPAttendanceRemarkCell
             cell.remarkTxtView.text = generalRemarks
+            cell.remarkTxtView.layer.cornerRadius = 5.0
+            cell.remarkTxtView.layer.borderWidth = 0.5
+            cell.remarkTxtView.layer.borderColor = UIColor.lightGray.cgColor
             cell.remarkTxtView.delegate = self
             return cell
         }

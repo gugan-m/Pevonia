@@ -138,12 +138,12 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                 {
                     cell.statusLabel.text = "Not allowed to enter PR before your joining Date."
                     cell.statusLabel.textColor = UIColor.red
-                    cell.cellBgView.backgroundColor = UIColor.lightGray
+                    //cell.cellBgView.backgroundColor = UIColor.lightGray
                 }
                 else
                 {
                     cell.statusLabel.text = "PENDING"
-                    cell.cellBgView.backgroundColor = UIColor.clear
+                    //cell.cellBgView.backgroundColor = UIColor.clear
                     
                     if uploadObj.Status != -1
                     {
@@ -171,7 +171,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                 let uploadObj = uploadList[indexPath.row]
                 
                 cell.statusLabel.text = "PENDING"
-                cell.cellBgView.backgroundColor = UIColor.clear
+               // cell.cellBgView.backgroundColor = UIColor.clear
                 
                 cell.dateLbl.text = "\(getMonthName(monthNumber: selectedMonth!)) \(selectedYear!)"
                 if uploadObj.Status != -1
