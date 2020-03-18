@@ -1234,7 +1234,7 @@ class BL_TPStepper: NSObject
         DBHelper.sharedInstance.deleteTPHeader(tpEntryId: tpEntryId)
     }
     
-    private func insertTourPlannerHeader()
+     func insertTourPlannerHeader()
     {
         let day = getDayFromDate(date: TPModel.sharedInstance.tpDate)
         var activityCode: String = "FIELD_RCPA"

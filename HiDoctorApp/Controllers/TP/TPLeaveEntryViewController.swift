@@ -141,27 +141,27 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
 //            AlertView.showAlertView(title: alertTitle, message: "Please select Not Working type", viewController: self)
 //        }
 //        else
-        if leaveReason.text?.count == 0
-        {
-            AlertView.showAlertView(title: alertTitle, message: "Please enter Not Working reason", viewController: self)
-            isValidation = false
-        }
-        else if condenseWhitespace(stringValue: leaveReason.text!).count == 0
-        {
-            isValidation = false
-            AlertView.showAlertView(title: alertTitle, message: "Please Enter Not Working reason", viewController: self)
-        }
-        else if isSpecialCharacterExist()
-        {
-            let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
-            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Not Working reason", restrictedVal: restrictedCharacter, viewController: self)
-            isValidation = false
-        }
-        else if (leaveReason.text?.count)! > tpLeaveReasonLength
-        {
-            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Not Working reason", maxVal: tpLeaveReasonLength, viewController: self)
-            isValidation = false
-        }
+//        if leaveReason.text?.count == 0
+//        {
+//            AlertView.showAlertView(title: alertTitle, message: "Please enter Not Working reason", viewController: self)
+//            isValidation = false
+//        }
+//        else if condenseWhitespace(stringValue: leaveReason.text!).count == 0
+//        {
+//            isValidation = false
+//            AlertView.showAlertView(title: alertTitle, message: "Please Enter Not Working reason", viewController: self)
+//        }
+//        else if isSpecialCharacterExist()
+//        {
+//            let restrictedCharacter = BL_Expense.sharedInstance.checkToValidateSpecialCharacter()
+//            AlertView.showSpecialCharacterAlertview(title: alertTitle, subject: "Not Working reason", restrictedVal: restrictedCharacter, viewController: self)
+//            isValidation = false
+//        }
+//        else if (leaveReason.text?.count)! > tpLeaveReasonLength
+//        {
+//            AlertView.showMaxLengthExceedAlertView(title: alertTitle, subject: "Not Working reason", maxVal: tpLeaveReasonLength, viewController: self)
+//            isValidation = false
+//        }
         
 //        if (isValidation)
 //        {
