@@ -367,39 +367,52 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     {
                         
                         
-                        if tpModelList.count > 0 && tpModelList[0].TpType != "P"
+                        if tpModelList.count > 0
+                        {
+                        if tpModelList[0].TpType == "F" || tpModelList[0].Project_Code == "Field_RCPA"
                         {
                             
                             Radiobtnfeild.isSelected = true
+                        }
                         }
                         Radiobtnfeild.isEnabled = true
                         Radiobtnfeild.alpha = 1
                     }
                     else  if titles as! String == DCRActivityName.prospect.rawValue || title == "Field_RCPA"
                     {
-                        if tpModelList.count > 0 && tpModelList[0].TpType == "P"
+                        if tpModelList.count > 0
+                        {
+                        if tpModelList[0].TpType == "P"
                         {
                             
                             Radiobtnprospect.isSelected = true
+                        }
                         }
                         Radiobtnprospect.isEnabled = true
                         Radiobtnprospect.alpha = 1
                     }
                     else if titles as! String == DCRActivityName.attendance.rawValue
                     {
-                        if tpModelList.count > 0 && tpModelList[0].Activity_Name == DCRActivityName.attendance.rawValue
+                        if tpModelList.count > 0
+                        {
+                        if tpModelList[0].Project_Code == "ATTENDANCE" || tpModelList[0].TpType == "A"
                         {
                             
                             Radiobtnoffice.isSelected = true
+                        }
                         }
                         Radiobtnoffice.isEnabled = true
                         Radiobtnoffice.alpha = 1
                     }
                     else if titles as! String == DCRActivityName.leave.rawValue
                     {
-                        if tpModelList.count > 0 && tpModelList[0].Activity_Name != DCRActivityName.attendance.rawValue && tpModelList[0].TpType != "P" && tpModelList[0].TpType != "F"
+                        if tpModelList.count > 0
+                        {
+                        if tpModelList[0].Project_Code == "LEAVE"  || tpModelList[0].TpType == "L"
+                        
                         {
                             Radiobtnnotworking.isSelected = true
+                        }
                         }
                         Radiobtnnotworking.isEnabled = true
                         Radiobtnnotworking.alpha = 1
