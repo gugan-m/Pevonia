@@ -2,8 +2,8 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
-
+//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
@@ -479,7 +479,7 @@ let wsTop10Doctor : String = "Top10Doctor/"
 //MARK:- TP
 let wsTPUploadV61: String = "TPUploadV61/"
 let wsTPUploadV62: String = "TPUploadV62/"
-
+let wsGetTPDoctorAttachment: String = "GetTPDoctorAttachments"
 
 //MARK:- Change Password
 let wsUpdateResetPassword : String = "UpdateResetPassword/V2/"
@@ -1425,6 +1425,7 @@ enum DCRActivityName : String
     case fieldRcpa = "Field"
     case attendance = "Office"
     case leave = "Not Working"
+    case prospect = "Prospecting"
 }
 
 enum TPActivityName : String

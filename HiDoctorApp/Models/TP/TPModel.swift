@@ -10,7 +10,7 @@ import UIKit
 
 class TPModel: NSObject {
     static let sharedInstance : TPModel = TPModel()
-    
+      var tp_Type: String = "F"
     var tpId: Int!
     var tpFlag: Int!
     var tpEntryId : Int! //--like DCRID

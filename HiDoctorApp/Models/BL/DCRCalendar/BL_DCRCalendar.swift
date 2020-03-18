@@ -242,6 +242,8 @@ class BL_DCRCalendar: NSObject
         
         var tpId : Int = 0
         
+        
+        
         let tpModelList = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: flag, status: TPStatus.approved.rawValue)
         
         if tpModelList.count > 0
@@ -289,6 +291,70 @@ class BL_DCRCalendar: NSObject
         if (flag == DCRFlag.fieldRcpa.rawValue)
         {
             prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: dcrId)
+            
+            let tpDoctormodel = DBHelper.sharedInstance.getTpDoctorDetailsByTpId1(tpdate: selectedDate)
+            if (tpDoctormodel.count > 0 && tpModelList.count>0)
+            {
+                for model in tpDoctormodel
+                {
+                                let doctorObj = BL_DCR_Doctor_Visit.sharedInstance.getCustomerMasterByCustomerCode(customerCode: model.Doctor_Code, regionCode: model.Doctor_Region_Code)
+                                
+                                let isCPDoc = BL_DCR_Doctor_Visit.sharedInstance.isCPDoctor(doctorCode: model.Doctor_Code, doctorRegionCode: model.Doctor_Region_Code)
+                                let isAccDoc = BL_DCR_Doctor_Visit.sharedInstance.isAccompanistDoctor(doctorRegionCode: model.Doctor_Region_Code)
+                                var latitude: String = ""
+                                var longitude: String = ""
+                               
+                                var geoFencingDeviationRemarks: String = EMPTY
+                                
+                               
+                                
+                                let dict1: [String: Any] = ["DCR_Id": "\(dcrId)", "Doctor_Id": doctorObj?.Customer_Id ?? 0, "Doctor_Code": model.Doctor_Code, "Doctor_Region_Code": model.Doctor_Region_Code, "Doctor_Name": model.Doctor_Name, "Speciality_Name": model.Speciality_Name, "MDL_Number": model.MDL_Number ?? "", "Hospital_Name": model.Hospital_Name ?? "", "Category_Code": model.Category_Code ?? ""]
+                                
+                                let dict2: [String: Any] = ["Category_Name": model.Category_Name ?? "", "Visit_Mode": "", "Visit_Time": "", "POB_Amount": 0.0, "Is_CP_Doc": isCPDoc, "Is_Acc_Doctor": isAccDoc, "Remarks": EMPTY, "Lattitude":"", "Longitude": "", "Doctor_Region_Name": doctorObj?.Region_Name ?? "", "Local_Area": "" ?? "", "Sur_Name": "" , "Geo_Fencing_Deviation_Remarks": geoFencingDeviationRemarks, "Geo_Fencing_Page_Source": Constants.Geo_Fencing_Page_Names.EDETAILING]
+                                
+                                let doctorDict: NSMutableDictionary = [:]
+                                doctorDict.addEntries(from: dict1)
+                                doctorDict.addEntries(from: dict2)
+                                
+                                let doctorVisitObj: DCRDoctorVisitModel = DCRDoctorVisitModel(dict: doctorDict)
+                                let doctorVisitId = DBHelper.sharedInstance.insertDCRDoctorVisit(dcrDoctorVisitObj: doctorVisitObj)
+                                
+                    self.insertEDetailedProducts(customerCode: model.Doctor_Code, regionCode: model.Doctor_Region_Code, doctorVisitId: doctorVisitId, dcrId: dcrId)
+                                
+                                
+                                
+            //                    if (model.Customer_Code == EMPTY) && (model.Customer_Region_Code == EMPTY) && (dcrId == 0)
+            //                    {
+                                
+                                var list: [DCRAccompanistModel] = []
+
+                                try? dbPool.read { db in
+
+                                    let accompanistData = try DCRAccompanistModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_ACCOMPANIST) WHERE DCR_Id = ? AND Employee_Name != 'VACANT' AND Employee_Name != 'NOT ASSIGNED'  ", arguments: [dcrId])
+
+                                    list = accompanistData
+
+                                }
+
+                                            for j in list
+
+                                            {
+
+                                                if list.count > 0
+                                                {
+                                                    let dict: NSDictionary = ["DCR_Id": dcrId, "Acc_Region_Code": j.Acc_Region_Code, "Acc_User_Code": j.Acc_User_Code , "Acc_User_Name": j.Acc_User_Name, "Acc_User_Type_Name": j.Acc_User_Type_Name, "Employee_Name":j.Employee_Name,"Visit_ID": doctorVisitId]
+
+                                                    let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+                                                    DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+                                                }
+
+
+                                            }
+
+
+                }
+                                }
+           
         }
         
         if tpModelList.count > 0
@@ -457,7 +523,7 @@ class BL_DCRCalendar: NSObject
 //        {
 //            automaticPrefillHeader(objTPHeader: nil)
 //        }
-//        
+//
 //        automaticSFCPrefill()
 
     }
@@ -1129,11 +1195,12 @@ class BL_DCRCalendar: NSObject
                     {
                         array.add(DCRActivityName.fieldRcpa.rawValue)
                     }
-                    
+                     array.add(DCRActivityName.prospect.rawValue)
                     if entryValList.contains(PrivilegeValues.ATTENDANCE.rawValue)
                     {
                         array.add(DCRActivityName.attendance.rawValue)
                     }
+                   
                 } else if flag == DCRFlag.fieldRcpa.rawValue
                 {
                     if entryValList.contains(PrivilegeValues.ATTENDANCE.rawValue)
@@ -1152,11 +1219,12 @@ class BL_DCRCalendar: NSObject
                     {
                         array.add(DCRActivityName.fieldRcpa.rawValue)
                     }
-                    
+                    array.add(DCRActivityName.prospect.rawValue)
                     if !isLeaveCategoryHidden(date: paramDate) && entryValList.contains(PrivilegeValues.LEAVE.rawValue)
                     {
                         array.add(DCRActivityName.leave.rawValue)
                     }
+                    
                 }
             } else
             {
@@ -1166,7 +1234,7 @@ class BL_DCRCalendar: NSObject
                     {
                         array.add(DCRActivityName.fieldRcpa.rawValue)
                     }
-                    
+                    array.add(DCRActivityName.prospect.rawValue)
                     if entryValList.contains(PrivilegeValues.ATTENDANCE.rawValue)
                     {
                         array.add(DCRActivityName.attendance.rawValue)
@@ -1176,13 +1244,14 @@ class BL_DCRCalendar: NSObject
                     {
                         array.add(DCRActivityName.leave.rawValue)
                     }
+                    
                 } else
                 {
                     if entryValList.contains(PrivilegeValues.FIELD_RCPA.rawValue)
                     {
                         array.add(DCRActivityName.fieldRcpa.rawValue)
                     }
-                    
+                    array.add(DCRActivityName.prospect.rawValue)
                     if entryValList.contains(PrivilegeValues.ATTENDANCE.rawValue)
                     {
                         array.add(DCRActivityName.attendance.rawValue)
@@ -1192,6 +1261,7 @@ class BL_DCRCalendar: NSObject
                     {
                         array.add(DCRActivityName.leave.rawValue)
                     }
+                    
                 }
             }
         }
@@ -1893,3 +1963,4 @@ class BL_DCRCalendar: NSObject
         }
     }
 }
+

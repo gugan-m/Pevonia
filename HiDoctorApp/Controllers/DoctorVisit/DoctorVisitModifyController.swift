@@ -398,6 +398,119 @@ class DoctorVisitModifyController: UIViewController, UITableViewDelegate, UITabl
         }
         
     }
+    func modifyBtnAction(position: Int)
+    {
+        doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorList()
+        if isForChemistDay
+        {
+            let chemistObj = chemistlist[position]
+            self.navigateToModifyPage(Obj: chemistObj)
+        }
+        else if isFromAttendanceDoctor
+        {
+            let model = doctorVisitList[position]
+            let sb = UIStoryboard(name: attendanceStepperSb, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: AttendanceDoctorStepperControllerID) as! AttendanceDoctorStepperController
+            // vc.geoLocationSkipRemarks = geoFencingSkipRemarks
+           
+            //        DCRModel.sharedInstance.customerId = model.Doctor_Id
+            DCRModel.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: model.Doctor_Code)
+            DCRModel.sharedInstance.customerRegionCode = model.Doctor_Region_Code
+            DCRModel.sharedInstance.doctorVisitId = model.DCR_Doctor_Visit_Id
+            DCRModel.sharedInstance.customerVisitId = model.DCR_Doctor_Visit_Id
+            DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
+            
+            if DCRModel.sharedInstance.customerCode != ""
+            {
+                let custObj = BL_DCR_Doctor_Visit.sharedInstance.getLocalArea(customerCode: model.Doctor_Code!, regionCode: model.Doctor_Region_Code!)
+                let local_Area = checkNullAndNilValueForString(stringData: custObj?.Local_Area)
+                let dict : NSMutableDictionary = [:]
+                
+                dict.setValue(model.Doctor_Code, forKey: "Customer_Code")
+                dict.setValue(model.Doctor_Name, forKey: "Customer_Name")
+                dict.setValue(model.Doctor_Region_Name, forKey: "Region_Name")
+                dict.setValue(model.Speciality_Name, forKey: "Speciality_Name")
+                dict.setValue(model.Category_Name, forKey: "Category_Name")
+                dict.setValue(model.MDL_Number, forKey: "MDL_Number")
+                dict.setValue(model.Hospital_Name, forKey: "Hospital_Name")
+                dict.setValue(local_Area, forKey: "Local_Area")
+                dict.setValue(model.Sur_Name, forKey: "Sur_Name")
+                dict.setValue(model.Category_Code, forKey: "Category_Code")
+                
+                let customerModel = CustomerMasterModel.init(dict: dict)
+                vc.customerMasterModel = customerModel
+                
+                BL_DoctorList.sharedInstance.regionCode = checkNullAndNilValueForString(stringData: model.Doctor_Region_Code)
+                BL_DoctorList.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: model.Doctor_Code)
+            }
+            else
+            {
+                vc.flexiDoctorName = model.Doctor_Name
+                vc.flexiSpecialityName = model.Speciality_Name
+                
+                BL_DoctorList.sharedInstance.regionCode = EMPTY
+                BL_DoctorList.sharedInstance.customerCode = EMPTY
+            }
+            
+            if let navigationController = self.navigationController
+            {
+                navigationController.popViewController(animated: false)
+                navigationController.pushViewController(vc, animated: false)
+            }
+        }
+        else
+        {
+            let model = doctorVisitList[position]
+            let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: doctorVisitStepperVcID) as! DoctorVisitStepperController
+            //        DCRModel.sharedInstance.customerId = model.Doctor_Id
+            DCRModel.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: model.Doctor_Code)
+            DCRModel.sharedInstance.customerRegionCode = model.Doctor_Region_Code
+            DCRModel.sharedInstance.doctorVisitId = model.DCR_Doctor_Visit_Id
+            DCRModel.sharedInstance.customerVisitId = model.DCR_Doctor_Visit_Id
+            DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
+            
+            if DCRModel.sharedInstance.customerCode != ""
+            {
+                let custObj = BL_DCR_Doctor_Visit.sharedInstance.getLocalArea(customerCode: model.Doctor_Code!, regionCode: model.Doctor_Region_Code!)
+                let local_Area = checkNullAndNilValueForString(stringData: custObj?.Local_Area)
+                let dict : NSMutableDictionary = [:]
+                
+                dict.setValue(model.Doctor_Code, forKey: "Customer_Code")
+                dict.setValue(model.Doctor_Name, forKey: "Customer_Name")
+                dict.setValue(model.Doctor_Region_Name, forKey: "Region_Name")
+                dict.setValue(model.Speciality_Name, forKey: "Speciality_Name")
+                dict.setValue(model.Category_Name, forKey: "Category_Name")
+                dict.setValue(model.MDL_Number, forKey: "MDL_Number")
+                dict.setValue(model.Hospital_Name, forKey: "Hospital_Name")
+                dict.setValue(local_Area, forKey: "Local_Area")
+                dict.setValue(model.Sur_Name, forKey: "Sur_Name")
+                dict.setValue(model.Category_Code, forKey: "Category_Code")
+                
+                let customerModel = CustomerMasterModel.init(dict: dict)
+                vc.customerMasterModel = customerModel
+                
+                BL_DoctorList.sharedInstance.regionCode = checkNullAndNilValueForString(stringData: model.Doctor_Region_Code)
+                BL_DoctorList.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: model.Doctor_Code)
+            }
+            else
+            {
+                vc.flexiDoctorName = model.Doctor_Name
+                vc.flexiSpecialityName = model.Speciality_Name
+                
+                BL_DoctorList.sharedInstance.regionCode = EMPTY
+                BL_DoctorList.sharedInstance.customerCode = EMPTY
+            }
+            
+            if let navigationController = self.navigationController
+            {
+                navigationController.popViewController(animated: false)
+                navigationController.pushViewController(vc, animated: false)
+            }
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
+        
+    }
     
     @IBAction func removeBtnAction(_ sender: AnyObject)
     {

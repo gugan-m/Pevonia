@@ -41,13 +41,20 @@ class BL_TPRefresh: NSObject
                                             if (status == SERVER_SUCCESS_CODE)
                                             {
                                                 self.getTourPlannerUnfreezeDates(masterDataGroupName: EMPTY, startDate: startDate, endDate: endDate, completion: { (status) in
-                                                    
+                                                   
                                                     if (status == SERVER_SUCCESS_CODE)
                                                     {
-                                                        self.updateIDsInRelatedTables()
+                                                        self.GetTPDoctorAttachments(masterDataGroupName: EMPTY,completion: {
+                                                            (status) in
+                                                            if (status == SERVER_SUCCESS_CODE)
+                                                            {
+                                                                self.updateIDsInRelatedTables()
+                                                            }
+                                                            completion(status)
+                                                        })
+                                                    } else {
+                                                        completion(status)
                                                     }
-                                                    
-                                                    completion(status)
                                                 })
                                             }
                                             else
@@ -260,6 +267,32 @@ class BL_TPRefresh: NSObject
         }
     }
     
+    private func GetTPDoctorAttachments(masterDataGroupName:String,completion: @escaping (Int) -> ())
+       {
+           let apiName: String = ApiName.GetTPDoctorAttachments.rawValue
+           
+           BL_PrepareMyDevice.sharedInstance.insertApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
+           let dict = [
+            "TPStatus" : "ALL",
+           "UserCode" : getUserCode(),
+           "RegionCode" : getRegionCode(),
+           "CompanyCode" : getCompanyCode()
+           ]
+           WebServiceHelper.sharedInstance.getTourPlannerDoctorAttachment(postData:dict ) { (apiResponseObj) in
+               let statusCode = apiResponseObj.Status
+               
+               if (statusCode == SERVER_SUCCESS_CODE)
+               {
+                   let status = self.getTpDoctorAttachmentCallBack(apiResponseObj: apiResponseObj, apiName: apiName, masterDataGroupName: masterDataGroupName)
+                   completion(status)
+               }
+               else
+               {
+                   completion(statusCode!)
+               }
+           }
+       }
+    
     private func getTourPlannerPostData(startDate: String, endDate: String) -> [String: Any]
     {
         if (startDate != EMPTY && endDate != EMPTY)
@@ -380,6 +413,19 @@ class BL_TPRefresh: NSObject
         
         return 1
     }
+    
+    private func getTpDoctorAttachmentCallBack(apiResponseObj: ApiResponseModel, apiName: String, masterDataGroupName:String) -> Int
+    {
+        if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
+        {
+            DBHelper.sharedInstance.insertTPAttachment(array: apiResponseObj.list)
+        }
+        
+        BL_PrepareMyDevice.sharedInstance.updateApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
+        
+        return 1
+    }
+    
     
     private func updateIDsInRelatedTables()
     {

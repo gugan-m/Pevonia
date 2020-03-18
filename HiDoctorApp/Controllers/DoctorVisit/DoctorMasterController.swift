@@ -31,6 +31,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     var regionName : String!
     var suffixConfigVal : [String]!
     var doctorMasterList : [CustomerMasterModel] = []
+    var tempList : [CustomerMasterModel] = []
     var currentList : [CustomerMasterModel] = []
     var searchList : [CustomerMasterModel] = []
     var isFromRCPA: Bool = false
@@ -44,7 +45,8 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     var dcrID: Int = 0
     var currentList1 : [CustomerSortedModel] = []
     var showOrganisation: String?
-    
+    var isFromDVR = false
+    var RegionCodeArr :[String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         showOrganisation = (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.SHOW_ORGANISATION_IN_CUSTOMER))
@@ -65,6 +67,9 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         addCustomBackButtonToNavigationBar()
         setDefaults()
         // Do any additional setup after loading the view.
+        self.segmentedControlHeight.constant = 0
+        self.segmentedControl.isHidden = true
+        self.segmentedControlTopSpace.constant = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +125,66 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         let checkRegionCode = getUserModelObj()
         if selectedIndex == 0
         {
+            doctorMasterList.removeAll()
+            if (isFromDVR)
+            {
+                if (RegionCodeArr.count > 0)
+                {
+                //doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: getRegionCode())!
+                for i in RegionCodeArr
+                {
+                    tempList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: i)!
+                    for j in tempList
+                    {
+                        doctorMasterList.append(j)
+                    }
+                }
+                    tempList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: getRegionCode())!
+                    for i in tempList
+                    {
+                        doctorMasterList.append(i)
+                    }
+                }
+                else
+                {
+                tempList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: getRegionCode())!
+                for i in tempList
+                {
+                    doctorMasterList.append(i)
+                }
+                }
+                
+                tempList.removeAll()
+                
+              //  let arr = doctorMasterList.filter{ $0.Customer_Code !=  j.Customer_Code}
+                
+//                for i in doctorMasterList
+//                {
+//                    for j in 0..<doctorMasterList.count
+//                    {
+//                        if (i.Customer_Code == doctorMasterList[j].Customer_Code)
+//                        {
+//                            doctorMasterList.remove(at: j)
+//                        }
+//                    }
+//
+//                }
+                var seen = Set<String>()
+                var unique : [CustomerMasterModel] = []
+                for message in doctorMasterList {
+                    if !seen.contains(message.Customer_Code!) {
+                        unique.append(message)
+                        seen.insert(message.Customer_Code!)
+                    }
+                }
+                doctorMasterList = unique
+                //doctorMasterList = tempList
+            }
+            else
+            {
             doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: regionCode)!
+            }
+            //doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterListOrderBY(regionCode: <#T##String#>, orderBy: <#T##String#>)
             // doctorMasterList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterListOrderBY(regionCode: regionCode,orderBy : "Customer_Name")!
         }
         else if selectedIndex == 1
@@ -1264,7 +1328,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         
         if selectedIndex == 0
         {
-            currentList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: regionCode)!
+            currentList = doctorMasterList
         }
         else if selectedIndex == 1
         {
@@ -1452,3 +1516,4 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     }
     
 }
+

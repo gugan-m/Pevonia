@@ -706,13 +706,13 @@ class BL_TPStepper: NSObject
         
         if (TPModel.sharedInstance.tpStatus == 3){
             
-            let tpDoctorList = getTPSelectedDoctorDetails(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
+            let tpDoctorList = getTPSelectedDoctorList(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
             self.doctorList = convertToStepperDoctorModel(tpDoctorList: tpDoctorList)
             stepperObjModel.recordCount = self.doctorList.count
         }else if (TPModel.sharedInstance.tpStatus == 2){
             
             if (TPModel.sharedInstance.tpId == 0){
-                let tpDoctorList = getTPSelectedDoctorDetails(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
+                let tpDoctorList = getTPSelectedDoctorList(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
                 self.doctorList = convertToStepperDoctorModel(tpDoctorList: tpDoctorList)
                 stepperObjModel.recordCount = self.doctorList.count
             }else{
@@ -724,7 +724,7 @@ class BL_TPStepper: NSObject
         }else if (TPModel.sharedInstance.tpStatus == 0){
             
 //            if (TPModel.sharedInstance.tpId == 0){
-                let tpDoctorList = getTPSelectedDoctorDetails(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
+                let tpDoctorList = getTPSelectedDoctorList(TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
                 self.doctorList = convertToStepperDoctorModel(tpDoctorList: tpDoctorList)
                 stepperObjModel.recordCount = self.doctorList.count
 //            }else{
@@ -761,7 +761,8 @@ class BL_TPStepper: NSObject
             objStepperDoctor.Category_Name = objTPDoctor.Category_Name
             objStepperDoctor.MDL_Number = objTPDoctor.MDL_Number
             objStepperDoctor.Hospital_Name = objTPDoctor.Hospital_Name
-            
+            objStepperDoctor.Call_Objective_Id = objTPDoctor.Call_Objective_Id
+                       objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
             objStepperDoctor.sampleList = []
             
             let filteredList = lstSamples.filter{
@@ -1253,7 +1254,7 @@ class BL_TPStepper: NSObject
             projectCode = EMPTY
         }
         
-        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString, "TP_Day": day, "Activity": String(TPModel.sharedInstance.tpFlag), "Activity_Code": activityCode, "Activity_Name": activityCode, "Project_Code": projectCode, "TP_Status": TPStatus.drafted.rawValue, "Is_Weekend": TPModel.sharedInstance.isWeekend, "Is_Holiday": TPModel.sharedInstance.isHollday]
+        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString, "TP_Day": day, "Activity": String(TPModel.sharedInstance.tpFlag), "Activity_Code": activityCode, "Activity_Name": activityCode, "Project_Code": projectCode, "TP_Status": TPStatus.drafted.rawValue, "Is_Weekend": TPModel.sharedInstance.isWeekend, "Is_Holiday": TPModel.sharedInstance.isHollday,"TP_Type": TPModel.sharedInstance.tp_Type]
         
         if (objTPHeader != nil)
         {
@@ -1273,7 +1274,7 @@ class BL_TPStepper: NSObject
     {
         let day = getDayFromDate(date: TPModel.sharedInstance.tpDate)
         
-        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": convertDateIntoServerStringFormat(date: date), "TP_Day": day, "Activity": String(TPFlag.leave.rawValue), "Activity_Code": leaveTypeCode, "Activity_Name": leaveTypeName, "Project_Code": "LEAVE", "TP_Status": TPStatus.applied.rawValue, "Remarks": remarks, "Upload_Msg": EMPTY, "Is_Weekend": TPModel.sharedInstance.isWeekend, "Is_Holiday": TPModel.sharedInstance.isHollday]
+        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": convertDateIntoServerStringFormat(date: date), "TP_Day": day, "Activity": String(TPFlag.leave.rawValue), "Activity_Code": leaveTypeCode, "Activity_Name": leaveTypeName, "Project_Code": "LEAVE", "TP_Status": TPStatus.applied.rawValue, "Remarks": remarks, "Upload_Msg": EMPTY, "Is_Weekend": TPModel.sharedInstance.isWeekend, "Is_Holiday": TPModel.sharedInstance.isHollday,"TP_Type": "L"]
         
         if (objTPHeader != nil)
         {
@@ -1598,6 +1599,13 @@ class BL_TPStepper: NSObject
         // return DAL_TP_Stepper.sharedInstance.getSelectedDoctor(tp_Entry_Id:tp_Entry_Id)
         
         return DBHelper.sharedInstance.getTpDoctorDetailsByTpId(TP_Entry_Id: TP_Entry_Id)
+    }
+    
+    func getTPSelectedDoctorList(TP_Entry_Id: Int) -> [TourPlannerDoctor]
+    {
+        // return DAL_TP_Stepper.sharedInstance.getSelectedDoctor(tp_Entry_Id:tp_Entry_Id)
+        
+        return DBHelper.sharedInstance.getTpDoctorList(TP_Entry_Id: TP_Entry_Id)
     }
     
     func getWorkPlaceDetails(tp_Entry_Id: Int) -> TourPlannerHeader

@@ -246,6 +246,14 @@ class WebServiceHelper: NSObject
         }
     }
     
+    func getTourPlannerDoctorAttachment(postData : [String : Any],completion: @escaping (_ apiResponseObject: ApiResponseModel) -> ())
+    {
+        let urlString = wsRootUrl + wsTourPlannerApi + wsGetTPDoctorAttachment
+        WebServiceWrapper.sharedInstance.postApi(urlString: urlString, dataDictionary: postData, stringData: nil, screenName: ScreenName.Empty) { (apiResponseObject) in
+            completion(apiResponseObject)
+        }
+    }
+    
     func getDFCMaster(completion: @escaping (_ apiResponseObject: ApiResponseModel) -> ())
     {
         let urlString = wsRootUrl + wsDFCApi + wsGetDFC + getCompanyCode() + "/" + getUserCode() + "/" + getRegionCode()

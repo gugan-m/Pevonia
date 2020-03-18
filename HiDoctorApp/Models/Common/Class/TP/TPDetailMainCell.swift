@@ -19,6 +19,7 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
     
     var selectedIndex: Int!
     var activity: Int!
+    var isProspect = false
     let acc:[UserMasterWrapperModel] = BL_TPStepper.sharedInstance.getSelectedAccompanists(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -117,7 +118,7 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
             }
             else if (selectedIndex == 2)
             {
-                return BL_TPCalendar.sharedInstance.getChildPlaceDetailsCellHeight()
+                return 0
             }
             else if (selectedIndex == 3)
             {
@@ -138,7 +139,7 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
             }
             else
             {
-                return BL_TPCalendar.sharedInstance.getChildPlaceDetailsCellHeight()
+                return 0
             }
             
         }
@@ -160,7 +161,16 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
                 let callObjectModel = BL_TPCalendar.sharedInstance.callObjectDataList[indexPath.row]
                 
                 cell.line1Lbl.text = callObjectModel.objTitle
-                cell.line2Lbl.text = callObjectModel.objName
+                if callObjectModel.objTitle == "Call Objective" {
+                    if  isProspect == true{
+                        cell.line2Lbl.text = "Prospecting"
+                    } else {
+                        cell.line2Lbl.text = "Field"
+                    }
+                } else {
+                    cell.line2Lbl.text = callObjectModel.objName
+                }
+                
                 
                 return cell
             }
@@ -178,9 +188,9 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TPPlaceDetailCell") as! TPPlaceDetailCell
                 let sfcObjModel = BL_TPCalendar.sharedInstance.tourPlannerSFC[indexPath.row]
                 
-                cell.fromPlaceLbl.text = sfcObjModel.From_Place
-                cell.toPlaceLbl.text = sfcObjModel.To_Place
-                cell.travelModeLbl.text = sfcObjModel.Travel_Mode
+               // cell.fromPlaceLbl.text = "Arizona"
+             //   cell.toPlaceLbl.text = sfcObjModel.To_Place
+              //  cell.travelModeLbl.text = sfcObjModel.Travel_Mode
                 
                 return cell
             }
@@ -205,8 +215,13 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
                 let index = indexPath.row
                 let callObjectModel:CallObjectModel = BL_TPCalendar.sharedInstance.callObjectDataList[index]
                 
-                cell.line1Lbl.text = callObjectModel.objTitle
-                cell.line2Lbl.text = callObjectModel.objName
+               if callObjectModel.objTitle == "Work Category" {
+                    cell.line1Lbl.text = ""
+                    cell.line2Lbl.text = ""
+                } else {
+                    cell.line1Lbl.text = callObjectModel.objTitle
+                    cell.line2Lbl.text = callObjectModel.objName
+                }
                 
                 return cell
             }
@@ -215,9 +230,9 @@ class TPDetailMainCell: UITableViewCell, UITableViewDelegate, UITableViewDataSou
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TPPlaceDetailCell") as! TPPlaceDetailCell
                 let sfcObjModel = BL_TPCalendar.sharedInstance.tourPlannerSFC[indexPath.row]
                 
-                cell.fromPlaceLbl.text = sfcObjModel.From_Place
-                cell.toPlaceLbl.text = sfcObjModel.To_Place
-                cell.travelModeLbl.text = sfcObjModel.Travel_Mode
+//                cell.fromPlaceLbl.text = sfcObjModel.From_Place
+//                cell.toPlaceLbl.text = sfcObjModel.To_Place
+//                cell.travelModeLbl.text = sfcObjModel.Travel_Mode
                 
                 return cell
             }

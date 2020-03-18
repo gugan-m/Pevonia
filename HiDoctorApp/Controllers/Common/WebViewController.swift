@@ -63,8 +63,8 @@ class WebViewController: UIViewController, UIWebViewDelegate {
                         //                           let urlValue =  URL(string:siteURL)
                         //                            req = NSURLRequest(url: urlValue!)
                         //                        }
-                        let urlValue =  URL(string:siteURL)
-                        req = NSURLRequest(url: urlValue!)
+                        let urlValue =  checkedUrl
+                        req = NSURLRequest(url: urlValue)
                         self.webView.loadRequest(req as URLRequest)
                     }
                     else

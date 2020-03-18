@@ -435,11 +435,14 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bth-Y3-Ryx">
                                                             <rect key="frame" x="40" y="0.0" width="270" height="143"/>
                                                             <subviews>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qY2-f3-Nbi">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" allowsEditingTextAttributes="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qY2-f3-Nbi">
                                                                     <rect key="frame" x="10" y="10" width="250" height="123"/>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                                    <attributedString key="attributedText"/>
-                                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                                    <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="17"/>
+                                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="next"/>
+                                                                    <connections>
+                                                                        <outlet property="delegate" destination="ifP-G3-da7" id="Vzr-al-7To"/>
+                                                                    </connections>
                                                                 </textView>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -2435,7 +2438,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8d-ZA-noz" userLabel="Card View" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
                                                             <rect key="frame" x="49" y="4" width="263" height="2"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eco-0Y-smP" userLabel="Section Title View">
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eco-0Y-smP" userLabel="Section Title View">
                                                                     <rect key="frame" x="0.0" y="0.0" width="263" height="2"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-work" translatesAutoresizingMaskIntoConstraints="NO" id="Es6-GQ-bLU" userLabel="Section Header Image View" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
@@ -2470,7 +2473,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="M0l-xr-Y89" secondAttribute="trailing" constant="8" id="rKa-z7-5TO"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTC-zW-wT2" userLabel="Child table View">
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uTC-zW-wT2" userLabel="Child table View">
                                                                     <rect key="frame" x="0.0" y="2" width="263" height="0.0"/>
                                                                     <subviews>
                                                                         <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mxo-Wl-ou5" userLabel="Child Table View">
@@ -3082,21 +3085,21 @@
                                             <outlet property="rightBtn" destination="fff-Nf-NDz" id="2Zq-0B-FG2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TPAttendanceRemarkCell" rowHeight="66" id="en4-yM-YO0" userLabel="RemarksCell" customClass="TPAttendanceRemarkCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="218" width="320" height="66"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TPAttendanceRemarkCell" rowHeight="139" id="en4-yM-YO0" userLabel="RemarksCell" customClass="TPAttendanceRemarkCell" customModule="HiDOCTOR" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="218" width="320" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="en4-yM-YO0" id="nxv-FU-tp8">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UrM-DY-jkN">
-                                                    <rect key="frame" x="43" y="0.0" width="269" height="66"/>
+                                                    <rect key="frame" x="43" y="0.0" width="269" height="139"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ju-2U-hV3">
-                                                            <rect key="frame" x="5" y="5" width="259" height="56"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <rect key="frame" x="5" y="5" width="259" height="129"/>
+                                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                             <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
+                                                            <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="15"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                     </subviews>
@@ -3109,7 +3112,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIf-yB-9pS" userLabel="Vertical View">
-                                                    <rect key="frame" x="20" y="0.0" width="1" height="66"/>
+                                                    <rect key="frame" x="20" y="0.0" width="1" height="139"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="0rx-Cr-5Ax"/>

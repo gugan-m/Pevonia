@@ -40,6 +40,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     var objDoctor : StepperDoctorModel?
     var userDCRProductList : [DCRSampleModel] = []
     var attachmentList : [TPAttachmentModel] = []
+     var selectedCallObj : CallObjectiveModel?
     
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
@@ -69,6 +70,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
             self.lblMeetingObjective.text = ""
         }
         self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+        self.txtMeetingObjective.text = objDoctor?.Call_Objective_Name ?? ""
          self.tblAttachments.reloadData()
     }
     
@@ -78,6 +80,10 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
                 BL_TPStepper.sharedInstance.insertSelectedSamples(doctorCode: objDoctor!.Customer_Code, regionCode: objDoctor!.Region_Code, lstDCRSamples: currentList)
         } else {
             BL_TPStepper.sharedInstance.deleteSelectedSamplesForDoctor(tpEntryId: TPModel.sharedInstance.tpEntryId, doctorCode: objDoctor!.Customer_Code, regionCode: objDoctor!.Region_Code)
+        }
+        if selectedCallObj != nil  {
+            DBHelper.sharedInstance.saveTPMeetingObjective(TP_ID: TPModel.sharedInstance.tpEntryId, TP_DoctorID: objDoctor!.tpDoctorId, Doctor_Code: objDoctor!.Customer_Code, Obj_Code: selectedCallObj!.Call_Objective_ID, obj_Name: selectedCallObj!.Call_Objective_Name)
+            
         }
     }
     
@@ -345,6 +351,7 @@ extension TPMeetingObjectiveViewController: UIPickerViewDelegate,UIPickerViewDat
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedCallObj = self.meetingObjectiveList[row]
         self.txtMeetingObjective.text = self.meetingObjectiveList[row].Call_Objective_Name
         self.txtMeetingObjective.resignFirstResponder()
     }

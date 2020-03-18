@@ -1435,7 +1435,10 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
         cell.rightButton.tag = rowIndex
         cell.emptyStateAddButton.tag = rowIndex
         cell.emptyStateSkipButton.tag = rowIndex
-        
+        if (objStepperModel.leftButtonTitle == "ADD SAMPLE")
+        {
+            cell.rightButton.isHidden = true
+        }
         return cell
     }
     

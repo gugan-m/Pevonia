@@ -34,6 +34,7 @@ class SampleBatchProductModel: NSObject
     var title: String!
     var isShowSection: Bool!
     var sampleList: [DCRSampleModel] = []
+    var sampleListnew: [DCRSampleModel] = []
     var chemistSamplePromotion: [DCRChemistSamplePromotion] = []
 }
 

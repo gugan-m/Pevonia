@@ -290,7 +290,7 @@ class BL_DCR_Accompanist: NSObject
         return DCRModel.sharedInstance.dcrCode
     }
     
-    private func updateDCRStatusToDraft()
+     func updateDCRStatusToDraft()
     {
         DBHelper.sharedInstance.updateDCRStatus(dcrId: getDCRId(), dcrStatus: DCRStatus.drafted.rawValue, dcrCode: EMPTY)
         

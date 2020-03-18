@@ -1847,9 +1847,35 @@ func setupDatabase(_ application: UIApplication) throws
 
     migrator.registerMigration(DatabaseMigrationString.TPATTACHMENT.rawValue) { db in
         var createTableString = ""
+         var rows: [Row] = []
         createTableString = "CREATE TABLE IF NOT EXISTS \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) (" + "TP_Id INTEGER," + "Check_Sum_Id INTEGER," + "TP_Doctor_Id INTEGER," + "Uploaded_File_Name TEXT," + "Blob_URL TEXT," + "Doctor_Code TEXT," + "Doctor_Region_Code TEXT," + "Is_Success INTEGER," + "TP_Doctor_Attachment_Id INTEGER" + ")"
         try db.execute(createTableString)
-       
+       try dbPool.read { db in
+                 rows = try Row.fetchAll(db, "PRAGMA table_info('\(TRAN_TP_HEADER)')")
+             }
+             
+             if (!checkIsColumnExist(rowList: rows, columnName: "TP_Type"))
+             {
+                 createTableString = "ALTER TABLE \(TRAN_TP_HEADER) ADD TP_Type TEXT"
+                 try db.execute(createTableString)
+             }
+             
+             try dbPool.read { db in
+                  rows = try Row.fetchAll(db, "PRAGMA table_info('\(TRAN_TP_DOCTOR)')")
+             }
+                    
+             if (!checkIsColumnExist(rowList: rows, columnName: "Call_Objective_Id"))
+             {
+                 createTableString = "ALTER TABLE \(TRAN_TP_DOCTOR) ADD Call_Objective_Id INTEGER"
+                 try db.execute(createTableString)
+             }
+             
+             if (!checkIsColumnExist(rowList: rows, columnName: "Call_Objective_Name"))
+             {
+                 createTableString = "ALTER TABLE \(TRAN_TP_DOCTOR) ADD Call_Objective_Name TEXT"
+                 try db.execute(createTableString)
+             }
+             
         isTPAttachemntRequired = true
         
     }

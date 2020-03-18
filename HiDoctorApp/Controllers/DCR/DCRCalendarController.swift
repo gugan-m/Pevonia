@@ -122,6 +122,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     
     override func viewDidAppear(_ animated: Bool)
     {
+        addBtn.isHidden = true
         calendarView.reloadData()
     }
     
@@ -197,7 +198,106 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         }
         
     }
-    
+    func addaction(){
+        
+        removeVersionToastView()
+        
+        let userStartDate : Date = getUserStartDate()
+        
+        if userStartDate.compare(selectedDate) == .orderedDescending
+        {
+            AlertView.showAlertView(title: alertTitle, message: addDCRErrorMsg, viewController: self)
+        }
+        else
+        {
+            print(selectedDate)
+            if BL_DCRCalendar.sharedInstance.activityRestrictionValidation(dcrDate: selectedDate)
+            {
+                showActivityRestrictionAlert()
+            }
+                
+            else
+            {
+                //DBHelper.sharedInstance.updateSessionId(sessionId: sessionId)
+                print(DBHelper.sharedInstance.getUserDetail())
+                
+                
+                let array:NSArray = BL_DCRCalendar.sharedInstance.dcrCategoryValidation(date: selectedDate)
+                let dcrCategoryMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                
+                for title in array
+                {
+                    let categoryAction = UIAlertAction(title: title as? String, style: .default, handler: {
+                        (alert: UIAlertAction) -> Void in
+                        
+                        if (BL_DCRCalendar.sharedInstance.dcrEntryTPApprovalNeeded())
+                        {
+                            if BL_DCRCalendar.sharedInstance.canShowTPDownloadAlertApprovedTP(selectedDate: self.selectedDate!)
+                            {
+                                let modelData:[DCRCalendarModel] = BL_DCRCalendar.sharedInstance.dcrLWHAModel
+                                if modelData.count > 0
+                                {
+                                    if modelData[0].Is_WeekEnd == 1 || modelData[0].Is_Holiday == 1
+                                    {
+                                        self.showTPDownloadAlert(title: title as! String, showSkip: true)
+                                    }
+                                    else
+                                    {
+                                        self.showTPDownloadAlert(title: title as! String, showSkip: false)
+                                    }
+                                }
+                                else
+                                {
+                                    self.activityValidation(title: title as! String)
+                                }
+                            }
+                            else
+                            {
+                                self.activityValidation(title: title as! String)
+                            }
+                        }
+                        else if (BL_DCRCalendar.sharedInstance.isTpLockPrivilegeEnabled())
+                        {
+                            if BL_DCRCalendar.sharedInstance.canShowTPDownloadAlert(selectedDate: self.selectedDate!)
+                            {
+                                self.showTPDownloadAlert(title: title as! String, showSkip: true)
+                            }
+                            else
+                            {
+                                self.activityValidation(title: title as! String)
+                            }
+                        }
+                        else
+                        {
+                            self.activityValidation(title: title as! String)
+                        }
+                    })
+                    dcrCategoryMenu.addAction(categoryAction)
+                }
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
+                    (alert: UIAlertAction) -> Void in
+                    showVersionToastView(textColor: UIColor.darkGray)
+                })
+                
+                dcrCategoryMenu.addAction(cancelAction)
+                
+                if SwifterSwift().isPhone
+                {
+                    self.present(dcrCategoryMenu, animated: true, completion: nil)
+                }
+                else
+                {
+                    if let currentPopoverpresentioncontroller = dcrCategoryMenu.popoverPresentationController{
+                        currentPopoverpresentioncontroller.sourceView = self.view
+                        currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
+                        currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
+                        self.present(dcrCategoryMenu, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
     @IBAction func addAction(_ sender: AnyObject)
     {
         
@@ -673,7 +773,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
                     BL_Stepper.sharedInstance.getAccompanistDataPendingList()
                     BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
-                    self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
+                    self.navigateToNextScreen(storyBoard:dcrStepperSb , viewControllerId: "DCRStepperNew")
                     
                 }
                 else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
@@ -727,8 +827,24 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 insertHourlyReportData()
                 //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
             }
-            self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
+            self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: "DCRStepperNew")
         }
+            if title == DCRActivityName.prospect.rawValue || title == "Field_RCPA"
+            {
+                BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.fieldRcpa.rawValue, selectedDate: self.selectedDate)
+                BL_Stepper.sharedInstance.getAccompanistDataPendingList()
+                if  BL_DCR_Doctor_Visit.sharedInstance.isGeoLocationMandatory() && BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
+                {
+                    self.dcrID = DCRModel.sharedInstance.dcrId
+                    insertHourlyReportData()
+                    //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
+                }
+                let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+                vc.propectus = true
+                self.navigationController?.pushViewController(vc, animated: true)
+                //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: "DCRStepperNew")
+            }
         else if title == DCRActivityName.attendance.rawValue
         {
             BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.attendance.rawValue, selectedDate: self.selectedDate)
@@ -1362,6 +1478,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         let doctorVisitHeight = getTextSize(text: doctorVisitText, fontName: fontRegular, fontSize: 14.0, constrainedWidth: SCREEN_WIDTH - 60.0).height
         let doctorPendingHeight = getTextSize(text: doctorPendingText, fontName: fontRegular, fontSize: 14.0, constrainedWidth: SCREEN_WIDTH - 60.0).height
         rcpaCellHeight = 267.0 + doctorVisitHeight + doctorPendingHeight
+        rcpaCellHeight = 100
     }
     
     func moveToMonthSegment(date: Date)
@@ -1436,6 +1553,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         selectedDate = getServerFormattedDate(date: date)
         
         loadDCRDetails(viewHeight: self.view.frame.size.height - 64.0)
+        addaction()
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
@@ -1601,7 +1719,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     cell.unapprovedBylabel.text = "No Remarks"
                 }
             } else
-            { 
+            {
                 let rowHeight = rowHeightArr[indexPath.row] as! CGFloat
                 if rowHeight == defaultRowHeight
                 {
@@ -2082,3 +2200,4 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         }
     }
 }
+

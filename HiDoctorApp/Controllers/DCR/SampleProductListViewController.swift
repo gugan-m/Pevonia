@@ -47,6 +47,7 @@ class SampleProductListViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewDidLoad()
     {
+        self.view.isHidden = true
         super.viewDidLoad()
     }
     
@@ -54,6 +55,21 @@ class SampleProductListViewController: UIViewController,UITableViewDelegate,UITa
         self.getProductList()
         self.addBackButtonView()
         self.addBarButtonItem()
+        
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+        if userSelectedList.count > 0
+        {
+            self.navigationItem.rightBarButtonItem = nextBtn
+        }
+       if(!isComingFromAttendanceDoctor && !isComingFromChemistDay)
+       {
+        self.view.isHidden = true
+       self.nextScreenBtnAction()
+       }
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -125,6 +141,7 @@ class SampleProductListViewController: UIViewController,UITableViewDelegate,UITa
             cell.selectedImageView.image = UIImage(named: "icon-unselected")
             cell.outerView.backgroundColor = UIColor.white
         }
+        self.userSelectedList.add(productDetail)
         return cell
     }
     

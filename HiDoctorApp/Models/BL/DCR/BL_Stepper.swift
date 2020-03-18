@@ -72,27 +72,30 @@ class BL_Stepper: NSObject
         self.isChemistDay = isChemistDayEnabled()
         
         getAccompanistData()
-        getWorkPlaceDetails()
+        //getWorkPlaceDetails()
         updateDCRStatusAsDraft()
-        
+        getDCRAccompanistDetails()
         // Privilege
         
-        checkTravelDetailsPrivilege()
+        //checkTravelDetailsPrivilege()
         
-        // getSFCDetails()
+        //getSFCDetails()
         getDoctorDetails()
-        getChemistDetails()
+        //getChemistDetails()
+        
         
         // Based upon Privilege
-        checkStockistAndExpensesPrivilege()
+        //checkStockistAndExpensesPrivilege()
         
         // getStockistDetails()
-        // getExpenseDetails()
+        //getExpenseDetails()
+       // getCategoryName()
+        getWorkPlaceDetails()
         getGeneralRemarks()
-        getWorkTimeDetails()
+        //getWorkTimeDetails()
         isTPFreezedDate()
         
-        determineButtonStatus()
+        //determineButtonStatus()
         disableButtonsForTPFreeze()
     }
     
@@ -714,14 +717,14 @@ class BL_Stepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = "My Team's Partner Details"
-        stepperObjModel.emptyStateTitle = "My Team's Partner Details"
-        stepperObjModel.emptyStateSubTitle = "Update details of the person who worked with you"
+        stepperObjModel.sectionTitle = "Who Did I Go With"
+        stepperObjModel.emptyStateTitle = "Who Did I Go With"
+        stepperObjModel.emptyStateSubTitle = "I am going alone "
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = "ADD PARTNER"
+        stepperObjModel.leftButtonTitle = "Add Ride Along"
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.Accompanist.rawValue
         
         let dcrAccompanistList = BL_DCR_Accompanist.sharedInstance.getDCRAccompanistList()
@@ -742,6 +745,18 @@ class BL_Stepper: NSObject
             }
             
             self.accompanistList = dcrAccompanistList!
+            if (self.accompanistList.count > 0)
+            {
+            var seen = Set<String>()
+            var unique : [DCRAccompanistModel] = []
+            for message in self.accompanistList {
+                if !seen.contains(message.Acc_User_Code!) {
+                    unique.append(message)
+                    seen.insert(message.Acc_User_Code!)
+                }
+            }
+            self.accompanistList = unique
+            }
             stepperObjModel.recordCount = dcrAccompanistList!.count
         }
         
@@ -753,9 +768,9 @@ class BL_Stepper: NSObject
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         var stepperWorkPlaceList: [StepperWorkPlaceModel] = []
         
-        stepperObjModel.sectionTitle = "Work Place Details"
-        stepperObjModel.emptyStateTitle = "Work Place Details"
-        stepperObjModel.emptyStateSubTitle = "Update your day work category, place and time"
+        stepperObjModel.sectionTitle = "Work Category"
+        stepperObjModel.emptyStateTitle = "Work Category"
+        stepperObjModel.emptyStateSubTitle = ""
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-work-area"
@@ -861,31 +876,31 @@ class BL_Stepper: NSObject
     {
         let stepperObjModel: DCRStepperModel = DCRStepperModel()
         
-        stepperObjModel.sectionTitle = ""
+        stepperObjModel.sectionTitle = "Whom Did I Meet"
         
         if (!isChemistDayEnabled())
         {
-            stepperObjModel.emptyStateTitle = "\(appDoctor) & \(appChemist) Visits"
+            stepperObjModel.emptyStateTitle = "Whom Did I Meet"
         }
         else
         {
-            stepperObjModel.emptyStateTitle = "\(appDoctor) Visits"
+            stepperObjModel.emptyStateTitle = "Whom Did I Meet"
         }
         
-        stepperObjModel.emptyStateSubTitle = "Update your \(appDoctor) visit details here"
+        stepperObjModel.emptyStateSubTitle = ""
         
         if (!isChemistDayEnabled())
         {
-            stepperObjModel.doctorEmptyStateTitle = "\(appDoctor) & \(appChemist) Visits"
+            stepperObjModel.doctorEmptyStateTitle = "Whom Did I Meet"
         }
         else
         {
-            stepperObjModel.doctorEmptyStateTitle = "\(appDoctor) Visits"
+            stepperObjModel.doctorEmptyStateTitle = "Whom Did I Meet"
         }
         
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
         stepperObjModel.isExpanded = true
-        stepperObjModel.leftButtonTitle = "ADD \(appDoctor.uppercased())"
+        stepperObjModel.leftButtonTitle = "Add Contact"
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.Doctor.rawValue
         
         let doctorList: [DCRDoctorVisitModel]? = getDCRDoctorDetails()
@@ -911,6 +926,14 @@ class BL_Stepper: NSObject
                 stepperObjModel.doctorEmptyStatePendingCount = stepperObjModel.doctorEmptyStatePendingCount + " | No Pending \(appDoctor) Visit(s)"
             }
         }
+        stepperObjModel.sectionTitle = "Whom Did I Meet"
+        stepperObjModel.emptyStateTitle = "Whom Did I Meet"
+        stepperObjModel.emptyStateSubTitle = "No.of.contacts met for the day"
+        stepperObjModel.doctorEmptyStateTitle = ""
+        stepperObjModel.doctorEmptyStatePendingCount = ""
+        stepperObjModel.sectionIconName = "icon-stepper-two-user"
+        stepperObjModel.isExpanded = false
+        stepperObjModel.leftButtonTitle = "Add Contact"
         
         stepperDataList.append(stepperObjModel)
     }
@@ -1002,8 +1025,8 @@ class BL_Stepper: NSObject
         stepperObjModel.doctorEmptyStateTitle = ""
         stepperObjModel.doctorEmptyStatePendingCount = ""
         stepperObjModel.sectionIconName = "icon-stepper-remarks"
-        stepperObjModel.isExpanded = false
-        stepperObjModel.leftButtonTitle = ""
+        stepperObjModel.isExpanded = true
+        stepperObjModel.leftButtonTitle = "Save"
         stepperObjModel.Entity_Id = DCR_Stepper_Entity_Id.GeneralRemarks.rawValue
         
         //        if (doctorList.count > 0)
@@ -2061,6 +2084,19 @@ class BL_Stepper: NSObject
                 determineStockistExpenseRemarksButtons(stockistIndex: stockistIndex, expenseIndex: expenseIndex, remarksIndex: remarksIndex, workTimeIndex: workTimeIndex)
             }
         }
+        stepperDataList[1].showEmptyStateAddButton = true
+        stepperDataList[1].showEmptyStateSkipButton = false
+        stepperDataList[2].showEmptyStateAddButton = true
+        stepperDataList[2].showEmptyStateSkipButton = false
+        stepperDataList[3].showEmptyStateAddButton = true
+        stepperDataList[3].showEmptyStateSkipButton = false
+        stepperDataList[1].showLeftButton = true
+        stepperDataList[1].showEmptyStateSkipButton = false
+        stepperDataList[2].showLeftButton = true
+        stepperDataList[2].showEmptyStateSkipButton = false
+        stepperDataList[3].showLeftButton = true
+        stepperDataList[3].showEmptyStateSkipButton = false
+        stepperDataList[1].showRightButton = false
     }
     
     private func determineStockistExpenseRemarksButtons(stockistIndex: Int, expenseIndex: Int, remarksIndex: Int, workTimeIndex: Int)
@@ -2970,4 +3006,5 @@ class BL_Stepper: NSObject
         return errorMessage
     }
 }
+
 

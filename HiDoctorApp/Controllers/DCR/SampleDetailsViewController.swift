@@ -77,27 +77,27 @@ class SampleDetailsViewController: UIViewController , UITableViewDataSource, UIT
         let productDetail = self.sampleBatchList[(indexPath?.section)!].sampleList[(indexPath?.row)!]
         if(self.sampleBatchList[(indexPath?.section)!].isShowSection)
         {
-            if productDetail.sampleObj.Quantity_Provided <  productDetail.sampleObj.Batch_Current_Stock
-            {
+//            if productDetail.sampleObj.Quantity_Provided <  productDetail.sampleObj.Batch_Current_Stock
+//            {
                 productDetail.sampleObj.Quantity_Provided! += 1
                 self.tableView.reloadData()
-            }
-            else
-            {
-                showToastView(toastText: "Entered quantity cannot be greater than available units")
-            }
+//            }
+//            else
+//            {
+//                showToastView(toastText: "Entered quantity cannot be greater than available units")
+//            }
         }
         else
         {
-            if productDetail.sampleObj.Quantity_Provided <  productDetail.sampleObj.Current_Stock
-            {
+//            if productDetail.sampleObj.Quantity_Provided <  productDetail.sampleObj.Current_Stock
+//            {
                 productDetail.sampleObj.Quantity_Provided! += 1
                 self.tableView.reloadData()
-            }
-            else
-            {
-                showToastView(toastText: "Entered quantity cannot be greater than available units")
-            }
+//            }
+//            else
+//            {
+//                showToastView(toastText: "Entered quantity cannot be greater than available units")
+//            }
         }
     }
     
@@ -166,6 +166,7 @@ class SampleDetailsViewController: UIViewController , UITableViewDataSource, UIT
         cell.upButton.tag = indexPath.row
         cell.downButton.tag = indexPath.row
         cell.upButton.tag = indexPath.row
+       
         
         if indexPath.row == 0
         {
@@ -199,6 +200,9 @@ class SampleDetailsViewController: UIViewController , UITableViewDataSource, UIT
         {
             cell.sepViewHeightConst.constant = 1
         }
+         cell.productCountLbl.isHidden = true
+        cell.upButton.tintColor = UIColor.black
+        cell.downButton.tintColor = UIColor.black
         return cell
     }
     
@@ -391,11 +395,28 @@ class SampleDetailsViewController: UIViewController , UITableViewDataSource, UIT
         }
         else
         {
-            let minMaxValidation = sampleDCRProductsMinMaxValidation(sampleProductList:sampleBatchList)
-            if minMaxValidation
+//            let minMaxValidation = sampleDCRProductsMinMaxValidation(sampleProductList:sampleBatchList)
+//            if minMaxValidation
+//            {
+            
+            var samplelistnewbatch : [SampleBatchProductModel] = []
+            for i in sampleBatchList
             {
-                BL_SampleProducts.sharedInstance.saveDoctorSampleDCRProducts(sampleProductList: sampleBatchList,isFrom:sampleBatchEntity.Doctor.rawValue,doctorVisitId: 0)
+                samplelistnewbatch.append(i)
             }
+            var sampleListnew1 : [DCRSampleModel] = []
+            //samplelistnewbatch[0].sampleList.removeAll()
+            for i in 0..<sampleBatchList[0].sampleList.count
+                {
+                    if (sampleBatchList[0].sampleList[i].sampleObj.Quantity_Provided > 0)
+                    {
+                        sampleListnew1.append(sampleBatchList[0].sampleList[i])
+                    }
+                }
+            samplelistnewbatch[0].sampleList.removeAll()
+            samplelistnewbatch[0].sampleList = sampleListnew1
+                BL_SampleProducts.sharedInstance.saveDoctorSampleDCRProducts(sampleProductList: samplelistnewbatch,isFrom:sampleBatchEntity.Doctor.rawValue,doctorVisitId: 0)
+            //}
         }
         
         _ = navigationController?.popViewController(animated: false)

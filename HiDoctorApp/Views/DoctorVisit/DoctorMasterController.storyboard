@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,9 +25,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HJ7-As-tWY">
-                                <rect key="frame" x="20" y="54" width="280" height="29"/>
+                                <rect key="frame" x="20" y="54" width="280" height="1"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="6n4-cL-iKU"/>
+                                    <constraint firstAttribute="height" id="6n4-cL-iKU"/>
                                 </constraints>
                                 <segments>
                                     <segment title="ALL"/>
@@ -39,7 +39,7 @@
                                 </connections>
                             </segmentedControl>
                             <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="Hf5-sS-rI7">
-                                <rect key="frame" x="0.0" y="93" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="65" width="320" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wTk-9c-FGC"/>
@@ -51,13 +51,13 @@
                                 </connections>
                             </searchBar>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yt-fc-Gaj">
-                                <rect key="frame" x="0.0" y="147" width="320" height="421"/>
+                                <rect key="frame" x="0.0" y="119" width="320" height="449"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smallcar" translatesAutoresizingMaskIntoConstraints="NO" id="tK8-fP-ug0" customClass="TintColorForImageView" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="128" y="178.5" width="64" height="64"/>
+                                        <rect key="frame" x="128" y="192.5" width="64" height="64"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="892-7G-yib">
-                                        <rect key="frame" x="20" y="262.5" width="280" height="0.0"/>
+                                        <rect key="frame" x="20" y="276.5" width="280" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -73,10 +73,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFA-YP-qbk">
-                                <rect key="frame" x="0.0" y="147" width="320" height="421"/>
+                                <rect key="frame" x="0.0" y="119" width="320" height="449"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1ac-XS-Rsm">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="421"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="449"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="doctorMasterCell" id="Cjj-3j-g2A" customClass="DoctorMasterCell" customModule="HiDOCTOR" customModuleProvider="target">
@@ -1360,6 +1360,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dKo-KP-ytE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qJS-Uf-S24">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

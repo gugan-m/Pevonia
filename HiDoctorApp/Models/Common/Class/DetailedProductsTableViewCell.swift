@@ -31,12 +31,15 @@ class DetailedProductsTableViewCell: UITableViewCell {
         //set border color and corner radius
 //        remarkTextView.layer.borderWidth = 1
 //        remarkTextView.layer.borderColor = UIColor.lightGray.cgColor
-        
+        statusViewHegConst.constant = 0
+        businessPotentialTxtFld.isHidden = true
         if (remarkTextView != nil)
         {
+            
             remarkTextView.layer.cornerRadius = 5
             remarkTextView.layer.masksToBounds = true
         }
+        
         // Initialization code
     }
 

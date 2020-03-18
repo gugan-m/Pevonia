@@ -100,8 +100,8 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
         {
             //self.visitTimeTxtField.isEnabled = false
             //self.visitTimeTxtField.alpha = 0.5
-            var intime = "N/A"
-            var outtime = "N/A"
+            var intime = ""
+            var outtime = ""
             if (isComingFromModifyPage)
             {
                 if (self.modifyDoctorVisitObj != nil)
@@ -145,6 +145,13 @@ class DoctorVisitViewController: UIViewController,UITextFieldDelegate,BusinessSt
             self.punchintime.isHidden = true
             self.punchouttime.isHidden = true
         }
+        businessStatusViewHeightConstraint.constant = 0
+        campaignViewHeightConstraint.constant = 0
+        businessStatusView.isHidden = true
+        canpaignView.isHidden = true
+        businessStatusLabel.isHidden = true
+        campaignLabel.isHidden = true
+        
     }
     
     override func didReceiveMemoryWarning()

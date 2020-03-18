@@ -150,7 +150,7 @@ class DetailedProductViewController: UIViewController, UITableViewDelegate, UITa
                 {
                     commonHeight += 205
                     
-                    //return commonHeight
+                    return commonHeight
                 }
                 else
                 {
@@ -176,6 +176,7 @@ class DetailedProductViewController: UIViewController, UITableViewDelegate, UITa
         {
             return commonHeight
         }
+        return 100
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -213,6 +214,7 @@ class DetailedProductViewController: UIViewController, UITableViewDelegate, UITa
         }
         else if isFromDoctor
         {
+            detailProductCell.remarkTextView.text = "Remarks"
             detailProductCell.remarkTextView.addHideinputAccessoryView()
             detailProductCell.businessPotentialTxtFld.addHideinputAccessoryView()
             //detailProductCell.selectedImgConst.constant = 25
@@ -332,8 +334,8 @@ class DetailedProductViewController: UIViewController, UITableViewDelegate, UITa
                 }
                 
                 
-                detailProductCell.textfieldViewHegConst.constant = 35
-                detailProductCell.businessPotentialTxtFld.isHidden = false
+                detailProductCell.textfieldViewHegConst.constant = 0
+                detailProductCell.businessPotentialTxtFld.isHidden = true
                 detailProductCell.remarkViewHegConst.constant = 90
                 detailProductCell.DetailProductNameImg.image = UIImage(named: "icon-tick")
             }
@@ -391,6 +393,10 @@ class DetailedProductViewController: UIViewController, UITableViewDelegate, UITa
         {
             detailProductCell.selectedImgConst.constant = 0
         }
+        detailProductCell.textfieldViewHegConst.constant = 0
+        detailProductCell.businessPotentialTxtFld.isHidden = true
+        detailProductCell.remarkViewHegConst.constant = 90
+        detailProductCell.statusViewHegConst.constant = 0
         
         return detailProductCell
     }

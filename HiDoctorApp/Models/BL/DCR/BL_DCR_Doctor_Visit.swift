@@ -243,7 +243,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateTitle = "\(appDoctor) Visit Details"
         stepperObjModel.emptyStateSubTitle = "Update details of \(appDoctor) visits(i.e. time, POB, etc..)"
         stepperObjModel.sectionIconName = "icon-stepper-work-area"
-        stepperObjModel.isExpanded = false
+        stepperObjModel.isExpanded = true
         stepperObjModel.leftButtonTitle = ""
         
         if DCRModel.sharedInstance.customerCode == ""
@@ -329,7 +329,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateTitle = "Samples / Promotional Items"
         stepperObjModel.emptyStateSubTitle = "Update details of sample / promotional item issues"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
-        stepperObjModel.isExpanded = false
+        stepperObjModel.isExpanded = true
         stepperObjModel.leftButtonTitle = "ADD SAMPLE"
         
         if doctorVisitList.count > 0
@@ -461,7 +461,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateTitle = "Detailed Products"
         stepperObjModel.emptyStateSubTitle = "Update the products detailed, business status, business potential and remarks information here"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
-        stepperObjModel.isExpanded = false
+        stepperObjModel.isExpanded = true
         stepperObjModel.leftButtonTitle = "ADD PRODUCTS"
         
         if doctorVisitList.count > 0
@@ -638,7 +638,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateTitle = "Follow-Ups"
         stepperObjModel.emptyStateSubTitle = "Update your follow-up details here"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
-        stepperObjModel.isExpanded = false
+        stepperObjModel.isExpanded = true
         stepperObjModel.leftButtonTitle = "ADD FOLLOW-UPS"
         
         if doctorVisitList.count > 0
@@ -682,7 +682,7 @@ class BL_DCR_Doctor_Visit: NSObject
         stepperObjModel.emptyStateTitle = "Attachments"
         stepperObjModel.emptyStateSubTitle = "Update visits related documents and image here"
         stepperObjModel.sectionIconName = "icon-stepper-two-user"
-        stepperObjModel.isExpanded = false
+        stepperObjModel.isExpanded = true
         stepperObjModel.leftButtonTitle = "ADD ATTACHMENT"
         
         if doctorVisitList.count > 0
@@ -1464,7 +1464,7 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            businessStatus = "N/A"
+            businessStatus = ""
         }
         
         if (doctorVisitList[0].Call_Objective_Name.count > 0)
@@ -1473,7 +1473,7 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            callObjective = "N/A"
+            callObjective = ""
         }
         
         if (doctorVisitList[0].Campaign_Name.count > 0)
@@ -1482,12 +1482,12 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            campaignName = "N/A"
+            campaignName = ""
         }
         
-        let businessDisplay = "Business Status\n\n" + businessStatus
-        let callObjDisplay = "n\nCall Objective\n\n" + callObjective
-        let campaignDisplay = "\n\nCampaign Name\n\n" + campaignName
+        let businessDisplay = "Business Status" + businessStatus
+        let callObjDisplay = "\nObjective\n\n" + callObjective
+        let campaignDisplay = "" + campaignName
         let remarksDisplay = "\n\n\n"
         
         let businessStatusHeight : CGFloat = getTextSize(text: businessDisplay, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
@@ -1498,7 +1498,7 @@ class BL_DCR_Doctor_Visit: NSObject
         let remarks = doctorVisitList[0].Remarks
         let remarksLblheight : CGFloat = getTextSize(text: remarks, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
         
-        let cellHeight = topSpace + bottomSpace + visitModeHeight + line1VerticalSpacing + visitModeLblHeight + verticalSpacingBtnlines + remarksHeight + line1VerticalSpacing + remarksLblheight + businessStatusHeight + callObjectyiveHeight + remarksNewLineHeight + campaignHeight + 10
+        let cellHeight = topSpace + bottomSpace + visitModeHeight + line1VerticalSpacing + visitModeLblHeight + verticalSpacingBtnlines + remarksHeight + line1VerticalSpacing + remarksLblheight  + callObjectyiveHeight + remarksNewLineHeight  + 10
         return cellHeight
     }
     
@@ -1532,7 +1532,7 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            businessStatus = "N/A"
+            businessStatus = ""
         }
         
         if (doctorVisitList[0].Call_Objective_Name.count > 0)
@@ -1541,7 +1541,7 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            callObjective = "N/A"
+            callObjective = ""
         }
         if (doctorVisitList[0].Campaign_Name.count > 0)
         {
@@ -1549,12 +1549,12 @@ class BL_DCR_Doctor_Visit: NSObject
         }
         else
         {
-            campaignName = "N/A"
+            campaignName = ""
         }
         
-        let businessDisplay = "Business Status\n\n" + businessStatus
-        let callObjDisplay = "n\nCall Objective\n\n" + callObjective
-        let campaignDisplay = "\n\nCampaign Name\n\n" + campaignName
+        let businessDisplay = "Business Status" + businessStatus
+        let callObjDisplay = "\nObjective\n\n" + callObjective
+        let campaignDisplay = "" + campaignName
         let remarksDisplay = "\n\n\n"
         
         let businessStatusHeight : CGFloat = getTextSize(text: businessDisplay, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
@@ -1563,11 +1563,11 @@ class BL_DCR_Doctor_Visit: NSObject
         let remarksNewLineHeight: CGFloat = getTextSize(text: remarksDisplay, fontName: fontRegular, fontSize: 13.0, constrainedWidth: SCREEN_WIDTH - 104.0).height
         
         childTableHeight = topSpace + bottomSpace + visitModeHeight + line1VerticalSpacing + visitModeLblHeight + verticalSpacingBtnlines + remarksHeight + line1VerticalSpacing + remarksLblheight
-        var totalHeight = titleSectionHeight + cellY + childTableHeight + buttonViewHeight + bottomSpaceView + businessStatusHeight + callObjectyiveHeight + remarksNewLineHeight + campaignHeight + 10
+        var totalHeight = titleSectionHeight + cellY + childTableHeight + buttonViewHeight + bottomSpaceView + callObjectyiveHeight + remarksNewLineHeight + 10
         
         if (stepperObj.isExpanded == false)
         {
-            totalHeight = totalHeight - remarksHeight - line1VerticalSpacing - remarksLblheight - businessStatusHeight - callObjectyiveHeight - remarksNewLineHeight
+            totalHeight = totalHeight - remarksHeight - line1VerticalSpacing - remarksLblheight  - callObjectyiveHeight - remarksNewLineHeight
         }
         
         return totalHeight
@@ -1610,6 +1610,10 @@ class BL_DCR_Doctor_Visit: NSObject
     {
         return BL_DCR_Accompanist.sharedInstance.getDCRAccompanistList()
     }
+    func getAccompanistsList() -> [AccompanistModel]?
+    {
+        return BL_DCR_Accompanist.sharedInstance.getAccompanistMasterList()
+    }
     
     func getDCRAccompanistsListWithoutVandNA() -> [DCRAccompanistModel]?
     {
@@ -1629,7 +1633,7 @@ class BL_DCR_Doctor_Visit: NSObject
             returnValue = true
         }
         
-        return returnValue
+        return true
     }
     
     func convertToDoctorVisitUserModel() -> [UserMasterWrapperModel]?
@@ -2501,42 +2505,42 @@ class BL_DCR_Doctor_Visit: NSObject
             var productAttributes: String = EMPTY
             let space: String = "     "
             
-            productAttributes += "\n\n\(space)Business Status\n"
+            //productAttributes += "\n\n\(space)Business Status\n"
             
             if (obj.objWrapper.objBusinessStatus != nil)
             {
-                productAttributes += space + obj.objWrapper.objBusinessStatus!.Status_Name!
+               // productAttributes += space + obj.objWrapper.objBusinessStatus!.Status_Name!
             }
             else
             {
-                productAttributes += "\(space)N/A"
+                //productAttributes += "\(space)N/A"
             }
             
-            productAttributes += "\n\n\(space)Business Potential\n"
+            //productAttributes += "\n\n\(space)Business Potential\n"
             if (obj.objWrapper.businessPotential != EMPTY)
             {
                 if (obj.objWrapper.businessPotential != defaultBusinessPotential)
                 {
-                    productAttributes += space + obj.objWrapper.businessPotential
+              //      productAttributes += space + obj.objWrapper.businessPotential
                 }
                 else
                 {
-                    productAttributes += "\(space)N/A"
+                //    productAttributes += "\(space)N/A"
                 }
             }
             else
             {
-                productAttributes += "\(space)N/A"
+                //productAttributes += "\(space)N/A"
             }
             
-            productAttributes += "\n\n\(space)Potential Remarks\n"
+            productAttributes += "\n\(space) Remarks\n"
             if (checkNullAndNilValueForString(stringData: obj.objWrapper.remarks) != EMPTY)
             {
                 productAttributes += space + obj.objWrapper.remarks
             }
             else
             {
-                productAttributes += "\(space)N/A"
+               // productAttributes += "\(space)N/A"
             }
             
             obj.stepperDisplayData = productAttributes

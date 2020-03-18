@@ -73,6 +73,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         super.viewDidLoad()
         self.planning_alertView.layer.cornerRadius = 10.0
         selectedDate = getServerFormattedDate(date: getCurrentDateAndTime())
+        self.hidePlanningPopup()
         // Do any additional setup after loading the view.
     }
     
@@ -83,6 +84,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         tpBtmWrapper.roundCorners([.bottomLeft,.bottomRight], radius: 5)
         setDefaults()
         BL_TPCalendar.sharedInstance.getTPCalendarModel()
+        self.hidePlanningPopup()
     }
     
     override func viewWillDisappear(_ animated: Bool)
@@ -499,6 +501,14 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
             
             navigateToNextScreen(stoaryBoard: TPStepperSb, viewController: TPAttendanceStepperVCID)
         }
+        else if tpActivityLbl.text == "Prospecting"
+        {
+               self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: TPFlag.fieldRcpa.rawValue)
+                let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: TPStepperVCID) as! TPStepperViewController
+                vc.isProspect = true
+                self.navigationController?.pushViewController(vc, animated: true)
+        }
         else
         {
             BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: selectedDateString, tpFlag: TPFlag.leave.rawValue)
@@ -659,14 +669,26 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                 if(activity == 1)
                 {
                     // Field
-                    outerTableReturnCounr = 4
-                    tpActivityLbl.text = "Field"
-                    getActivity = 1
+                    outerTableReturnCounr = 3
+                    if tourPlannerHeaderModelData?.TpType != nil {
+                       if tourPlannerHeaderModelData?.TpType == "F"{
+                            tpActivityLbl.text = "Field"
+                            getActivity = 1
+                        } else {
+                            tpActivityLbl.text = "Prospecting"
+                           getActivity = 1
+                        }
+                    } else {
+                        tpActivityLbl.text = "Field"
+                        getActivity = 1
+                    }
+                    
+                    
                 }
                 else if(activity == 2)
                 {
                     //Attendance
-                    outerTableReturnCounr = 2
+                    outerTableReturnCounr = 1
                     tpActivityLbl.text = "Office"
                     getActivity = 2
                 }
@@ -825,6 +847,13 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         let stepperObj = tempObj[index]
         
         cell.selectedIndex = index
+        
+        if tpActivityLbl.text == "Prospecting" {
+           cell.isProspect = true
+        } else {
+            cell.isProspect = false
+        }
+        
         cell.activity = getActivity
         cell.titleLbl.text = stepperObj.sectionTitle
         cell.iconView.image = UIImage(named: stepperObj.sectionIconName)

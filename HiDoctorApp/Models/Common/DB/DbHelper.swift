@@ -2226,6 +2226,19 @@ class DBHelper: NSObject
             }
         })
     }
+    func updateDCRWorkCategory(dcrHeaderObj: DCRHeaderObjectModel)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRHeaderModel.fetchOne(db, key: dcrHeaderObj.DCR_Id)
+            {
+                rowValue.DCR_Id = dcrHeaderObj.DCR_Id
+                rowValue.Category_Id = dcrHeaderObj.Category_Id
+                rowValue.Category_Name = dcrHeaderObj.Category_Name
+                rowValue.DCR_Code = EMPTY
+                try! rowValue.update(db)
+            }
+        })
+    }
     
     func updateDCRWorkTime(startTime: String, endTime: String, dcrId: Int)
     {
@@ -4701,6 +4714,16 @@ class DBHelper: NSObject
         return tpProductList
     }
     
+    func getTpDoctorList(TP_Entry_Id: Int) -> [TourPlannerDoctor]
+    {
+        var tpDoctorList : [TourPlannerDoctor] = []
+        try? dbPool.read { db in
+            tpDoctorList = try TourPlannerDoctor.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR) WHERE TP_Entry_Id = ?", arguments: [TP_Entry_Id])
+        }
+        return tpDoctorList
+    }
+    
+    
     
     func getTpDoctorDetailsByTpId(TP_Entry_Id : Int) -> [TourPlannerDoctor]
     {
@@ -4719,10 +4742,10 @@ class DBHelper: NSObject
 //        Category_Name = row["Category_Name"]
 //   **     TP_Entry_Id = row["TP_Entry_Id"]
         
-        
+        print("SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code,\(TRAN_TP_DOCTOR).Call_Objective_Id,\(TRAN_TP_DOCTOR).Call_Objective_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code where TP_Entry_Id = ?")
         try? dbPool.read { db in
 
-                tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code where TP_Entry_Id = ?", arguments: [TP_Entry_Id])
+            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code,\(TRAN_TP_DOCTOR).Call_Objective_Id,\(TRAN_TP_DOCTOR).Call_Objective_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code where TP_Entry_Id = ?", arguments: [TP_Entry_Id])
 //            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(TRAN_TP_DOCTOR).* , \(MST_CUSTOMER_MASTER).Customer_Name AS Doctor_Name , \(MST_CUSTOMER_MASTER).MDL_Number AS MDL_Number , \(MST_CUSTOMER_MASTER).Region_Name AS Doctor_Region_Name , \(MST_CUSTOMER_MASTER).Category_Name , \(MST_CUSTOMER_MASTER).Customer_Code, \(MST_CUSTOMER_MASTER).Speciality_Name, \(MST_CUSTOMER_MASTER).Hospital_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) ON \(TRAN_TP_DOCTOR).Doctor_Code = \(MST_CUSTOMER_MASTER).Customer_Code AND \(TRAN_TP_DOCTOR).Doctor_Region_Code = \(MST_CUSTOMER_MASTER).Region_Code WHERE \(TRAN_TP_DOCTOR).TP_Entry_Id = ?" , arguments: [TP_Entry_Id])
 
         }
@@ -5089,7 +5112,18 @@ class DBHelper: NSObject
             try dcrAttachmentModel.insert(db)
         })
     }
-
+    
+    func insertTPAttachment(array: NSArray)
+          {
+              try? dbPool.writeInTransaction { db in
+                  for data in array
+                  {
+                      try TPAttachmentModel(dict: data as! NSDictionary).insert(db)
+                  }
+                  return .commit
+              }
+          }
+    
     func getAttachmentDetails(dcrId: Int, doctorVisitId: Int) -> [DCRAttachmentModel]?
     {
         var dcrAttachmentList: [DCRAttachmentModel]?
@@ -5419,7 +5453,7 @@ class DBHelper: NSObject
     
     func updateFailureTPAttachmentStatus()
        {
-           executeQuery(query: "UPDATE \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) SET Is_Success = -1 WHERE DCR_Doctor_Visit_Code != '' AND Blob_Url = '' AND Is_Success = 0")
+           executeQuery(query: "UPDATE \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) SET Is_Success = -1 WHERE TP_Id != '' AND Blob_Url = '' AND Is_Success = 0")
        }
     
     
@@ -8587,7 +8621,8 @@ class DBHelper: NSObject
         return doctorMappingObj
     }
     
-    
-    
+    func saveTPMeetingObjective(TP_ID: Int ,TP_DoctorID: Int ,Doctor_Code: String ,Obj_Code:Int ,obj_Name:String) {
+        executeQuery(query: "UPDATE \(TRAN_TP_DOCTOR) SET Call_Objective_Id = \(Obj_Code), Call_Objective_Name = '\(obj_Name)' WHERE TP_Entry_Id = \(TP_ID) AND TP_Doctor_Id = \(TP_DoctorID) AND Doctor_Code = '\(Doctor_Code)'")
+    }
 }
 

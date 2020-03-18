@@ -24,6 +24,8 @@ class TourPlannerDoctor: Record
     var Category_Name: String?
     var Doctor_Region_Name : String?
     var Hospital_Name : String!
+    var Call_Objective_Id : Int?
+    var Call_Objective_Name: String?
    // var Hospital_Account_Number : String!
     
     init(dict: NSDictionary)
@@ -54,7 +56,8 @@ class TourPlannerDoctor: Record
         self.Doctor_Region_Name = checkNullAndNilValueForString(stringData: dict.value(forKey : "Doctor_Region_Name") as? String)
         self.Hospital_Name = checkNullAndNilValueForString(stringData: dict.value(forKey : "Hospital_Name") as? String)
        // self.Hospital_Account_Number = checkNullAndNilValueForString(stringData: dict.value(forKey : "Hospital_Account_Number") as? String)
-        
+        self.Call_Objective_Id = dict.value(forKey : "Call_Objective_Id") as? Int ?? 0
+        self.Call_Objective_Name = checkNullAndNilValueForString(stringData: dict.value(forKey : "Call_Objective_Name") as? String)
         super.init()
     }
     
@@ -79,7 +82,8 @@ class TourPlannerDoctor: Record
         TP_Entry_Id = row["TP_Entry_Id"]
         Hospital_Name = row["Hospital_Name"]
        // Hospital_Account_Number = row["Hospital_Account_Number"]
-        
+        Call_Objective_Id = row["Call_Objective_Id"]
+        Call_Objective_Name = row["Call_Objective_Name"]
         super.init(row: row)
     }
     override func encode(to container: inout PersistenceContainer) {
@@ -97,6 +101,8 @@ class TourPlannerDoctor: Record
         container["Category_Code"] = Category_Code
         container["TP_Entry_Id"] = TP_Entry_Id
         container["Hospital_Name"] = Hospital_Name
+        container["Call_Objective_Id"] = Call_Objective_Id
+        container["Call_Objective_Name"] = Call_Objective_Name
       //  container["Hospital_Account_Number"] = Hospital_Account_Number
     }
 //    var persistentDictionary: [String : DatabaseValueConvertible?]

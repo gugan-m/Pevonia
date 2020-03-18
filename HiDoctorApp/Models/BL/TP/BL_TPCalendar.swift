@@ -296,7 +296,9 @@ class BL_TPCalendar: NSObject
             getCallObjectModelList(objTPHeader: objTPHeader)
             getAccompanistDataList()
             getSFCDataList()
-            getDoctorDataList()
+            if objTPHeader?.TpType == "F"{
+                getDoctorDataList()
+            }
         }
         else if TPModel.sharedInstance.tpFlag == TPFlag.attendance.rawValue
         {

@@ -42,6 +42,7 @@ class TourPlannerHeader: Record
     var Remarks: String?
     var Upload_Msg: String?
     var Upload_Status: Int = -1
+    var TpType : String?
     
     init(dict: NSDictionary)
     {
@@ -98,7 +99,7 @@ class TourPlannerHeader: Record
         self.Hospital_Name = checkNullAndNilValueForString(stringData: dict.value(forKey: "Hospital_Name") as? String)
         //self.Hospital_Account_Number = checkNullAndNilValueForString(stringData: dict.value(forKey : "Hospital_Account_Number") as? String)
         self.Remarks = dict.value(forKey: "Remarks") as? String ?? ""
-        
+        self.TpType = dict.value(forKey: "TP_Type") as? String ?? ""
         if let uploadMsg = dict.value(forKey: "Upload_Message") as? String
         {
             self.Upload_Msg = uploadMsg
@@ -135,7 +136,7 @@ class TourPlannerHeader: Record
         LeaveType_Id = row["Leave_Type_Id"]
         Hospital_Name = row["Hospital_Name"]
        // Hospital_Account_Number = row["Hospital_Account_Number"]
-        
+         TpType = row["TP_Type"]
         TP_Entry_Id = row["TP_Entry_Id"]
         Status = row["Status"]
         Meeting_Place = row["Meeting_Place"]
@@ -179,6 +180,7 @@ class TourPlannerHeader: Record
         container["Category_Name"] =  Category_Name
         container["CP_Name"] =  CP_Name
         container["Hospital_Name"] =  Hospital_Name
+        container["TP_Type"] = TpType
        // container["Hospital_Account_Number"] = Hospital_Account_Number
     }
 //    var persistentDictionary: [String : DatabaseValueConvertible?]

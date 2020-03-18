@@ -468,6 +468,7 @@ extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDat
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceRemarkCell")  as! TPAttendanceRemarkCell
             cell.remarkTxtView.text = generalRemarks
+            cell.remarkTxtView.delegate = self
             return cell
         }
     }
@@ -477,11 +478,7 @@ extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDat
         if indexPath.row == 0 {
               return 60
             } else {
-            if generalRemarks.count != 0 {
-                return 120
-            } else {
-               return 0
-            }
+           return  120
         }
     }
     
@@ -527,11 +524,7 @@ extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
             return 0
-        } else {
-            return 60
-        }
     }
 }
 
@@ -557,4 +550,14 @@ extension TPAttendanceStepperViewController : UIPickerViewDelegate , UIPickerVie
         BL_TP_AttendanceStepper.sharedInstance.updateAttendanceActivity(objActivity: projectObj!)
         self.tableView.reloadData()
     }
+}
+
+extension TPAttendanceStepperViewController : UITextViewDelegate {
+
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+         let str = "\(textView.text!)"
+               BL_TP_AttendanceStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: str)
+               return true
+    }
+    
 }

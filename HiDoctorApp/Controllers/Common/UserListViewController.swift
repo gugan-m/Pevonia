@@ -75,6 +75,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var lockSelectedUserCode = String()
     var isTPFreeze : Bool = false
     var accompanistDataPendingList: [DCRAccompanistModel] = []
+    var isFromDVR = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -965,6 +966,9 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
              toggleTickButton()
             userWrapperList = BL_TP_Doctor_Visit.sharedInstance.convertToTPDoctorVisitUserModel()!
             let selectedDoctorList = BL_TPStepper.sharedInstance.doctorList
+            let selectedDVRList = BL_Stepper.sharedInstance.accompanistList
+            if(!isFromDVR)
+            {
             for doctor in selectedDoctorList {
                 for num in 0..<userWrapperList.count{
                     if doctor.Region_Code == userWrapperList[num].userObj.Region_Code {
@@ -973,6 +977,20 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         userWrapperList[num].isSelected = false
                     }
                 }
+            }
+        }
+            else
+            {
+                for doctor in selectedDVRList {
+                    for num in 0..<userWrapperList.count{
+                        if doctor.Acc_User_Code == userWrapperList[num].userObj.User_Code || doctor.Employee_Name == userWrapperList[num].userObj.Employee_name{
+                            userWrapperList[num].isReadOnly = true
+                        } else {
+                            userWrapperList[num].isSelected = false
+                        }
+                    }
+                }
+                
             }
             self.tableView.reloadData()
         } else if navigationScreenName == "TPFieldStepperAddRideALong" {
@@ -1189,56 +1207,135 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     @objc func nextScreenBtnAction()
-    {
-        if navigationScreenName == UserListScreenName.TPAccompanist.rawValue
-        {
-            BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
-            BL_TPStepper.sharedInstance.insertAccompanistData(accArray: selectedAccompanyList as! [UserMasterWrapperModel])
-            self.navigationController?.popViewController(animated: true)
-        }
-        else if navigationScreenName == UserListScreenName.MessageUserList.rawValue
-        {
-            let getSelectedList = doneButtonAction()
-            messageUserListDelegate?.setSelectedMessageUserList(accompanistObj: getSelectedList,isFromCc: self.isFromCC )
-            self.navigationController?.popViewController(animated: true)
-        } else if navigationScreenName == "TPFieldStepper" {
-            
-            var regionArr:[String] = [String]()
-            let filteredArr = userCurrentList.filter{
-                           $0.isSelected == true
-            }
-            for item in filteredArr {
-                regionArr.append(item.userObj.Region_Code)
-            }
-            print(regionArr)
-            let regionCodeArr =  Array(Set(regionArr))
-            print(regionCodeArr)
-            if filteredArr.count == 0 {
-                let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-                            let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
-                            vc.regionCode = getRegionCode()
-                            self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                showLoader()
-                BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
-                  BL_PrepareMyDeviceAccompanist.sharedInstance.getTPCustomerData(regionCodeArr: regionCodeArr) { (status) in
-                  if (status == SERVER_SUCCESS_CODE)
-                  {
-                      let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-                      let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
-                      self.navigationController?.pushViewController(vc, animated: true)
-                     self.hideLoader()
-                  }
+       {
+           if navigationScreenName == UserListScreenName.TPAccompanist.rawValue
+           {
+               BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
+               BL_TPStepper.sharedInstance.insertAccompanistData(accArray: selectedAccompanyList as! [UserMasterWrapperModel])
+               self.navigationController?.popViewController(animated: true)
+           }
+           else if navigationScreenName == UserListScreenName.MessageUserList.rawValue
+           {
+               let getSelectedList = doneButtonAction()
+               messageUserListDelegate?.setSelectedMessageUserList(accompanistObj: getSelectedList,isFromCc: self.isFromCC )
+               self.navigationController?.popViewController(animated: true)
+           } else if navigationScreenName == "TPFieldStepper" {
+               
+               var regionArr:[String] = [String]()
+               let filteredArr = userCurrentList.filter{
+                              $0.isSelected == true
+               }
+               let selectarr = userCurrentList.filter{
+                   $0.isReadOnly == true
+               }
+               for item in selectarr
+               {
+                   regionArr.append(item.userObj.Region_Code)
+               }
+               for item in filteredArr {
+                   regionArr.append(item.userObj.Region_Code)
+               }
+               print(regionArr)
+               let regionCodeArr =  Array(Set(regionArr))
+               print(regionCodeArr)
+               
+               if (isFromDCR && regionCodeArr.count == 0)
+               {
+                   let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+                   let vc = sb.instantiateViewController(withIdentifier: doctorMasterVcID) as! DoctorMasterController
+                   vc.regionCode = getRegionCode()
+                   self.navigationController?.pushViewController(vc, animated: true)
+               }
+               if filteredArr.count == 0 && !isFromDCR{
+                   
+                   if (!isFromDVR)
+                       {
+                   let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                               let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
+                               vc.regionCode = getRegionCode()
+                               self.navigationController?.pushViewController(vc, animated: true)
+                       }
+                   
+               } else {
+                   showLoader()
+                   if(!isFromDVR)
+                   {
+                   BL_TPStepper.sharedInstance.insertTPheaderDetails(Date: TPModel.sharedInstance.tpDateString, tpFlag: TPModel.sharedInstance.tpFlag)
+                   }
                   else
+                   {
+                       for i in filteredArr
                   {
-                      self.hideLoader()
-                  }
-                }
-            }
-            
-            
-        }
-    }
+                   var accompanistList : [AccompanistModel] = []
+                   try? dbPool.read { db in
+                       let accompanistData = try AccompanistModel.fetchAll(db, "SELECT * FROM \(MST_ACCOMPANIST) WHERE Region_Code = ? and User_Name =? ", arguments: [i.userObj.Region_Code, i.userObj.User_Name])
+                       accompanistList = accompanistData
+                   }
+                   if accompanistList.count > 0
+                   {
+                       for j in accompanistList
+                       {
+                           let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": j.Region_Code, "Acc_User_Code":j.User_Code , "Acc_User_Name": j.User_Name, "Acc_User_Type_Name": j.User_Type_Name, "Employee_Name":j.Employee_name]
+                           let dcrAccompanistModelObj: DCRAccompanistModel = DCRAccompanistModel(dict: dict)
+                           var dcraccomp: [DCRAccompanistModel] = []
+                           dcraccomp = BL_Stepper.sharedInstance.getDCRAccompanistDetails()!
+                           if (dcraccomp != nil && dcraccomp.count > 0)
+                           {
+                               for i in dcraccomp
+                               {
+                                   if (dcrAccompanistModelObj.Acc_User_Code != i.Acc_User_Code)
+                                   {
+                                        DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
+                                   }
+                               }
+                           }
+                           else
+                           {
+                               DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
+                           }
+                          // let dcrAccompanistModelObj: DCRAccompanistModel = DCRAccompanistModel(dict: dict)
+
+                        
+                       }
+                   }
+                       }
+                   BL_DCR_Accompanist.sharedInstance.updateDCRStatusToDraft()
+                   }
+                   BL_PrepareMyDeviceAccompanist.sharedInstance.getTPCustomerData(regionCodeArr: regionCodeArr) { (status) in
+                     if (status == SERVER_SUCCESS_CODE)
+                     {
+                       if(!self.isFromDVR)
+                       {
+                       let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                         let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
+                         self.navigationController?.pushViewController(vc, animated: true)
+                       }
+                       else if (self.isFromDCR)
+                       {
+                           let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+                           let vc = sb.instantiateViewController(withIdentifier: doctorMasterVcID) as! DoctorMasterController
+                           vc.isFromDVR = true
+                           vc.RegionCodeArr = regionCodeArr
+                           self.navigationController?.pushViewController(vc, animated: true)
+                       }
+                        else
+                       {
+                        self.navigationController?.popViewController(animated: true)
+                        }
+                        
+                      
+                        self.hideLoader()
+                     }
+                     else
+                     {
+                         self.hideLoader()
+                     }
+                   }
+               }
+               
+               
+           }
+       }
     
     private func getPostData(sectionName: String) -> [String: Any]
     {

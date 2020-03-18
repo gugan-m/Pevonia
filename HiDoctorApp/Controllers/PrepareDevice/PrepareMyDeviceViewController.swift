@@ -38,6 +38,7 @@ enum ApiName : String
     case TourPlannerAccompanist = "getTourPlannerAccompanist"
     case TourPlannerProduct = "getTourPlannerProduct"
     case TourPlannerUnfreezeDate = "getTourPlannerUnfreezeDates"
+    case GetTPDoctorAttachments = "GetTPDoctorAttachments"
     case DCRCalendarDetails = "getDCRCalendarDetails"
     case DCRLockDetails = "getDCRLockDetails"
     case DCRHeaderDetails = "getDCRHeaderDetails"

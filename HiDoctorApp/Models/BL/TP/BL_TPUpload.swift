@@ -187,7 +187,7 @@ class BL_TPUpload: NSObject
             let dict1: NSDictionary = ["Company_Code": getCompanyCode(), "User_Code": getUserCode(), "CP_Code": cpCode, "TP_Date": tpDate, "TP_Status": String(objTPHeader.Status!)]
             let dict2: NSDictionary = ["Work_Area": workArea, "Project_Code": objTPHeader.Project_Code!, "Activity": objTPHeader.Activity!, "Activity_Code": objTPHeader.Activity_Code!, "Category_Name": categoryName]
             let dict3: NSDictionary = ["Region_Code": getRegionCode(), "Meeting_Place": meetingPlace, "Meeting_Time": meetingTime, "Remarks": remarks, "TP_Id": objTPHeader.TP_Id!]
-            let dict4: NSDictionary = ["TP_Entry_Id": objTPHeader.TP_Entry_Id!, "Check_Sum_Id": NSNull(), "Source_Of_Entry": 3, "Entered_by": getUserName()]
+            let dict4: NSDictionary = ["TP_Entry_Id": objTPHeader.TP_Entry_Id!, "Check_Sum_Id": NSNull(), "Source_Of_Entry": 3, "Entered_by": getUserName(),"TP_Type": TPModel.sharedInstance.tp_Type]
             var combinedAttributes : NSMutableDictionary!
             
             combinedAttributes = NSMutableDictionary(dictionary: dict1)
@@ -329,6 +329,9 @@ class BL_TPUpload: NSObject
             var doctorCode: String = EMPTY
             var regionCode: String = EMPTY
             var categoryCode: String = EMPTY
+            var Call_Objective_Name: String = EMPTY
+            var Call_Objective_Id: Int = 0
+            
             
             if (checkNullAndNilValueForString(stringData: objTPDoctor.Doctor_Code) != EMPTY)
             {
@@ -345,7 +348,17 @@ class BL_TPUpload: NSObject
                 categoryCode = objTPDoctor.Category_Code!
             }
             
-            let dict: NSDictionary = ["TP_Id": objTPDoctor.TP_Id, "Doctor_Code": doctorCode, "Doctor_Region_Code": regionCode, "Category_Code": categoryCode]
+            if (checkNullAndNilValueForString(stringData: objTPDoctor.Call_Objective_Name) != EMPTY)
+                       {
+                           Call_Objective_Name = objTPDoctor.Category_Code!
+                       }
+                       
+                       if objTPDoctor.Call_Objective_Id != nil
+                       {
+                           Call_Objective_Id = objTPDoctor.Call_Objective_Id!
+                       }
+            
+            let dict: NSDictionary = ["TP_Id": objTPDoctor.TP_Id, "Doctor_Code": doctorCode, "Doctor_Region_Code": regionCode, "Category_Code": categoryCode,"Call_Objective_Id": Call_Objective_Id,"Call_Objective_Name": Call_Objective_Name]
             var combinedAttributes : NSMutableDictionary!
             
             combinedAttributes = NSMutableDictionary(dictionary: dict)

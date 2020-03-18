@@ -284,7 +284,7 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    businessStatus = "N/A"
+                    businessStatus = ""
                 }
                 
                 if (model.Call_Objective_Name.count > 0)
@@ -293,7 +293,7 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    callObjective = "N/A"
+                    callObjective = ""
                 }
                 
                 if (model.Campaign_Name.count > 0)
@@ -302,13 +302,13 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    campaignName = "N/A"
+                    campaignName = ""
                 }
                 
                 let combineAttributeString = NSMutableAttributedString()
-                combineAttributeString.append( attributedStringWithBold(boldText: "Business Status\n\n ", normalText: businessStatus))
-                combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCall Objective\n\n ", normalText: callObjective))
-                combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCampaign Name\n\n ", normalText: campaignName))
+              //  combineAttributeString.append( attributedStringWithBold(boldText: "Business Status\n\n ", normalText: businessStatus))
+                combineAttributeString.append(attributedStringWithBold(boldText: "\nObjective\n", normalText: callObjective))
+               // combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCampaign Name\n\n ", normalText: campaignName))
                 combineAttributeString.append(attributedStringWithBold(boldText: "\n\nRemarks", normalText: ""))
                 
                 if model.Visit_Time != ""
@@ -325,7 +325,7 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 else
                 {
                     cell.visitMode.text = "Visit Time"
-                    cell.visitModeLabel.text = "N/A"
+                    cell.visitModeLabel.text = ""
                 }
                 
                 cell.remarks.attributedText = combineAttributeString
@@ -346,7 +346,7 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    businessStatus = "N/A"
+                    businessStatus = ""
                 }
                 
                 if (model.Call_Objective_Name.count > 0)
@@ -355,7 +355,7 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    callObjective = "N/A"
+                    callObjective = ""
                 }
             
                 if (model.Campaign_Name.count > 0)
@@ -364,13 +364,13 @@ class DoctorVisitStepperMain: UITableViewCell, UITableViewDelegate, UITableViewD
                 }
                 else
                 {
-                    campaignName = "N/A"
+                    campaignName = ""
                 }
                 
                 let combineAttributeString = NSMutableAttributedString()
-                combineAttributeString.append( attributedStringWithBold(boldText: "Business Status\n\n ", normalText: businessStatus))
-                combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCall Objective\n\n ", normalText: callObjective))
-                combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCampaign Name\n\n ", normalText: campaignName))
+//                combineAttributeString.append( attributedStringWithBold(boldText: "Business Status\n\n ", normalText: businessStatus))
+                combineAttributeString.append(attributedStringWithBold(boldText: "Objective\n\n ", normalText: callObjective))
+//                combineAttributeString.append(attributedStringWithBold(boldText: "\n\nCampaign Name\n\n ", normalText: campaignName))
                 combineAttributeString.append(attributedStringWithBold(boldText: "\n\nRemarks", normalText: ""))
                 
                 if model.Visit_Time != ""

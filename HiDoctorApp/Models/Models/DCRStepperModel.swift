@@ -81,6 +81,8 @@ class StepperDoctorModel: NSObject
     var sampleList1 = [DCRSampleModel]()
     var sampleList = [SampleBatchProductModel]()
     var isExpanded = false
+    var Call_Objective_Id: Int!
+    var Call_Objective_Name: String!
 }
 
 class StepperAttendanceDoctorModel: NSObject

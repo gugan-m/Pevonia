@@ -31,10 +31,10 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        let tapRecog = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
 //        self.view.addGestureRecognizer(tapRecog)
         
-        self.navigationItem.title = "Add Flexi \(appDoctor)"
+        self.navigationItem.title = "Add Prospecting \(appDoctor)"
         doctorNameHeader.text = "\(appDoctor) Name"
         doctorSpecialityHeader.text = "\(appDoctor) Position"
-        recentlyAddedHeader.text = "Recently added (Flexi \(appDoctorPlural))"
+        recentlyAddedHeader.text = "Recently added (Prospecting \(appDoctorPlural))"
         doctorSpeciality.text = "Select \(appDoctor) Position"
         
         doctorList = BL_DCR_Doctor_Visit.sharedInstance.getFlexiDoctorsList()!
