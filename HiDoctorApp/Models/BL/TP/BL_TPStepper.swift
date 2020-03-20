@@ -762,7 +762,7 @@ class BL_TPStepper: NSObject
             objStepperDoctor.MDL_Number = objTPDoctor.MDL_Number
             objStepperDoctor.Hospital_Name = objTPDoctor.Hospital_Name
             objStepperDoctor.Call_Objective_Id = objTPDoctor.Call_Objective_Id
-                       objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
+            objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
             objStepperDoctor.sampleList = []
             
             let filteredList = lstSamples.filter{

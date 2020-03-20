@@ -313,6 +313,7 @@ class BL_TPRefresh: NSObject
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_ACCOMPANIST)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_HEADER)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_UNFREEZE_DATES)
+        DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_DOCTOR_VISIT_ATTACHMENT)
         
         if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
         {

@@ -546,7 +546,6 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                 
             }
         }
-        
     }
     
     @IBAction func uploadActionBtn(_ sender: Any) {
@@ -649,9 +648,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         self.navigationController!.pushViewController(vc, animated: true)
         
     }
-    
-    
-    
+
     @IBAction func backToCalendarAction(_ sender: Any)
     {
         if let navigationController = self.navigationController
@@ -669,14 +666,13 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         
         if startUploadBtn.title(for: .normal) == "COMPLETED"
         {
-//            if attachmentList.count != 0{
-//                backToCalHeightConstraint.constant = 0
-//                self.btnUploadAttachment.isHidden = false
-//            } else {
-//                self.btnUploadAttachment.isHidden = true
+            if attachmentList.count != 0{
+                backToCalHeightConstraint.constant = 0
+                self.btnUploadAttachment.isHidden = false
+            } else {
+                self.btnUploadAttachment.isHidden = true
                 backToCalHeightConstraint.constant = 50
-         //   }
-            
+            }
         }
         else
         {

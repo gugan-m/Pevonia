@@ -1059,6 +1059,7 @@ let attachmentFailedMsg : String = "Some of the attachments uploaded failed. Ple
 
 //MARK:- Notification names
 let attachmentNotification : String = "attachmentNotification"
+let tpaAttachmentNotification : String = "tpattachmentNotification"
 let chemistAttachmentNotification : String = "chemistAttachmentNotification"
 let assetNotification: String = "assetNotification"
 let leaveAttachmentNotification : String = "leaveAttachmentNotification"

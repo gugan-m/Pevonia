@@ -22,7 +22,7 @@ class Bl_Attachment: NSObject
     
     func insertTPAttachment(attachmentName: String, doctor_Id: Int, doctor_Code: String, doctor_Regioncode:String)
     {
-        let dict : NSDictionary = ["TP_Id": TPModel.sharedInstance.tpEntryId, "Check_Sum_Id": 0, "TP_Doctor_Id": doctor_Id, "Uploaded_File_Name": attachmentName, "Blob_URL": "", "Doctor_Code": doctor_Code, "Doctor_Region_Code": doctor_Regioncode]
+        let dict : NSDictionary = ["TP_Entry_Id": TPModel.sharedInstance.tpEntryId,"TP_Id": 0, "Check_Sum_Id": 0, "TP_Doctor_Id": 0, "Uploaded_File_Name": attachmentName, "Blob_URL": "", "Doctor_Code": doctor_Code, "Doctor_Region_Code": doctor_Regioncode]
         let tpAttachmentModel = TPAttachmentModel.init(dict: dict)
         DBHelper.sharedInstance.insertTPAttachmentDetail(dcrAttachmentModel: tpAttachmentModel)
     }
@@ -56,9 +56,9 @@ class Bl_Attachment: NSObject
         return DBHelper.sharedInstance.getAttachmentDetails(dcrId: dcrId, doctorVisitId: doctorVisitId)
     }
     
-    func getTPAttachment(tpId: Int, doctor_Code: String) -> [TPAttachmentModel]?
+    func getTPAttachment(tp_entryId: Int, doctor_Code: String) -> [TPAttachmentModel]?
     {
-        return DBHelper.sharedInstance.getTPAttachmentDetails(tpId: tpId, doctor_Code: doctor_Code)
+        return DBHelper.sharedInstance.getTPAttachmentDetails(tp_entryId: tp_entryId, doctor_Code: doctor_Code)
     }
     
     func getDCRChemistAttachment(dcrId: Int, chemistVisitId: Int) -> [DCRChemistAttachment]?

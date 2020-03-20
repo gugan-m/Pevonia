@@ -632,18 +632,18 @@ class BL_AttachmentOperation: NSObject
     
     func updateFailureStatus(model: TPAttachmentModel)
     {
-        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 0)
+        DBHelper.sharedInstance.updateTPAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 0)
         self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
         let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 0]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil, userInfo: userInfo)
     }
     
     func updateSuccessStatus(model: TPAttachmentModel)
     {
-        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 1)
+        DBHelper.sharedInstance.updateTPAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 1)
         self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
         let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 1]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil, userInfo: userInfo)
     }
     
     func showInternetErrorToast()

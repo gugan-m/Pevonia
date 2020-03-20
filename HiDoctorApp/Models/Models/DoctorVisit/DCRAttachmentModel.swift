@@ -154,13 +154,14 @@ class TPAttachmentModel: Record
     var attachmentBlobUrl: String?
     var tpId: Int!
     var attachmentName: String?
-    
+    var tp_entryId: Int!
     
     init(dict: NSDictionary)
     {
         self.tpId = (dict.value(forKey: "TP_Id") as! Int)
         self.tpChecksumId = (dict.value(forKey: "Check_Sum_Id") as! Int)
         self.tpDoctorId = (dict.value(forKey: "TP_Doctor_Id") as! Int)
+        self.tp_entryId = (dict.value(forKey: "TP_Entry_Id") as! Int)
         self.attachmentName = dict.value(forKey: "Uploaded_File_Name") as? String
         self.attachmentBlobUrl = dict.value(forKey: "Blob_URL") as? String
         self.tpDoctorCode = dict.value(forKey: "Doctor_Code") as? String
@@ -194,6 +195,7 @@ class TPAttachmentModel: Record
         tpDoctorRegionCode = row["Doctor_Region_Code"]
         attachmentId = row["TP_Doctor_Attachment_Id"]
         isSuccess = row["Is_Success"]
+        tp_entryId = row["TP_Entry_Id"]
         super.init(row: row)
     }
     override func encode(to container: inout PersistenceContainer) {
@@ -207,5 +209,6 @@ class TPAttachmentModel: Record
         container["Doctor_Region_Code"] =  tpDoctorRegionCode
         container["TP_Doctor_Attachment_Id"] = attachmentId
         container["Is_Success"] = isSuccess
+        container["TP_Entry_Id"] = tp_entryId
     }
 }

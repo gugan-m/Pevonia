@@ -43,7 +43,7 @@ class BL_TPUpload: NSObject
     func uploadTP(objTPHeader: TourPlannerHeader, completion: @escaping (ApiResponseModel) -> ())
     {
         let postData: NSArray = getUploadData(tpEntryId: objTPHeader.TP_Entry_Id, objTPHeader: objTPHeader)
-        
+        print(postData)
         WebServiceHelper.sharedInstance.uploadTP(tpDate: getServerFormattedDateString(date: objTPHeader.TP_Date), dataArray: postData) { (objApiResponse) in
             self.uploadTPCallBack(tpEntryId: objTPHeader.TP_Entry_Id, objApiResponse: objApiResponse)
             completion(objApiResponse)
@@ -81,6 +81,7 @@ class BL_TPUpload: NSObject
         var tpId: Int = 0
         var tpStatus: Int!
         let uploadMessage: String = objApiResponse.Message
+        var TP_Doctor_Id: Int = 0
         
         if (status == 0) //0 = Error
         {
@@ -104,9 +105,15 @@ class BL_TPUpload: NSObject
                 {
                     tpId = id
                 }
+                
+                if let attachment_Name = dict.value(forKey: "Uploaded_File_Name") as? String {
+                    if attachment_Name.count != 0{
+                        TP_Doctor_Id = (dict.value(forKey: "TP_Doctor_Id") as? Int)!
+                    }
+                    updateAttachmentTPId(tpEntryId: tpEntryId, tpId: tpId, TP_Doctor_Id: TP_Doctor_Id )
+                }
             }
         }
-        
         updateTPId(tpEntryId: tpEntryId, tpId: tpId, tpStatus: tpStatus, uploadMessage: uploadMessage)
     }
     
@@ -115,10 +122,16 @@ class BL_TPUpload: NSObject
         DAL_TPUpload.sharedInstance.updateTPId(tpEntryId: tpEntryId, tpId: tpId, tpStatus: tpStatus, uploadMessage: uploadMessage)
     }
     
+    
+    private func updateAttachmentTPId(tpEntryId: Int, tpId: Int, TP_Doctor_Id: Int)
+    {
+        DAL_TPUpload.sharedInstance.updateAttachmentTPId(tpEntryId: tpEntryId, tpId: tpId, TP_Doctor_Id: TP_Doctor_Id)
+    }
+    
     private func getUploadData(tpEntryId: Int, objTPHeader: TourPlannerHeader) -> NSArray
     {
         let dict: NSDictionary = ["lstTPHeaderStaging": getHeaderList(tpEntryId: tpEntryId, objTPHeader: objTPHeader), "lstTPAccompanist": getAccompanistList(tpEntryId: tpEntryId), "lstTpSFCStaging": getSFCList(tpEntryId: tpEntryId) , "lstTPDoctorsStaging": getDoctorList(tpEntryId: tpEntryId), "lstTPProductsStaging": getProductList(tpEntryId: tpEntryId),"lstTPDoctorAttachmentStaging":getAttchmentList(tpEntryId: tpEntryId)]
-        
+        print(dict)
         let dataArray: NSArray = [dict]
         
         return dataArray
@@ -187,7 +200,7 @@ class BL_TPUpload: NSObject
             let dict1: NSDictionary = ["Company_Code": getCompanyCode(), "User_Code": getUserCode(), "CP_Code": cpCode, "TP_Date": tpDate, "TP_Status": String(objTPHeader.Status!)]
             let dict2: NSDictionary = ["Work_Area": workArea, "Project_Code": objTPHeader.Project_Code!, "Activity": objTPHeader.Activity!, "Activity_Code": objTPHeader.Activity_Code!, "Category_Name": categoryName]
             let dict3: NSDictionary = ["Region_Code": getRegionCode(), "Meeting_Place": meetingPlace, "Meeting_Time": meetingTime, "Remarks": remarks, "TP_Id": objTPHeader.TP_Id!]
-            let dict4: NSDictionary = ["TP_Entry_Id": objTPHeader.TP_Entry_Id!, "Check_Sum_Id": NSNull(), "Source_Of_Entry": 3, "Entered_by": getUserName(),"TP_Type": TPModel.sharedInstance.tp_Type]
+            let dict4: NSDictionary = ["TP_Entry_Id": objTPHeader.TP_Entry_Id!, "Check_Sum_Id": NSNull(), "Source_Of_Entry": 3, "Entered_by": getUserName(),"TP_Type": objTPHeader.TpType]
             var combinedAttributes : NSMutableDictionary!
             
             combinedAttributes = NSMutableDictionary(dictionary: dict1)
@@ -350,7 +363,7 @@ class BL_TPUpload: NSObject
             
             if (checkNullAndNilValueForString(stringData: objTPDoctor.Call_Objective_Name) != EMPTY)
                        {
-                           Call_Objective_Name = objTPDoctor.Category_Code!
+                        Call_Objective_Name = objTPDoctor.Call_Objective_Name!
                        }
                        
                        if objTPDoctor.Call_Objective_Id != nil
@@ -406,13 +419,24 @@ class BL_TPUpload: NSObject
     
     private func getAttchmentList(tpEntryId: Int) -> NSMutableArray
     {
-        let tpAttachmentList = DAL_TP_Stepper.sharedInstance.getTPAttachmentList(tpId: tpEntryId)
+        let tpAttachmentList = DAL_TP_Stepper.sharedInstance.getTPAttachmentList(entry_Id: tpEntryId)
         let resultList: NSMutableArray = []
         
         for objAttachment in tpAttachmentList!
         {
-            var doctorCode: String = EMPTY
-            var regionCode: String = EMPTY
+            var doctorCode: String = ""
+            var regionCode: String = ""
+            var attachmentName: String = ""
+            var tpid: Int = 0
+            var bloburl: String = ""
+            var tp_doctor_id: Int = 0
+            var checksumid: Int = 0
+                
+            attachmentName = objAttachment.attachmentName!
+            tpid = objAttachment.tpId
+            checksumid = objAttachment.tpChecksumId!
+            tp_doctor_id = objAttachment.tpDoctorId!
+            bloburl = objAttachment.attachmentBlobUrl!
             
             if (checkNullAndNilValueForString(stringData: objAttachment.tpDoctorCode) != EMPTY)
             {
@@ -425,18 +449,16 @@ class BL_TPUpload: NSObject
             }
             
             let dict1: NSDictionary = [
-                   "TP_Id": objAttachment.tpId,
-                   "Check_Sum_Id": objAttachment.tpChecksumId ?? 0,
-                   "TP_Doctor_Id": 0,
-                   "Uploaded_File_Name": objAttachment.attachmentName ?? "",
-                   "Blob_URL": NSNull()]
-            let dict2: NSDictionary = ["Doctor_Code": doctorCode, "Doctor_Region_Code": regionCode]
-            var combinedAttributes : NSMutableDictionary!
-            combinedAttributes = NSMutableDictionary(dictionary: dict1)
-            combinedAttributes.addEntries(from: dict2 as! [AnyHashable : Any])
-            combinedAttributes = replaceEmptyStringToNullValues(combinedAttributes: combinedAttributes)
+                   "TP_Id": tpid,
+                   "Check_Sum_Id": checksumid,
+                   "TP_Doctor_Id": tp_doctor_id,
+                   "Uploaded_File_Name": attachmentName,
+                   "Blob_URL": bloburl,
+                   "Doctor_Code": doctorCode,
+                   "Doctor_Region_Code": regionCode]
             
-            resultList.add(combinedAttributes)
+            
+            resultList.add(dict1)
         }
         
         return resultList

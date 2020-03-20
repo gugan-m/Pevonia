@@ -312,9 +312,9 @@ class DAL_TP_Stepper: NSObject {
         return sampleList
     }
     
-    func getTPAttachmentList(tpId: Int) -> [TPAttachmentModel]?
+    func getTPAttachmentList(entry_Id: Int) -> [TPAttachmentModel]?
     {
-        return DBHelper.sharedInstance.getTPAttachmentList(tpId:tpId)
+        return DBHelper.sharedInstance.getTPAttachmentList(entry_Id:entry_Id)
     }
     
     func insertSelectedSamples(lstTPSamples :[TourPlannerProduct])
