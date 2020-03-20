@@ -1459,6 +1459,50 @@ class BL_PrepareMyDevice: NSObject
         }
     }
     
+    
+    
+    func GetTPDoctorAttachments(masterDataGroupName:String,completion: @escaping (Int) -> ())
+          {
+              let apiName: String = ApiName.GetTPDoctorAttachments.rawValue
+              
+              BL_PrepareMyDevice.sharedInstance.insertApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
+              let dict = [
+               "TPStatus" : "ALL",
+              "UserCode" : getUserCode(),
+              "RegionCode" : getRegionCode(),
+              "CompanyCode" : getCompanyCode()
+              ]
+              WebServiceHelper.sharedInstance.getTourPlannerDoctorAttachment(postData:dict ) { (apiResponseObj) in
+                  let statusCode = apiResponseObj.Status
+                  
+                  if (statusCode == SERVER_SUCCESS_CODE)
+                  {
+                      let status = self.getTpDoctorAttachmentCallBack(apiResponseObj: apiResponseObj, apiName: apiName, masterDataGroupName: masterDataGroupName)
+                      completion(status)
+                  }
+                  else
+                  {
+                      completion(statusCode!)
+                  }
+              }
+          }
+    
+    
+    private func getTpDoctorAttachmentCallBack(apiResponseObj: ApiResponseModel, apiName: String, masterDataGroupName:String) -> Int
+       {
+           if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
+           {
+               DBHelper.sharedInstance.insertTPAttachment(array: apiResponseObj.list)
+           }
+           
+           BL_PrepareMyDevice.sharedInstance.updateApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
+           
+           return 1
+       }
+    
+    
+    
+    
     // MARK:- Private Functions
     private func getDoctorProductMappingPageInfo(masterDataGroupName:String,selectedRegionCode: String, completion: @escaping (Int) -> ())
     {

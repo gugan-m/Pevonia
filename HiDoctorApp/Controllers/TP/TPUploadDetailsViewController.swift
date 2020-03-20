@@ -46,9 +46,14 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         userDetails = DBHelper.sharedInstance.getUserDetail()
         self.setDefaults()
         self.showBackButton()
-        
+        self.navigationController?.navigationItem.hidesBackButton = true
     }
 
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -666,7 +671,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         
         if startUploadBtn.title(for: .normal) == "COMPLETED"
         {
-            if attachmentList.count != 0{
+            if attachmentList.count != 0 {
                 backToCalHeightConstraint.constant = 0
                 self.btnUploadAttachment.isHidden = false
             } else {

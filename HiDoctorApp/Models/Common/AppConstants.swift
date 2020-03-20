@@ -2,8 +2,8 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
-let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+//let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"

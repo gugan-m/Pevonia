@@ -193,6 +193,7 @@ class PrepareMyDeviceViewController: UIViewController
         static let AttendanceSample = "Office Samples"
         static let MCDetails = "Marketing Campaign Details"
         static let DivisionMappingDetails = "Division Mapping Details"
+        static let PRAttachments = "PR Attachments"
     }
     
     override func viewDidLoad()

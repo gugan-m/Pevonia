@@ -44,14 +44,14 @@ class BL_TPRefresh: NSObject
                                                    
                                                     if (status == SERVER_SUCCESS_CODE)
                                                     {
-                                                        self.GetTPDoctorAttachments(masterDataGroupName: EMPTY,completion: {
-                                                            (status) in
-                                                            if (status == SERVER_SUCCESS_CODE)
-                                                            {
+//                                                        self.GetTPDoctorAttachments(masterDataGroupName: EMPTY,completion: {
+//                                                            (status) in
+//                                                            if (status == SERVER_SUCCESS_CODE)
+//                                                            {
                                                                 self.updateIDsInRelatedTables()
-                                                            }
+//                                                            }
                                                             completion(status)
-                                                        })
+//                                                        })
                                                     } else {
                                                         completion(status)
                                                     }
@@ -308,12 +308,12 @@ class BL_TPRefresh: NSObject
     private func getTourPlannerHeaderCallBack(apiResponseObj: ApiResponseModel, apiName: String, masterDataGroupName:String, startDate: String, endDate: String) -> Int
     {
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_PRODUCT)
-        DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_DOCTOR)
+         DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_DOCTOR)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_SFC)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_ACCOMPANIST)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_HEADER)
          DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_UNFREEZE_DATES)
-        DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_DOCTOR_VISIT_ATTACHMENT)
+      // DBHelper.sharedInstance.deleteFromTable(tableName: TRAN_TP_DOCTOR_VISIT_ATTACHMENT)
         
         if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
         {
@@ -419,6 +419,15 @@ class BL_TPRefresh: NSObject
     {
         if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
         {
+            
+            for data in apiResponseObj.list {
+                let dict = data as! NSDictionary
+                if let tpid = dict["TP_Id"] as? Int {
+                    DBHelper.sharedInstance.deleteTpAttachmentByTpID(tp_ID: tpid)
+                }
+            }
+            
+            
             DBHelper.sharedInstance.insertTPAttachment(array: apiResponseObj.list)
         }
         

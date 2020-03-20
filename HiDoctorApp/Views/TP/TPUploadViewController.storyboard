@@ -388,6 +388,9 @@
                                         <state key="normal" title="UPLOAD ATTACHMENTS">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="act_UploadAttachment:" destination="cq1-dr-pdU" eventType="touchUpInside" id="Hqw-GW-hrs"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
