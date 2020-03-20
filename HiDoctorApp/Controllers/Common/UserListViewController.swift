@@ -193,7 +193,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         {
                             cell.imgView.image = UIImage(named: "icon-unselected")
                         }
-                        if userValueobj.isReadOnly
+                        if userValueobj.isReadOnly && !isFromDCR
                         {
                             cell.imgView.image = UIImage(named: "icon-selected")
                             
@@ -1225,13 +1225,17 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                let filteredArr = userCurrentList.filter{
                               $0.isSelected == true
                }
+                if (!isFromDCR)
+                {
                let selectarr = userCurrentList.filter{
                    $0.isReadOnly == true
-               }
-               for item in selectarr
-               {
-                   regionArr.append(item.userObj.Region_Code)
-               }
+                    }
+                    for item in selectarr
+                    {
+                        regionArr.append(item.userObj.Region_Code)
+                    }
+                }
+               
                for item in filteredArr {
                    regionArr.append(item.userObj.Region_Code)
                }
@@ -1269,6 +1273,8 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    }
                   else
                    {
+                    if (!isFromDCR)
+                    {
                        for i in filteredArr
                   {
                    var accompanistList : [AccompanistModel] = []
@@ -1283,21 +1289,59 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                            let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": j.Region_Code, "Acc_User_Code":j.User_Code , "Acc_User_Name": j.User_Name, "Acc_User_Type_Name": j.User_Type_Name, "Employee_Name":j.Employee_name]
                            let dcrAccompanistModelObj: DCRAccompanistModel = DCRAccompanistModel(dict: dict)
                            var dcraccomp: [DCRAccompanistModel] = []
+                            
                            dcraccomp = BL_Stepper.sharedInstance.getDCRAccompanistDetails()!
-                           if (dcraccomp != nil && dcraccomp.count > 0)
+                           if (dcraccomp.count > 0)
                            {
                                for i in dcraccomp
                                {
                                    if (dcrAccompanistModelObj.Acc_User_Code != i.Acc_User_Code)
                                    {
-                                        DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
-                                   }
+                                    DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
+                                 
+                                    
+                                }
                                }
                            }
+                            
                            else
                            {
                                DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
+                         let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
+                                            if (docvisitidobj.count > 0 )
+                                            {
+                                                
+                                                for visitid in docvisitidobj
+                                                {
+                                                    var isaccompanied = 0
+                                                    if (visitid.Doctor_Region_Code == dcrAccompanistModelObj.Acc_Region_Code)
+                                                    {
+                                                       isaccompanied = 1
+                                                    }
+                                                    let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": dcrAccompanistModelObj.Acc_Region_Code, "Acc_User_Code": dcrAccompanistModelObj.Acc_User_Code , "Acc_User_Name": dcrAccompanistModelObj.Acc_User_Name, "Acc_User_Type_Name": dcrAccompanistModelObj.Acc_User_Type_Name, "Employee_Name":dcrAccompanistModelObj.Employee_Name,"Visit_ID": visitid.DCR_Doctor_Visit_Id,"accompainedCall":isaccompanied]
+
+                            let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+                                        DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+                                                }
+                                            }
                            }
+                        let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
+                        if (docvisitidobj.count > 0 && i.userObj.User_Code != dcrAccompanistModelObj.Acc_User_Code)
+                                                         {
+                                                             
+                                                             for visitid in docvisitidobj
+                                                             {
+                                                                 var isaccompanied = 0
+                                                                 if (visitid.Doctor_Region_Code == dcrAccompanistModelObj.Acc_Region_Code)
+                                                                 {
+                                                                     isaccompanied = 1
+                                                                 }
+                                                                 let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": dcrAccompanistModelObj.Acc_Region_Code, "Acc_User_Code": dcrAccompanistModelObj.Acc_User_Code , "Acc_User_Name": dcrAccompanistModelObj.Acc_User_Name, "Acc_User_Type_Name": dcrAccompanistModelObj.Acc_User_Type_Name, "Employee_Name":dcrAccompanistModelObj.Employee_Name,"Visit_ID": visitid.DCR_Doctor_Visit_Id,"accompainedCall":isaccompanied]
+                                                                 
+                                                                 let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+                                                                 DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+                                                             }
+                                                         }
                           // let dcrAccompanistModelObj: DCRAccompanistModel = DCRAccompanistModel(dict: dict)
 
                         
@@ -1305,7 +1349,8 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    }
                        }
                    BL_DCR_Accompanist.sharedInstance.updateDCRStatusToDraft()
-                   }
+                }
+                }
                    BL_PrepareMyDeviceAccompanist.sharedInstance.getTPCustomerData(regionCodeArr: regionCodeArr) { (status) in
                      if (status == SERVER_SUCCESS_CODE)
                      {

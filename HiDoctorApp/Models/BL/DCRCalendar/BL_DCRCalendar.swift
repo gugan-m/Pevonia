@@ -399,9 +399,13 @@ class BL_DCRCalendar: NSObject
                                     {
                                             for j in dcraccomplist
                                                    {
+                                                    var isaccompanied = 0
+                                                    if (doctorVisitObj.Doctor_Region_Code == j.Acc_Region_Code)
+                                                   {
+                                                      isaccompanied = 1
+                                                   }
                                                    
-                                                   
-                                                    let dict: NSDictionary = ["DCR_Id": doctorVisitObj.DCR_Id, "Acc_Region_Code": j.Acc_Region_Code, "Acc_User_Code": j.Acc_User_Code , "Acc_User_Name": j.Acc_User_Name, "Acc_User_Type_Name": j.Acc_User_Type_Name, "Employee_Name":j.Acc_Employee_Name,"Visit_ID": doctorVisitId]
+                                                    let dict: NSDictionary = ["DCR_Id": doctorVisitObj.DCR_Id, "Acc_Region_Code": j.Acc_Region_Code, "Acc_User_Code": j.Acc_User_Code , "Acc_User_Name": j.Acc_User_Name, "Acc_User_Type_Name": j.Acc_User_Type_Name, "Employee_Name":j.Acc_Employee_Name,"Visit_ID": doctorVisitId,"accompainedCall":isaccompanied]
                                                        
                                                        let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
                                                        DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)

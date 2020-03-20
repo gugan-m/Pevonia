@@ -1218,6 +1218,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
                 let acc_Code = BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_User_Code
                 if acc_Code != nil {
                     BL_DCR_Accompanist.sharedInstance.removeDCRAccompanist(accompanistRegionCode: BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_Region_Code, accompanistUserCode: acc_Code!)
+                    DBHelper.sharedInstance.funcupdateaccompanistremoved(dcrId: BL_Stepper.sharedInstance.dcrId, accompanistCode: acc_Code!)
                     BL_Stepper.sharedInstance.generateDataArray()
                     self.reloadTableView()
                 }

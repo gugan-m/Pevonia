@@ -2928,6 +2928,11 @@ class DBHelper: NSObject
         executeQuery(query: "DELETE FROM \(TRAN_DCR_CHEMIST_ACCOMPANIST) WHERE DCR_Id = \(dcrId) AND Acc_Region_Code = '\(accompanistRegionCode)'")
     }
     
+    func funcupdateaccompanistremoved(dcrId: Int, accompanistCode: String)
+    {
+         executeQuery(query: "DELETE FROM \(TRAN_DCR_DOCTOR_ACCOMPANIST) WHERE DCR_Id = \(dcrId) AND Acc_User_Code = '\(accompanistCode)'")
+    }
+    
     func insertDoctorAccompanist(dcrDoctorAccompanist: [DCRDoctorAccompanist])
     {
         try? dbPool.write { db in
@@ -6663,6 +6668,7 @@ class DBHelper: NSObject
         
         return count
     }
+    
     
     func getDoctorVisitDetailsByDoctorCode(dcrId: Int, customerCode: String, regionCode: String) -> DCRDoctorVisitModel?
     {
