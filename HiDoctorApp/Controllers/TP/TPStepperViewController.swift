@@ -8,7 +8,7 @@
 import UIKit
 
 class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDelegate, AddSampleDelegate {
-   
+    
     // MARK:- Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitButton: UIButton!
@@ -47,7 +47,7 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     override func viewWillAppear(_ animated: Bool)
     {
         if isProspect == true {
-           BL_TPStepper.sharedInstance.generateProspectDataArray()
+            BL_TPStepper.sharedInstance.generateProspectDataArray()
         } else {
             BL_TPStepper.sharedInstance.generateDataArray()
         }
@@ -270,21 +270,21 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     //        navigateToNextScreen(stoaryBoard: doctorMasterSb, viewController: doctorVisitModifyVcID)
     //    }
     //
-        private func navigateToAddGeneralRemarks()
-        {
-            let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPGeneralRemarksVCID) as! TPGeneralRemarksViewController
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+    private func navigateToAddGeneralRemarks()
+    {
+        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPGeneralRemarksVCID) as! TPGeneralRemarksViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
-        private func navigateToEditGeneralRemarks()
-        {
-            let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPGeneralRemarksVCID) as! TPGeneralRemarksViewController
-            vc.isComingFromModify = true
-            self.navigationController?.pushViewController(vc, animated: true)
-    
-        }
+    private func navigateToEditGeneralRemarks()
+    {
+        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPGeneralRemarksVCID) as! TPGeneralRemarksViewController
+        vc.isComingFromModify = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
     
     private func navigateToAddContact() {
         
@@ -307,15 +307,15 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     {
         if isProspect == true {
             switch index {
-                       case 0:
-                           navigateToAddUser()
-                       case 1:
-                           break
-                       case 2:
-                           navigateToAddGeneralRemarks()
-                       default:
-                           break
-                       }
+            case 0:
+                navigateToAddUser()
+            case 1:
+                break
+            case 2:
+                navigateToAddGeneralRemarks()
+            default:
+                break
+            }
         } else {
             switch index {
             case 0:
@@ -338,15 +338,15 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     {
         if isProspect == true {
             switch index {
-                       case 0:
-                           navigateToAddContact()
-                       case 1:
-                           break
-                       case 2:
-                           navigateToEditGeneralRemarks()
-                       default:
-                           break
-                       }
+            case 0:
+                navigateToAddContact()
+            case 1:
+                break
+            case 2:
+                navigateToEditGeneralRemarks()
+            default:
+                break
+            }
         } else {
             switch index {
             case 0:
@@ -423,71 +423,71 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     //    }
     //
     //
-        func showAlertToConfirmAppliedMode()
-        {
-            var alertMessage = ""
-            if isProspect == true {
-                alertMessage =  "Your PR Plan for Prospecting will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
-            } else {
-                alertMessage =  "Your PR Plan for Field will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+    func showAlertToConfirmAppliedMode()
+    {
+        var alertMessage = ""
+        if isProspect == true {
+            alertMessage =  "Your PR Plan for Prospecting will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+        } else {
+            alertMessage =  "Your PR Plan for Field will be submitted in Applied status. Once submitted you cannot edit your PR Plan.\n\n Press 'OK' to submit PR Plan.\n OR \n Press 'Cancel'."
+        }
+        
+        
+        
+        let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        
+        alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
+            
+            BL_TPStepper.sharedInstance.submitTP()
+            if(!BL_TPUpload.sharedInstance.isSFCMinCountValidInTP())
+            {
+                self.showAlertToUploadDCR()
+            }
+            else
+            {
+                _ = self.navigationController?.popViewController(animated: true)
             }
             
-             
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alertViewController, animated: true, completion: nil)
+    }
     
-            let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
-    
-            alertViewController.addAction(UIAlertAction(title: CANCEL, style: UIAlertActionStyle.default, handler: { alertAction in
-                alertViewController.dismiss(animated: true, completion: nil)
-            }))
-    
-            alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-    
-                BL_TPStepper.sharedInstance.submitTP()
-                if(!BL_TPUpload.sharedInstance.isSFCMinCountValidInTP())
-                {
-                    self.showAlertToUploadDCR()
-                }
-                else
-                {
-                    _ = self.navigationController?.popViewController(animated: true)
-                }
-    
-                alertViewController.dismiss(animated: true, completion: nil)
-            }))
-    
-            self.present(alertViewController, animated: true, completion: nil)
+    func showAlertToUploadDCR()
+    {
+        var alertMessage = ""
+        if isProspect == true {
+            alertMessage = "Your PR Plan for Prospecting is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
+        } else {
+            alertMessage = "Your PR Plan for Field is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
         }
+        let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
+            _ = self.navigationController?.popViewController(animated: true)
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        
+        alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
+            self.navigateToUploadTP()
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alertViewController, animated: true, completion: nil)
+    }
     
-        func showAlertToUploadDCR()
-        {
-            var alertMessage = ""
-            if isProspect == true {
-                alertMessage = "Your PR Plan for Prospecting is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
-            } else {
-                alertMessage = "Your PR Plan for Field is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Routing Upload'option from the PR Calendar screen to submit."
-            }
-            let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
-    
-            alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in
-              _ = self.navigationController?.popViewController(animated: true)
-                alertViewController.dismiss(animated: true, completion: nil)
-            }))
-    
-            alertViewController.addAction(UIAlertAction(title: "Upload", style: UIAlertActionStyle.default, handler: { alertAction in
-                self.navigateToUploadTP()
-                alertViewController.dismiss(animated: true, completion: nil)
-            }))
-    
-            self.present(alertViewController, animated: true, completion: nil)
-        }
-    
-        func navigateToUploadTP()
-        {
-            let sb = UIStoryboard(name: Constants.StoaryBoardNames.TPUploadSb, bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPUploadSelectVCID) as! TPUploadSelectionViewController
-    
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+    func navigateToUploadTP()
+    {
+        let sb = UIStoryboard(name: Constants.StoaryBoardNames.TPUploadSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPUploadSelectVCID) as! TPUploadSelectionViewController
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     //
     //    func popViewController(animated: Bool)
     //    {
@@ -842,21 +842,21 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     //        skipItem(index: sender.tag)
     //    }
     //
-        @IBAction func submitButtonAction()
+    @IBAction func submitButtonAction()
+    {
+        let errorMessage = BL_TPStepper.sharedInstance.doSubmitTPValidations()
+        
+        if (errorMessage != EMPTY)
         {
-            let errorMessage = BL_TPStepper.sharedInstance.doSubmitTPValidations()
-    
-            if (errorMessage != EMPTY)
-            {
-                AlertView.showAlertView(title: alertTitle, message: errorMessage, viewController: self)
-            } else if selectedWorkPlace.count == 0 {
-                AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
-            }
-            else
-            {
-                showAlertToConfirmAppliedMode()
-            }
+            AlertView.showAlertView(title: alertTitle, message: errorMessage, viewController: self)
+        } else if selectedWorkPlace.count == 0 {
+            AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
         }
+        else
+        {
+            showAlertToConfirmAppliedMode()
+        }
+    }
     //
     //    func getselectedAccompanist(selectedAccompanist: [DCRAccompanistModel], type: Int)
     //    {
@@ -1002,7 +1002,7 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
             if acc_Code != nil {
                 DAL_TP_Stepper.sharedInstance.deleteSelectedAccompanists(tp_Entry_Id: TPModel.sharedInstance.tpEntryId,Acc_Code:acc_Code!)
                 BL_TPStepper.sharedInstance.generateDataArray()
-                          self.reloadTableView()
+                self.reloadTableView()
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
@@ -1037,16 +1037,18 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     
     func setWorkPlace() {
         if TPModel.sharedInstance.tpEntryId != -1 {
-            if let category: TourPlannerHeader =  DAL_TP_Stepper.sharedInstance.getWorkPlaceDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)! {
-                if category.Category_Name != nil{
-                    selectedWorkPlace = category.Category_Name!
+            
+            let category: TourPlannerHeader? =  BL_TPStepper.sharedInstance.getWorkPlaceDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
+            let Remarksobj: TourPlannerHeader? =  DAL_TP_Stepper.sharedInstance.getGeneralRemarks(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
+            if category != nil {
+                if category!.Category_Name != nil{
+                    selectedWorkPlace = category!.Category_Name!
                 }
-               
             }
-            if let Remarksobj: TourPlannerHeader =  DAL_TP_Stepper.sharedInstance.getGeneralRemarks(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)! {
-                if Remarksobj.Remarks != nil {
-                    generalText = Remarksobj.Remarks!
-                 }
+            if Remarksobj != nil {
+                if Remarksobj!.Remarks != nil {
+                    generalText = Remarksobj!.Remarks!
+                }
             }
         }
     }
@@ -1060,9 +1062,9 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         }
         let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name":selectedWorkPlace , "CP_Name": "","CP_Code": "","Work_Area": "Florida", "Category_Code": CategoryCode]
         let objTPHeader: TourPlannerHeader = TourPlannerHeader(dict: dict)
-         if isProspect == true {
+        if isProspect == true {
             DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
-         } else {
+        } else {
             if BL_TPStepper.sharedInstance.doctorList.count != 0 {
                 DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
             }
@@ -1080,9 +1082,9 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
         if isProspect == true {
             if indexPath.section == 0 {
                 let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
-                           RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
-                           RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
-                           return RideAlongCell
+                RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
+                RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+                return RideAlongCell
             } else if indexPath.section == 1 {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
                 WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
@@ -1212,35 +1214,35 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
         if isProspect == true {
             let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
             headerCell.lblSectionTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].sectionTitle
-                      
+            
             headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
-                    
-                       switch section {
-                       case 0:
-                           if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
-                            headerCell.lblectionSubTitle.text = ""
-                               headerCell.lblSectionCount.backgroundColor = default_Blue
-                           } else {
-                            headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
-                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                           }
-                       case 1:
-                           if self.selectedWorkPlace.count != 0 {
-                               headerCell.lblSectionCount.backgroundColor = default_Blue
-                           } else {
-                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                           }
-                       case 2:
-                           if self.generalText.count != 0 {
-                               headerCell.lblSectionCount.backgroundColor = default_Blue
-                           } else {
-                               headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                           }
-                       default:
-                           break
-                       }
-                       headerCell.lblSectionCount.text = "\(section + 1)"
-                       return headerCell
+            
+            switch section {
+            case 0:
+                if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                    headerCell.lblectionSubTitle.text = ""
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblectionSubTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 1:
+                if self.selectedWorkPlace.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            case 2:
+                if self.generalText.count != 0 {
+                    headerCell.lblSectionCount.backgroundColor = default_Blue
+                } else {
+                    headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+                }
+            default:
+                break
+            }
+            headerCell.lblSectionCount.text = "\(section + 1)"
+            return headerCell
         } else {
             let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
             headerCell.lblSectionTitle.text = BL_TPStepper.sharedInstance.stepperDataList[section].sectionTitle
@@ -1299,18 +1301,18 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldFooterCell) as! TPFieldStepperFooterCell
-    footerCell.leftButton.setTitle(BL_TPStepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+        footerCell.leftButton.setTitle(BL_TPStepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
         footerCell.leftButton.tag = section
         footerCell.rightButton.tag = section
         
         if isProspect == true {
             if section == 2 {
                 if generalText.count != 0 {
-                footerCell.rightButton.isHidden = false
-                footerCell.leftButton.isHidden = true
+                    footerCell.rightButton.isHidden = false
+                    footerCell.leftButton.isHidden = true
                 } else {
-                footerCell.rightButton.isHidden = true
-                footerCell.leftButton.isHidden = false
+                    footerCell.rightButton.isHidden = true
+                    footerCell.leftButton.isHidden = false
                 }
             } else {
                 footerCell.rightButton.isHidden = true
@@ -1318,11 +1320,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
         } else {
             if section == 4 {
                 if generalText.count != 0 {
-                footerCell.rightButton.isHidden = false
-                footerCell.leftButton.isHidden = true
+                    footerCell.rightButton.isHidden = false
+                    footerCell.leftButton.isHidden = true
                 } else {
-                footerCell.rightButton.isHidden = true
-                footerCell.leftButton.isHidden = false
+                    footerCell.rightButton.isHidden = true
+                    footerCell.leftButton.isHidden = false
                 }
             } else {
                 footerCell.rightButton.isHidden = true
@@ -1336,12 +1338,12 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if isProspect == true {
-             if indexPath.section == 0 {
+            if indexPath.section == 0 {
                 return 40
             } else if indexPath.section == 1 {
                 return 50
             } else if indexPath.section == 2 {
-                    return 120
+                return 120
             } else {
                 return 0
             }
@@ -1395,39 +1397,39 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
     //------> Set height for each header.
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-       if isProspect == true {
-       if section == 0 {
-        if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
-            return 40
-        } else {
-           return 90
-        }
-        } else if section == 1 {
-            return 40
-        } else if section == 2 {
-            return 50
-        } else {
-            return 0
-        }
-       } else {
-        if section == 0 {
-            return 90
-        } else if section == 1 {
-            return 50
-        } else if section == 2 {
-            if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+        if isProspect == true {
+            if section == 0 {
+                if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                    return 40
+                } else {
+                    return 90
+                }
+            } else if section == 1 {
                 return 40
+            } else if section == 2 {
+                return 50
             } else {
-              return 90
+                return 0
             }
-        } else if section == 3 {
-            return 40
-        } else if section == 4 {
-            return 50
         } else {
-            return 0
+            if section == 0 {
+                return 90
+            } else if section == 1 {
+                return 50
+            } else if section == 2 {
+                if BL_TPStepper.sharedInstance.accompanistList.count != 0 {
+                    return 40
+                } else {
+                    return 90
+                }
+            } else if section == 3 {
+                return 40
+            } else if section == 4 {
+                return 50
+            } else {
+                return 0
+            }
         }
-      }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -1478,10 +1480,10 @@ extension TPStepperViewController: UIPickerViewDelegate,UIPickerViewDataSource {
 }
 
 extension TPStepperViewController : UITextViewDelegate {
-
+    
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-         let str = "\(textView.text!)"
-               BL_TPStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: str)
-               return true
+        let str = "\(textView.text!)"
+        BL_TPStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: str)
+        return true
     }
 }

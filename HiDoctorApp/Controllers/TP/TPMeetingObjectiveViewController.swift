@@ -79,7 +79,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
         } else {
             self.lblMeetingObjective.text = ""
         }
-        self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+        self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
         self.txtMeetingObjective.text = objDoctor?.Call_Objective_Name ?? ""
          self.tblAttachments.reloadData()
     }
@@ -179,7 +179,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
             UIAlertAction in
             let filename = self.attachmentList[sender.tag].attachmentName ?? ""
             Bl_Attachment.sharedInstance.deleteTPAttachment(id: TPModel.sharedInstance.tpEntryId, fileName: filename)
-            self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: self.objDoctor!.Customer_Code)!
+            self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: self.objDoctor!.Customer_Code)!
             self.tblAttachments.reloadData()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
@@ -269,7 +269,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
                         Bl_Attachment.sharedInstance.saveAttachmentFile(fileData: getData as Data, fileName: modifiedFileName)
                         Bl_Attachment.sharedInstance.insertTPAttachment(attachmentName: modifiedFileName, doctor_Id: 0, doctor_Code: objDoctor!.Customer_Code, doctor_Regioncode: objDoctor!.Region_Code)
                     }
-                    self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tpId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+                    self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
                     self.tblAttachments.reloadData()
                 }
                 

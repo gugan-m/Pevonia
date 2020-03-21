@@ -32,9 +32,10 @@ class DCRAttachmentUploadController: UIViewController, UITableViewDelegate, UITa
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateAttachmentStatus(_:)), name: NSNotification.Name(rawValue: attachmentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateChemistAttachmentStatus(_:)), name: NSNotification.Name(rawValue: chemistAttachmentNotification), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateChemistAttachmentStatus(_:)), name: NSNotification.Name(rawValue: chemistAttachmentNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTPAttachmentStatus(_:)), name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil)
         
         addCustomBackButtonToNavigationBar()
+
         if isfromTP {
             DBHelper.sharedInstance.updateFailureTPAttachmentStatus()
             let tpAttachment = DBHelper.sharedInstance.getUploadableTPAttachments()
@@ -320,6 +321,8 @@ class DCRAttachmentUploadController: UIViewController, UITableViewDelegate, UITa
     {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: attachmentNotification), object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: chemistAttachmentNotification), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil)
+        
     }
     
     private func addCustomBackButtonToNavigationBar()

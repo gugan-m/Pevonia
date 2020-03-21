@@ -35,11 +35,15 @@ class TPAttendanceStepperViewController: UIViewController
     
     override func viewWillAppear(_ animated: Bool)
     {
+        self.TPAttendanceStepperReload()
+    }
+    
+    func TPAttendanceStepperReload()  {
         BL_TP_AttendanceStepper.sharedInstance.clearAllArray()
-        BL_TP_AttendanceStepper.sharedInstance.generateDataArray()
-        reloadTableView()
-        selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
-        generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks 
+               BL_TP_AttendanceStepper.sharedInstance.generateDataArray()
+               reloadTableView()
+               selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
+               generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
     }
     
     override func didReceiveMemoryWarning()
@@ -552,7 +556,7 @@ extension TPAttendanceStepperViewController : UIPickerViewDelegate , UIPickerVie
         
         projectObj = ProjectActivityMaster(dict: dict)
         BL_TP_AttendanceStepper.sharedInstance.updateAttendanceActivity(objActivity: projectObj!)
-        self.tableView.reloadData()
+        self.TPAttendanceStepperReload()
     }
 }
 

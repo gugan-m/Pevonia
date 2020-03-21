@@ -69,6 +69,7 @@ class DAL_TP_Stepper: NSObject {
         executeQuery(query: "DELETE FROM \(TRAN_TP_SFC) WHERE TP_Entry_Id = \(tpEntryId)")
         executeQuery(query: "DELETE FROM \(TRAN_TP_ACCOMPANIST) WHERE TP_Entry_Id = \(tpEntryId)")
         executeQuery(query: "DELETE FROM \(TRAN_TP_HEADER) WHERE TP_Entry_Id = \(tpEntryId)")
+       // executeQuery(query: "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Entry_Id = \(tpEntryId)")
     }
 
     //MARK:- Functions to update and get MeetingPoint&MeetingTime details
@@ -312,9 +313,9 @@ class DAL_TP_Stepper: NSObject {
         return sampleList
     }
     
-    func getTPAttachmentList(tpId: Int) -> [TPAttachmentModel]?
+    func getTPAttachmentList(entry_Id: Int) -> [TPAttachmentModel]?
     {
-        return DBHelper.sharedInstance.getTPAttachmentList(tpId:tpId)
+        return DBHelper.sharedInstance.getTPAttachmentList(entry_Id:entry_Id)
     }
     
     func insertSelectedSamples(lstTPSamples :[TourPlannerProduct])

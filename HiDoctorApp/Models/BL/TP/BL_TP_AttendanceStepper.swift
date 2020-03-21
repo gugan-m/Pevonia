@@ -540,7 +540,7 @@ class BL_TP_AttendanceStepper: NSObject
     {
         let day = getDayFromDate(date: TPModel.sharedInstance.tpDate)
         
-        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString, "TP_Day": day, "Activity": String(TPModel.sharedInstance.tpFlag), "Activity_Code": EMPTY, "Activity_Name": EMPTY, "Project_Code": EMPTY, "Status": TPStatus.drafted.rawValue,"TP_Type": "A"]
+        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString, "TP_Day": day, "Activity": String(TPModel.sharedInstance.tpFlag), "Activity_Code": EMPTY, "Activity_Name": EMPTY, "Project_Code": EMPTY, "TP_Status": TPStatus.drafted.rawValue,"TP_Type": "A"]
         
         DBHelper.sharedInstance.insertTourPlannerHeader(array: [dict])
     }

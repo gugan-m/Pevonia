@@ -47,4 +47,13 @@ class DAL_TPUpload: NSObject
         
         executeQuery(query: query)
     }
+    
+    func updateAttachmentTPId(tpEntryId: Int, tpId: Int, TP_Doctor_Id: Int)
+    {
+        let query = "UPDATE \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) SET TP_Id = \(tpId), TP_Doctor_Id = \(TP_Doctor_Id) WHERE TP_Entry_Id = \(tpEntryId)"
+        
+        executeQuery(query: query)
+    }
+    
+    
 }

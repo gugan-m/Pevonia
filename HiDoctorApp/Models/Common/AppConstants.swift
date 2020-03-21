@@ -2,8 +2,8 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
-let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
+//let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
@@ -1059,6 +1059,7 @@ let attachmentFailedMsg : String = "Some of the attachments uploaded failed. Ple
 
 //MARK:- Notification names
 let attachmentNotification : String = "attachmentNotification"
+let tpaAttachmentNotification : String = "tpattachmentNotification"
 let chemistAttachmentNotification : String = "chemistAttachmentNotification"
 let assetNotification: String = "assetNotification"
 let leaveAttachmentNotification : String = "leaveAttachmentNotification"

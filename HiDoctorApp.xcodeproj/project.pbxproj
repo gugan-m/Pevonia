@@ -750,6 +750,11 @@
 		F1895A64213E668C0051D60C /* LockReleaseFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1895A63213E668C0051D60C /* LockReleaseFormController.swift */; };
 		F195635A22782C2D0026E197 /* TravelTrackingReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195635922782C2D0026E197 /* TravelTrackingReportViewController.swift */; };
 		F195635C2278661B0026E197 /* TravelTrackingReportMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195635B2278661A0026E197 /* TravelTrackingReportMapViewController.swift */; };
+		F1BE13F32423A2490033CBAA /* SSRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F02423A2480033CBAA /* SSRadioButton.swift */; };
+		F1BE13F42423A2490033CBAA /* SSRadioButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F12423A2480033CBAA /* SSRadioButtonsController.swift */; };
+		F1BE13F52423A2490033CBAA /* AddNewProspectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */; };
+		F1BE13F72423A2560033CBAA /* TPMeetingObjectiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F62423A2550033CBAA /* TPMeetingObjectiveViewController.swift */; };
+		F1BE13F92423A37E0033CBAA /* DCRStepperNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F82423A37D0033CBAA /* DCRStepperNewViewController.swift */; };
 		F1DB702420E3B72B0015DE67 /* AttendanceSampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB702320E3B72B0015DE67 /* AttendanceSampleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -1550,6 +1555,11 @@
 		F1895A63213E668C0051D60C /* LockReleaseFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockReleaseFormController.swift; sourceTree = "<group>"; };
 		F195635922782C2D0026E197 /* TravelTrackingReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTrackingReportViewController.swift; sourceTree = "<group>"; };
 		F195635B2278661A0026E197 /* TravelTrackingReportMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTrackingReportMapViewController.swift; sourceTree = "<group>"; };
+		F1BE13F02423A2480033CBAA /* SSRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButton.swift; sourceTree = "<group>"; };
+		F1BE13F12423A2480033CBAA /* SSRadioButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButtonsController.swift; sourceTree = "<group>"; };
+		F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewProspectViewController.swift; sourceTree = "<group>"; };
+		F1BE13F62423A2550033CBAA /* TPMeetingObjectiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPMeetingObjectiveViewController.swift; sourceTree = "<group>"; };
+		F1BE13F82423A37D0033CBAA /* DCRStepperNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DCRStepperNewViewController.swift; sourceTree = "<group>"; };
 		F1DB702320E3B72B0015DE67 /* AttendanceSampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceSampleTableViewCell.swift; sourceTree = "<group>"; };
 		F3F07F578AA15876A3235E11 /* Pods-HiDoctorApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HiDoctorApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2669,6 +2679,9 @@
 			isa = PBXGroup;
 			children = (
 				F14324B722F31A8D00C71E28 /* NotesKnowYourCalendar.swift */,
+				F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */,
+				F1BE13F02423A2480033CBAA /* SSRadioButton.swift */,
+				F1BE13F12423A2480033CBAA /* SSRadioButtonsController.swift */,
 				F14324B922F31A8F00C71E28 /* NotesListViewController.swift */,
 				F14324BA22F31A8F00C71E28 /* NotesTaskViewController.swift */,
 				F14324B822F31A8E00C71E28 /* ViewCalendarController.swift */,
@@ -2845,6 +2858,7 @@
 			isa = PBXGroup;
 			children = (
 				841E2BFB1F73FE1D00FF19D4 /* CalendarDateCell.swift */,
+				F1BE13F62423A2550033CBAA /* TPMeetingObjectiveViewController.swift */,
 				841E2BFC1F73FE1D00FF19D4 /* TPAccompanistViewController.swift */,
 				841E2BFD1F73FE1D00FF19D4 /* TPAttendanceActivityViewController.swift */,
 				841E2BFE1F73FE1D00FF19D4 /* TPAttendanceStepperViewController.swift */,
@@ -2925,6 +2939,7 @@
 				ADD50C391EA4A39D006509B1 /* FollowUps */,
 				BA1E5DD81E02D00700AE2710 /* DCRGeneralRemarksViewController.swift */,
 				F10D76F62373FE130083A0AD /* GroupEdetailingCell.swift */,
+				F1BE13F82423A37D0033CBAA /* DCRStepperNewViewController.swift */,
 				BA92325D1DF9941A0098FFEB /* LeaveEntryDropDownViewController.swift */,
 				6CAAB3BA1DF91F40002E0AA5 /* AddCompetitorProductViewController.swift */,
 				BA7DF7FD1DEFF57B00E1D876 /* DoctorAccompanistListViewController.swift */,
@@ -3760,6 +3775,7 @@
 				BAAA215C1DCB436C00131D9F /* OnBoardModel.swift in Sources */,
 				6CCAFFD61FCD315400485D9D /* POBSectionTableViewCell.swift in Sources */,
 				ADB3C63C1E24BF63006A6A8F /* DashboardDoctorMissedDetailsViewController.swift in Sources */,
+				F1BE13F72423A2560033CBAA /* TPMeetingObjectiveViewController.swift in Sources */,
 				173FDA4620D515B0007E52DE /* CompetitorListViewController.swift in Sources */,
 				AD5C767D1DFBDED50090470E /* UploadDCRDoctorVisit.swift in Sources */,
 				B1ECD1671DE6EDD7003357F3 /* BL_SFC.swift in Sources */,
@@ -3931,6 +3947,7 @@
 				B1EA259D1DF99963006E705C /* DoctorVisitChemistCell.swift in Sources */,
 				AD9CF99A1DD09A2400B4E7C5 /* AccompanistModel.swift in Sources */,
 				ADB979DA1DCC4174007B1FCE /* CampaignPlannerHeader.swift in Sources */,
+				F1BE13F52423A2490033CBAA /* AddNewProspectViewController.swift in Sources */,
 				6CBCE38D1F8CC43E0056F9B3 /* LandingAlertsDetailViewController.swift in Sources */,
 				BAAA215A1DCB434600131D9F /* OnBoardViewController.swift in Sources */,
 				AD9CF9B41DD1F0CD00B4E7C5 /* AppStatusModel.swift in Sources */,
@@ -3981,6 +3998,7 @@
 				B15CA80B1DDB6BE800576CEE /* AttendanceCell.swift in Sources */,
 				6CAD338E1EFBE84A00BA2FEB /* AssetStoryListViewController.swift in Sources */,
 				6C00A70D1DEC5CA200D2B729 /* BL_DetailedProducts.swift in Sources */,
+				F1BE13F32423A2490033CBAA /* SSRadioButton.swift in Sources */,
 				B15CA8051DDB6B7900576CEE /* FieldRCPACell.swift in Sources */,
 				6C859A971E52DD4E008F727F /* DCRRejectViewController.swift in Sources */,
 				F14324DE22F333D000C71E28 /* CalendarHeaderView.swift in Sources */,
@@ -4111,6 +4129,7 @@
 				6C4BB01E1EA8D4D6001104EB /* POBStepperTableViewCell.swift in Sources */,
 				BAC6E95F1DD099C30040C394 /* IntermediateAccompanistTableViewCell.swift in Sources */,
 				B17EEFBC1FAB38E900D12EAB /* GeoReportDateViewController.swift in Sources */,
+				F1BE13F92423A37E0033CBAA /* DCRStepperNewViewController.swift in Sources */,
 				AD5C767B1DFBDEB80090470E /* UploadDCRTravelledPlaces.swift in Sources */,
 				ADADCB6A1DEEDC4300509C9E /* FlexiChemistModel.swift in Sources */,
 				6C1EE86A1EB0B7DC00E94158 /* RemoveAccompanistPopUpViewController.swift in Sources */,
@@ -4156,6 +4175,7 @@
 				690CD1C720BC2DDB00C668EC /* CodeOfConductViewController.swift in Sources */,
 				6C765A671E2F6C5D00299E6A /* TpReportDetailsViewController.swift in Sources */,
 				B1D40A271F87E8EB005AF689 /* MessageReplyCell.swift in Sources */,
+				F1BE13F42423A2490033CBAA /* SSRadioButtonsController.swift in Sources */,
 				6C5AE1731DE17F0E00F31179 /* SampleProductListViewController.swift in Sources */,
 				BA3FB2B21E2628C600A93C2B /* ApprovalRCPADetailsViewController.swift in Sources */,
 				AD4A0F8B1DD2F36500D08531 /* BL_PrepareMyDeviceAccompanist.swift in Sources */,
@@ -4490,6 +4510,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4498,6 +4519,7 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.32;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
@@ -4518,6 +4540,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4526,6 +4549,7 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.32;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";

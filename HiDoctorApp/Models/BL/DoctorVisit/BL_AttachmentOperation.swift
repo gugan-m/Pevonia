@@ -94,7 +94,7 @@ class BL_AttachmentOperation: NSObject
                     request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
                     
                     // Post parameters
-                    let attachmentInfo : [String : Any] = ["TP_Id": model.tpId, "TP_Doctor_Id": model.tpDoctorCode, "Uploaded_File_Name": model.attachmentName]
+                    let attachmentInfo : [String : Any] = ["TP_Id": model.tpId, "TP_Doctor_Id": model.tpDoctorId, "Uploaded_File_Name": model.attachmentName]
                     let attachmentArr: NSMutableArray = NSMutableArray()
                     attachmentArr.add(attachmentInfo)
                     
@@ -119,7 +119,7 @@ class BL_AttachmentOperation: NSObject
                     }
                     
                     body.append("--\(boundary)\r\n")
-                    body.append("Content-Disposition: form-data; name=\"DCRDoctorVisitFile\"; filename=\"\(outputFilename)\"\r\n")
+                    body.append("Content-Disposition: form-data; name=\"TPDoctorVisitFile\"; filename=\"\(outputFilename)\"\r\n")
                     let contentType = Bl_Attachment.sharedInstance.getFileContentType(fileExtension: fileExtension)
                     body.append("Content-Type: \(contentType)\r\n\r\n")
                     body.append(getFileData as Data)
@@ -632,18 +632,18 @@ class BL_AttachmentOperation: NSObject
     
     func updateFailureStatus(model: TPAttachmentModel)
     {
-        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 0)
+        DBHelper.sharedInstance.updateTPAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 0)
         self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
         let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 0]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil, userInfo: userInfo)
     }
     
     func updateSuccessStatus(model: TPAttachmentModel)
     {
-        DBHelper.sharedInstance.updateAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 1)
+        DBHelper.sharedInstance.updateTPAttachmentSuccessFlag(attachmentId: model.attachmentId!, isSuccess: 1)
         self.updateTPStatusInitiateOperation(fileId: model.attachmentId!)
         let userInfo : [String : Int] = ["id": model.attachmentId!, "status": 1]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: attachmentNotification), object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil, userInfo: userInfo)
     }
     
     func showInternetErrorToast()

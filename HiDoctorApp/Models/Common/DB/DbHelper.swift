@@ -5160,12 +5160,23 @@ class DBHelper: NSObject
            return tpAttachmentList
        }
     
-    func getTPAttachmentList(tpId: Int) -> [TPAttachmentModel]?
+    func getTPAttachmentDetails(tp_entryId: Int, doctor_Code: String) -> [TPAttachmentModel]?
     {
         var tpAttachmentList: [TPAttachmentModel]?
         
         try? dbPool.read ({ db in
-        tpAttachmentList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ?", arguments : [tpId])
+            tpAttachmentList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Entry_Id = ? AND Doctor_Code = ?", arguments : [tp_entryId, doctor_Code])
+        })
+        
+        return tpAttachmentList
+    }
+    
+    func getTPAttachmentList(entry_Id: Int) -> [TPAttachmentModel]?
+    {
+        var tpAttachmentList: [TPAttachmentModel]?
+        
+        try? dbPool.read ({ db in
+        tpAttachmentList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Entry_Id = ?", arguments : [entry_Id])
         })
         
         return tpAttachmentList
@@ -5196,7 +5207,28 @@ class DBHelper: NSObject
     func deleteTpAttachment(tp_ID: Int,attachment_Name: String)
     {
         try? dbPool.write({ db in
-            if let rowValue = try DCRAttachmentModel.fetchOne(db, "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ? AND Uploaded_File_Name = ?", arguments : [tp_ID,attachment_Name])
+            if let rowValue = try DCRAttachmentModel.fetchOne(db, "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Entry_Id = ? AND Uploaded_File_Name = ?", arguments : [tp_ID,attachment_Name])
+            {
+                try! rowValue.delete(db)
+            }
+        })
+    }
+    
+    
+    func deleteTpAttachment(tp_ID: Int)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRAttachmentModel.fetchOne(db, "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Entry_Id = ?", arguments : [tp_ID])
+            {
+                try! rowValue.delete(db)
+            }
+        })
+    }
+    
+    func deleteTpAttachmentByTpID(tp_ID: Int)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRAttachmentModel.fetchOne(db, "DELETE FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ?", arguments : [tp_ID])
             {
                 try! rowValue.delete(db)
             }
@@ -5381,6 +5413,18 @@ class DBHelper: NSObject
         })
     }
     
+    func updateTPAttachmentSuccessFlag(attachmentId: Int, isSuccess: Int)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try TPAttachmentModel.fetchOne(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Doctor_Attachment_Id = ?", arguments: [attachmentId])
+            {
+                rowValue.isSuccess = isSuccess
+                try! rowValue.update(db)
+            }
+        })
+    }
+    
+    
     func updateChemistAttachmentSuccessFlag(attachmentId: Int, isSuccess: Int)
     {
         executeQuery(query: "UPDATE \(TRAN_DCR_CHEMIST_ATTACHMENT) SET Is_Success = \(isSuccess) WHERE DCR_Chemist_Attachment_Id = \(attachmentId)")
@@ -5487,7 +5531,7 @@ class DBHelper: NSObject
         var modelList: [TPAttachmentModel] = []
         
         try? dbPool.read ({ db in
-            modelList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id != '' AND Blob_URL = '' AND Uploaded_File_Name != ''")
+            modelList = try TPAttachmentModel.fetchAll(db, "SELECT * FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id != 0 AND Blob_URL = '' AND Uploaded_File_Name != ''")
         })
         
         return modelList

@@ -762,7 +762,7 @@ class BL_TPStepper: NSObject
             objStepperDoctor.MDL_Number = objTPDoctor.MDL_Number
             objStepperDoctor.Hospital_Name = objTPDoctor.Hospital_Name
             objStepperDoctor.Call_Objective_Id = objTPDoctor.Call_Objective_Id
-                       objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
+            objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
             objStepperDoctor.sampleList = []
             
             let filteredList = lstSamples.filter{
@@ -1385,8 +1385,9 @@ class BL_TPStepper: NSObject
         {
             deleteSelectedSamplesForDoctor(tpEntryId: TPModel.sharedInstance.tpEntryId, doctorCode: filtered.first!.Customer_Code, regionCode: filtered.first!.Region_Code)
         }
-        
+        DBHelper.sharedInstance.deleteTpAttachment(tp_ID: TPModel.sharedInstance.tpEntryId)
         DAL_TP_Stepper.sharedInstance.deleteSelectedDoctorFromTP(tp_Doctor_Id: tp_Doctor_Id)
+        
     }
     
    // func insertTPSelectedDoctorDetails(selectedDoctorsList: [TPCustomerMasterDoctorModel])
@@ -1567,6 +1568,16 @@ class BL_TPStepper: NSObject
         return lstSelectedAcc
     }
     
+    func getWorkPlaceDetails(tp_Entry_Id: Int)-> TourPlannerHeader?
+       {
+           var workPlaceModel: TourPlannerHeader?
+           
+           try? dbPool.read { db in
+               workPlaceModel = try TourPlannerHeader.fetchOne(db, "SELECT Work_Place ,Category_Name,CP_Name  FROM \(TRAN_TP_HEADER) WHERE TP_Entry_Id = ?", arguments: [tp_Entry_Id])
+           }
+           return workPlaceModel
+       }
+
     func getMeetingDetails(tp_Entry_Id: Int) -> TourPlannerHeader?
     {
         return DAL_TP_Stepper.sharedInstance.getMeetingDetails(tp_Entry_Id: tp_Entry_Id)
