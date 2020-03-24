@@ -1,15 +1,38 @@
 //
-//  TPLeaveEntryViewController.swift
+//  DCRAttendanceController.swift
 //  HiDoctorApp
 //
-//  Created by Admin on 8/8/17.
-//  Copyright © 2017 swaas. All rights reserved.
+//  Created by SwaaS on 24/03/20.
+//  Copyright © 2020 swaas. All rights reserved.
 //
 
 import UIKit
 
-class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntryListDelegate, UITextFieldDelegate
+class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryListDelegate, UITextFieldDelegate,UIPickerViewDelegate , UIPickerViewDataSource
 {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.activityList.count
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return activityList[row].Activity_Name
+    }
+    
+   
+    @IBOutlet weak var pickerViewtext: UITextField!
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        //selectedActivity = activityList[row].Activity_Name
+        let dict:NSDictionary = ["Activity_Code":activityList[row].Activity_Code,"Activity_Name":activityList[row].Activity_Name,"Project_Code":activityList[row].Project_Code!,"Project_Name":EMPTY]
+        pickerViewtext.text = activityList[row].Activity_Name
+        self.ActivityCode = activityList[row].Activity_Code
+        self.ProjectCode = activityList[row].Project_Code
+        projectObj = ProjectActivityMaster(dict: dict)
+    
+    }
+    
     //MARK:- IBoutlet
     @IBOutlet weak var scrollViewBtm: NSLayoutConstraint!
     @IBOutlet weak var txtCount: UILabel!
@@ -28,13 +51,39 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     var endDate : Date = Date()
     var leaveTypeCode : String = ""
     var leaveTypeId : String = ""
+    var ActivityCode = ""
+    var ProjectCode = ""
     var isInsertedFromDCR: Bool = false
     let placeHolderForLeaveType : String = "Select Not Working Type"
-    
+    var projectObj : ProjectActivityMaster!
+    var activityList : [ProjectActivityMaster] = []
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        let picker: UIPickerView
+        picker = UIPickerView(frame: CGRect(x: 0, y: 200, width: view.frame.width, height: 300))
+        picker.backgroundColor = .white
+
+        picker.showsSelectionIndicator = true
+        picker.delegate = self
+        picker.dataSource = self
+
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.donePicker))
+
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+
+        pickerViewtext.inputView = picker
+        pickerViewtext.inputAccessoryView = toolBar
+         activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
         submitbtn.layer.cornerRadius = 5
         self.addKeyBoardObserver()
         addBackButtonView()
@@ -44,12 +93,13 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         // Do any additional setup after loading the view.
         let tpDate = DCRModel.sharedInstance.dcrDate
         txtCount.text = "\(String(0))/\(tpLeaveReasonLength)"
-        startDate = tpDate!
-        self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Not Working)"
-        fromDateLbl.text = stringDateFormat(date1: tpDate!)
-        fromDateLbl.isEnabled = false
+        startDate = DCRModel.sharedInstance.dcrDate
+        self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (office)"
+       // fromDateLbl.text = stringDateFormat(date1: DCRModel.sharedInstance.dcrDate!)
+        //fromDateLbl.isEnabled = false
         leaveReason.delegate = self
         
+       
         if DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue
         {
             let unApprovedObj = BL_DCR_Leave.sharedInstance.getUnapprovedLeaveData(leaveDate: startDate)
@@ -74,7 +124,11 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
             updateViews()
         }
     }
-    
+    func donePicker() {
+
+        pickerViewtext.resignFirstResponder()
+
+    }
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -97,17 +151,17 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         let formValidation = self.validation()
 //        if ()
 //        {
-//            
+//
 //        }
 //        else
 //        {
-//        
+//
 //        dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date: nextDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.leave.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
-//        
+//
 //        let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
-//        
+//
 //        DBHelper.sharedInstance.insertDCRHeader(dcrHeaderObj: dcrHeaderObj)
-//        
+//
 //        BL_DCR_Refresh.sharedInstance.updateDCRCalendarHeader(uniqueDCRDates: [dcrHeaderObj])
 //        }
         if formValidation
@@ -356,52 +410,60 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     
     private func updateViews()
     {
-         
-            let unApprovedObj = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: DCRModel.sharedInstance.dcrDateString)
-            
-            if unApprovedObj != nil
-            {
-                startDate = (unApprovedObj?.TP_Date)!
-                leaveTypeCode = (unApprovedObj?.Activity_Code)!
-                leaveTypeId = String((unApprovedObj?.Project_Code)!)
-                leaveTypeName = String((unApprovedObj?.Activity_Name)!)
-                
-                selectLeaveType.text = placeHolderForLeaveType
-                
-                if checkNullAndNilValueForString(stringData: leaveTypeName) != EMPTY
-                {
-//                    let leaveTypesList = BL_DCR_Leave.sharedInstance.getLeaveTypes()
-//
-//                    if (leaveTypesList != nil)
-//                    {
-//                        let filteredArray = leaveTypesList!.filter{
-//                            $0.Leave_Type_Name.uppercased() == leaveTypeName.uppercased()
-//                        }
-//
-//                        if (filteredArray.count > 0)
-//                        {
-//                            selectLeaveType.text = leaveTypeName
-//                        }
-//                    }
-                    
-                    selectLeaveType.text = leaveTypeName
-                }
-                
-                if checkNullAndNilValueForString(stringData: unApprovedObj?.UnApprove_Reason) != EMPTY
-                {
-                    leaveReason.text = unApprovedObj?.Remarks
-                    txtCount.text =  "\(String(leaveReason.text.count))/\(tpLeaveReasonLength)"
-                }
-            }
-        else
-        {
-            fromDateLbl.text = stringDateFormat(date1: startDate)
-            fromDateLbl.isEnabled = false
-            txtCount.text = "\0/\(tpLeaveReasonLength)"
-            leaveReason.text = EMPTY
-            selectLeaveType.text = placeHolderForLeaveType
-        }
-        
+          let unApprovedObj = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: DCRModel.sharedInstance.dcrDateString)
+                     
+                     if unApprovedObj != nil
+                     {
+                         //startDate = (unApprovedObj?.TP_Date)!
+                         //leaveTypeCode = (unApprovedObj?.Activity_Code)!
+                        // leaveTypeId = String((unApprovedObj?.Project_Code)!)
+                         //leaveTypeName = String((unApprovedObj?.Activity_Name)!)
+                         
+                         //selectLeaveType.text = placeHolderForLeaveType
+                         
+                         if checkNullAndNilValueForString(stringData: leaveTypeName) != EMPTY
+                         {
+         //                    let leaveTypesList = BL_DCR_Leave.sharedInstance.getLeaveTypes()
+         //
+         //                    if (leaveTypesList != nil)
+         //                    {
+         //                        let filteredArray = leaveTypesList!.filter{
+         //                            $0.Leave_Type_Name.uppercased() == leaveTypeName.uppercased()
+         //                        }
+         //
+         //                        if (filteredArray.count > 0)
+         //                        {
+         //                            selectLeaveType.text = leaveTypeName
+         //                        }
+         //                    }
+                             
+                             //selectLeaveType.text = leaveTypeName
+                         }
+                        self.ActivityCode = unApprovedObj?.Activity_Code ?? ""
+                        self.ProjectCode = unApprovedObj?.Project_Code ?? ""
+                        for i in activityList
+                        {
+                            if self.ActivityCode == i.Activity_Code
+                            {
+                                self.pickerViewtext.text = i.Activity_Name
+                            }
+                        }
+                        
+                         leaveReason.text = unApprovedObj?.Remarks
+                         if checkNullAndNilValueForString(stringData: unApprovedObj?.UnApprove_Reason) != EMPTY
+                         {
+                             leaveReason.text = unApprovedObj?.Remarks
+                             txtCount.text =  "\(String(leaveReason.text.count))/\(tpLeaveReasonLength)"
+                         }
+                     }
+                 else
+                 {
+                    // fromDateLbl.text = stringDateFormat(date1: startDate)
+                     //fromDateLbl.isEnabled = false
+                     txtCount.text = "\0/\(tpLeaveReasonLength)"
+                     leaveReason.text = EMPTY
+                  //   selectLeaveType.text = placeHolderForLeaveType
+                 }
     }
     
     //MARK:- Custom Delegate Function
@@ -413,7 +475,7 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     }
     func showAlertToConfirmAppliedMode()
     {
-        let alertMessage =  "Your DVR for Not Working will be submitted in Applied status. Once submitted you cannot edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your DVR for Office will be submitted in Applied status. Once submitted you cannot edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel'."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -425,12 +487,13 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
                if (DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue)
                     {
-                        BL_DCR_Leave.sharedInstance.updateLeave(leaveDate: self.endDate, leaveTypeId: self.leaveTypeId, leaveTypeCode: self.leaveTypeCode, leaveReason: self.leaveReason.text!, dcrCode: EMPTY)
+                        DBHelper.sharedInstance.updateDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, Dcr_id: DCRModel.sharedInstance.dcrId)
+                        BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
                     }
                     else
-                    {
-                        BL_DCR_Leave.sharedInstance.applyLeave(startDate: self.startDate, endDate: self.endDate, leaveTypeId: self.leaveTypeId, leaveTypeCode: self.leaveTypeCode, leaveReason: self.leaveReason.text!, leaveArray: [])
-                    }
+               { BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!)
+                BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+            }
             self.showAlertToUploadTP()
 
             alertViewController.dismiss(animated: true, completion: nil)
@@ -440,7 +503,7 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     }
     func showAlertToConfirmUpdateLeaveAppliedMode()
     {
-        let alertMessage =  "Your DVR for Not Working will be submitted in Applied status. Once submitted you cannot edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel'."
+        let alertMessage =  "Your DVR for Office will be submitted in Applied status. Once submitted you cannot edit your DVR.\n\n Press 'OK' to submit DVR.\n OR \n Press 'Cancel'."
 
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
@@ -470,7 +533,7 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     func showAlertToUploadTP()
     {
         
-        let alertMessage = "Your DVR for Not Working is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Upload DVR 'option from the home screen to submit."
+        let alertMessage = "Your DVR for Office is ready to be submitted to your Manager.\n\n Click 'Upload' to submit.\nClick 'Later' to submit later\n\nAlternatively,you can use 'Upload DVR 'option from the home screen to submit."
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "Later", style: UIAlertActionStyle.default, handler: { alertAction in

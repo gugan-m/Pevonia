@@ -125,8 +125,7 @@ class BL_DCR_Leave: NSObject
         let longitude = getLongitude()
         let calenderDetails = DBHelper.sharedInstance.getDCRCalendarDetails()
         
-        while nextDate.compare(compareDate) == ComparisonResult.orderedAscending
-        {
+    
             let objLeave = DBHelper.sharedInstance.getDCRHeaderByDCRDateAndFlag(dcrActualDate: nextDate, flag: DCRFlag.leave.rawValue)
             var dcrCode: String = EMPTY
             
@@ -149,8 +148,8 @@ class BL_DCR_Leave: NSObject
             }
             else
             {
-                if (isHolidayOrWeekend(dcrActualDate: nextDate, calendarDetails: calenderDetails))
-                {
+//                if (isHolidayOrWeekend(dcrActualDate: nextDate, calendarDetails: calenderDetails))
+//                {
                     dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date: nextDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.leave.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
                     
                     let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
@@ -158,11 +157,11 @@ class BL_DCR_Leave: NSObject
                     DBHelper.sharedInstance.insertDCRHeader(dcrHeaderObj: dcrHeaderObj)
                     
                     BL_DCR_Refresh.sharedInstance.updateDCRCalendarHeader(uniqueDCRDates: [dcrHeaderObj])
-                }
+               // }
             }
             
-            nextDate = nextDate.addingTimeInterval(interval)
-        }
+           // nextDate = nextDate.addingTimeInterval(interval)
+        
     }
     
     func updateLeave(leaveDate: Date, leaveTypeId: String, leaveTypeCode: String, leaveReason: String, dcrCode: String)
@@ -174,8 +173,8 @@ class BL_DCR_Leave: NSObject
         let calenderDetails = DBHelper.sharedInstance.getDCRCalendarDetails()
         let dcrStatus = DCRStatus.applied.rawValue
         
-        if (isHolidayOrWeekend(dcrActualDate: leaveDate, calendarDetails: calenderDetails))
-        {
+//        if (isHolidayOrWeekend(dcrActualDate: leaveDate, calendarDetails: calenderDetails))
+//        {
             dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date:leaveDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(dcrStatus), "Flag": DCRFlag.leave.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
             
             let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
@@ -183,8 +182,57 @@ class BL_DCR_Leave: NSObject
             DBHelper.sharedInstance.updateLeave(dcrHeaderObj: dcrHeaderObj)
             
             BL_DCR_Refresh.sharedInstance.updateDCRCalendarHeader(uniqueDCRDates: [dcrHeaderObj])
-        }
+        //}
     }
+    
+    
+    
+    func applyOffice(dcrDate: Date, endDate: Date, leaveTypeId: String, leaveTypeCode: String, leaveReason: String, dcrCode: String)
+        {
+            let interval: TimeInterval = 24*60*60 //one day
+            let compareDate = endDate.addingTimeInterval(interval)
+            var dcrHeaderDict: NSDictionary!
+            let enteredDate = convertDateIntoServerStringFormat(date: Date())
+            let latitude = getLatitude()
+            let longitude = getLongitude()
+            let calenderDetails = DBHelper.sharedInstance.getDCRCalendarDetails()
+            
+        
+    //                if (isHolidayOrWeekend(dcrActualDate: nextDate, calendarDetails: calenderDetails))
+    //                {
+            dcrHeaderDict = ["DCR_Actual_Date":convertDateIntoServerStringFormat(date: dcrDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.attendance.rawValue,"Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
+                        
+                        let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
+                        
+                        DBHelper.sharedInstance.insertDCRHeader(dcrHeaderObj: dcrHeaderObj)
+                        
+                        BL_DCR_Refresh.sharedInstance.updateDCRCalendarHeader(uniqueDCRDates: [dcrHeaderObj])
+                   // }
+                
+               // nextDate = nextDate.addingTimeInterval(interval)
+            
+        }
+        
+        func updateOffice(leaveDate: Date, leaveTypeId: String, leaveTypeCode: String, leaveReason: String, dcrCode: String)
+        {
+            var dcrHeaderDict: NSDictionary!
+            let enteredDate = convertDateIntoServerStringFormat(date: Date())
+            let latitude = getLatitude()
+            let longitude = getLongitude()
+            let calenderDetails = DBHelper.sharedInstance.getDCRCalendarDetails()
+            let dcrStatus = DCRStatus.applied.rawValue
+            
+    //        if (isHolidayOrWeekend(dcrActualDate: leaveDate, calendarDetails: calenderDetails))
+    //        {
+                dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date:leaveDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(dcrStatus), "Flag": DCRFlag.attendance.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
+                
+                let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
+                
+                DBHelper.sharedInstance.updateLeave(dcrHeaderObj: dcrHeaderObj)
+                
+                BL_DCR_Refresh.sharedInstance.updateDCRCalendarHeader(uniqueDCRDates: [dcrHeaderObj])
+            //}
+        }
     
     //MARK:- Private Functions
     private func getDCRHeaderByDate(dcrActualDate: Date) -> [DCRHeaderModel]?

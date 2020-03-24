@@ -506,7 +506,7 @@
         <!--Not Working Entry-->
         <scene sceneID="vOs-kl-L8u">
             <objects>
-                <viewController storyboardIdentifier="DCRLeaveEntryVcID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4A5-UA-DaT" customClass="LeaveEntryNewViewController" customModule="HiDOCTOR" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DCRLeaveEntryNew" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4A5-UA-DaT" customClass="LeaveEntryNewViewController" customModule="HiDOCTOR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xgz-H8-LP8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -30,6 +30,13 @@ class BL_DCR_Attendance: NSObject
         
         DBHelper.sharedInstance.insertDCRAttendanceActivity(dcrAttendanceActivityObj: objAttendaceActivity)
     }
+    func saveDCRAttendanceActivity1(Project_Code: String,Activity_Code:String, startTime: String, endTime: String, remarks: String)
+    {
+        let dcrAttendanceActivityDict: NSDictionary = ["DCR_Id": getDCRId(), "DCR_Actual_Date": convertDateIntoServerStringFormat(date: getDCRDate()), "Project_Code":Project_Code , "Activity_Code": Activity_Code, "Start_Time": startTime, "End_Time": endTime, "Remarks": remarks]
+        let objAttendaceActivity: DCRAttendanceActivityModel = DCRAttendanceActivityModel(dict: dcrAttendanceActivityDict)
+        
+        DBHelper.sharedInstance.insertDCRAttendanceActivity(dcrAttendanceActivityObj: objAttendaceActivity)
+    }
     
     func updateDCRAttendanceActivity(dcrAttendanceActivityObj: DCRAttendanceActivityModel)
     {
