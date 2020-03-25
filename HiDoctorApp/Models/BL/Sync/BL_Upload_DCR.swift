@@ -167,7 +167,7 @@ class BL_Upload_DCR: NSObject
     private func getUploadDataForAttendance(dcrId: Int, checkSum: Int,dcrDate : String) -> NSArray
     {
         let dict1: NSDictionary = ["checksum": checkSum, "lstDCRMasterStaging": getDCRHeaderList(dcrId: dcrId), "lstDCRAccompanistModel": [], "lstTravelledPlaces": getDCRTravelledPlaces(dcrId: dcrId), "lstDCRVisitStaging": [], "lstAccompStaging": [], "lstSampleProductsStaging": [], "lstDetailedStaging": []]
-        let dict2: NSDictionary = ["lstChemistStaging": [], "lstRCPAStaging": [],"lstFollowupsStaging": [], "lstAttachmentStaging": [], "lstStockiestStaging": [], "lstExpenseStaging": getExpenseList(dcrId: dcrId), "lstTimeSheetActivityStaging": getAttendanceActivities(dcrId: dcrId)]
+        let dict2: NSDictionary = ["lstChemistStaging": [], "lstRCPAStaging": [],"lstFollowupsStaging": [], "lstAttachmentStaging": [], "lstStockiestStaging": [], "lstExpenseStaging": getExpenseList(dcrId: dcrId), "lstTimeSheetActivityStaging": getAttendanceActivities(dcrId: dcrDate,dcridvalue: dcrId)]
         let dict3: NSDictionary = ["lstChemistAccompStaging": [], "lstSamplePromotionsStaging": [], "lstDCRChemistDetailedStagging": [], "lstChemistRCPAOwnProductsStaging": [], "lstChemistRCPACompetitorProductStaging": [], "lstchemistFollowupstaging": [], "lstChemistAttachmentStaging": []]
         let dict4: NSDictionary = ["lstOrderHeader": [], "lstOrderDetails": [], "lstDCRCallActivity": [], "lstDCRMCActivity": [], "lstDCRInheritanceAccompanist": [], "lstCompetitorDetails": [],"lstAttendanceDoctorDetails":getDCRAttendanceDoctor(dcrId: dcrId),"lstAttendaceSamplesDetails":getDCRAttendanceSample(dcrId: dcrId),"lstAttendancecallactivity":getAttendanceDCRCallActivities(dcrId: dcrId),"lstAttendanceMCactivity":getAttendanceDCRMCActivities(dcrId: dcrId)]
         var combinedAttributes : NSMutableDictionary!
@@ -1128,7 +1128,7 @@ class BL_Upload_DCR: NSObject
         return resultList
     }
     
-    private func getAttendanceActivities(dcrId: Int) -> NSMutableArray
+    private func getAttendanceActivities(dcrId: String, dcridvalue: Int) -> NSMutableArray
     {
         let dcrAttendanceActivities = DBHelper.sharedInstance.getDCRAttendanceActivitiesForUpload(dcrId: dcrId)
         let resultList: NSMutableArray = []
@@ -1142,7 +1142,7 @@ class BL_Upload_DCR: NSObject
                 remarks = dcrAttendanceObj.Remarks!
             }
             
-            var dict: NSMutableDictionary = ["DCR_Id": dcrAttendanceObj.DCR_Id, "DCR_Attendance_Id": dcrAttendanceObj.DCR_Attendance_Id, "Activity_Code": dcrAttendanceObj.Activity_Code, "Project_Code": dcrAttendanceObj.Project_Code!, "Start_Time": dcrAttendanceObj.Start_Time!, "End_Time": dcrAttendanceObj.End_Time!, "Remarks": remarks,
+            var dict: NSMutableDictionary = ["DCR_Id": dcridvalue, "DCR_Attendance_Id": dcrAttendanceObj.DCR_Attendance_Id, "Activity_Code": dcrAttendanceObj.Activity_Code, "Project_Code": dcrAttendanceObj.Project_Code!, "Start_Time": dcrAttendanceObj.Start_Time!, "End_Time": dcrAttendanceObj.End_Time!, "Remarks": remarks,
                                              "UTC_DateTime":getUTCDateForPunch(),
                                              "Entered_TimeZone":getcurrenttimezone(),
                                              "Entered_OffSet":getOffset(),

@@ -927,11 +927,11 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                    {
                        DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
-                       self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: AttendanceStepperVcID)
+                       self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
                    }
                    else if detailModel.dcrFlag == DCRFlag.leave.rawValue
                    {
-                       navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
+                       navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
                    }
                    removeVersionToastView()
                }
@@ -990,11 +990,11 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 {
                     DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
                     DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
-                    self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: AttendanceStepperVcID)
+                    self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
                 }
                 else if detailModel.dcrFlag == DCRFlag.leave.rawValue
                 {
-                    navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
+                    navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
                 }
                 removeVersionToastView()
             }
@@ -1059,7 +1059,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         {
             BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.attendance.rawValue, selectedDate: self.selectedDate)
             
-            self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: AttendanceStepperVcID)
+            self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
         }
         else if title == DCRActivityName.leave.rawValue
         {
@@ -1068,8 +1068,8 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 BL_DCRCalendar.sharedInstance.insertLeaveTPDetails(selectedDate: self.selectedDate)
                 //            self.navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
                 let sb = UIStoryboard(name: leaveEntrySb, bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: LeaveEntryVcID) as! LeaveEntryViewController
-                vc.isInsertedFromTP = true
+                let vc = sb.instantiateViewController(withIdentifier: "DCRLeaveEntryNew") as! LeaveEntryNewViewController
+//                vc.isInsertedFromTP = true
                 self.navigationController?.pushViewController(vc, animated: true)
             }else{
                 AlertView.showAlertView(title: internetOfflineMessage, message: internetOfflineMessage, viewController: self)
@@ -1770,7 +1770,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             addaction()
             self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )
         }
-        else if (dcrDetailList.count > 0 && dcrDetailList[0].dcrStatus != 3 && dcrDetailList[0].dcrStatus != 2 && dcrDetailList[0].dcrStatus != 1)
+        else if (dcrDetailList.count > 0 && dcrDetailList[0].dcrStatus != 3 && dcrDetailList[0].dcrStatus != 2 && dcrDetailList[0].dcrStatus != 1 && dcrDetailList[0].dcrStatus != 0)
         {
             addaction()
             self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )

@@ -3322,7 +3322,10 @@ class DBHelper: NSObject
     {
         executeQuery(query: "UPDATE \(TRAN_DCR_ATTENDANCE_ACTIVITIES) SET Project_Code = '\(dcrAttendanceActivityObj.Project_Code!)',Activity_Code = '\(dcrAttendanceActivityObj.Activity_Code!)',Start_Time = '\(dcrAttendanceActivityObj.Start_Time!)',End_Time = '\(dcrAttendanceActivityObj.End_Time!)' , Remarks = '\(dcrAttendanceActivityObj.Remarks!)'  WHERE DCR_Attendance_Id = \(dcrAttendanceActivityObj.DCR_Attendance_Id!)")
     }
-    
+    func updateDCRAttendanceActivity1(Project_Code: String,Activity_Code:String, startTime: String, endTime: String, remarks: String,Dcr_id: Int)
+    {
+        executeQuery(query: "UPDATE \(TRAN_DCR_ATTENDANCE_ACTIVITIES) SET Project_Code = '\(Project_Code)',Activity_Code = '\(Activity_Code)',Start_Time = '\(startTime)',End_Time = '\(endTime)' , Remarks = '\(remarks)'  WHERE DCR_Attendance_Id = \(Dcr_id)")
+    }
     func deleteDCRAttendanceActivity(dcrAttendanceActivityId: Int)
     {
         try? dbPool.write({ db in
@@ -4160,12 +4163,12 @@ class DBHelper: NSObject
         return count
     }
     
-    func getDCRAttendanceActivitiesForUpload(dcrId: Int) -> [DCRAttendanceActivityModel]
+    func getDCRAttendanceActivitiesForUpload(dcrId: String) -> [DCRAttendanceActivityModel]
     {
         var activitiesList: [DCRAttendanceActivityModel] = []
         
         try? dbPool.read { db in
-            activitiesList = try DCRAttendanceActivityModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_ATTENDANCE_ACTIVITIES) WHERE DCR_Id = ?", arguments: [dcrId])
+            activitiesList = try DCRAttendanceActivityModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_ATTENDANCE_ACTIVITIES) WHERE DCR_Date like '\(dcrId)%'")
         }
         
         return activitiesList

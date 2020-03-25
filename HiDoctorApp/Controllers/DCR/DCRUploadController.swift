@@ -388,7 +388,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         if model.flagLabel == "O"
         {
-            let attendanceActivities = DBHelper.sharedInstance.getDCRAttendanceActivitiesForUpload(dcrId: model.dcrId)
+            let attendanceActivities = DBHelper.sharedInstance.getDCRAttendanceActivitiesForUpload(dcrId: getServerFormattedDateString(date: model.dcrDate))
             for attendanceActivity in attendanceActivities
             {
                 if (checkNullAndNilValueForString(stringData: attendanceActivity.Remarks).count > attendanceActivityRemarksLength)
