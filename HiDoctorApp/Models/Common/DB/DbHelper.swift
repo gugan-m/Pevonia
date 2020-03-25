@@ -8683,5 +8683,41 @@ class DBHelper: NSObject
     func saveTPMeetingObjective(TP_ID: Int ,TP_DoctorID: Int ,Doctor_Code: String ,Obj_Code:Int ,obj_Name:String) {
         executeQuery(query: "UPDATE \(TRAN_TP_DOCTOR) SET Call_Objective_Id = \(Obj_Code), Call_Objective_Name = '\(obj_Name)' WHERE TP_Entry_Id = \(TP_ID) AND TP_Doctor_Id = \(TP_DoctorID) AND Doctor_Code = '\(Doctor_Code)'")
     }
+    
+    
+    func insertProspecting(ProspectList : NSArray)
+    {
+        try? dbPool.writeInTransaction{ db in
+            
+            for prospectObj in ProspectList
+            {
+                try AddProspectModel(dict: prospectObj as! NSDictionary).insert(db)
+            }
+            return .commit
+        }
+    }
+    
+    func getProspect() -> [AddProspectModel]?
+    {
+        var prospectList: [AddProspectModel]?
+        
+        try? dbPool.read { db in
+            prospectList = try AddProspectModel.fetchAll(db, "SELECT * FROM \(TRAN_PROSPECTING)")
+        }
+        
+        return prospectList
+    }
+    
+    func deleteProspecting(Prospect_Id:Int)
+       {
+           executeQuery(query: "DELETE FROM \(TRAN_PROSPECTING) WHERE Prospect_Id = \(Prospect_Id)")
+       }
+    
+    
+    
+    
+    
+    
+    
 }
 

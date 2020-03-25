@@ -188,7 +188,7 @@ class WebServiceWrapper: NSObject
             
             request.httpMethod = wsPOST
             request.timeoutInterval = wsTimeOutInterval
-            
+            print(dataDictionary)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             do

@@ -1850,6 +1850,12 @@ func setupDatabase(_ application: UIApplication) throws
          var rows: [Row] = []
         createTableString = "CREATE TABLE IF NOT EXISTS \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) (" + "TP_Id INTEGER," + "Check_Sum_Id INTEGER," + "TP_Doctor_Id INTEGER," + "Uploaded_File_Name TEXT," + "Blob_URL TEXT," + "Doctor_Code TEXT," + "Doctor_Region_Code TEXT," + "Is_Success INTEGER," + "TP_Entry_Id INTEGER," + "TP_Doctor_Attachment_Id INTEGER PRIMARY KEY AUTOINCREMENT" + ")"
         try db.execute(createTableString)
+        
+        createTableString = "CREATE TABLE IF NOT EXISTS \(TRAN_PROSPECTING) (" + "Flag TEXT," + "Prospect_Id INTEGER," + "Company_Code TEXT," + "Company_Id INTEGER," + "Account_Name TEXT," + "Contact_Name TEXT," + "Title TEXT," + "Address TEXT," + "City TEXT," + "State TEXT," + "Phone_No TEXT," + "Email TEXT," + "Prospect_Status TEXT," + "DCR_Date TEXT," + "Created_Region_Code TEXT," + "Created_By TEXT," + "Created_DateTime TEXT," + "Zip INTEGER" + ")"
+        try db.execute(createTableString)
+        
+
+ 
        try dbPool.read { db in
                  rows = try Row.fetchAll(db, "PRAGMA table_info('\(TRAN_TP_HEADER)')")
              }

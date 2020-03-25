@@ -1051,7 +1051,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 }
                 let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
-                vc.propectus = true
+                vc.isProspect = true
                 self.navigationController?.pushViewController(vc, animated: true)
                 //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: "DCRStepperNew")
             }

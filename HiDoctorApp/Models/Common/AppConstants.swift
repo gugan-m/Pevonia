@@ -15,7 +15,7 @@ let dashboardBaseUrl : String = "http://hdreports.hidoctor.me/?Lid="
 //let wsRootUrl: String = "https://dev-webapi-ios.hidoctor.me/"
 //let wsRootUrl: String = "http://hdwedev1.hidoctor.me/"
 
-//MARK:- Development  email issue
+//MARK:- Development  email issuett
 //let supportEmail : String = "Pevonia.support@swaas.net"
 
 
@@ -315,6 +315,7 @@ let wsAssetProductMappingDetails :String = "Asset/Product/MappingDetails/"
 let wsParentHierarchy : String = "ParentHierarchy/Users/"
 let wsLeaveApproval : String = "DCRHeaderApi/Leave/"
 let wsLeaveAppoveAndReject : String = "DCRHeaderApi/"
+let wsInsertProspectDetails : String = "InsertProspectDetails/"
 
 //MARK:-- Kennect Authorization Key
 //let authorizationKey = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoyMCwib3duZXIiOiJhZG1pbiIsImlkIjoiNWJjMGY0ZTVkYjcxZjE3NDgzZTc0MGI3IiwidXNlcm5hbWUiOiJ3YWxsYWNlQGtlbm5lY3QuaW4iLCJpYXQiOjE1NDIxNzkxNTYsImV4cCI6MTU2ODA5OTE1Nn0.nh1OhL2IVBfTgRMHtYbCOmkVLnR8uNQ9CeumGciU7Kr8wIRpleywzjIOF9997rZWTCNHWt1y_jv2ePeyHoKN86BVGiw18Qx52u1yQZlbNS5MjS1FiiywJnOM3ynTzGnZgi_Zd1BRap0w2QzQiIH6iKh7BD2610WkaxtjxRuXf2CaaeP4--TDlT3JbFE2t_CEWebEBnPtJnjhVExSjSKFWlJ0P0J27LjjpWCUBsuCsSkIi7O_9ss9jbW4NEQhT9ks2c7OiFM4BbZ0dvuq2NsBnqkoAPskLoD-zHryYggmBAbaWzihxHSflCKTFfR930YFno803cVF5jPQ1kZn3f3Eew"
@@ -761,6 +762,7 @@ let Hourly_Report_Visit = "Hourly_Report_Visit"
 let TRAN_DCR_LEAVE_ATTACHMENT = "tran_DCR_Leave_Attachment"
 let Notes_Attachment = "Notes_Attachment"
 let TRAN_CUSTOMER_HOSPITAL_INFO = "tran_Customer_Hospital_Info"
+let TRAN_PROSPECTING = "tran_Prospecting"
 
 // message tables
 let TRAN_MAIL_MESSAGE_HEADER = "tran_Mail_Message_Header"

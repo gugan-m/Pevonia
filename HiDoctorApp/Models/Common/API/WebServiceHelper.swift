@@ -2834,4 +2834,13 @@ class WebServiceHelper: NSObject
         }
     }
     
+    func updateProspect(postData: [String:Any],completion: @escaping (_ apiResponseObj:ApiResponseModel)->())
+    {
+        let urlString = wsRootUrl + wsDCRDoctorVisitApi + wsInsertProspectDetails + getCompanyCode() + "/" + getUserCode() + "/" + getRegionCode()
+        WebServiceWrapper.sharedInstance.postApiWithAnyObject(urlString: urlString, dataDictionary: [postData], stringData: getCurrentDate(), screenName: ScreenName.Empty) { (apiResponseObject) in
+            completion(apiResponseObject)
+        }
+    }
+  
 }
+

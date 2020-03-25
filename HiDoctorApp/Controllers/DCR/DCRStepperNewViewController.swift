@@ -29,7 +29,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     var isFromDVR = false
     var general = UITextField()
     let doctorvisitmodify = DoctorVisitModifyController()
-    var propectus = false
+    
     // MARK:- Life Cycle Events
     override func viewDidLoad()
     {
@@ -37,7 +37,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         //        super.viewDidLoad()
             
             self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
-            if (propectus)
+            if (isProspect)
             {
                 self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Prospecting)"
                 }
@@ -314,10 +314,14 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     }
     func addflexi()
     {
+//        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
+//        vc.isfromChemistDay = true
+//        self.navigationController?.pushViewController(vc, animated: true)
         let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
-        vc.isfromChemistDay = true
-         self.navigationController?.pushViewController(vc, animated: true)
+        let vc = sb.instantiateViewController(withIdentifier: "AddNewProspectViewController") as! AddNewProspectViewController
+        vc.title = ""
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     private func navigateToAddUser() {
         let accom_sb = UIStoryboard(name: commonListSb, bundle: nil)
@@ -335,7 +339,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
             case 0:
                 navigateToAddUser()
             case 1:
-                if (propectus)
+                if (isProspect)
                 {
                 addflexi()
                 }
@@ -1435,7 +1439,16 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 
             let footerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldFooterCell) as! TPFieldStepperFooterCell
-               footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+        if isProspect{
+            if  section == 1 {
+            footerCell.leftButton.setTitle("Add Prospect", for: .normal)
+            } else {
+footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+            }
+        } else {
+footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+               }
+             
                    footerCell.leftButton.tag = section
                    footerCell.rightButton.tag = section
                    if section == 4 {
