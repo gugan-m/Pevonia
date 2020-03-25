@@ -228,14 +228,14 @@
                                                                                                         </connections>
                                                                                                     </tableView>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dG8-hg-rwj">
-                                                                                                        <rect key="frame" x="137" y="183" width="118" height="28"/>
+                                                                                                        <rect key="frame" x="135" y="183" width="120" height="28"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <state key="normal" title="REMOVE CONTACT">
                                                                                                             <color key="titleColor" red="0.31564596140000001" green="0.6921270356" blue="0.71500566710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                         </state>
                                                                                                     </button>
                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgp-bv-PcK">
-                                                                                                        <rect key="frame" x="164" y="147" width="91" height="28"/>
+                                                                                                        <rect key="frame" x="163" y="147" width="92" height="28"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                                                                         <state key="normal" title="ADD SAMPLES">
                                                                                                             <color key="titleColor" red="0.31564596140000001" green="0.6921270356" blue="0.71500566710000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -316,13 +316,13 @@
                                                                                                         </constraints>
                                                                                                     </imageView>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ol-ik-g72" userLabel="Visit Mode Label">
-                                                                                                        <rect key="frame" x="223" y="6" width="32" height="16"/>
+                                                                                                        <rect key="frame" x="220" y="6" width="35" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
                                                                                                     </label>
                                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fa1-S2-BXW" userLabel="Doctor Name Label">
-                                                                                                        <rect key="frame" x="36" y="6" width="195" height="16"/>
+                                                                                                        <rect key="frame" x="36" y="6" width="192" height="16"/>
                                                                                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
                                                                                                         <nil key="highlightedColor"/>
@@ -736,13 +736,13 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2g-wI-Tu1" userLabel="Empty state sub title">
-                                                                    <rect key="frame" x="0.0" y="23" width="255" height="14"/>
+                                                                    <rect key="frame" x="0.0" y="23" width="255" height="14.5"/>
                                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wSs-0B-FIj">
-                                                                    <rect key="frame" x="0.0" y="49" width="70" height="29"/>
+                                                                    <rect key="frame" x="0.0" y="49.5" width="70" height="29"/>
                                                                     <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.53333333329999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="29" id="ndb-Tw-7AY"/>

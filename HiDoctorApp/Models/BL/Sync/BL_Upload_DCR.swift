@@ -167,7 +167,7 @@ class BL_Upload_DCR: NSObject
     private func getUploadDataForAttendance(dcrId: Int, checkSum: Int,dcrDate : String) -> NSArray
     {
         let dict1: NSDictionary = ["checksum": checkSum, "lstDCRMasterStaging": getDCRHeaderList(dcrId: dcrId), "lstDCRAccompanistModel": [], "lstTravelledPlaces": getDCRTravelledPlaces(dcrId: dcrId), "lstDCRVisitStaging": [], "lstAccompStaging": [], "lstSampleProductsStaging": [], "lstDetailedStaging": []]
-        let dict2: NSDictionary = ["lstChemistStaging": [], "lstRCPAStaging": [],"lstFollowupsStaging": [], "lstAttachmentStaging": [], "lstStockiestStaging": [], "lstExpenseStaging": getExpenseList(dcrId: dcrId), "lstTimeSheetActivityStaging": getAttendanceActivities(dcrId: dcrId)]
+        let dict2: NSDictionary = ["lstChemistStaging": [], "lstRCPAStaging": [],"lstFollowupsStaging": [], "lstAttachmentStaging": [], "lstStockiestStaging": [], "lstExpenseStaging": getExpenseList(dcrId: dcrId), "lstTimeSheetActivityStaging": getAttendanceActivities(dcrId: dcrDate)]
         let dict3: NSDictionary = ["lstChemistAccompStaging": [], "lstSamplePromotionsStaging": [], "lstDCRChemistDetailedStagging": [], "lstChemistRCPAOwnProductsStaging": [], "lstChemistRCPACompetitorProductStaging": [], "lstchemistFollowupstaging": [], "lstChemistAttachmentStaging": []]
         let dict4: NSDictionary = ["lstOrderHeader": [], "lstOrderDetails": [], "lstDCRCallActivity": [], "lstDCRMCActivity": [], "lstDCRInheritanceAccompanist": [], "lstCompetitorDetails": [],"lstAttendanceDoctorDetails":getDCRAttendanceDoctor(dcrId: dcrId),"lstAttendaceSamplesDetails":getDCRAttendanceSample(dcrId: dcrId),"lstAttendancecallactivity":getAttendanceDCRCallActivities(dcrId: dcrId),"lstAttendanceMCactivity":getAttendanceDCRMCActivities(dcrId: dcrId)]
         var combinedAttributes : NSMutableDictionary!
@@ -1128,7 +1128,7 @@ class BL_Upload_DCR: NSObject
         return resultList
     }
     
-    private func getAttendanceActivities(dcrId: Int) -> NSMutableArray
+    private func getAttendanceActivities(dcrId: String) -> NSMutableArray
     {
         let dcrAttendanceActivities = DBHelper.sharedInstance.getDCRAttendanceActivitiesForUpload(dcrId: dcrId)
         let resultList: NSMutableArray = []

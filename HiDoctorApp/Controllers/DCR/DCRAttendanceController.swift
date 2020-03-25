@@ -102,22 +102,11 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
        
         if DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue
         {
-            let unApprovedObj = BL_DCR_Leave.sharedInstance.getUnapprovedLeaveData(leaveDate: startDate)
             
-            startDate = (unApprovedObj?.DCR_Actual_Date)!
-            endDate = (unApprovedObj?.DCR_Actual_Date)!
-            leaveTypeCode = (unApprovedObj?.Leave_Type_Code)!
-            leaveTypeId = String((unApprovedObj?.Leave_Type_Id)!)
-            leaveTypeName = BL_DCR_Leave.sharedInstance.getLeaveTypeName(leaveTypeCode: self.leaveTypeCode)
+           // selectLeaveType.text = leaveTypeName
+            leaveReason.text = ""
             
-            fromDateLbl.text = stringDateFormat(date1: startDate)
-            fromDateLbl.isEnabled = false
-        
-            selectLeaveType.text = leaveTypeName
-            leaveReason.text = unApprovedObj?.Reason
             
-            let reasonLen : Int = ((unApprovedObj?.Reason?.count)!)
-            txtCount.text =  "\(String(reasonLen))/\(leaveReasonMaxLength)"
         }
         else
         {
@@ -491,8 +480,11 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
                         BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
                     }
                     else
-               { BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!)
+               {
                 BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+                BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, dcrId: DCRModel.sharedInstance.dcrId)
+              
+                //BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
             }
             self.showAlertToUploadTP()
 

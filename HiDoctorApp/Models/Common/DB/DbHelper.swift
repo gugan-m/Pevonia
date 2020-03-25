@@ -4163,12 +4163,12 @@ class DBHelper: NSObject
         return count
     }
     
-    func getDCRAttendanceActivitiesForUpload(dcrId: Int) -> [DCRAttendanceActivityModel]
+    func getDCRAttendanceActivitiesForUpload(dcrId: String) -> [DCRAttendanceActivityModel]
     {
         var activitiesList: [DCRAttendanceActivityModel] = []
         
         try? dbPool.read { db in
-            activitiesList = try DCRAttendanceActivityModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_ATTENDANCE_ACTIVITIES) WHERE DCR_Id = ?", arguments: [dcrId])
+            activitiesList = try DCRAttendanceActivityModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_ATTENDANCE_ACTIVITIES) WHERE DCR_Date like '\(dcrId)%'")
         }
         
         return activitiesList

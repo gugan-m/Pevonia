@@ -931,7 +931,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                    }
                    else if detailModel.dcrFlag == DCRFlag.leave.rawValue
                    {
-                       navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
+                       navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
                    }
                    removeVersionToastView()
                }
@@ -994,7 +994,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 }
                 else if detailModel.dcrFlag == DCRFlag.leave.rawValue
                 {
-                    navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: LeaveEntryVcID)
+                    navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
                 }
                 removeVersionToastView()
             }
@@ -1770,7 +1770,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             addaction()
             self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )
         }
-        else if (dcrDetailList.count > 0 && dcrDetailList[0].dcrStatus != 3 && dcrDetailList[0].dcrStatus != 2 && dcrDetailList[0].dcrStatus != 1)
+        else if (dcrDetailList.count > 0 && dcrDetailList[0].dcrStatus != 3 && dcrDetailList[0].dcrStatus != 2 && dcrDetailList[0].dcrStatus != 1 && dcrDetailList[0].dcrStatus != 0)
         {
             addaction()
             self.showPlanningPopup(selectedDate: getStringFromDate(date: selectedDate) )
