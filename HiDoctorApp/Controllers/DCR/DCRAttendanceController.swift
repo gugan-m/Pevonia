@@ -85,6 +85,9 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         pickerViewtext.inputAccessoryView = toolBar
          activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
         submitbtn.layer.cornerRadius = 5
+        pickerViewtext.text = activityList[0].Activity_Name
+        self.ActivityCode = activityList[0].Activity_Code
+        self.ProjectCode = activityList[0].Project_Code
         self.addKeyBoardObserver()
         addBackButtonView()
         self.addTapGestureForView()

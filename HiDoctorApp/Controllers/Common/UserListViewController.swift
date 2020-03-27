@@ -181,7 +181,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
             {
                 if navigationScreenName == "TPFieldStepper" {
                     
-                    if indexPath.row == 0 {
+                    if indexPath.row == 0 && employeeName == "Mine"{
                         cell.imgView.isHidden = true
                     } else {
                         cell.imgView.isHidden = false

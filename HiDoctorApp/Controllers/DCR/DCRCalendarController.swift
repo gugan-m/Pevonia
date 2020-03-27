@@ -363,13 +363,16 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     })
                     dcrCategoryMenu.addAction(categoryAction)
                     let tpModelList = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: DCRActivity.fieldRcpa.rawValue, status: TPStatus.approved.rawValue)
+                    let tpModelListA = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 2, status: TPStatus.approved.rawValue)
+                    let tpModelListL = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 3, status: TPStatus.approved.rawValue)
+                    
                     if titles as! String == DCRActivityName.fieldRcpa.rawValue || title == "Field_RCPA"
                     {
                         
                         
                         if tpModelList.count > 0
                         {
-                        if tpModelList[0].TpType == "F" || tpModelList[0].Project_Code == "Field_RCPA"
+                        if tpModelList[0].TpType == "F" && tpModelList[0].Project_Code == "Field_RCPA"
                         {
                             
                             Radiobtnfeild.isSelected = true
@@ -393,9 +396,9 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     }
                     else if titles as! String == DCRActivityName.attendance.rawValue
                     {
-                        if tpModelList.count > 0
+                        if tpModelListA.count > 0
                         {
-                        if tpModelList[0].Project_Code == "ATTENDANCE" || tpModelList[0].TpType == "A"
+                        if tpModelListA[0].Project_Code == "ATTENDANCE" || tpModelListA[0].TpType == "A"
                         {
                             
                             Radiobtnoffice.isSelected = true
@@ -406,9 +409,9 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     }
                     else if titles as! String == DCRActivityName.leave.rawValue
                     {
-                        if tpModelList.count > 0
+                        if tpModelListL.count > 0
                         {
-                        if tpModelList[0].Project_Code == "LEAVE"  || tpModelList[0].TpType == "L"
+                        if tpModelListL[0].Project_Code == "LEAVE"  || tpModelListL[0].TpType == "L"
                         
                         {
                             Radiobtnnotworking.isSelected = true
@@ -1785,7 +1788,14 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     // Tableview Delegates
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if (dcrDetailList.count > 1)
+        {
+            return 1
+        }
+        else
+        {
         return dcrDetailList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -1806,8 +1816,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var outputCell: UITableViewCell = UITableViewCell()
-        
-        let detailModel = dcrDetailList[indexPath.row]
+
+        var detailModel = dcrDetailList[indexPath.row]
+        if (dcrDetailList.count > 1)
+        {
+            detailModel = dcrDetailList[indexPath.row + 1]
+        }
         
         if detailModel.dcrFlag == DCRFlag.fieldRcpa.rawValue
         {
