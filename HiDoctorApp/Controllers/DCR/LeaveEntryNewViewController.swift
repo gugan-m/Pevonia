@@ -392,6 +392,8 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
                     leaveReason.text = unApprovedObj?.Remarks
                     txtCount.text =  "\(String(leaveReason.text.count))/\(tpLeaveReasonLength)"
                 }
+                leaveReason.text = unApprovedObj?.Remarks
+                                                 txtCount.text =  "\(String(leaveReason.text.count))/\(tpLeaveReasonLength)"
             }
         else
         {
