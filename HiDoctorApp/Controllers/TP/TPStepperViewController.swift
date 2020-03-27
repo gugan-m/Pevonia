@@ -1001,7 +1001,11 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
             let acc_Code = BL_TPStepper.sharedInstance.accompanistList[sender.tag].userObj.User_Code
             if acc_Code != nil {
                 DAL_TP_Stepper.sharedInstance.deleteSelectedAccompanists(tp_Entry_Id: TPModel.sharedInstance.tpEntryId,Acc_Code:acc_Code!)
-                BL_TPStepper.sharedInstance.generateDataArray()
+                if self.isProspect == true {
+                    BL_TPStepper.sharedInstance.generateProspectDataArray()
+                } else {
+                    BL_TPStepper.sharedInstance.generateDataArray()
+                }
                 self.reloadTableView()
             }
         }

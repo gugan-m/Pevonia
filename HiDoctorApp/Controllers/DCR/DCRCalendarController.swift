@@ -920,7 +920,18 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
                        BL_Stepper.sharedInstance.getAccompanistDataPendingList()
                        BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
-                       self.navigateToNextScreen(storyBoard:dcrStepperSb , viewControllerId: "DCRStepperNew")
+                      let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                       let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+                       let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
+                       let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
+                       if doctorlist.count != 0{
+                           if doctorlist.count == filterArr.count {
+                              vc.isProspect = true
+                           } else {
+                              vc.isProspect = false
+                           }
+                       }
+                       self.navigationController?.pushViewController(vc, animated: true)
                        
                    }
                    else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
@@ -983,7 +994,18 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
                     BL_Stepper.sharedInstance.getAccompanistDataPendingList()
                     BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
-                    self.navigateToNextScreen(storyBoard:dcrStepperSb , viewControllerId: "DCRStepperNew")
+                    let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+                    let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
+                    let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
+                    if doctorlist.count != 0{
+                        if doctorlist.count == filterArr.count {
+                           vc.isProspect = true
+                        } else {
+                           vc.isProspect = false
+                        }
+                    }
+                    self.navigationController?.pushViewController(vc, animated: true)
                     
                 }
                 else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
@@ -1035,9 +1057,21 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 self.dcrID = DCRModel.sharedInstance.dcrId
                 insertHourlyReportData()
+                
                 //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
             }
-            self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: "DCRStepperNew")
+            let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+            let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
+            let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
+            if doctorlist.count != 0{
+                if doctorlist.count == filterArr.count {
+                   vc.isProspect = true
+                } else {
+                   vc.isProspect = false
+                }
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
             if title == DCRActivityName.prospect.rawValue || title == "Prospect"
             {
@@ -1047,7 +1081,6 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 {
                     self.dcrID = DCRModel.sharedInstance.dcrId
                     insertHourlyReportData()
-                    //self.navigateToNextScreen(storyBoard: dcrStepperSb, viewControllerId: dcrStepperVcID)
                 }
                 let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
@@ -1814,8 +1847,16 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             getRCPACellHeight(doctorVisitCount: detailModel.doctorVisitCount!, doctorPendingCount: detailModel.doctorPendingVisitCount!)
             
             let cell:FieldRCPACell = tableView.dequeueReusableCell(withIdentifier: rcpaCellIdentifier) as! FieldRCPACell
-            cell.dcrLabel.text = fieldRcpa
-
+            
+            let doctorlist:[DCRDoctorVisitModel] = DBHelper.sharedInstance.getDCRDoctorVisitDetails(dcrId: detailModel.dcrId)
+            let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
+            if doctorlist.count != 0{
+                if doctorlist.count == filterArr.count {
+                   cell.dcrLabel.text = "Prospecting"
+                } else {
+                   cell.dcrLabel.text = fieldRcpa
+                }
+            }
             if detailModel.dcrStatus == DCRStatus.drafted.rawValue
             {
                 cell.headerView.backgroundColor = CellColor.draftedBgColor.color

@@ -43,6 +43,10 @@ class TPAttendanceStepperViewController: UIViewController
                BL_TP_AttendanceStepper.sharedInstance.generateDataArray()
                reloadTableView()
                selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
+        if selectedActivity.count == 0 && activityList.count != 0 {
+            selectedActivity = activityList[0].Activity_Name
+        }
+        
                generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
     }
     

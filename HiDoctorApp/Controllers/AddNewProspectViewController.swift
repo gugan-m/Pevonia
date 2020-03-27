@@ -218,9 +218,6 @@ class AddNewProspectViewController: UIViewController {
         let dict = ["Flag": Flag ,"Prospect_Id": Prospect_Id,"Company_Code": getCompanyCode() ,"Company_Id":companyId,"Account_Name": Account_Name, "Contact_Name":Contact_Name, "Title":Title, "Address":Address, "City":City, "State": State,"Phone_No":Phone_No,"Email":Email,"Prospect_Status":Prospect_Status,"DCR_Date": getCurrentDate(),"Created_Region_Code": getRegionCode(),"Created_By": getUserCode(),"Created_DateTime": getStringFromDateforPunch(date: Date()),"Zip": Zip] as [String : Any]
         prosArr = [dict]
         let postData = AddProspectModel(dict: dict as NSDictionary)
-         if self.btnSave.currentTitle == "Save" {
-            self.saveDoctorInFlexi(DoctorName:Contact_Name, Title: Title)
-         }
             self.updateProspectDetails(flag: Flag, postData: postData)
     }
     
@@ -267,127 +264,6 @@ class AddNewProspectViewController: UIViewController {
                     navigationController.popViewController(animated: false)
                     navigationController.pushViewController(vc, animated: false)
                     
-                    let privValue = PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.ADD_DOCTOR_FROM_DCR)
-                    
-                    if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
-                    {
-                        var model : [DCRDoctorVisitModel] = []
-                        
-                        model = DBHelper.sharedInstance.getDCRDoctorVisitPunchTimeValidation(dcrId: DCRModel.sharedInstance.dcrId)
-                        if(model != nil && model.count > 0)
-                        {
-                            let doctorobj : DCRDoctorVisitModel = model[0]
-                            
-                            let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
-
-                            let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
-
-                            alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
-                                 navigationController.popViewController(animated: false)
-                                alertViewController.dismiss(animated: true, completion: nil)
-                                
-                            }))
-
-                            alertViewController.addAction(UIAlertAction(title: "Go to modify", style: UIAlertActionStyle.default, handler: { alertAction in
-                                 navigationController.popViewController(animated: false)
-                                self.navigateToNextScreen(stoaryBoard: doctorMasterSb, viewController: doctorVisitModifyVcID)
-                                alertViewController.dismiss(animated: true, completion: nil)
-                                
-                            }))
-                            self.present(alertViewController, animated: true, completion: nil)
-                        }
-                        else
-                        {
-                            let currentLocation = getCurrentLocaiton()
-                            
-                            let initialAlert = "Check-in time for " + "\(DoctorName)" + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + "\(DoctorName)"
-                            
-                            //let indexpath = sender.tag
-                            
-                            let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
-
-                            alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
-                                navigationController.popViewController(animated: false)
-                                alertViewController.dismiss(animated: true, completion: nil)
-                                
-                            }))
-                            alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
-                                if (privValue == PrivilegeValues.YES.rawValue)
-                                {
-                                    let sb = UIStoryboard(name: mainSb, bundle: nil)
-                                    let vc = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                                    vc.webViewTitle = "Add \(appDoctor)"
-                                    
-                                    let companyObj = DBHelper.sharedInstance.getCompanyDetails()
-                                    
-                                    if (companyObj != nil)
-                                    {
-                                        let companyUrl = companyObj!.companyURL
-                                        var url = "https://" + companyUrl!
-                                        url += "/HiDoctor_Master/CMDoctor/Doctormaster?CC="
-                                        
-                                        var queryString: String = "CC="
-                                        queryString += getCompanyCode() + "&UC=" + getUserCode() + "&RC=" + getRegionCode()
-                                        queryString += "&S=2"
-                                        queryString += "&DN=\(DoctorName)"
-                                        queryString += "&SC=SPC00000001"
-                                        
-                                        let data = queryString.data(using: String.Encoding.utf8)
-                                        let encodedString = data?.base64EncodedString()
-                                        
-                                        url += encodedString!
-                                        print(url)
-                                        
-                                        vc.siteURL = url
-                                        vc.pageSource = 1
-                                        
-                                        navigationController.pushViewController(vc, animated: false)
-                                    }
-                                }
-                              
-                                
-                            }))
-                            self.present(alertViewController, animated: true, completion: nil)
-                            
-                        }
-                    
-                }
-                    else
-                    {
-                        if (privValue == PrivilegeValues.YES.rawValue)
-                        {
-                            let sb = UIStoryboard(name: mainSb, bundle: nil)
-                            let vc = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
-                            vc.webViewTitle = "Add \(appDoctor)"
-                            
-                            let companyObj = DBHelper.sharedInstance.getCompanyDetails()
-                            
-                            if (companyObj != nil)
-                            {
-                                let companyUrl = companyObj!.companyURL
-                                var url = "https://" + companyUrl!
-                                url += "/HiDoctor_Master/CMDoctor/Doctormaster?CC="
-                                
-                                var queryString: String = "CC="
-                                queryString += getCompanyCode() + "&UC=" + getUserCode() + "&RC=" + getRegionCode()
-                                queryString += "&S=2"
-                                queryString += "&DN=\(DoctorName)"
-                                queryString += "&SC=SPC00000001"
-                                
-                                let data = queryString.data(using: String.Encoding.utf8)
-                                let encodedString = data?.base64EncodedString()
-                                
-                                url += encodedString!
-                                print(url)
-                                
-                                vc.siteURL = url
-                                vc.pageSource = 1
-                                
-                                navigationController.pushViewController(vc, animated: false)
-                            }
-                        }
-                       
-                    }
                 }
             }
         }
@@ -502,6 +378,7 @@ class AddNewProspectViewController: UIViewController {
                         self.tblProspecting.reloadData()
                         removeCustomActivityView()
                     } else {
+                            self.saveDoctorInFlexi(DoctorName:postData.Contact_Name, Title: postData.Title)
                         if apiObj.list != nil && apiObj.list.count != 0 {
                             DBHelper.sharedInstance.insertProspecting(ProspectList: apiObj.list)
                            if let arr = DBHelper.sharedInstance.getProspect(){
@@ -514,6 +391,9 @@ class AddNewProspectViewController: UIViewController {
                         }
                     }
                 } else {
+                    if flag != "Edit"{
+                       self.saveDoctorInFlexi(DoctorName:postData.Contact_Name, Title: postData.Title)
+                    }
                     removeCustomActivityView()
                 }
             })

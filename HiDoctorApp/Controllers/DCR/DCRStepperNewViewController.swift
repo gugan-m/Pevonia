@@ -1006,8 +1006,18 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //
         @IBAction func submitButtonAction()
         {
-
+           
+            
+            if BL_Stepper.sharedInstance.doctorList.count == 0
+            {
+                AlertView.showAlertView(title: alertTitle, message: "Add atleast one Contact", viewController: self)
+            } else if selectedWorkPlace.count == 0 {
+                AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
+            }
+            else
+            {
                 showAlertToConfirmAppliedMode(captureLocation: false)
+            }
         }
     //
     //    func getselectedAccompanist(selectedAccompanist: [DCRAccompanistModel], type: Int)
@@ -1325,7 +1335,11 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
             else if indexPath.section == 2
             {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
-                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                if selectedWorkPlace.count == 0 {
+                    WorkCaregoryCell.txtWorkCategory.text = self.workCategory[0]
+                } else {
+                   WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                }
                 WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
                 return WorkCaregoryCell
             }
@@ -1594,7 +1608,7 @@ extension DCRStepperNewViewController: UIPickerViewDelegate,UIPickerViewDataSour
                 dcrheaderobj.Category_Name = selectedWorkPlace
             }
             DBHelper.sharedInstance.updateDCRWorkCategory(dcrHeaderObj: dcrheaderobj)
-       
+        self.tableView.reloadData()
         
         self.view.endEditing(true)
     }

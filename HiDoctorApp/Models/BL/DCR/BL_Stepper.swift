@@ -527,45 +527,45 @@ class BL_Stepper: NSObject
             return errorMessage
         }
         
-        errorMessage = doDoctorAccompanistEmptyAccompaniedValidation()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doDoctorAccompanistEmptyAccompaniedValidation()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doAllChemistVisitValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllChemistVisitValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doChemistDayRCPAMandatoryValidation()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doChemistDayRCPAMandatoryValidation()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doChemistInvalidAccompanistValidation()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doChemistInvalidAccompanistValidation()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        errorMessage = doChemistAccompanistEmptyAccompaniedValidation()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doChemistAccompanistEmptyAccompaniedValidation()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
-        let sfcList: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
-        if privilegeArray.contains(Constants.ChemistDayCaptureValue.travel_details) || sfcList!.count > 0
-        {
-            errorMessage = doAllExpenseValidations()
-            if (errorMessage != EMPTY)
-            {
-                return errorMessage
-            }
-        }
+//        let sfcList: [DCRTravelledPlacesModel]? = getDCRSFCDetails()
+//        if privilegeArray.contains(Constants.ChemistDayCaptureValue.travel_details) || sfcList!.count > 0
+//        {
+//            errorMessage = doAllExpenseValidations()
+//            if (errorMessage != EMPTY)
+//            {
+//                return errorMessage
+//            }
+//        }
         
         errorMessage = doAllGeneralRemarksValidations()
         if (errorMessage != EMPTY)
@@ -573,11 +573,11 @@ class BL_Stepper: NSObject
             return errorMessage
         }
         
-        errorMessage = doInheritanceValidations()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doInheritanceValidations()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
         return errorMessage
     }
