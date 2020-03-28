@@ -45,7 +45,12 @@ class TPAttendanceStepperViewController: UIViewController
                selectedActivity = BL_TP_AttendanceStepper.sharedInstance.objTPHeader?.Activity_Name ?? ""
         if selectedActivity.count == 0 && activityList.count != 0 {
             selectedActivity = activityList[0].Activity_Name
+            let dict:NSDictionary = ["Activity_Code":activityList[0].Activity_Code,"Activity_Name":activityList[0].Activity_Name,"Project_Code":activityList[0].Project_Code!,"Project_Name":EMPTY]
+            
+            projectObj = ProjectActivityMaster(dict: dict)
+            BL_TP_AttendanceStepper.sharedInstance.updateAttendanceActivity(objActivity: projectObj!)
         }
+        
         
                generalRemarks = BL_TP_AttendanceStepper.sharedInstance.generalRemarks
     }
@@ -179,16 +184,16 @@ class TPAttendanceStepperViewController: UIViewController
     
     @IBAction func submitDCRBtnAction(_ sender: AnyObject)
     {
-        let errorMessage = BL_TP_AttendanceStepper.sharedInstance.doSubmitTPValidations()
-        
-        if (errorMessage != EMPTY)
-        {
-            AlertView.showAlertView(title: alertTitle, message: errorMessage, viewController: self)
-        }
-        else
-        {
+//        let errorMessage = BL_TP_AttendanceStepper.sharedInstance.doSubmitTPValidations()
+//
+//        if (errorMessage != EMPTY)
+//        {
+//            AlertView.showAlertView(title: alertTitle, message: errorMessage, viewController: self)
+//        }
+//        else
+//        {
             showAlertToConfirmAppliedMode()
-        }
+        //}
     }
     
     func showAlertToConfirmAppliedMode()
@@ -471,8 +476,14 @@ extension TPAttendanceStepperViewController : UITableViewDelegate,UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceActivityCell")  as! TPAttendanceActivityCell
-            cell.txtselectActivity.inputView = self.pickerView
-            cell.txtselectActivity.text = selectedActivity
+            if selectedActivity.count != 0 {
+                cell.txtselectActivity.text = selectedActivity
+            } else {
+                cell.txtselectActivity.text = activityList[0].Activity_Name
+                selectedActivity = activityList[0].Activity_Name
+            }
+           cell.txtselectActivity.inputView = self.pickerView
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TPAttendanceRemarkCell")  as! TPAttendanceRemarkCell

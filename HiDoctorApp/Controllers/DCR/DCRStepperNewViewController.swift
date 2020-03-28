@@ -54,8 +54,13 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     {
        
             BL_Stepper.sharedInstance.generateDataArray()
-            selectedWorkPlace = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name ?? ""
-       
+        if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil {
+            if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name?.count == 0 {
+               selectedWorkPlace = workCategory[0]
+            } else {
+               selectedWorkPlace = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name ?? ""
+            }
+        }
         reloadTableView()
         //        showAlertCaptureLocationCount = 0
         //
@@ -1006,11 +1011,16 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //
         @IBAction func submitButtonAction()
         {
-           
-            
             if BL_Stepper.sharedInstance.doctorList.count == 0
             {
-                AlertView.showAlertView(title: alertTitle, message: "Add atleast one Contact", viewController: self)
+                if isProspect{
+                AlertView.showAlertView(title: alertTitle, message: "Atleast one Prospect is needed for the DVR", viewController: self)
+                } else {
+                    AlertView.showAlertView(title: alertTitle, message: "Add atleast one Contact", viewController: self)
+                }
+                
+            } else if isWorkTimeNeeded() == false {
+                AlertView.showAlertView(title: alertTitle, message: "Please remove unvisited Contact before submiting your DVR", viewController: self)
             } else if selectedWorkPlace.count == 0 {
                 AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
             }
@@ -1019,6 +1029,22 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
                 showAlertToConfirmAppliedMode(captureLocation: false)
             }
         }
+    
+    func isWorkTimeNeeded() -> Bool{
+        if BL_Stepper.sharedInstance.doctorList.count != 0
+        {
+            let filterArr = BL_Stepper.sharedInstance.doctorList.filter({$0.Visit_Mode == "" && $0.Visit_Time == ""})
+            if filterArr.count != 0 {
+              return false
+            }
+        }
+        return true
+    }
+    
+    
+    
+    
+    
     //
     //    func getselectedAccompanist(selectedAccompanist: [DCRAccompanistModel], type: Int)
     //    {

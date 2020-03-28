@@ -1046,7 +1046,14 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
             let Remarksobj: TourPlannerHeader? =  DAL_TP_Stepper.sharedInstance.getGeneralRemarks(tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
             if category != nil {
                 if category!.Category_Name != nil{
+                    if category!.Category_Name!.count == 0
+                    {
+                        selectedWorkPlace = workCategory[0]
+                    } else {
                     selectedWorkPlace = category!.Category_Name!
+                    }
+                } else {
+                    selectedWorkPlace = workCategory[0]
                 }
             }
             if Remarksobj != nil {
@@ -1091,7 +1098,13 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 return RideAlongCell
             } else if indexPath.section == 1 {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
-                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                if self.selectedWorkPlace.count == 0 {
+                   WorkCaregoryCell.txtWorkCategory.text = workCategory[0]
+                    selectedWorkPlace = workCategory[0]
+                } else {
+                  WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                }
+                
                 WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
                 return WorkCaregoryCell
             } else if indexPath.section == 2  {
@@ -1153,7 +1166,12 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             else if indexPath.section == 3
             {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
-                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                 if self.selectedWorkPlace.count == 0 {
+                                  WorkCaregoryCell.txtWorkCategory.text = workCategory[0]
+                                   selectedWorkPlace = workCategory[0]
+                               } else {
+                                 WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
+                               }
                 WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
                 return WorkCaregoryCell
             }

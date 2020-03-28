@@ -19,8 +19,8 @@ func getDBPath() -> String
 {
   //DB local and device change
   let databasePath = "/Users/swaas/Desktop/HiDoctor.sqlite"
-  //  let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
-  //let databasePath = documentsPath.appendingPathComponent("HiDoctor_DB.sqlite")
+    //let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as NSString
+   //let databasePath = documentsPath.appendingPathComponent("HiDoctor_DB.sqlite")
     return databasePath
 }
 

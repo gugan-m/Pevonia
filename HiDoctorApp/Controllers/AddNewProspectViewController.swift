@@ -149,6 +149,7 @@ class AddNewProspectViewController: UIViewController {
                        self.consAddViewHeight.constant = 0
                        self.view.layoutIfNeeded()
                    })
+    self.scrollView.setContentOffset(.zero, animated: true)
     }
     
     @objc func doneAction() {
@@ -359,7 +360,12 @@ class AddNewProspectViewController: UIViewController {
     
     func updateProspectDetails(flag: String,postData: AddProspectModel) {
         if postData != nil {
-            showCustomActivityIndicatorView(loadingText: "Updating Prospect..")
+            if flag == "Edit"{
+                showCustomActivityIndicatorView(loadingText: "Updating Prospect..")
+            } else {
+                showCustomActivityIndicatorView(loadingText: "Saving Prospect..")
+            }
+            
             WebServiceHelper.sharedInstance.updateProspect(postData: self.getProspectData(model: postData), completion: {
                 (apiObj) in
                 if apiObj.Status ==  SERVER_SUCCESS_CODE
@@ -378,7 +384,7 @@ class AddNewProspectViewController: UIViewController {
                         self.tblProspecting.reloadData()
                         removeCustomActivityView()
                     } else {
-                            self.saveDoctorInFlexi(DoctorName:postData.Contact_Name, Title: postData.Title)
+                        self.saveDoctorInFlexi(DoctorName:postData.Contact_Name, Title: postData.Title)
                         if apiObj.list != nil && apiObj.list.count != 0 {
                             DBHelper.sharedInstance.insertProspecting(ProspectList: apiObj.list)
                            if let arr = DBHelper.sharedInstance.getProspect(){
@@ -391,10 +397,12 @@ class AddNewProspectViewController: UIViewController {
                         }
                     }
                 } else {
+                    removeCustomActivityView()
                     if flag != "Edit"{
                        self.saveDoctorInFlexi(DoctorName:postData.Contact_Name, Title: postData.Title)
+                    } else {
+                    AlertView.showAlertView(title: "Prospect update failed", message: "Try after some time")
                     }
-                    removeCustomActivityView()
                 }
             })
         }
