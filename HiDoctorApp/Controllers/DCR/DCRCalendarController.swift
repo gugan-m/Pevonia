@@ -1862,7 +1862,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             
             let cell:FieldRCPACell = tableView.dequeueReusableCell(withIdentifier: rcpaCellIdentifier) as! FieldRCPACell
             
-            let doctorlist:[DCRDoctorVisitModel] = DBHelper.sharedInstance.getDCRDoctorVisitDetails(dcrId: detailModel.dcrId)
+            let doctorlist:[DCRDoctorVisitModel] = DBHelper.sharedInstance.getDCRDoctors(dcrId: detailModel.dcrId)
             let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
             if doctorlist.count != 0{
                 if doctorlist.count == filterArr.count {
@@ -1870,6 +1870,8 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 } else {
                    cell.dcrLabel.text = fieldRcpa
                 }
+            } else {
+                cell.dcrLabel.text = fieldRcpa
             }
             if detailModel.dcrStatus == DCRStatus.drafted.rawValue
             {

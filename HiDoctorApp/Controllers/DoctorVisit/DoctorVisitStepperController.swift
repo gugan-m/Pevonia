@@ -41,6 +41,9 @@ class DoctorVisitStepperController: UIViewController, UITableViewDelegate, UITab
     var punch_timezone: String?
     var punch_timeoffset: String?
     var punch_UTC: String?
+    var isfromProspect: Bool = false
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -33,6 +33,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
     var isComingFromTP = false
     var isComingFromDigitalAssets = false
     var isComingFromDCR = false
+    var isFromProspect :Bool = false
     
     //  @IBOutlet weak var bottomTabViewThreeWidth: NSLayoutConstraint!
     // @IBOutlet weak var bottomTabViewTwoWidth: NSLayoutConstraint!
@@ -352,6 +353,7 @@ class AssetParentViewController: UIViewController , deleteOrAddShowListDelegate
             let asset_sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
             assetViewController = asset_sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.AssetsListVcID) as! AssetsListViewController
             assetViewController.isComingFromDigitalAssets = isComingFromDigitalAssets
+            assetViewController.isFromProspect   = self.isFromProspect
             addNewChildController(content: assetViewController)
         }
     }

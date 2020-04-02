@@ -2564,6 +2564,14 @@ class DBHelper: NSObject
         return sfcList
     }
     
+    func getDCRDoctors(dcrId: Int) -> [DCRDoctorVisitModel] {
+         var doctorList : [DCRDoctorVisitModel] = []
+                try? dbPool.read { db in
+                    doctorList = try DCRDoctorVisitModel.fetchAll(db, "SELECT * FROM \(TRAN_DCR_DOCTOR_VISIT) WHERE DCR_Id = ?", arguments: [dcrId])
+                }
+        return doctorList
+    }
+    
     func getDCRDoctorVisitDetails(dcrId: Int) -> [DCRDoctorVisitModel]
     {
         var doctorList : [DCRDoctorVisitModel] = []

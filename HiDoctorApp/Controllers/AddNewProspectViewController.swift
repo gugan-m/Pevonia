@@ -251,6 +251,8 @@ class AddNewProspectViewController: UIViewController {
                 
                 vc.punch_UTC = getUTCDateForPunch()
                 
+                vc.isfromProspect = true
+                    
                 vc.punch_timezone = localTimeZoneName
                 
                 vc.punch_timeoffset = getOffset()

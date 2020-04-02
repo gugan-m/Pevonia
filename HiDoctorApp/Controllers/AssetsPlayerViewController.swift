@@ -99,6 +99,7 @@ class AssetsPlayerViewController: UIViewController , ReaderViewControllerDelegat
     var blinkStatus = true
     var ratingBtnArray = [UIButton]()
     var lastSelBtn = UIButton()
+    var isFromProspect : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,6 +170,11 @@ class AssetsPlayerViewController: UIViewController , ReaderViewControllerDelegat
         self.navigationCornerButton.layer.cornerRadius = 7
         navigationCornerButton.layer.masksToBounds = true
 
+        if isFromProspect {
+            previewBtn.isHidden = true
+        } else {
+            previewBtn.isHidden = false
+        }
     }
     
     func loadTheDefaultState(){

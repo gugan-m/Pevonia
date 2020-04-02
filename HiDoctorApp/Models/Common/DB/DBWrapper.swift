@@ -2030,8 +2030,6 @@ func setupDatabase(_ application: UIApplication) throws
     {
         BL_Version_Upgrade.sharedInstance.insertVersionUpgradeInfo(versionNumber: DatabaseMigrationString.TPATTACHMENT.rawValue, isVersionUpdateCompleted: 0)
     }
-    
-    
 }
 
 func executeQuery(query: String)
