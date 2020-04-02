@@ -612,6 +612,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         }))
         
         alertViewController.addAction(UIAlertAction(title: "UPLOAD", style: UIAlertActionStyle.default, handler: { alertAction in
+            self.removeUnVisitedContacts()
             BL_DCRCalendar.sharedInstance.getDCRUploadError(viewController: self, isFromLandingUpload: false, enabledAutoSync: false)
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -1020,7 +1021,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
                 }
                 
             } else if isWorkTimeNeeded() == false {
-                AlertView.showAlertView(title: alertTitle, message: "Please remove unvisited Contact before submiting your DVR", viewController: self)
+                AlertView.showAlertView(title: alertTitle, message: "Please visit atleast one contact before submiting your DVR", viewController: self)
             } else if selectedWorkPlace.count == 0 {
                 AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
             }
@@ -1034,15 +1035,24 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         if BL_Stepper.sharedInstance.doctorList.count != 0
         {
             let filterArr = BL_Stepper.sharedInstance.doctorList.filter({$0.Visit_Mode == "" && $0.Visit_Time == ""})
-            if filterArr.count != 0 {
+            if filterArr.count != 0  && filterArr.count == BL_Stepper.sharedInstance.doctorList.count {
               return false
             }
         }
         return true
     }
     
-    
-    
+    func removeUnVisitedContacts() {
+        if BL_Stepper.sharedInstance.doctorList.count != 0
+        {
+            let filterArr = BL_Stepper.sharedInstance.doctorList.filter({$0.Visit_Mode == "" && $0.Visit_Time == ""})
+            if filterArr.count != 0 {
+                for model in filterArr {
+                  BL_DCR_Doctor_Visit.sharedInstance.deleteDCRDoctorVisit(dcrDoctorVisitId: model.DCR_Doctor_Visit_Id, customerCode: checkNullAndNilValueForString(stringData: model.Doctor_Code), regionCode: checkNullAndNilValueForString(stringData: model.Doctor_Region_Code), dcrDate: checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.dcrDateString), doctorName: model.Doctor_Name)
+                }
+            }
+        }
+    }
     
     
     //

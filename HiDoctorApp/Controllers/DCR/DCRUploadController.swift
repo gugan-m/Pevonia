@@ -60,6 +60,8 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
         if (enabledAutoSync)
         {
             uploadDCROnly()
+        } else {
+            uploadBtnAction()
         }
     }
     
@@ -204,7 +206,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @IBAction func uploadBtnAction(_ sender: AnyObject)
+     func uploadBtnAction()
     {
         //startUpload()
         if(checkInternetConnectivity())

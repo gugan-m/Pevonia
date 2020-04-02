@@ -152,6 +152,8 @@ class AddFlexiDoctor: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     vc.punch_status = 1
                     
+                    vc.isfromProspect = true
+                        
                     vc.punch_UTC = getUTCDateForPunch()
                     
                     vc.punch_timezone = localTimeZoneName

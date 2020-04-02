@@ -646,7 +646,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         startUploadBtn.setTitle("UPLOAD", for: .normal)
     }
     
-    @IBAction func act_UploadAttachment(_ sender: UIButton) {
+     func act_UploadAttachment() {
          let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.AttachmentUploadVCID) as! DCRAttachmentUploadController
         vc.isfromTP = true
@@ -673,7 +673,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         {
             if attachmentList.count != 0 {
                 backToCalHeightConstraint.constant = 0
-                self.btnUploadAttachment.isHidden = false
+                act_UploadAttachment()
             } else {
                 self.btnUploadAttachment.isHidden = true
                 backToCalHeightConstraint.constant = 50

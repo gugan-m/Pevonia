@@ -55,6 +55,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
     var isForPreview = false
     var tempAssetObj :AssetHeader?
     var selectedListFinal : NSMutableArray = []
+    var isFromProspect : Bool = false
     
     override func viewDidLoad()
     {
@@ -418,6 +419,7 @@ class AssetsListViewController: UIViewController,UITableViewDelegate,UITableView
         let sb = UIStoryboard(name: AssetsPlaySb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "AssetsPlayerVCID") as! AssetsPlayerViewController
         vc.assetObj = assetObj
+        vc.isFromProspect = self.isFromProspect
         var assetList : [AssetHeader] = []
         if !isToShowList
         {
