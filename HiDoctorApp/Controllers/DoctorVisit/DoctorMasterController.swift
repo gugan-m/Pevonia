@@ -790,8 +790,8 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     
     private func moveToDCRDoctorVisitStepper(indexPath: IndexPath, geoFencingSkipRemarks: String, currentLocation: GeoLocationModel)
     {
-        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: doctorVisitStepperVcID) as! DoctorVisitStepperController
+        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "DCRDoctorStepperNew") as! DoctorStepperNewController
         
         vc.customerMasterModel = userCurrentList[indexPath.section].userList[indexPath.row]
         vc.geoLocationSkipRemarks = geoFencingSkipRemarks
@@ -827,8 +827,8 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     
     private func PunchInmoveToDCRDoctorVisitStepper(indexPath: IndexPath, geoFencingSkipRemarks: String, currentLocation: GeoLocationModel)
     {
-        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: doctorVisitStepperVcID) as! DoctorVisitStepperController
+        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "DCRDoctorStepperNew") as! DoctorStepperNewController
         var localTimeZoneName: String { return TimeZone.current.identifier }
         vc.customerMasterModel = userCurrentList[indexPath.section].userList[indexPath.row]
         vc.geoLocationSkipRemarks = geoFencingSkipRemarks

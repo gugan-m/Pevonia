@@ -1203,8 +1203,8 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     {
         let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorList()
         let model = doctorVisitList[position]
-        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: doctorVisitStepperVcID) as! DoctorVisitStepperController
+        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "DCRDoctorStepperNew") as! DoctorStepperNewController
         //        DCRModel.sharedInstance.customerId = model.Doctor_Id
         DCRModel.sharedInstance.customerCode = checkNullAndNilValueForString(stringData: model.Doctor_Code)
         DCRModel.sharedInstance.customerRegionCode = model.Doctor_Region_Code
