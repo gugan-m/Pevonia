@@ -30,6 +30,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     var leaveTypeId : String = ""
     var isInsertedFromTP: Bool = false
     let placeHolderForLeaveType : String = "Select Not Working Type"
+    var IS_VIEW_MODE = false
     
     override func viewDidLoad()
     {
@@ -50,6 +51,13 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         fromDateLbl.isEnabled = false
         leaveReason.delegate = self
         updateViews()
+        if IS_VIEW_MODE {
+            self.scrollView.isUserInteractionEnabled = true
+            self.submitbtn.isHidden = true
+        } else {
+           self.scrollView.isUserInteractionEnabled = false
+            self.submitbtn.isHidden = false
+        }
     }
     
     override func didReceiveMemoryWarning()

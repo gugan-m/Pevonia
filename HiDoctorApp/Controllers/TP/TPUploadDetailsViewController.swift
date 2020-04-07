@@ -53,6 +53,9 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     override func viewWillAppear(_ animated: Bool) {
         
     }
+    override func viewDidAppear(_ animated: Bool) {
+        self.uploadAction()
+    }
     
     override func didReceiveMemoryWarning()
     {

@@ -43,6 +43,7 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var frameView: CornerRadiusWithShadowView!
     @IBOutlet weak var submitbtn: UIButton!
+    var IS_VIEW_MODE = false
     
     //MARK:- Variables
     var toTimePicker = UIDatePicker()
@@ -115,6 +116,16 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         {
             updateViews()
         }
+        
+        if IS_VIEW_MODE {
+            self.scrollView.isUserInteractionEnabled = false
+            self.submitbtn.isHidden = true
+        } else {
+            self.scrollView.isUserInteractionEnabled = true
+             self.submitbtn.isHidden = false
+        }
+        
+        
     }
     func donePicker() {
 
@@ -477,6 +488,8 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         }))
         
         alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
+            let dcrActivityList = DBHelper.sharedInstance.getDCRAttendanceActivities(dcrId: DCRModel.sharedInstance.dcrId)
+            print(dcrActivityList!.count)
                if (DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue)
                     {
                         DBHelper.sharedInstance.updateDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, Dcr_id: DCRModel.sharedInstance.dcrId)
@@ -484,8 +497,19 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
                     }
                     else
                {
-                BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
-                BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, dcrId: DCRModel.sharedInstance.dcrId)
+                
+                
+                if dcrActivityList != nil && dcrActivityList?.count == 0 {
+                    BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+                    
+                    BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, dcrId: DCRModel.sharedInstance.dcrId)
+                } else {
+                    DBHelper.sharedInstance.updateDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, Dcr_id: DCRModel.sharedInstance.dcrId)
+                    
+                    BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+                }
+                
+               
               
                 //BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
             }

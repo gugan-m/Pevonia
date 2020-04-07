@@ -10,7 +10,7 @@
 import UIKit
 
 class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUpDelegate, AddSampleDelegate {
-   
+    
     // MARK:- Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitButton: UIButton!
@@ -21,44 +21,51 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     var showAlertCaptureLocationCount : Int = 0
     let htmlstr = ""
     var pickerview = UIPickerView()
-    let workCategory = ["Field Works","Requires Overnight"]
+    var workCategory : [WorkCategories] = []
     var selectedWorkPlace = ""
+    var selectedWorkCategoryID = 0
     var generalText = ""
     var default_Blue = UIColor(red: 63.0/255.0, green: 81.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+    var visitedContactColor = UIColor(red: 0/255.0, green: 150.0/255.0, blue: 136/255.0, alpha: 1.0)
     var isProspect = false
     var isFromDVR = false
     var general = UITextField()
     let doctorvisitmodify = DoctorVisitModifyController()
-    
+    var IS_VIEW_MODE = false
     // MARK:- Life Cycle Events
     override func viewDidLoad()
     {
         //        removeVersionToastView()
         //        super.viewDidLoad()
-            
-            self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
-            if (isProspect)
-            {
-                self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Prospecting)"
-                }
         
+        self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
+        if (isProspect)
+        {
+            self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Prospecting)"
+        }
+        workCategory = BL_WorkPlace.sharedInstance.getWorkCategoriesList()
         self.pickerview.delegate = self
-        //        self.tableView.delegate = self
-        //        self.tableView.dataSource = self
-        //
-        //        BL_TPStepper.sharedInstance.clearAllArray()
+       if IS_VIEW_MODE == true {
+            self.tableView.isUserInteractionEnabled = false
+            self.submitButton.isHidden = true
+        } else {
+            self.tableView.isUserInteractionEnabled = true
+            self.submitButton.isHidden = false
+        }
         
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-       
-            BL_Stepper.sharedInstance.generateDataArray()
+        
+        BL_Stepper.sharedInstance.generateDataArray()
         if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil {
             if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name?.count == 0 {
-               selectedWorkPlace = workCategory[0]
+//                selectedWorkPlace = workCategory[0].Category_Name
+//                selectedWorkCategoryID =  workCategory[0].Category_Id
             } else {
-               selectedWorkPlace = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name ?? ""
+                selectedWorkPlace = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name ?? ""
+                selectedWorkCategoryID = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Id ?? 0
             }
         }
         reloadTableView()
@@ -296,11 +303,11 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     
     private func navigateToAddDoctorAccompanist()
     {
-         let addAccompanist_sb = UIStoryboard(name: commonListSb, bundle: nil)
-                   let addAccomapanist_vc = addAccompanist_sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
-                   addAccomapanist_vc.navigationScreenName = UserListScreenName.DcrAddAccompanistList.rawValue
-                   addAccomapanist_vc.navigationTitle = "User List"
-                   self.navigationController?.pushViewController(addAccomapanist_vc, animated: true)
+        let addAccompanist_sb = UIStoryboard(name: commonListSb, bundle: nil)
+        let addAccomapanist_vc = addAccompanist_sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
+        addAccomapanist_vc.navigationScreenName = UserListScreenName.DcrAddAccompanistList.rawValue
+        addAccomapanist_vc.navigationTitle = "User List"
+        self.navigationController?.pushViewController(addAccomapanist_vc, animated: true)
     }
     private func navigateToAddContact() {
         if (isFromDVR)
@@ -309,20 +316,20 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         }
         else
         {
-        let sb = UIStoryboard(name: commonListSb, bundle: nil)
-        let vc:UserListViewController = sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
-        vc.navigationScreenName = TPStepperVCID
-        vc.navigationTitle = "User Selection"
-        //vc.isFromDVR = true
-        self.navigationController?.pushViewController(vc, animated: true)
+            let sb = UIStoryboard(name: commonListSb, bundle: nil)
+            let vc:UserListViewController = sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
+            vc.navigationScreenName = TPStepperVCID
+            vc.navigationTitle = "User Selection"
+            //vc.isFromDVR = true
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     func addflexi()
     {
-//        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-//        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
-//        vc.isfromChemistDay = true
-//        self.navigationController?.pushViewController(vc, animated: true)
+        //        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+        //        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
+        //        vc.isfromChemistDay = true
+        //        self.navigationController?.pushViewController(vc, animated: true)
         let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "AddNewProspectViewController") as! AddNewProspectViewController
         vc.title = ""
@@ -339,33 +346,33 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //MARK:-- Button Action Helper Methods
     private func addNewEntry(index: Int)
     {
-       
-            switch index {
-            case 0:
-                navigateToAddUser()
-            case 1:
-                if (isProspect)
-                {
+        
+        switch index {
+        case 0:
+            navigateToAddUser()
+        case 1:
+            if (isProspect)
+            {
                 addflexi()
-                }
-                else
-                {
-                navigateToAddDoctor()
-                }
-            case 2:
-                break
-            case 3:
-                tableView.reloadData()
-                DispatchQueue.main.async {
-                    self.updategeneralremarks()
-                }
-                
-            case 4:
-                break
-            default:
-                break
             }
-       
+            else
+            {
+                navigateToAddDoctor()
+            }
+        case 2:
+            break
+        case 3:
+            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.updategeneralremarks()
+            }
+            
+        case 4:
+            break
+        default:
+            break
+        }
+        
         
     }
     //
@@ -375,64 +382,64 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         let objDCRInheritanceValidation = BL_DCR_Doctor_Visit.sharedInstance.doDCRInheritanceValidations()
         proceedToAddDoctor()
         
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_ERROR)
-//        {
-//            showAccompanistMandatoryAlert()
-//        }
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_CONFIRMATION)
-//        {
-//            showAccompanistOptionalAlert()
-//        }
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.INTERNET_MANDATORY_ERROR)
-//        {
-//            showInternetMandatoryAlert()
-//        }
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.INTERNET_OPTIONAL_ERROR)
-//        {
-//            showInternetOptionalAlert(accUserCodes: objDCRInheritanceValidation.Message)
-        }
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACC_DATA_NOT_DOWNLOADED_ERROR)
-//        {
-//            let message = Display_Messages.DCR_Inheritance_Messages.ACCOMPANIST_DATA_MANDATORY_ERROR_MESSAGE.replacingOccurrences(of: "@ACC_USERS", with: objDCRInheritanceValidation.Message)
-//           // showAccDataNotDownloadAlert(message: message)
-//        }
-//        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.MAKE_API_CALL)
-//        {
-//            showCustomActivityIndicatorView(loadingText: Display_Messages.DCR_Inheritance_Messages.API_CALL_LOADING_MESSAGE)
-//            BL_DCR_Doctor_Visit.sharedInstance.getAccompanistDCRDoctorVisit(viewController: self, accompanistsUsersCodes: objDCRInheritanceValidation.Message, completion: { (objResponse) in
-//                self.dcrInheritanceCallBack(objResponse: objResponse)
-//            })
-//        }
-//}
+        //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_ERROR)
+        //        {
+        //            showAccompanistMandatoryAlert()
+        //        }
+        //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACCOMPANIST_NOT_ENTERED_CONFIRMATION)
+        //        {
+        //            showAccompanistOptionalAlert()
+        //        }
+        //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.INTERNET_MANDATORY_ERROR)
+        //        {
+        //            showInternetMandatoryAlert()
+        //        }
+        //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.INTERNET_OPTIONAL_ERROR)
+        //        {
+        //            showInternetOptionalAlert(accUserCodes: objDCRInheritanceValidation.Message)
+    }
+    //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.ACC_DATA_NOT_DOWNLOADED_ERROR)
+    //        {
+    //            let message = Display_Messages.DCR_Inheritance_Messages.ACCOMPANIST_DATA_MANDATORY_ERROR_MESSAGE.replacingOccurrences(of: "@ACC_USERS", with: objDCRInheritanceValidation.Message)
+    //           // showAccDataNotDownloadAlert(message: message)
+    //        }
+    //        else if (objDCRInheritanceValidation.Status == Constants.DCR_Inheritance_Status_Codes.MAKE_API_CALL)
+    //        {
+    //            showCustomActivityIndicatorView(loadingText: Display_Messages.DCR_Inheritance_Messages.API_CALL_LOADING_MESSAGE)
+    //            BL_DCR_Doctor_Visit.sharedInstance.getAccompanistDCRDoctorVisit(viewController: self, accompanistsUsersCodes: objDCRInheritanceValidation.Message, completion: { (objResponse) in
+    //                self.dcrInheritanceCallBack(objResponse: objResponse)
+    //            })
+    //        }
+    //}
     
-//    private func dcrInheritanceCallBack(objResponse: ApiResponseModel)
-//    {
-//        if (checkNullAndNilValueForString(stringData: objResponse.Message) != EMPTY)
-//        {
-//            showDCRInheirtanceAlert(message: objResponse.Message, apiResponseStatus: objResponse.Status)
-//        }
-//
-//        BL_Stepper.sharedInstance.generateDataArray()
-//        //self.reloadTableView()
-//
-//        removeCustomActivityView()
-//    }
+    //    private func dcrInheritanceCallBack(objResponse: ApiResponseModel)
+    //    {
+    //        if (checkNullAndNilValueForString(stringData: objResponse.Message) != EMPTY)
+    //        {
+    //            showDCRInheirtanceAlert(message: objResponse.Message, apiResponseStatus: objResponse.Status)
+    //        }
+    //
+    //        BL_Stepper.sharedInstance.generateDataArray()
+    //        //self.reloadTableView()
+    //
+    //        removeCustomActivityView()
+    //    }
     
-//    private func showDCRInheirtanceAlert(message: String, apiResponseStatus: Int)
-//    {
-//        let alertViewController = UIAlertController(title: alertTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
-//
-//        alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-//            if (apiResponseStatus != 2)
-//            {
-//                //self.proceedToAddDoctor()
-//                //self.navigateToEditDoctor()
-//            }
-//            alertViewController.dismiss(animated: true, completion: nil)
-//        }))
-//
-//        present(alertViewController, animated: true, completion: nil)
-//    }
+    //    private func showDCRInheirtanceAlert(message: String, apiResponseStatus: Int)
+    //    {
+    //        let alertViewController = UIAlertController(title: alertTitle, message: message, preferredStyle: UIAlertControllerStyle.alert)
+    //
+    //        alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
+    //            if (apiResponseStatus != 2)
+    //            {
+    //                //self.proceedToAddDoctor()
+    //                //self.navigateToEditDoctor()
+    //            }
+    //            alertViewController.dismiss(animated: true, completion: nil)
+    //        }))
+    //
+    //        present(alertViewController, animated: true, completion: nil)
+    //    }
     
     private func proceedToAddDoctor()
     {
@@ -471,26 +478,26 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     }
     private func modifyEntry(index: Int)
     {
-       
-            switch index {
-            case 0:
-                break
-            case 1:
-                navigateToAddContact()
-            case 2:
-                navigateToAddDoctor()
-            case 3:
-                break
-            case 4:
-                break
-               // navigateToEditGeneralRemarks()
-            default:
-                break
-            }
-    
+        
+        switch index {
+        case 0:
+            break
+        case 1:
+            navigateToAddContact()
+        case 2:
+            navigateToAddDoctor()
+        case 3:
+            break
+        case 4:
+            break
+        // navigateToEditGeneralRemarks()
+        default:
+            break
+        }
+        
         
     }
-
+    
     //
     //    private func emptyStateAddNewEntry(index: Int)
     //    {
@@ -578,21 +585,21 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
             
             BL_Stepper.sharedInstance.submitDCR(captureLocation: captureLocation)
             
-//            if (isAutoSyncEnabled)
-//            {
-//                if (checkInternetConnectivity())
-//                {
-//                    self.navigateToUploadDVR(enabledAutoSync: true)
-//                }
-//                else
-//                {
-//                    self.popViewController(animated: true)
-//                }
-//            }
-//            else
-//            {
-                self.showAlertToUploadDVR()
-//            }
+            //            if (isAutoSyncEnabled)
+            //            {
+            //                if (checkInternetConnectivity())
+            //                {
+            //                    self.navigateToUploadDVR(enabledAutoSync: true)
+            //                }
+            //                else
+            //                {
+            //                    self.popViewController(animated: true)
+            //                }
+            //            }
+            //            else
+            //            {
+            self.showAlertToUploadDVR()
+            //            }
             
             alertViewController.dismiss(animated: true, completion: nil)
         }))
@@ -600,14 +607,14 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         self.present(alertViewController, animated: true, completion: nil)
     }
     
-     func showAlertToUploadDVR()
+    func showAlertToUploadDVR()
     {
         let alertMessage =  "Your Offline DVR is ready to submit to your manager.\n\n Click 'Upload' to submit DVR.\n Click 'Later' to submit later\n\n Alternatively, you can use 'Upload my DVR' option from the home screen to submit your applied DVR."
         
         let alertViewController = UIAlertController(title: infoTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
         
         alertViewController.addAction(UIAlertAction(title: "LATER", style: UIAlertActionStyle.default, handler: { alertAction in
-              _ = self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
             alertViewController.dismiss(animated: true, completion: nil)
         }))
         
@@ -620,9 +627,9 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         self.present(alertViewController, animated: true, completion: nil)
     }
     
-
     
-
+    
+    
     //
     //    func popViewController(animated: Bool)
     //    {
@@ -962,7 +969,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         
         var localTimeZoneName: String { return TimeZone.current.identifier }
         //vc.customerMasterModel = BL_Stepper.sharedInstance.doctorList[indexPath.row]
-       
+        
         let punch_start = getStringFromDateforPunch(date: getCurrentDateAndTime())
         let punch_status = 1
         let punch_UTC = getUTCDateForPunch()
@@ -979,7 +986,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     }
     func checkPunchin(indexPath: IndexPath) -> Bool
     {
-         let doctorlist = DBHelper.sharedInstance.getDCRDoctorVisitid(dcrId: DCRModel.sharedInstance.dcrId, doctorcode: BL_Stepper.sharedInstance.doctorList[indexPath.row].Doctor_Code!)
+        let doctorlist = DBHelper.sharedInstance.getDCRDoctorVisitid(dcrId: DCRModel.sharedInstance.dcrId, doctorcode: BL_Stepper.sharedInstance.doctorList[indexPath.row].Doctor_Code!)
         if (doctorlist[0].Punch_Start_Time != nil && doctorlist[0].Punch_Start_Time?.count ?? 0 > 0 )
         {
             return false
@@ -1010,33 +1017,33 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //        skipItem(index: sender.tag)
     //    }
     //
-        @IBAction func submitButtonAction()
+    @IBAction func submitButtonAction()
+    {
+        if BL_Stepper.sharedInstance.doctorList.count == 0
         {
-            if BL_Stepper.sharedInstance.doctorList.count == 0
-            {
-                if isProspect{
+            if isProspect{
                 AlertView.showAlertView(title: alertTitle, message: "Atleast one Prospect is needed for the DVR", viewController: self)
-                } else {
-                    AlertView.showAlertView(title: alertTitle, message: "Add atleast one Contact", viewController: self)
-                }
-                
-            } else if isWorkTimeNeeded() == false {
-                AlertView.showAlertView(title: alertTitle, message: "Please visit atleast one contact before submiting your DVR", viewController: self)
-            } else if selectedWorkPlace.count == 0 {
-                AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
+            } else {
+                AlertView.showAlertView(title: alertTitle, message: "Add atleast one Contact", viewController: self)
             }
-            else
-            {
-                showAlertToConfirmAppliedMode(captureLocation: false)
-            }
+            
+        } else if isWorkTimeNeeded() == false {
+            AlertView.showAlertView(title: alertTitle, message: "Please visit atleast one contact before submiting your DVR", viewController: self)
+        } else if selectedWorkPlace.count == 0 {
+            AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
         }
+        else
+        {
+            showAlertToConfirmAppliedMode(captureLocation: false)
+        }
+    }
     
     func isWorkTimeNeeded() -> Bool{
         if BL_Stepper.sharedInstance.doctorList.count != 0
         {
             let filterArr = BL_Stepper.sharedInstance.doctorList.filter({$0.Visit_Mode == "" && $0.Visit_Time == ""})
             if filterArr.count != 0  && filterArr.count == BL_Stepper.sharedInstance.doctorList.count {
-              return false
+                return false
             }
         }
         return true
@@ -1048,7 +1055,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
             let filterArr = BL_Stepper.sharedInstance.doctorList.filter({$0.Visit_Mode == "" && $0.Visit_Time == ""})
             if filterArr.count != 0 {
                 for model in filterArr {
-                  BL_DCR_Doctor_Visit.sharedInstance.deleteDCRDoctorVisit(dcrDoctorVisitId: model.DCR_Doctor_Visit_Id, customerCode: checkNullAndNilValueForString(stringData: model.Doctor_Code), regionCode: checkNullAndNilValueForString(stringData: model.Doctor_Region_Code), dcrDate: checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.dcrDateString), doctorName: model.Doctor_Name)
+                    BL_DCR_Doctor_Visit.sharedInstance.deleteDCRDoctorVisit(dcrDoctorVisitId: model.DCR_Doctor_Visit_Id, customerCode: checkNullAndNilValueForString(stringData: model.Doctor_Code), regionCode: checkNullAndNilValueForString(stringData: model.Doctor_Region_Code), dcrDate: checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.dcrDateString), doctorName: model.Doctor_Name)
                 }
             }
         }
@@ -1209,7 +1216,7 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         doctorvisitmodify.modifyBtnAction(position: 0)
     }
     func modifydoctor(position: Int)
-
+        
     {
         let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorList()
         let model = doctorVisitList[position]
@@ -1261,58 +1268,58 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     
     @IBAction func remove_Accompanist(_ sender: UIButton) {
         
-            let acc_Name = BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_User_Name
-            let alertController = UIAlertController(title: "\(acc_Name!)", message: "Will be removed from ride along", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-                UIAlertAction in
-                let acc_Code = BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_User_Code
-                if acc_Code != nil {
-                    BL_DCR_Accompanist.sharedInstance.removeDCRAccompanist(accompanistRegionCode: BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_Region_Code, accompanistUserCode: acc_Code!)
-                    DBHelper.sharedInstance.funcupdateaccompanistremoved(dcrId: BL_Stepper.sharedInstance.dcrId, accompanistCode: acc_Code!)
-                    BL_Stepper.sharedInstance.generateDataArray()
-                    self.reloadTableView()
-                }
+        let acc_Name = BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_User_Name
+        let alertController = UIAlertController(title: "\(acc_Name!)", message: "Will be removed from ride along", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            let acc_Code = BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_User_Code
+            if acc_Code != nil {
+                BL_DCR_Accompanist.sharedInstance.removeDCRAccompanist(accompanistRegionCode: BL_Stepper.sharedInstance.accompanistList[sender.tag].Acc_Region_Code, accompanistUserCode: acc_Code!)
+                DBHelper.sharedInstance.funcupdateaccompanistremoved(dcrId: BL_Stepper.sharedInstance.dcrId, accompanistCode: acc_Code!)
+                BL_Stepper.sharedInstance.generateDataArray()
+                self.reloadTableView()
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
-                UIAlertAction in
-                
-            }
-            alertController.addAction(okAction)
-            alertController.addAction(cancelAction)
-            self.present(alertController, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
     
     @IBAction func removeContacts(_ sender: UIButton) {
-       
-            let model = BL_Stepper.sharedInstance.doctorList[sender.tag]
-            let doc_Name = BL_Stepper.sharedInstance.doctorList[sender.tag].Doctor_Name
-            let alertController = UIAlertController(title: "\(doc_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-                UIAlertAction in
-                let dcrid = BL_Stepper.sharedInstance.doctorList[sender.tag].DCR_Id
-               BL_DCR_Doctor_Visit.sharedInstance.deleteDCRDoctorVisit(dcrDoctorVisitId: model.DCR_Doctor_Visit_Id, customerCode: checkNullAndNilValueForString(stringData: model.Doctor_Code), regionCode: checkNullAndNilValueForString(stringData: model.Doctor_Region_Code), dcrDate: checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.dcrDateString), doctorName: model.Doctor_Name)
-                
-                showToastView(toastText: "Contact deleted successfully")
-                BL_Stepper.sharedInstance.generateDataArray()
-                self.reloadTableView()
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
-                UIAlertAction in
-                
-            }
-            alertController.addAction(okAction)
-            alertController.addAction(cancelAction)
-            self.present(alertController, animated: true, completion: nil)
-      
+        
+        let model = BL_Stepper.sharedInstance.doctorList[sender.tag]
+        let doc_Name = BL_Stepper.sharedInstance.doctorList[sender.tag].Doctor_Name
+        let alertController = UIAlertController(title: "\(doc_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            let dcrid = BL_Stepper.sharedInstance.doctorList[sender.tag].DCR_Id
+            BL_DCR_Doctor_Visit.sharedInstance.deleteDCRDoctorVisit(dcrDoctorVisitId: model.DCR_Doctor_Visit_Id, customerCode: checkNullAndNilValueForString(stringData: model.Doctor_Code), regionCode: checkNullAndNilValueForString(stringData: model.Doctor_Region_Code), dcrDate: checkNullAndNilValueForString(stringData: DCRModel.sharedInstance.dcrDateString), doctorName: model.Doctor_Name)
+            
+            showToastView(toastText: "Contact deleted successfully")
+            BL_Stepper.sharedInstance.generateDataArray()
+            self.reloadTableView()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+        
         
     }
     
     
-
     
-
+    
+    
     
 }
 
@@ -1323,190 +1330,197 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-  
-            if indexPath.section == 1
+        
+        if indexPath.section == 1
+        {
+            let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
+            let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
+            MeetingObjCell.txtContactName.text = doctorObj.Doctor_Name
+            
+            if doctorObj.Visit_Mode.count != 0 || doctorObj.Visit_Time?.count != 0 {
+                MeetingObjCell.txtContactName.textColor = self.visitedContactColor
+            } else {
+                MeetingObjCell.txtContactName.textColor = UIColor.black
+            }
+            
+            var line2Text: String = ""
+            
+            if doctorObj.Hospital_Name! != ""{
+                line2Text = doctorObj.Hospital_Name! + " | "
+            } else {
+                line2Text = doctorObj.Hospital_Name!
+            }
+            
+//            if doctorObj.Speciality_Name! != ""{
+//                line2Text = (doctorObj.Speciality_Name)! + " | "
+//            }
+//            
+//            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+//            {
+//                line2Text = doctorObj.Category_Name! + " | "
+//            }
+            
+            if (checkNullAndNilValueForString(stringData: doctorObj.Doctor_Region_Name) != "")
             {
-                let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
-                let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
-                MeetingObjCell.txtContactName.text = doctorObj.Doctor_Name
-                var line2Text: String = ""
-                
-                if doctorObj.Hospital_Name! != ""{
-                    line2Text = doctorObj.Hospital_Name! + " | "
-                } else {
-                    line2Text = doctorObj.Hospital_Name!
-                }
-                
-                if doctorObj.Speciality_Name! != ""{
-                    line2Text = (doctorObj.Speciality_Name)! + " | "
-                }
-                
-                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                if (line2Text != "")
                 {
-                    line2Text = doctorObj.Category_Name! + " | "
+                    line2Text = line2Text + doctorObj.Doctor_Region_Name!
                 }
-                
-                if (checkNullAndNilValueForString(stringData: doctorObj.Doctor_Region_Name) != "")
+                else
                 {
-                    if (line2Text != "")
-                    {
-                        line2Text = line2Text + doctorObj.Doctor_Region_Name!
-                    }
-                    else
-                    {
-                        line2Text = doctorObj.Doctor_Region_Name!
-                    }
+                    line2Text = doctorObj.Doctor_Region_Name!
                 }
-                MeetingObjCell.txtContactDetails.text = line2Text
-                MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
-                return MeetingObjCell
             }
-            else if indexPath.section == 0
-            {
-                let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
-                RideAlongCell.lblAccompanist.text = BL_Stepper.sharedInstance.accompanistList[indexPath.row].Acc_User_Name
-                RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
-                return RideAlongCell
+            MeetingObjCell.txtContactDetails.text = line2Text
+            MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
+            return MeetingObjCell
+        }
+        else if indexPath.section == 0
+        {
+            let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
+            RideAlongCell.lblAccompanist.text = BL_Stepper.sharedInstance.accompanistList[indexPath.row].Acc_User_Name
+            RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+            return RideAlongCell
+        }
+        else if indexPath.section == 2
+        {
+            let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
+            if selectedWorkPlace.count == 0 {
+              //  WorkCaregoryCell.txtWorkCategory.text = self.workCategory[0].Category_Name
+            } else {
+                WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
             }
-            else if indexPath.section == 2
+            WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
+            return WorkCaregoryCell
+        }
+        else if indexPath.section == 3
+        {
+            let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
+            
+            if (BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks != nil )
             {
-                let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
-                if selectedWorkPlace.count == 0 {
-                    WorkCaregoryCell.txtWorkCategory.text = self.workCategory[0]
-                } else {
-                   WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
-                }
-                WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
-                return WorkCaregoryCell
-            }
-            else if indexPath.section == 3
-            {
-                let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
                 
-                if (BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks != nil )
-                {
-                
-                    remarksCell.txtViewRemarks.text = BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks
-                }
-                remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 40
-                remarksCell.txtViewRemarks.delegate = self
-                //remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
-                self.generalText = remarksCell.txtViewRemarks.text
-                return remarksCell
+                remarksCell.txtViewRemarks.text = BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks
             }
-            else
-            {
-                return UITableViewCell.init()
-            }
-       
+            remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 40
+            remarksCell.txtViewRemarks.delegate = self
+            //remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
+            self.generalText = remarksCell.txtViewRemarks.text
+            return remarksCell
+        }
+        else
+        {
+            return UITableViewCell.init()
+        }
+        
         
         
         
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         generalText = textField.text ?? ""
-        }
+    }
     //------> Total number of sections
     
     func numberOfSections(in tableView: UITableView) -> Int {
-
-            return BL_Stepper.sharedInstance.stepperDataList.count
-       
+        
+        return BL_Stepper.sharedInstance.stepperDataList.count
+        
     }
     
     //------> Total number of rows in each section
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-            if section == 0 {
-                return BL_Stepper.sharedInstance.accompanistList.count
-                   } else if section == 1 {
-                       return BL_Stepper.sharedInstance.doctorList.count
-                   } else if section == 2 {
-                       return 1
-                   } else if section == 3 {
-                       return 1
-                   } else if section == 4 {
-                       return 0
-                   } else {
-                       return 0
-                   }
+        
+        if section == 0 {
+            return BL_Stepper.sharedInstance.accompanistList.count
+        } else if section == 1 {
+            return BL_Stepper.sharedInstance.doctorList.count
+        } else if section == 2 {
+            return 1
+        } else if section == 3 {
+            return 1
+        } else if section == 4 {
+            return 0
+        } else {
+            return 0
+        }
     }
     
     //------> To display header view.
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-            let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
-                   headerCell.lblSectionTitle.text = BL_Stepper.sharedInstance.stepperDataList[section].sectionTitle
-                   if section == 1 {
-                       let subTitle = NSMutableAttributedString()
-                       let hdr = NSMutableAttributedString(string: BL_Stepper.sharedInstance.stepperDataList[section].emptyStateSubTitle)
-                       let count = NSMutableAttributedString(string: "  \(BL_Stepper.sharedInstance.doctorList.count)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black,NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)])
-                       subTitle.append(hdr)
-                       subTitle.append(count)
-                       headerCell.lblectionSubTitle.attributedText = subTitle
-                   } else {
-                       headerCell.lblectionSubTitle.text = BL_Stepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
-                   }
-                   switch section {
-                   case 1:
-                       if BL_Stepper.sharedInstance.doctorList.count != 0 {
-                           headerCell.lblSectionCount.backgroundColor = default_Blue
-                       } else {
-                           headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                       }
-                   case 2:
-                       if BL_Stepper.sharedInstance.doctorList.count != 0 {
-                           headerCell.lblSectionCount.backgroundColor = default_Blue
-                       } else {
-                           headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                       }
-                   case 0:
-                       if BL_Stepper.sharedInstance.accompanistList.count != 0 {
-                           headerCell.lblSectionCount.backgroundColor = default_Blue
-                       } else {
-                           headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                       }
-                   case 3:
-                       if self.selectedWorkPlace.count != 0 {
-                           headerCell.lblSectionCount.backgroundColor = default_Blue
-                       } else {
-                           headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
-                       }
-                   case 4:
-                       break
-                   default:
-                       break
-                   }
-                   headerCell.lblSectionCount.text = "\(section + 1)"
-                   return headerCell
-
+        
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldHeaderCell) as! TPFieldStepperHeaderCell
+        headerCell.lblSectionTitle.text = BL_Stepper.sharedInstance.stepperDataList[section].sectionTitle
+        if section == 1 {
+            let subTitle = NSMutableAttributedString()
+            let hdr = NSMutableAttributedString(string: BL_Stepper.sharedInstance.stepperDataList[section].emptyStateSubTitle)
+            let count = NSMutableAttributedString(string: "  \(BL_Stepper.sharedInstance.doctorList.count)", attributes: [NSAttributedStringKey.foregroundColor: UIColor.black,NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 17.0)])
+            subTitle.append(hdr)
+            subTitle.append(count)
+            headerCell.lblectionSubTitle.attributedText = subTitle
+        } else {
+            headerCell.lblectionSubTitle.text = BL_Stepper.sharedInstance.stepperDataList[section].emptyStateSubTitle
+        }
+        switch section {
+        case 1:
+            if BL_Stepper.sharedInstance.doctorList.count != 0 {
+                headerCell.lblSectionCount.backgroundColor = default_Blue
+            } else {
+                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+            }
+        case 2:
+            if BL_Stepper.sharedInstance.doctorList.count != 0 {
+                headerCell.lblSectionCount.backgroundColor = default_Blue
+            } else {
+                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+            }
+        case 0:
+            if BL_Stepper.sharedInstance.accompanistList.count != 0 {
+                headerCell.lblSectionCount.backgroundColor = default_Blue
+            } else {
+                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+            }
+        case 3:
+            if self.selectedWorkPlace.count != 0 {
+                headerCell.lblSectionCount.backgroundColor = default_Blue
+            } else {
+                headerCell.lblSectionCount.backgroundColor = UIColor.lightGray
+            }
+        case 4:
+            break
+        default:
+            break
+        }
+        headerCell.lblSectionCount.text = "\(section + 1)"
+        return headerCell
+        
     }
     
     //------> To display footer view.
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-
-            let footerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldFooterCell) as! TPFieldStepperFooterCell
+        
+        let footerCell = tableView.dequeueReusableCell(withIdentifier: TPFieldFooterCell) as! TPFieldStepperFooterCell
         if isProspect{
             if  section == 1 {
-            footerCell.leftButton.setTitle("Add Prospect", for: .normal)
+                footerCell.leftButton.setTitle("Add Prospect", for: .normal)
             } else {
-footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+                footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
             }
         } else {
-footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
-               }
-             
-                   footerCell.leftButton.tag = section
-                   footerCell.rightButton.tag = section
-                   if section == 4 {
-                       footerCell.rightButton.isHidden = false
-                   } else {
-                       footerCell.rightButton.isHidden = true
-                   }
-                   return footerCell
+            footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section].leftButtonTitle, for: .normal)
+        }
+        
+        footerCell.leftButton.tag = section
+        footerCell.rightButton.tag = section
+        if section == 4 {
+            footerCell.rightButton.isHidden = false
+        } else {
+            footerCell.rightButton.isHidden = true
+        }
+        return footerCell
         
     }
     
@@ -1514,102 +1528,102 @@ footerCell.leftButton.setTitle(BL_Stepper.sharedInstance.stepperDataList[section
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-   
-            if indexPath.section == 0 {
-                return 40
-            } else if indexPath.section == 2 {
-                return 40
-            } else if indexPath.section == 1 {
-                return 70
-            } else if indexPath.section == 3 {
-                return 80
-            } else if indexPath.section == 4 {
-                if generalText.count != 0 {
-                    return 60
-                } else {
-                    return 0
-                }
+        
+        if indexPath.section == 0 {
+            return 40
+        } else if indexPath.section == 2 {
+            return 40
+        } else if indexPath.section == 1 {
+            return 70
+        } else if indexPath.section == 3 {
+            return 80
+        } else if indexPath.section == 4 {
+            if generalText.count != 0 {
+                return 60
             } else {
                 return 0
             }
-  
+        } else {
+            return 0
+        }
+        
         
     }
     
     //------> Set height for each footer.
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-
-            if section == 0 {
-                       return 60
-                   } else if section == 2 {
-                       return 0
-                   } else if section == 1 {
-                       return 60
-                   } else if section == 3 {
-                       return 60
-                   } else if section == 4 {
-                       return 0
-                   } else {
-                       return 0
-                   }
-   
+        
+        if section == 0 {
+            return 60
+        } else if section == 2 {
+            return 0
+        } else if section == 1 {
+            return 60
+        } else if section == 3 {
+            return 60
+        } else if section == 4 {
+            return 0
+        } else {
+            return 0
+        }
+        
         
     }
     
     //------> Set height for each header.
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    
-            if section == 0 {
-                return 90
-            } else if section == 2 {
-                return 50
-            } else if section == 1 {
-                return 90
-            } else if section == 3 {
-                return 40
-            } else if section == 4 {
-                return 50
-            } else {
-                return 0
-            }
-    
+        
+        if section == 0 {
+            return 90
+        } else if section == 2 {
+            return 50
+        } else if section == 1 {
+            return 90
+        } else if section == 3 {
+            return 40
+        } else if section == 4 {
+            return 50
+        } else {
+            return 0
+        }
+        
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
-           if indexPath.section == 1 {
+        
+        if indexPath.section == 1 {
             let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
             if (isCurrentDate() && checkPunchin(indexPath: indexPath))
             {
                 
-                    let currentLocation = getCurrentLocaiton()
-                    let initialAlert = "Check-in time for " + doctorObj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorObj.Doctor_Name
-                    //let indexpath = sender.tag
-                    let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
-                        alertViewController.dismiss(animated: true, completion: nil)
-                    }))
-                    
-                    alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
-                        //function
-                        self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
-                        self.modifydoctor(position: indexPath.row)
-                        alertViewController.dismiss(animated: true, completion: nil)
-                    }))
-                    
-                    self.present(alertViewController, animated: true, completion: nil)
+                let currentLocation = getCurrentLocaiton()
+                let initialAlert = "Check-in time for " + doctorObj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorObj.Doctor_Name
+                //let indexpath = sender.tag
+                let alertViewController = UIAlertController(title: "Check In", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                    alertViewController.dismiss(animated: true, completion: nil)
+                }))
+                
+                alertViewController.addAction(UIAlertAction(title: "Check In", style: UIAlertActionStyle.default, handler: { alertAction in
+                    //function
+                    self.PunchInmoveToDCRDoctorVisitStepper(indexPath: indexPath, geoFencingSkipRemarks: EMPTY, currentLocation: currentLocation)
+                    self.modifydoctor(position: indexPath.row)
+                    alertViewController.dismiss(animated: true, completion: nil)
+                }))
+                
+                self.present(alertViewController, animated: true, completion: nil)
                 
             }
             else
             {
-            modifydoctor(position: indexPath.row)
+                modifydoctor(position: indexPath.row)
             }
-                                
-            }
+            
+        }
         
     }
 }
@@ -1625,25 +1639,25 @@ extension DCRStepperNewViewController: UIPickerViewDelegate,UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return workCategory[row]
+        return workCategory[row].Category_Name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedWorkPlace = self.workCategory[row]
-      
-            let dcrheaderobj = DCRHeaderObjectModel()
-            dcrheaderobj.DCR_Id = BL_Stepper.sharedInstance.dcrId
-            if (row == 1)
-            {
-            dcrheaderobj.Category_Id = 01
+        selectedWorkPlace = self.workCategory[row].Category_Name
+        selectedWorkCategoryID = self.workCategory[row].Category_Id
+        let dcrheaderobj = DCRHeaderObjectModel()
+        dcrheaderobj.DCR_Id = BL_Stepper.sharedInstance.dcrId
+        if (row == 1)
+        {
+            dcrheaderobj.Category_Id = selectedWorkCategoryID
             dcrheaderobj.Category_Name = selectedWorkPlace
-            }
-            else
-            {
-                dcrheaderobj.Category_Id = 02
-                dcrheaderobj.Category_Name = selectedWorkPlace
-            }
-            DBHelper.sharedInstance.updateDCRWorkCategory(dcrHeaderObj: dcrheaderobj)
+        }
+        else
+        {
+            dcrheaderobj.Category_Id = selectedWorkCategoryID
+            dcrheaderobj.Category_Name = selectedWorkPlace
+        }
+        DBHelper.sharedInstance.updateDCRWorkCategory(dcrHeaderObj: dcrheaderobj)
         self.tableView.reloadData()
         
         self.view.endEditing(true)
@@ -1652,12 +1666,12 @@ extension DCRStepperNewViewController: UIPickerViewDelegate,UIPickerViewDataSour
     
 }
 extension DCRStepperNewViewController : UITextViewDelegate {
-
+    
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-         let str = "\(textView.text!)"
-              BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = str
-            generalText = str
-               return true
+        let str = "\(textView.text!)"
+        BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = str
+        generalText = str
+        return true
     }
 }
 

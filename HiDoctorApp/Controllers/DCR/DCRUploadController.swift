@@ -593,10 +593,12 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
             BL_Geo_Location.sharedInstance.uploadCustomerAddress(completion: { (status) in
                 BL_DCR_Refresh.sharedInstance.dcrRefreshAPICall(refreshMode: DCRRefreshMode.MERGE_LOCAL_AND_SERVER_DATA, endDate: "")
                 BL_DCR_Refresh.sharedInstance.delegate = self
+                 removeCustomActivityView()
             })
         }
         else
         {
+             removeCustomActivityView()
             AlertView.showNoInternetAlert()
         }
     }

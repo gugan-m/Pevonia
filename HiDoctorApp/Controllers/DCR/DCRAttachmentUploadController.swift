@@ -340,7 +340,17 @@ class DCRAttachmentUploadController: UIViewController, UITableViewDelegate, UITa
     
     @objc func backButtonClicked()
     {
-        _ = navigationController?.popViewController(animated: false)
+        if isfromTP {
+            if let navigationController = self.navigationController
+            {
+                let index = navigationController.viewControllers.count - 3
+                self.navigationController?.viewControllers.remove(at: index)
+            }
+            _ = navigationController?.popViewController(animated: false)
+        }
+        else {
+            _ = navigationController?.popViewController(animated: false)
+        }
     }
     
     private func convertChemistAttachmentToDoctorAttachment(lstChemistAttachment: [DCRChemistAttachment]) -> [DCRAttachmentModel]

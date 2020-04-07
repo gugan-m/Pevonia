@@ -258,7 +258,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
         calendarView.scrollingMode = .stopAtEachCalendarFrame
         //calendarView.cellInset = CGPoint(x: 0, y: 0)
         moveToMonthSegment(date: selectedDate)
-        calendarView.selectDates([selectedDate])
+        //calendarView.selectDates([selectedDate])
     }
     
     func orientationCalendarReloadData()
@@ -951,6 +951,90 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                }
            }
 }
+    
+    func viewAction() {
+        let userStartDate : Date = getUserStartDate()
+        
+        if userStartDate.compare(selectedDate) == .orderedDescending
+        {
+            AlertView.showAlertView(title: alertTitle, message: addDCRErrorMsg, viewController: self)
+        }
+        else
+        {
+            if BL_DCRCalendar.sharedInstance.activityRestrictionValidation(dcrDate: selectedDate)
+            {
+                showActivityRestrictionAlert()
+            }
+            else
+            {
+                let detailModel = dcrDetailList[0]
+                
+                if detailModel.dcrStatus == DCRStatus.approved.rawValue {
+                    if !BL_DCRCalendar.sharedInstance.checkIsFutureDate(date: self.selectedDate)
+                    {
+                        if detailModel.dcrFlag != DCRFlag.leave.rawValue
+                        {
+                            let seqValidationMsg :  String = BL_DCRCalendar.sharedInstance.getSequentialEntryValidation(startDate : self.currentStartDate, endDate: self.selectedDate, isEditMode: true)
+                            
+                            if seqValidationMsg != ""
+                            {
+                                AlertView.showAlertView(title: alertTitle, message: seqValidationMsg, viewController: self)
+                                return
+                            }
+                        }
+                    }
+                    
+                    DCRModel.sharedInstance.dcrId = detailModel.dcrId
+                    DCRModel.sharedInstance.dcrDate = selectedDate
+                    DCRModel.sharedInstance.dcrDateString = convertDateIntoServerStringFormat(date: selectedDate)
+                    DCRModel.sharedInstance.dcrFlag = detailModel.dcrFlag
+                    DCRModel.sharedInstance.dcrStatus = detailModel.dcrStatus
+                    DCRModel.sharedInstance.dcrCode = detailModel.dcrCode!
+                    if detailModel.dcrFlag == DCRFlag.fieldRcpa.rawValue
+                    {
+                        
+                        DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                        BL_Stepper.sharedInstance.getAccompanistDataPendingList()
+                        BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
+                       let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+                        let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
+                        let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
+                        if doctorlist.count != 0{
+                            if doctorlist.count == filterArr.count {
+                               vc.isProspect = true
+                            } else {
+                               vc.isProspect = false
+                            }
+                        }
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        
+                    }
+                    else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
+                    {
+                        DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                        let sb = UIStoryboard(name: attendanceStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "DCRAttendancenew") as! DCRAttendanceController
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+
+                    }
+                    else if detailModel.dcrFlag == DCRFlag.leave.rawValue
+                    {
+                        let sb = UIStoryboard(name: leaveEntrySb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "DCRLeaveEntryNew") as! LeaveEntryNewViewController
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    removeVersionToastView()
+                }
+            }
+        }
+    }
+   
     @IBAction func editBtnAction(_ sender: AnyObject)
     {
         let userStartDate : Date = getUserStartDate()
@@ -2478,5 +2562,18 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             AlertView.showNoInternetAlert()
         }
     }
+    
+    @IBAction func viewLeave(_ sender: UIButton) {
+   viewAction()
+    }
+    
+    @IBAction func viewRCPA(_ sender: UIButton) {
+      viewAction()
+       }
+    
+    @IBAction func viewAttendance(_ sender: UIButton) {
+      viewAction()
+       }
+    
 }
 

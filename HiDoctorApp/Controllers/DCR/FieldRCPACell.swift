@@ -41,6 +41,7 @@ class FieldRCPACell: UITableViewCell {
     @IBOutlet weak var stockiestEntryLbl: UILabel!
     @IBOutlet weak var expenseEntryLbl: UILabel!
     
+    @IBOutlet weak var btnViewRCPA: UIButton!
     override func awakeFromNib() {
         chemistEntryLbl.text = "\(appChemist) Entry"
         stockiestEntryLbl.text = "\(appStockiest) Entry"

@@ -24,4 +24,7 @@ class AttendanceCell: UITableViewCell {
     @IBOutlet weak var unApprovedHeightConst: NSLayoutConstraint!
     @IBOutlet weak var btmViewHeightConst: NSLayoutConstraint!
     @IBOutlet weak var unapprovedView: UIView!
+    
+    @IBOutlet weak var btnViewAttendance: UIButton!
+    
 }

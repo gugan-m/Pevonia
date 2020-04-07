@@ -19,11 +19,15 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     var showAlertCaptureLocationCount : Int = 0
     let htmlstr = ""
     var pickerview = UIPickerView()
-    let workCategory = ["Field Works","Requires Overnight"]
+    var workCategory : [WorkCategories] = []
     var selectedWorkPlace = ""
+    var selectedCategoryId = 0
     var generalText = ""
     var default_Blue = UIColor(red: 63.0/255.0, green: 81.0/255.0, blue: 181.0/255.0, alpha: 1.0)
+    var plnnedContactColor = UIColor(red: 0/255.0, green: 150.0/255.0, blue: 136/255.0, alpha: 1.0)
     var isProspect = false
+    var IS_VIEW_MODE = false
+    
     // MARK:- Life Cycle Events
     override func viewDidLoad()
     {
@@ -36,12 +40,21 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
             self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Field)"
             TPModel.sharedInstance.tp_Type = "F"
         }
-        
+        workCategory = BL_WorkPlace.sharedInstance.getWorkCategoriesList()
         self.pickerview.delegate = self
+        setWorkPlace()
+        BL_TPStepper.sharedInstance.insertTourPlannerHeader()
+        self.updateWorkPlaceDetails()
         //        self.tableView.delegate = self
         //        self.tableView.dataSource = self
         //
         //        BL_TPStepper.sharedInstance.clearAllArray()
+        if IS_VIEW_MODE {
+            self.submitButton.isHidden = true
+        } else {
+          self.submitButton.isHidden = false
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -51,8 +64,6 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         } else {
             BL_TPStepper.sharedInstance.generateDataArray()
         }
-        
-        setWorkPlace()
         reloadTableView()
         //        showAlertCaptureLocationCount = 0
         //
@@ -849,8 +860,6 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         if (errorMessage != EMPTY)
         {
             AlertView.showAlertView(title: alertTitle, message: errorMessage, viewController: self)
-        } else if selectedWorkPlace.count == 0 {
-            AlertView.showAlertView(title: alertTitle, message: "Please select Work Category", viewController: self)
         }
         else
         {
@@ -1048,12 +1057,15 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
                 if category!.Category_Name != nil{
                     if category!.Category_Name!.count == 0
                     {
-                        selectedWorkPlace = workCategory[0]
+                        selectedWorkPlace = workCategory[0].Category_Name
+                        selectedCategoryId = workCategory[0].Category_Id
                     } else {
                     selectedWorkPlace = category!.Category_Name!
+                        selectedCategoryId = category!.Category_Id ?? 0
                     }
                 } else {
-                    selectedWorkPlace = workCategory[0]
+                    selectedWorkPlace = workCategory[0].Category_Name
+                    selectedCategoryId = workCategory[0].Category_Id
                 }
             }
             if Remarksobj != nil {
@@ -1061,26 +1073,36 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
                     generalText = Remarksobj!.Remarks!
                 }
             }
+        } else {
+            if workCategory.count != 0 {
+                selectedWorkPlace = workCategory[0].Category_Name
+                selectedCategoryId = workCategory[0].Category_Id
+            }
         }
     }
     
     func updateWorkPlaceDetails() {
-        var CategoryCode = ""
-        if selectedWorkPlace == "Field Works" {
-            CategoryCode = "1"
-        } else {
-            CategoryCode = "2"
-        }
-        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name":selectedWorkPlace , "CP_Name": "","CP_Code": "","Work_Area": "Florida", "Category_Code": CategoryCode]
+       
+        let dict: NSDictionary = ["TP_Id": 0, "TP_Date": TPModel.sharedInstance.tpDateString,"Category_Name":selectedWorkPlace , "CP_Name": "","CP_Code": "","Work_Area": "Florida", "Category_Code": selectedCategoryId]
         let objTPHeader: TourPlannerHeader = TourPlannerHeader(dict: dict)
         if isProspect == true {
             DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
         } else {
-            if BL_TPStepper.sharedInstance.doctorList.count != 0 {
                 DAL_TP_Stepper.sharedInstance.updateWorkPlaceModel(workPlaceObj: objTPHeader,tp_Entry_Id: TPModel.sharedInstance.tpEntryId)
-            }
         }
         
+    }
+    
+    func isPlannedContact(objDoctor : StepperDoctorModel) -> Bool {
+    
+    var attachmentList : [TPAttachmentModel] = []
+     attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor.Customer_Code)!
+        
+        if objDoctor.Call_Objective_Name.count != 0 || objDoctor.sampleList1.count != 0 || attachmentList.count != 0 {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
@@ -1095,16 +1117,25 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
                 RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
                 RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+                if IS_VIEW_MODE {
+                    RideAlongCell.isUserInteractionEnabled = false
+                } else {
+                    RideAlongCell.isUserInteractionEnabled = true
+                }
                 return RideAlongCell
             } else if indexPath.section == 1 {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
                 if self.selectedWorkPlace.count == 0 {
-                   WorkCaregoryCell.txtWorkCategory.text = workCategory[0]
-                    selectedWorkPlace = workCategory[0]
+                    WorkCaregoryCell.txtWorkCategory.text = workCategory[0].Category_Name
+                    selectedWorkPlace = workCategory[0].Category_Name
                 } else {
                   WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
                 }
-                
+                if IS_VIEW_MODE {
+                    WorkCaregoryCell.isUserInteractionEnabled = false
+                } else {
+                    WorkCaregoryCell.isUserInteractionEnabled = true
+                }
                 WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
                 return WorkCaregoryCell
             } else if indexPath.section == 2  {
@@ -1114,6 +1145,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 remarksCell.txtViewRemarks.layer.borderWidth = 0.5
                 remarksCell.txtViewRemarks.layer.borderColor = UIColor.lightGray.cgColor
                 remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
+                if IS_VIEW_MODE {
+                    remarksCell.isUserInteractionEnabled = false
+                } else {
+                    remarksCell.isUserInteractionEnabled = true
+                }
                 return remarksCell
             } else {
                 return UITableViewCell.init()
@@ -1124,6 +1160,27 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
                 let doctorObj = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
                 MeetingObjCell.txtContactName.text = doctorObj.Customer_Name
+                
+                if self.isPlannedContact(objDoctor: doctorObj) == true {
+                    MeetingObjCell.txtContactName.textColor =  self.plnnedContactColor
+                } else {
+                    MeetingObjCell.txtContactName.textColor = UIColor.black
+                }
+                
+                if IS_VIEW_MODE {
+                    MeetingObjCell.btnRemoveDoctor.isUserInteractionEnabled = false
+                    if self.isPlannedContact(objDoctor: doctorObj) == true    {
+                       MeetingObjCell.isUserInteractionEnabled = true
+                    } else {
+                       MeetingObjCell.isUserInteractionEnabled = false
+                    }
+                } else {
+                     MeetingObjCell.isUserInteractionEnabled = true
+                    MeetingObjCell.btnRemoveDoctor.isUserInteractionEnabled = true
+                }
+                
+                 
+                
                 var line2Text: String = ""
                 
                 if doctorObj.Hospital_Name! != ""{
@@ -1132,14 +1189,14 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                     line2Text = doctorObj.Hospital_Name!
                 }
                 
-                if doctorObj.Speciality_Name! != ""{
-                    line2Text = (doctorObj.Speciality_Name)! + " | "
-                }
+//                if doctorObj.Speciality_Name! != ""{
+//                    line2Text = (doctorObj.Speciality_Name)! + " | "
+//                }
                 
-                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
-                {
-                    line2Text = doctorObj.Category_Name! + " | "
-                }
+//                if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+//                {
+//                    line2Text = doctorObj.Category_Name! + " | "
+//                }
                 
                 if (checkNullAndNilValueForString(stringData: doctorObj.Region_Name) != "")
                 {
@@ -1154,6 +1211,7 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 }
                 MeetingObjCell.txtContactDetails.text = line2Text
                 MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
+                
                 return MeetingObjCell
             }
             else if indexPath.section == 2
@@ -1161,17 +1219,27 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
                 RideAlongCell.lblAccompanist.text = BL_TPStepper.sharedInstance.accompanistList[indexPath.row].userObj.User_Name
                 RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+                if IS_VIEW_MODE {
+                    RideAlongCell.isUserInteractionEnabled = false
+                } else {
+                    RideAlongCell.isUserInteractionEnabled = true
+                }
                 return RideAlongCell
             }
             else if indexPath.section == 3
             {
                 let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
                  if self.selectedWorkPlace.count == 0 {
-                                  WorkCaregoryCell.txtWorkCategory.text = workCategory[0]
-                                   selectedWorkPlace = workCategory[0]
+                    WorkCaregoryCell.txtWorkCategory.text = workCategory[0].Category_Name
+                    selectedWorkPlace = workCategory[0].Category_Name
                                } else {
                                  WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
                                }
+                if IS_VIEW_MODE {
+                    WorkCaregoryCell.isUserInteractionEnabled = false
+                } else {
+                    WorkCaregoryCell.isUserInteractionEnabled = true
+                }
                 WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
                 return WorkCaregoryCell
             }
@@ -1184,6 +1252,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 remarksCell.txtViewRemarks.layer.borderColor = UIColor.lightGray.cgColor
                 remarksCell.txtViewRemarks.delegate = self
                 remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
+                if IS_VIEW_MODE {
+                    remarksCell.isUserInteractionEnabled = false
+                } else {
+                    remarksCell.isUserInteractionEnabled = true
+                }
                 return remarksCell
             }
             else
@@ -1263,6 +1336,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             default:
                 break
             }
+            if IS_VIEW_MODE {
+                headerCell.isUserInteractionEnabled = false
+            } else {
+                headerCell.isUserInteractionEnabled = true
+            }
             headerCell.lblSectionCount.text = "\(section + 1)"
             return headerCell
         } else {
@@ -1314,6 +1392,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             default:
                 break
             }
+            if IS_VIEW_MODE {
+                headerCell.isUserInteractionEnabled = false
+            } else {
+                headerCell.isUserInteractionEnabled = true
+            }
             headerCell.lblSectionCount.text = "\(section + 1)"
             return headerCell
         }
@@ -1351,6 +1434,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
             } else {
                 footerCell.rightButton.isHidden = true
             }
+        }
+        if IS_VIEW_MODE {
+            footerCell.isUserInteractionEnabled = false
+        } else {
+            footerCell.isUserInteractionEnabled = true
         }
         return footerCell
     }
@@ -1463,6 +1551,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                 let vc:TPMeetingObjectiveViewController = sb.instantiateViewController(withIdentifier: "TPMeetingObjectiveViewController") as! TPMeetingObjectiveViewController
                 vc.objDoctor = BL_TPStepper.sharedInstance.doctorList[indexPath.row]
                 vc.userDCRProductList = BL_TPStepper.sharedInstance.doctorList[indexPath.row].sampleList1
+                if IS_VIEW_MODE{
+                 vc.IS_VIEW_MODE = true
+                } else {
+                    vc.IS_VIEW_MODE = false
+                }
                 let backItem = UIBarButtonItem()
                 backItem.title = "Back"
                 navigationItem.backBarButtonItem = backItem
@@ -1483,16 +1576,17 @@ extension TPStepperViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return workCategory[row]
+        return workCategory[row].Category_Name
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if isProspect == true {
-            if BL_TPStepper.sharedInstance.accompanistList.count == 0{
-                BL_TPStepper.sharedInstance.insertTourPlannerHeader()
-            }
-        }
-        selectedWorkPlace = self.workCategory[row]
+//        if isProspect == true {
+//            if BL_TPStepper.sharedInstance.accompanistList.count == 0{
+//                BL_TPStepper.sharedInstance.insertTourPlannerHeader()
+//            }
+//        }
+        selectedWorkPlace = self.workCategory[row].Category_Name
+        selectedCategoryId = self.workCategory[row].Category_Id
         self.updateWorkPlaceDetails()
         self.tableView.reloadData()
         self.view.endEditing(true)

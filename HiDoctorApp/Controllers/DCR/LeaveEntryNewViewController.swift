@@ -30,6 +30,7 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     var leaveTypeId : String = ""
     var isInsertedFromDCR: Bool = false
     let placeHolderForLeaveType : String = "Select Not Working Type"
+    var IS_VIEW_MODE = false
     
     override func viewDidLoad()
     {
@@ -72,6 +73,14 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         else
         {
             updateViews()
+        }
+        
+        if IS_VIEW_MODE {
+            self.scrollView.isUserInteractionEnabled = false
+            self.submitbtn.isHidden = true
+        } else {
+            self.scrollView.isUserInteractionEnabled = true
+            self.submitbtn.isHidden = false
         }
     }
     

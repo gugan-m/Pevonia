@@ -44,6 +44,7 @@ class AddNewProspectViewController: UIViewController {
     @IBOutlet weak var imgDropDown_AddProspect: UIImageView!
     @IBOutlet weak var btnSave: UIButton!
     
+    @IBOutlet weak var btnAddNewProspect: UIButton!
     //MARK:- Variables
 
     let add_COLOR = UIColor.init(red: 0/255.0, green: 150/255.0, blue: 136/255.0, alpha: 1.0)
@@ -143,7 +144,7 @@ class AddNewProspectViewController: UIViewController {
     canShowAddView = true
     self.addView.isHidden = true
     clearAll()
-    self.btnSave.setTitle("Save", for: .normal)
+    self.btnAddNewProspect.setTitle("  Add New Prospect", for: .normal)
     self.imgDropDown_AddProspect.image = UIImage(named: "icon-stepper-down-arrow")
                    UIView.animate(withDuration: 0.2, animations: { () -> Void in
                        self.consAddViewHeight.constant = 0
@@ -175,27 +176,27 @@ class AddNewProspectViewController: UIViewController {
             AlertView.showAlertView(title: "Account Name", message: "Please enter account name")
         } else if txtProspectName.text?.count == 0 {
             AlertView.showAlertView(title: "Prospect Name", message: "Please enter prospect name")
-        } else if txtTitle.text?.count == 0 {
-            AlertView.showAlertView(title: "Title", message: "Please enter title")
-        } else if txtCity.text?.count == 0 {
+//        } else if txtTitle.text?.count == 0 {
+//            AlertView.showAlertView(title: "Title", message: "Please enter title")
+       } else if txtCity.text?.count == 0 {
             AlertView.showAlertView(title: "City", message: "Please enter city")
         } else if txtState.text?.count == 0 {
             AlertView.showAlertView(title: "State", message: "Please enter state")
         } else if txtZip.text?.count == 0 {
             AlertView.showAlertView(title: "Zip", message: "Please enter zip")
-        } else if txtPhoneNumber.text?.count == 0 {
-            AlertView.showAlertView(title: "Phone Number", message: "Please enter phone number")
-        } else if txtEmail.text?.count == 0 {
-            AlertView.showAlertView(title: "Email", message: "Please enter email id")
-        } else if !isValidEmail(stringData: txtEmail.text!) {
-            AlertView.showAlertView(title: "Email", message: "Please enter valid email id")
-        } else {
+//        } else if txtPhoneNumber.text?.count == 0 {
+//            AlertView.showAlertView(title: "Phone Number", message: "Please enter phone number")
+//        } else if txtEmail.text?.count == 0 {
+//            AlertView.showAlertView(title: "Email", message: "Please enter email id")
+//        } else if !isValidEmail(stringData: txtEmail.text!) {
+//            AlertView.showAlertView(title: "Email", message: "Please enter valid email id")
+      } else {
             var flag = ""
             var ProspectId = 0
             if selectedObj != nil {
                 ProspectId = selectedObj!.Prospect_Id
             }
-            if self.btnSave.currentTitle == "Save" && ProspectId == 0 {
+            if self.btnAddNewProspect.currentTitle == "  Add New Prospect" && ProspectId == 0 {
               flag = "Add"
             } else {
                flag = "Edit"
@@ -216,7 +217,7 @@ class AddNewProspectViewController: UIViewController {
             Prospect_Id = selectedObj?.Prospect_Id ?? 0
         }
         
-        let dict = ["Flag": Flag ,"Prospect_Id": Prospect_Id,"Company_Code": getCompanyCode() ,"Company_Id":companyId,"Account_Name": Account_Name, "Contact_Name":Contact_Name, "Title":Title, "Address":Address, "City":City, "State": State,"Phone_No":Phone_No,"Email":Email,"Prospect_Status":Prospect_Status,"DCR_Date": getCurrentDate(),"Created_Region_Code": getRegionCode(),"Created_By": getUserCode(),"Created_DateTime": getStringFromDateforPunch(date: Date()),"Zip": Zip] as [String : Any]
+        let dict = ["Flag": Flag ,"Prospect_Id": Prospect_Id,"Company_Code": getCompanyCode() ,"Company_Id":companyId,"Account_Name": Account_Name, "Contact_Name":Contact_Name, "Title":Title ?? "", "Address":Address ?? "", "City":City, "State": State,"Phone_No":Phone_No ?? "","Email":Email ?? "","Prospect_Status":Prospect_Status,"DCR_Date": getCurrentDate(),"Created_Region_Code": getRegionCode(),"Created_By": getUserCode(),"Created_DateTime": getStringFromDateforPunch(date: Date()),"Zip": Zip] as [String : Any]
         prosArr = [dict]
         let postData = AddProspectModel(dict: dict as NSDictionary)
             self.updateProspectDetails(flag: Flag, postData: postData)
@@ -434,7 +435,7 @@ class AddNewProspectViewController: UIViewController {
                     self.segmentStatus.selectedSegmentIndex = 2
                 }
             }
-            self.btnSave.setTitle("Update", for: .normal)
+            self.btnAddNewProspect.setTitle("  Edit Prospect", for: .normal)
         }
     }
     
@@ -575,7 +576,7 @@ extension AddNewProspectViewController: UITableViewDelegate,UITableViewDataSourc
          if isSearchEnable {
             let dict = self.searchProspectArr[indexPath.row]
             cell.lblProspectingName.text = dict.Contact_Name
-            cell.lblProspectingDetails.text = dict.Account_Name + " | " + dict.City
+            cell.lblProspectingDetails.text =  dict.Title + " | " + dict.Account_Name + " | " + dict.City
             cell.btnSelected.tag = indexPath.row
             if dict.isSelected == true {
              cell.btnSelected.setImage(UIImage(named: "icon-tick"), for: .normal)

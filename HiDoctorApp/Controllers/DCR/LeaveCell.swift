@@ -25,4 +25,7 @@ class LeaveCell: UITableViewCell {
     @IBOutlet weak var editBtnWrapper: UIView!
     @IBOutlet weak var btmViewHeightConst: NSLayoutConstraint!
     @IBOutlet weak var unapprovedView: UIView!
+    
+    
+    @IBOutlet weak var btnViewLeave: UIButton!
 }

@@ -161,7 +161,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
         calendarView.scrollingMode = .stopAtEachCalendarFrame
         //calendarView.cellInset = CGPoint(x: 0, y: 0)
         moveToMonthSegment(date: selectedDate)
-        calendarView.selectDates([selectedDate])
+       // calendarView.selectDates([selectedDate])
         DispatchQueue.main.async {
             self.calendarView.reloadData()
         }
@@ -895,6 +895,51 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     func calendarActionSheetSelectionAction(date: String,flag: Int)
     {
         BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: date, tpFlag: flag)
+    }
+    
+    
+    
+    @IBAction func act_View(_ sender: UIButton) {
+         let tourPlannerHeaderModelData:TourPlannerHeader? = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: selectedDateString)
+        if tourPlannerHeaderModelData != nil
+               {
+                if tourPlannerHeaderModelData!.Status == TPStatus.approved.rawValue
+                {
+                    if tpActivityLbl.text == "Field"
+                    {
+                        BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: selectedDateString, tpFlag: TPFlag.fieldRcpa.rawValue)
+                        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: TPStepperVCID) as! TPStepperViewController
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    else if tpActivityLbl.text == "Office"
+                    {
+                        BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: selectedDateString, tpFlag: TPFlag.attendance.rawValue)
+                        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: TPAttendanceStepperVCID) as! TPAttendanceStepperViewController
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    else if tpActivityLbl.text == "Prospecting"
+                    {
+                           self.calendarActionSheetSelectionAction(date: self.selectedDateString,flag: TPFlag.fieldRcpa.rawValue)
+                            let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                            let vc = sb.instantiateViewController(withIdentifier: TPStepperVCID) as! TPStepperViewController
+                            vc.isProspect = true
+                            vc.IS_VIEW_MODE = true
+                            self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    else
+                    {
+                        BL_TPStepper.sharedInstance.setSelectedTpDataInContext(date: selectedDateString, tpFlag: TPFlag.leave.rawValue)
+                        let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: TPLeaveEntryVcID) as! TPLeaveEntryViewController
+                        vc.IS_VIEW_MODE = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
+        }
     }
 }
 

@@ -41,6 +41,7 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     var userDCRProductList : [DCRSampleModel] = []
     var attachmentList : [TPAttachmentModel] = []
     var selectedCallObj : CallObjectiveModel?
+    var IS_VIEW_MODE = false
     
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
@@ -53,9 +54,14 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
         self.getSamplesList()
         let val = userDCRProductList
         print(userDCRProductList)
-        setDoneButton()
         self.txtMeetingObjective.inputView = self.pickerview
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Field)"
+        if IS_VIEW_MODE {
+            self.scrollView.isUserInteractionEnabled = false
+        } else {
+            setDoneButton()
+            self.scrollView.isUserInteractionEnabled = true
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -85,7 +91,9 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-       saveMeetingObjective()
+        if IS_VIEW_MODE == false {
+            saveMeetingObjective()
+        }
     }
     
     @objc func doneAction() {

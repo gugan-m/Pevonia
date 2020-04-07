@@ -20,6 +20,7 @@ class TPAttendanceStepperViewController: UIViewController
     var activityList : [ProjectActivityMaster] = []
     var stepperDataList: [DCRStepperModel] = []
     var projectObj : ProjectActivityMaster?
+    var IS_VIEW_MODE = false
     
     override func viewDidLoad()
     {
@@ -30,7 +31,13 @@ class TPAttendanceStepperViewController: UIViewController
         addBackButtonView()
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Office)"
         activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
-        
+        if IS_VIEW_MODE {
+            self.tableView.isUserInteractionEnabled = false
+            self.submitViewHgtConst.constant = 0
+        } else {
+            self.tableView.isUserInteractionEnabled = true
+            self.submitViewHgtConst.constant = 40
+        }
     }
     
     override func viewWillAppear(_ animated: Bool)
