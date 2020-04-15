@@ -1298,32 +1298,31 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                                    if (dcrAccompanistModelObj.Acc_User_Code != i.Acc_User_Code)
                                    {
                                     DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
-                                 
-                                    
+                                    break
                                 }
                                }
                            }
                             
                            else
                            {
-                               DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
-                         let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
-                                            if (docvisitidobj.count > 0 )
-                                            {
-                                                
-                                                for visitid in docvisitidobj
-                                                {
-                                                    var isaccompanied = 0
-                                                    if (visitid.Doctor_Region_Code == dcrAccompanistModelObj.Acc_Region_Code)
-                                                    {
-                                                       isaccompanied = 1
-                                                    }
-                                                    let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": dcrAccompanistModelObj.Acc_Region_Code, "Acc_User_Code": dcrAccompanistModelObj.Acc_User_Code , "Acc_User_Name": dcrAccompanistModelObj.Acc_User_Name, "Acc_User_Type_Name": dcrAccompanistModelObj.Acc_User_Type_Name, "Employee_Name":dcrAccompanistModelObj.Employee_Name,"Visit_ID": visitid.DCR_Doctor_Visit_Id,"accompainedCall":isaccompanied]
-
-                            let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
-                                        DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
-                                                }
-                                            }
+                              DBHelper.sharedInstance.insertDCRAccompanist(dcrAccompanistModelObj: dcrAccompanistModelObj)
+//                         let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
+//                                            if (docvisitidobj.count > 0 )
+//                                            {
+//
+//                                                for visitid in docvisitidobj
+//                                                {
+//                                                    var isaccompanied = 0
+//                                                    if (visitid.Doctor_Region_Code == dcrAccompanistModelObj.Acc_Region_Code)
+//                                                    {
+//                                                       isaccompanied = 1
+//                                                    }
+//                                                    let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": dcrAccompanistModelObj.Acc_Region_Code, "Acc_User_Code": dcrAccompanistModelObj.Acc_User_Code , "Acc_User_Name": dcrAccompanistModelObj.Acc_User_Name, "Acc_User_Type_Name": dcrAccompanistModelObj.Acc_User_Type_Name, "Employee_Name":dcrAccompanistModelObj.Employee_Name,"Visit_ID": visitid.DCR_Doctor_Visit_Id,"accompainedCall":isaccompanied]
+//
+//                            let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+//                                        DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+//                                                }
+//                                            }
                            }
                         let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
                         if (docvisitidobj.count > 0 && i.userObj.User_Code != dcrAccompanistModelObj.Acc_User_Code)

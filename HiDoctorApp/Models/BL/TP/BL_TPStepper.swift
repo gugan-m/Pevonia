@@ -751,19 +751,28 @@ class BL_TPStepper: NSObject
         for objTPDoctor in tpDoctorList
         {
             let objStepperDoctor: StepperDoctorModel = StepperDoctorModel()
+            let customerDetails_fromMaster = DBHelper.sharedInstance.getCustomerByCustomerCode(customerCode: objTPDoctor.Doctor_Code, regionCode: objTPDoctor.Doctor_Region_Code)     //getCustomerByCustomerCode
             
             objStepperDoctor.tpDoctorId = objTPDoctor.TP_Doctor_Id
             objStepperDoctor.Customer_Code = objTPDoctor.Doctor_Code
             objStepperDoctor.Region_Code = objTPDoctor.Doctor_Region_Code
-            objStepperDoctor.Customer_Name = objTPDoctor.Doctor_Name
-            objStepperDoctor.Region_Name = objTPDoctor.Doctor_Region_Name
-            objStepperDoctor.Speciality_Name = objTPDoctor.Speciality_Name
             objStepperDoctor.Category_Name = objTPDoctor.Category_Name
             objStepperDoctor.MDL_Number = objTPDoctor.MDL_Number
-            objStepperDoctor.Hospital_Name = objTPDoctor.Hospital_Name
             objStepperDoctor.Call_Objective_Id = objTPDoctor.Call_Objective_Id
             objStepperDoctor.Call_Objective_Name = objTPDoctor.Call_Objective_Name
             objStepperDoctor.sampleList = []
+            
+            if customerDetails_fromMaster != nil {
+                objStepperDoctor.Hospital_Name = customerDetails_fromMaster?.Hospital_Name
+                objStepperDoctor.Customer_Name = customerDetails_fromMaster?.Customer_Name
+                objStepperDoctor.Region_Name = customerDetails_fromMaster?.Region_Name
+                objStepperDoctor.Speciality_Name = customerDetails_fromMaster?.Speciality_Name
+            } else {
+               objStepperDoctor.Hospital_Name = objTPDoctor.Hospital_Name
+               objStepperDoctor.Customer_Name = objTPDoctor.Doctor_Name
+               objStepperDoctor.Region_Name = objTPDoctor.Doctor_Region_Name
+               objStepperDoctor.Speciality_Name = objTPDoctor.Speciality_Name
+            }
             
             let filteredList = lstSamples.filter{
                 $0.Doctor_Code == objStepperDoctor.Customer_Code && $0.Doctor_Region_Code == objStepperDoctor.Region_Code

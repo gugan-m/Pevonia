@@ -12,23 +12,23 @@ import AssetsLibrary
 import MobileCoreServices
 class DoctorStepperNewController : UIViewController, UINavigationControllerDelegate, UIDocumentPickerDelegate
 {
-   //mark variables
-   
-       var customerMasterModel:CustomerMasterModel!
-       var flexiSpecialityName : String = ""
-       var flexiDoctorName : String = ""
-       var stepperIndex: DoctorVisitStepperIndex!
-       var locationAlertCount: Int = 0
-       var geoLocationSkipRemarks: String = EMPTY
-       var currentLocation: GeoLocationModel!
-       var doctorStepperString = String()
-       var objBusinessStatus: BusinessStatusModel?
-       var obj: BussinessPotential?
-       var punch_start: String?
-       var punch_status: Int?
-       var punch_timezone: String?
-       var punch_timeoffset: String?
-       var punch_UTC: String?
+    //mark variables
+    
+    var customerMasterModel:CustomerMasterModel!
+    var flexiSpecialityName : String = ""
+    var flexiDoctorName : String = ""
+    var stepperIndex: DoctorVisitStepperIndex!
+    var locationAlertCount: Int = 0
+    var geoLocationSkipRemarks: String = EMPTY
+    var currentLocation: GeoLocationModel!
+    var doctorStepperString = String()
+    var objBusinessStatus: BusinessStatusModel?
+    var obj: BussinessPotential?
+    var punch_start: String?
+    var punch_status: Int?
+    var punch_timezone: String?
+    var punch_timeoffset: String?
+    var punch_UTC: String?
     let pobAmt: Double = 0
     var meetingObjectiveList: [CallObjectiveModel] = []
     var sampleList: [UserProductMapping] = []
@@ -52,9 +52,15 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     var doctorName : String = EMPTY
     var objCallObjective: BusinessStatusModel?
     var campaignCode = ""
-       var campaignName = ""
-       var time: String = ""
+    var campaignName = ""
+    var time: String = ""
     var customerMasterObj:CustomerMasterModel!
+    var accompanistList: [DCRDoctorAccompanist] = []
+    var detailProductList : [DetailProductMaster] = []
+    var doctorVisitList : [DCRDoctorVisitModel] = []
+    var isfromProspect: Bool = false
+    var isAddDetailProduct = false
+    var isEdetailing = false
     
     // Mark outlets
     @IBOutlet weak var headerView: UIView!
@@ -65,7 +71,6 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var eDetailingView: UIView!
     @IBOutlet weak var headerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var eDetailingViewHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var detailedproducttblview: UITableView!
     @IBOutlet weak var accompanisttblview: UITableView!
     @IBOutlet weak var visittime: TextField!
@@ -76,112 +81,27 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var submitbtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tblAttachments: UITableView!
-       @IBOutlet weak var sampleSearchBar: UISearchBar!
-       @IBOutlet weak var tblSamples: UITableView!
+    @IBOutlet weak var sampleSearchBar: UISearchBar!
+    @IBOutlet weak var tblSamples: UITableView!
     @IBOutlet weak var tblSelectedSample: UITableView!
-       @IBOutlet weak var SelectedListHeaderView: UIView!
-       @IBOutlet weak var selectedListView: UITableView!
+    @IBOutlet weak var SelectedListHeaderView: UIView!
+    @IBOutlet weak var selectedListView: UITableView!
     @IBOutlet weak var viewhdrSelectedSamples: UIView!
-      @IBOutlet weak var cons_AttachmentHeight: NSLayoutConstraint!
+    @IBOutlet weak var cons_AttachmentHeight: NSLayoutConstraint!
     @IBOutlet weak var consSelectedTblHeight: NSLayoutConstraint!
-@IBOutlet weak var txtMeetingObjective: UITextField!
-    //mark actions
-    @IBAction func addattachment() {
-        
-        
-        
-    }
-    @IBAction func adddetailedproduct() {
-        
-        
-    }
-    
-    @IBAction func submitdoctoraction() {
-            
-            let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList
-                  if dcrDoctorVisitList.count > 0
-                  {
-                      let dcrDoctorVisitObj = dcrDoctorVisitList.first
-                      self.modifyDoctorVisitObj = dcrDoctorVisitObj
-                  }
-                  else
-                  
-                  {
-                  savedoctorvisitdetails()
-                  }
-            let doctorobj = BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList[0]
-            if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" )
-            {
-                
-                let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
-                //let indexpath = sender.tag
-                let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
-                
-                alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
-                    //_ = self.navigationController?.popViewController(animated: false)
-                    alertViewController.dismiss(animated: true, completion: nil)
-                }))
-                
-                alertViewController.addAction(UIAlertAction(title: "Check Out", style: UIAlertActionStyle.default, handler: { alertAction in
-                    //function
-                    DBHelper.sharedInstance.updatepunchendtime(Customercode: doctorobj.Doctor_Code!, regioncode:doctorobj.Doctor_Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
-                    self.updatepunchout(dcrID: doctorobj.DCR_Id, visitid: doctorobj.DCR_Doctor_Visit_Id!)
-                    alertViewController.dismiss(animated: true, completion: nil)
-                }))
-                
-                self.present(alertViewController, animated: true, completion: nil)
-            }
-            else
-            {
-                let doctorObj = BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList[0]
-                let statusMsg = BL_DCR_Doctor_Visit.sharedInstance.doDoctorVisitAllValidations(doctorVisitObj: doctorObj)
-                if statusMsg != ""
-                {
-                    AlertView.showAlertView(title: alertTitle, message: statusMsg, viewController: self)
-                }
-                else if BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus() != nil
-                {
-                    let alertMsg = accompMissedPrefixErrorMsg + (BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus()?.Employee_Name)! + accompMissedSuffixErrorMsg
-                    AlertView.showAlertView(title: alertTitle, message: alertMsg, viewController: self)
-                }
-                else
-                {
-                    _ = navigationController?.popViewController(animated: false)
-                }
-            }
-        
-    }
-    
-    @IBAction func edetailingaction() {
-        BL_DoctorList.sharedInstance.regionCode = DCRModel.sharedInstance.customerRegionCode
-        BL_DoctorList.sharedInstance.customerCode = DCRModel.sharedInstance.customerCode
-        
-        let customerObj = DBHelper.sharedInstance.getCustomerByCustomerCode(customerCode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode)
-        
-        CustomerModel.sharedInstance.navTitle = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
-        BL_DoctorList.sharedInstance.doctorTitle = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
-        
-        var deletailedDBId = DBHelper.sharedInstance.getMaxCustomerDetailedId(customerCode: BL_DoctorList.sharedInstance.customerCode, customerRegionCode: BL_DoctorList.sharedInstance.regionCode, detailingDate: getCurrentDate())
-        
-        if (deletailedDBId == nil)
-        {
-            deletailedDBId = 0
-        }
-        
-        BL_AssetModel.sharedInstance.detailedCustomerId = deletailedDBId! + 1
-        self.flexiDoctorName = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
-        moveToNextScreen()
-    }
+    @IBOutlet weak var txtMeetingObjective: UITextField!
+    @IBOutlet weak var cons_RideAlongHeight: NSLayoutConstraint!
+    @IBOutlet weak var cons_DetailProductHeight: NSLayoutConstraint!
     
     override func viewDidLoad() {
         self.selectedSampleArr = []
-               self.masterSampleArr = []
-               self.searchSampleArr = []
-               self.getMeetingObjective()
-               self.getSamplesList()
+        self.masterSampleArr = []
+        self.searchSampleArr = []
+        self.getMeetingObjective()
+        self.getSamplesList()
         self.currentLocation = getCurrentLocaiton()
         self.pickerview.delegate = self as! UIPickerViewDelegate
-               let val = userDCRProductList
+        let val = userDCRProductList
         setDefaults()
         setDoneButton()
         let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
@@ -198,10 +118,52 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         addCustomBackButtonToNavigationBar()
         DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
         self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
+        
+        if (isCurrentDate()) && !isfromProspect
+        {
+            visittime.isEnabled = false
+            var intime : String = ""
+            intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
+            
+            let outtime = ""
+            self.checkinlabel.text = "Check In: \(intime)"
+            self.checkoutlabel.text = "Check Out: \(outtime)"
+            let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
+            if dcrDoctorVisitList?.count ?? 0 > 0
+            {
+                for i in dcrDoctorVisitList!
+                {
+                    if (i.Doctor_Code == DCRModel.sharedInstance.customerCode)
+                    {
+                        let dcrDoctorVisitObj = i
+                        self.modifyDoctorVisitObj = dcrDoctorVisitObj
+                        self.modifyDoctorVisitObj.Visit_Time = visittime.text
+                        self.modifyDoctorVisitObj.Call_Objective_ID = i.Call_Objective_ID
+                        self.modifyDoctorVisitObj.Call_Objective_Name = i.Call_Objective_Name
+                        if !isAddDetailProduct && !isEdetailing {
+                           updatedoctorvisitdetails()
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if !isAddDetailProduct && !isEdetailing {
+                   savedoctorvisitdetails()
+                }
+            }
+        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        isAddDetailProduct = false
+        self.getAccompanist()
+        self.getDetailProducts()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
-        if (isCurrentDate())
+        if (isCurrentDate()) && !isfromProspect
         {
             visittime.isEnabled = false
             var intime : String = ""
@@ -235,11 +197,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         self.txtMeetingObjective.text = dcrDoctorVisitObj.Call_Objective_Name
                     }
                 }
-               
-                
               }
-             
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         let followUpModifyList = BL_DCR_Follow_Up.sharedInstance.getDCRFollowUpDetails()
@@ -267,23 +225,25 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                 if (i.Doctor_Code == DCRModel.sharedInstance.customerCode)
                 {
                     let dcrDoctorVisitObj = i
-                               self.modifyDoctorVisitObj = dcrDoctorVisitObj
-                               self.modifyDoctorVisitObj.Visit_Time = visittime.text
+                    self.modifyDoctorVisitObj = dcrDoctorVisitObj
+                    self.modifyDoctorVisitObj.Visit_Time = visittime.text
                     self.modifyDoctorVisitObj.Call_Objective_ID = i.Call_Objective_ID
                     self.modifyDoctorVisitObj.Call_Objective_Name = i.Call_Objective_Name
-                               updatedoctorvisitdetails()
+                    if !isAddDetailProduct && !isEdetailing {
+                       updatedoctorvisitdetails()
+                    }
                 }
             }
-           
         }
         else
-        
         {
-        savedoctorvisitdetails()
+            if !isAddDetailProduct && !isEdetailing {
+               savedoctorvisitdetails()
+            }
         }
         if selectedSampleArr.count != 0  {
             var currentList = convertToDCRSampleModel(list: selectedSampleArr)
-                let temp = currentList
+            let temp = currentList
             currentList.removeAll()
             for i in temp
             {
@@ -293,213 +253,416 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                 currentList.append(i)
             }
             let sampleBatchList = BL_SampleProducts.sharedInstance.convertToSampleBatchModel(selectedList: currentList,isComingFromModifyPage:false, dcrId: DCRModel.sharedInstance.dcrId,visitId:DCRModel.sharedInstance.customerVisitId,sampleId: 0)
-                      // changeCurrentList(list: sampleBatchList)
+            // changeCurrentList(list: sampleBatchList)
             
-                   BL_SampleProducts.sharedInstance.saveDoctorSampleDCRProducts(sampleProductList: sampleBatchList,isFrom:sampleBatchEntity.Doctor.rawValue,doctorVisitId: DCRModel.sharedInstance.customerVisitId)
+            BL_SampleProducts.sharedInstance.saveDoctorSampleDCRProducts(sampleProductList: sampleBatchList,isFrom:sampleBatchEntity.Doctor.rawValue,doctorVisitId: DCRModel.sharedInstance.customerVisitId)
+        }
+        
+        if accompanistList.count > 0 {
+            for docAccObj in accompanistList {
+                DBHelper.sharedInstance.updateDCRDoctorAccompanist(dcrDoctorAccompanistObj: docAccObj)
             }
+        }
     }
+    
+    //mark actions
+    @IBAction func addattachment() {
+        
+    
+    }
+    
+    
+    @IBAction func act_AccompanistSave(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+           self.accompanistList[sender.tag].Is_Accompanied = "1"
+        } else {
+           self.accompanistList[sender.tag].Is_Accompanied = "0"
+        }
+        DBHelper.sharedInstance.updateDCRDoctorAccompanist(dcrDoctorAccompanistObj: self.accompanistList[sender.tag])
+        self.getAccompanist()
+    }
+    
+    
+    
+    @IBAction func act_DeleteProduct(_ sender: UIButton) {
+        let acc_Name = self.detailProductList[sender.tag].Product_Name
+               let alertController = UIAlertController(title: "\(acc_Name!)", message: "Will be removed for \(DCRModel.sharedInstance.doctorName!)", preferredStyle: .alert)
+               let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+                   UIAlertAction in
+                let product_id = Int(self.detailProductList[sender.tag].Product_Code)
+                DBHelper.sharedInstance.deleteDCRDetailedProduct(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId, product_Code: product_id!)
+                self.getDetailProducts()
+                   }
+               let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+                   UIAlertAction in
+                   
+               }
+               alertController.addAction(okAction)
+               alertController.addAction(cancelAction)
+               self.present(alertController, animated: true, completion: nil)
+    }
+   
+    
+    func getoctorVisitList(){
+     let doctorvisitList = DBHelper.sharedInstance.getDoctorVisitDetailFlexiDoctor(dcrId: DCRModel.sharedInstance.dcrId , doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+        if doctorvisitList != nil {
+            doctorVisitList = doctorvisitList!
+        }
+    }
+    
+    
+    @IBAction func adddetailedproduct() {
+       self.isAddDetailProduct = true
+       let sb = UIStoryboard(name: detailProductSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: DetailProductVcID) as! DetailedProductViewController
+        vc.isComingFromModifyPage = false
+        vc.isFromDoctor = true
+        //self.present(vc, animated: false, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func submitdoctoraction() {
+        
+        
+        if DCRModel.sharedInstance.customerCode == ""
+        {
+            let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitFlexiDoctor(doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+            if doctorVisitList != nil
+            {
+                self.doctorVisitList = doctorVisitList!
+            }
+        }
+        else
+        {
+            let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
+            if doctorVisitList != nil
+            {
+                self.doctorVisitList = doctorVisitList!
+            }
+        }
+        
+        
+        
+        if self.doctorVisitList.count > 0
+        {
+            let dcrDoctorVisitObj = self.doctorVisitList.first
+            self.modifyDoctorVisitObj = dcrDoctorVisitObj
+        }
+        else
+            
+        {
+            savedoctorvisitdetails()
+        }
+        if self.doctorVisitList.count > 0 {
+            
+            let doctorobj = self.doctorVisitList[0]
+            if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" && !isfromProspect)
+            {
+                
+                let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
+                //let indexpath = sender.tag
+                let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                
+                alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                    //_ = self.navigationController?.popViewController(animated: false)
+                    alertViewController.dismiss(animated: true, completion: nil)
+                }))
+                
+                alertViewController.addAction(UIAlertAction(title: "Check Out", style: UIAlertActionStyle.default, handler: { alertAction in
+                    //function
+                    DBHelper.sharedInstance.updatepunchendtime(Customercode: doctorobj.Doctor_Code!, regioncode:doctorobj.Doctor_Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
+                    self.updatepunchout(dcrID: doctorobj.DCR_Id, visitid: doctorobj.DCR_Doctor_Visit_Id!)
+                    alertViewController.dismiss(animated: true, completion: nil)
+                }))
+                
+                self.present(alertViewController, animated: true, completion: nil)
+            }
+            else
+            {
+                let statusMsg = BL_DCR_Doctor_Visit.sharedInstance.doDoctorVisitAllValidations(doctorVisitObj: doctorobj)
+                if statusMsg != ""
+                {
+                    AlertView.showAlertView(title: alertTitle, message: statusMsg, viewController: self)
+                }
+                else if BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus() != nil
+                {
+                    let alertMsg = accompMissedPrefixErrorMsg + (BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus()?.Employee_Name)! + accompMissedSuffixErrorMsg
+                    AlertView.showAlertView(title: alertTitle, message: alertMsg, viewController: self)
+                }
+                else
+                {
+                    _ = navigationController?.popViewController(animated: false)
+                }
+            }
+        }
+    }
+    
+    @IBAction func edetailingaction() {
+        self.isEdetailing = true
+        if isfromProspect {
+            BL_DoctorList.sharedInstance.customerCode = ""
+            BL_DoctorList.sharedInstance.regionCode  = ""
+            BL_DoctorList.sharedInstance.doctorTitle = ""
+            BL_AssetModel.sharedInstance.detailedCustomerId = 0
+            
+            let sb = UIStoryboard(name: Constants.StoaryBoardNames.AssetsListSb, bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: AssetParentVCID) as! AssetParentViewController
+            vc.isComingFromDigitalAssets = true
+            vc.isFromProspect = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            BL_DoctorList.sharedInstance.regionCode = DCRModel.sharedInstance.customerRegionCode
+            BL_DoctorList.sharedInstance.customerCode = DCRModel.sharedInstance.customerCode
+            
+            let customerObj = DBHelper.sharedInstance.getCustomerByCustomerCode(customerCode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode)
+            
+            CustomerModel.sharedInstance.navTitle = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
+            BL_DoctorList.sharedInstance.doctorTitle = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
+            
+            var deletailedDBId = DBHelper.sharedInstance.getMaxCustomerDetailedId(customerCode: BL_DoctorList.sharedInstance.customerCode, customerRegionCode: BL_DoctorList.sharedInstance.regionCode, detailingDate: getCurrentDate())
+            
+            if (deletailedDBId == nil)
+            {
+                deletailedDBId = 0
+            }
+            
+            BL_AssetModel.sharedInstance.detailedCustomerId = deletailedDBId! + 1
+            self.flexiDoctorName = checkNullAndNilValueForString(stringData: customerObj?.Customer_Name)
+            moveToNextScreen()
+        }
+    }
+    
     
     // mark functions
     
+    func getAccompanist() {  // Ride Along
+        let accompanistList = BL_DCR_Doctor_Accompanists.sharedInstance.getDCRDoctorAccompanists(doctorVisitId: DCRModel.sharedInstance.doctorVisitId,dcrId: DCRModel.sharedInstance.dcrId)
+        if accompanistList.count != 0
+        {
+            self.accompanistList = accompanistList
+            self.cons_RideAlongHeight.constant = CGFloat(self.accompanistList.count * 50)
+        } else {
+            self.cons_RideAlongHeight.constant = 40.0
+        }
+        
+        self.accompanisttblview.reloadData()
+    }
+    
+    func getDetailProducts() {
+        let detailedProductList = BL_DCR_Doctor_Visit.sharedInstance.getDetailedProducts(dcrId:DCRModel.sharedInstance.dcrId , doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+        if detailedProductList != nil
+        {
+            self.detailProductList = detailedProductList!
+            if detailProductList.count != 0 {
+                self.cons_DetailProductHeight.constant = CGFloat(self.detailProductList.count * 80)
+            } else {
+                self.cons_DetailProductHeight.constant = 5.0
+            }
+        } else {
+            self.cons_DetailProductHeight.constant = 5.0
+        }
+        
+        
+        self.detailedproducttblview.reloadData()
+    }
+    
     func updatedoctorvisitdetails()
     {
-           
-                   // self.setValueToModifyObj()
+        
+        // self.setValueToModifyObj()
         BL_DCR_Doctor_Visit.sharedInstance.updateDCRDoctorVisit(dcrDoctorVisitObj: self.modifyDoctorVisitObj, viewController: self)
- 
-                    _ = self.navigationController?.popViewController(animated: false)
-                    if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
-                    {
-                        let customerCode = DCRModel.sharedInstance.customerCode
-                        let remarksText =  ""
-                        let statusId: Int = defaultBusineessStatusId
-                        let statusName: String = EMPTY
-                        let postData: NSMutableArray = []
-                        let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":self.modifyDoctorVisitObj.Doctor_Name,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.modifyDoctorVisitObj.Speciality_Name,"Category_Code": self.modifyDoctorVisitObj.Category_Code ?? EMPTY,"MDL_Number":self.modifyDoctorVisitObj.MDL_Number!,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":modifyDoctorVisitObj.Punch_Start_Time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":1,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
-                        
-                        postData.add(dict)
-                        showCustomActivityIndicatorView(loadingText: "Loading...")
-                        WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
-                            if(apiObj.Status == SERVER_SUCCESS_CODE)
-                            {
-                                
-                                removeCustomActivityView()
-                                _ = self.navigationController?.popViewController(animated: false)
-
-                            }
-                            else
-                            {
-                                removeCustomActivityView()
-                                AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
-                            }
-                        })
-                    }
+        
+      //  _ = self.navigationController?.popViewController(animated: false)
+        if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && !isfromProspect
+        {
+            let customerCode = DCRModel.sharedInstance.customerCode
+            let remarksText =  ""
+            let statusId: Int = defaultBusineessStatusId
+            let statusName: String = EMPTY
+            let postData: NSMutableArray = []
+            let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":self.modifyDoctorVisitObj.Doctor_Name,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.modifyDoctorVisitObj.Speciality_Name,"Category_Code": self.modifyDoctorVisitObj.Category_Code ?? EMPTY,"MDL_Number":self.modifyDoctorVisitObj.MDL_Number!,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":modifyDoctorVisitObj.Punch_Start_Time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":1,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+            
+            postData.add(dict)
+            showCustomActivityIndicatorView(loadingText: "Loading...")
+            WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
+                if(apiObj.Status == SERVER_SUCCESS_CODE)
+                {
                     
+                    removeCustomActivityView()
+                   // _ = self.navigationController?.popViewController(animated: false)
                     
                 }
+                else
+                {
+                    removeCustomActivityView()
+                    AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
+                }
+            })
+        }
+    }
     
     
     func savedoctorvisitdetails()
-   {
-                    let customerCode = DCRModel.sharedInstance.customerCode
-                    let remarksText =  ""
-                    var statusId: Int = defaultBusineessStatusId
-                    var statusName: String = EMPTY
-                  
-                    
-                    //                let doctorVisits = DBHelper.sharedInstance.getEdetailingModified(drcCustomerCode: DCRModel.sharedInstance.customerCode, regionCode: getRegionCode())
-                    
-                    if  customerCode == ""
+    {
+        let customerCode = DCRModel.sharedInstance.customerCode
+        let remarksText =  ""
+        var statusId: Int = defaultBusineessStatusId
+        var statusName: String = EMPTY
+        
+        
+        //                let doctorVisits = DBHelper.sharedInstance.getEdetailingModified(drcCustomerCode: DCRModel.sharedInstance.customerCode, regionCode: getRegionCode())
+        
+        if  customerCode == ""
+        {
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            
+            if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && !isfromProspect
+            {
+                let postData: NSMutableArray = []
+                let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": EMPTY,"Doctor_Name":self.doctorName,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.specialityName,"Category_Code": EMPTY,"MDL_Number":EMPTY,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+                
+                postData.add(dict)
+                showCustomActivityIndicatorView(loadingText: "Loading...")
+                WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
+                    if(apiObj.Status == SERVER_SUCCESS_CODE)
                     {
+                        removeCustomActivityView()
+                        let visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        let visitmode = visittime.substring(from: lastcharacterIndex)
+                        var localTimeZoneName: String { return TimeZone.current.identifier }
+                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: self.doctorName, specialityName: self.specialityName, visitTime: visittime, visitMode: visitmode, pobAmount: self.pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
+                        self.insertDCRDoctorAccompanists()
+                     //   _ = self.navigationController?.popViewController(animated: false)
                         
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateStyle = .short
-                        
-                        if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
-                        {
-                            let postData: NSMutableArray = []
-                            let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": EMPTY,"Doctor_Name":self.doctorName,"regionCode":BL_InitialSetup.sharedInstance.regionCode,"Speciality_Name":self.specialityName,"Category_Code": EMPTY,"MDL_Number":EMPTY,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":getRegionCode(),"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
-                            
-                            postData.add(dict)
-                            showCustomActivityIndicatorView(loadingText: "Loading...")
-                            WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
-                                if(apiObj.Status == SERVER_SUCCESS_CODE)
-                                {
-                                    removeCustomActivityView()
-                                    let visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                    let visitmode = visittime.substring(from: lastcharacterIndex)
-                                    var localTimeZoneName: String { return TimeZone.current.identifier }
-                                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: self.doctorName, specialityName: self.specialityName, visitTime: visittime, visitMode: visitmode, pobAmount: self.pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
-                                        self.insertDCRDoctorAccompanists()
-                                    _ = self.navigationController?.popViewController(animated: false)
-
-                                }
-                                else
-                                {
-                                    removeCustomActivityView()
-                                    AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
-                                }
-                            })
-                        }
-                        else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
-                        {
-                            
-                            var visittime = ""
-                            var visitmode = ""
-                            
-                            if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
-                                
-                                if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
-                                    visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                    visitmode = visittime.substring(from: lastcharacterIndex)
-                                }else{
-                                    visittime = ""
-                                    visitmode = ""
-                                }
-                                
-                            }else{
-                                if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
-                                    visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                    visitmode = visittime.substring(from: lastcharacterIndex)
-                                    visittime = ""
-                                }else{
-                                    visittime = ""
-                                    visitmode = ""
-                                }
-                            }
-                            var localTimeZoneName: String { return TimeZone.current.identifier }
-                            BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: doctorName, specialityName: specialityName, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
-                            insertDCRDoctorAccompanists()
-                            _ = self.navigationController?.popViewController(animated: false)
-                        }
-                        else
-                        {
-                            
-                            BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: doctorName, specialityName: specialityName, visitTime: visitTime, visitMode: visitMode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
-                            insertDCRDoctorAccompanists()
-                            _ = self.navigationController?.popViewController(animated: false)
-                        }
                     }
                     else
                     {
-                        
-                        
-                        if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
-                        {
-                            let postData: NSMutableArray = []
-                            let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":customerMasterObj.Customer_Name,"regionCode":DCRModel.sharedInstance.customerRegionCode,"Speciality_Name":customerMasterObj.Speciality_Name,"Category_Code":customerMasterObj.Category_Code ?? EMPTY,"MDL_Number":customerMasterObj.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":DCRModel.sharedInstance.customerRegionCode,"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
-                            
-                            postData.add(dict)
-                            showCustomActivityIndicatorView(loadingText: "Loading...")
-                            WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
-                                if(apiObj.Status == SERVER_SUCCESS_CODE)
-                                {
-                                    removeCustomActivityView()
-                                    
-                                   let visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                   let visitmode = visittime.substring(from: lastcharacterIndex)
-                                    
-                                    var localTimeZoneName: String { return TimeZone.current.identifier }
-                                    BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: self.pobAmt, remarks: remarksText, regionCode: DCRModel.sharedInstance.customerRegionCode, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
-                                       // self.insertDCRDoctorAccompanists()
-                                        _ = self.navigationController?.popViewController(animated: false)
-                                    
-                                }
-                                else
-                                {
-                                    removeCustomActivityView()
-                                    AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
-                                }
-                            })
-                        }
-                        else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
-                        {
-                            
-                            
-                            var visittime = ""
-                            var visitmode = ""
-                            
-                            if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
-                                
-                                if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
-                                    visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                    visitmode = visittime.substring(from: lastcharacterIndex)
-                                }else{
-                                    visittime = ""
-                                    visitmode = ""
-                                }
-                                
-                            }else{
-                                if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
-                                    visittime = stringFromDate(date1: Date())
-                                    let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
-                                    visitmode = visittime.substring(from: lastcharacterIndex)
-                                    visittime = ""
-                                }else{
-                                    visittime = ""
-                                    visitmode = ""
-                                }
-                            }
-                            
-                            var localTimeZoneName: String { return TimeZone.current.identifier }
-                            BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks: remarksText, regionCode: DCRModel.sharedInstance.customerRegionCode, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
-                           // insertDCRDoctorAccompanists()
-                            _ = self.navigationController?.popViewController(animated: false)
-                        }
-                        else
-                        {
-                            BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: visitTime, visitMode: visitMode, pobAmount: pobAmt, remarks: remarksText,regionCode: DCRModel.sharedInstance.customerRegionCode!, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: campaignName, campaignCode: self.campaignCode)
-                           // insertDCRDoctorAccompanists()
-                            _ = self.navigationController?.popViewController(animated: false)
-                        }
+                        removeCustomActivityView()
+                        AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
+                    }
+                })
+            }
+            else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate() && !isfromProspect)
+            {
+                
+                var visittime = ""
+                var visitmode = ""
+                
+                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
+                    
+                    if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
+                        visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        visitmode = visittime.substring(from: lastcharacterIndex)
+                    }else{
+                        visittime = ""
+                        visitmode = ""
                     }
                     
+                }else{
+                    if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
+                        visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        visitmode = visittime.substring(from: lastcharacterIndex)
+                        visittime = ""
+                    }else{
+                        visittime = ""
+                        visitmode = ""
+                    }
                 }
+                var localTimeZoneName: String { return TimeZone.current.identifier }
+                BL_DCR_Doctor_Visit.sharedInstance.savePunchInFlexiDoctorVisitDetails( doctorName: doctorName, specialityName: specialityName, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch())
+                insertDCRDoctorAccompanists()
+              //  _ = self.navigationController?.popViewController(animated: false)
+            }
+            else
+            {
+                
+                BL_DCR_Doctor_Visit.sharedInstance.saveFlexiDoctorVisitDetails(doctorName: flexiDoctorName, specialityName: specialityName, visitTime: visitTime, visitMode: visitMode, pobAmount: pobAmt, remarks:remarksText, regionCode: BL_InitialSetup.sharedInstance.regionCode, viewController: self, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective,campaignName:self.campaignName, campaignCode:self.campaignCode)
+                insertDCRDoctorAccompanists()
+             //   _ = self.navigationController?.popViewController(animated: false)
+            }
+        }
+        else
+        {
+            
+            
+            if BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && !isfromProspect
+            {
+                let postData: NSMutableArray = []
+                let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code":customerCode ?? EMPTY,"Doctor_Name":DCRModel.sharedInstance.doctorName,"regionCode":DCRModel.sharedInstance.customerRegionCode,"Speciality_Name":DCRModel.sharedInstance.doctorSpeciality,"Category_Code": EMPTY,"MDL_Number":"","DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":time,"Lattitude":getLatitude(),"Longitude":getLongitude(),"Modified_Entity":0,"Doctor_Region_Code":DCRModel.sharedInstance.customerRegionCode,"Customer_Entity_Type":"D","Source_Of_Entry":"iOS"]
+                
+                postData.add(dict)
+                showCustomActivityIndicatorView(loadingText: "Loading...")
+                WebServiceHelper.sharedInstance.sendHourlyReport(postData: postData, completion: { (apiObj) in
+                    if(apiObj.Status == SERVER_SUCCESS_CODE)
+                    {
+                        removeCustomActivityView()
+                        
+                        let visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        let visitmode = visittime.substring(from: lastcharacterIndex)
+                        
+                        var localTimeZoneName: String { return TimeZone.current.identifier }
+                        BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: self.pobAmt, remarks: remarksText, regionCode: DCRModel.sharedInstance.customerRegionCode, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
+                        // self.insertDCRDoctorAccompanists()
+                      //  _ = self.navigationController?.popViewController(animated: false)
+                        
+                    }
+                    else
+                    {
+                        removeCustomActivityView()
+                        AlertView.showAlertView(title: alertTitle, message: apiObj.Message, viewController: self)
+                    }
+                })
+            }
+            else if (BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate() && !isfromProspect)
+            {
+                
+                
+                var visittime = ""
+                var visitmode = ""
+                
+                if(BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() || BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode() == PrivilegeValues.VISIT_TIME.rawValue ){
+                    
+                    if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
+                        visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        visitmode = visittime.substring(from: lastcharacterIndex)
+                    }else{
+                        visittime = ""
+                        visitmode = ""
+                    }
+                    
+                }else{
+                    if(BL_DCR_Doctor_Visit.sharedInstance.isAppGeoLocationEnabled()){
+                        visittime = stringFromDate(date1: Date())
+                        let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
+                        visitmode = visittime.substring(from: lastcharacterIndex)
+                        visittime = ""
+                    }else{
+                        visittime = ""
+                        visitmode = ""
+                    }
+                }
+                
+                var localTimeZoneName: String { return TimeZone.current.identifier }
+                BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: stringFromDate(date1: getDateFromString(dateString: time)), visitMode: visitmode, pobAmount: pobAmt, remarks: remarksText, regionCode: DCRModel.sharedInstance.customerRegionCode, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
+                // insertDCRDoctorAccompanists()
+               // _ = self.navigationController?.popViewController(animated: false)
+            }
+            else
+            {
+                BL_DCR_Doctor_Visit.sharedInstance.saveDoctorVisitDetails(customerCode: customerCode, visitTime: visitTime, visitMode: visitMode, pobAmount: pobAmt, remarks: remarksText,regionCode: DCRModel.sharedInstance.customerRegionCode!, viewController: self, geoFencingSkipRemarks: self.geoLocationSkipRemarks, latitude: self.currentLocation.Latitude, longitude: self.currentLocation.Longitude, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: campaignName, campaignCode: self.campaignCode)
+                // insertDCRDoctorAccompanists()
+               // _ = self.navigationController?.popViewController(animated: false)
+            }
+        }
+        
+    }
     func insertDCRDoctorAccompanists()
     {
         BL_DCR_Doctor_Accompanists.sharedInstance.insertDCRDoctorAccompanists(dcrAccompanistList: BL_DCR_Doctor_Accompanists.sharedInstance.getDCRAccompanistVandNA())
@@ -511,14 +674,14 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         button.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let barButton = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = barButton
-       
+        
     }
     func getMeetingObjective() {
         self.meetingObjectiveList = DBHelper.sharedInstance.getCallObjectiveByEntityType(entityType: Constants.Call_Objective_Entity_Type_Ids.Doctor)
     }
     @objc func doneAction() {
-           self.navigationController?.popViewController(animated: true)
-       }
+        self.navigationController?.popViewController(animated: true)
+    }
     
     func getSamplesList() {
         userDCRProductList = BL_SampleProducts.sharedInstance.getSampleDCRProducts(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)!
@@ -554,9 +717,9 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             }
         }
         self.tblSelectedSample.reloadData()
-               self.tblSamples.reloadData()
-               self.scrollView.contentSize =
-               self.setScrollViewOffset()
+        self.tblSamples.reloadData()
+        self.scrollView.contentSize =
+            self.setScrollViewOffset()
     }
     
     private func addCustomBackButtonToNavigationBar()
@@ -591,7 +754,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         if(BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList != nil &&  BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList.count > 0){
             
             let doctorobj = BL_DCR_Doctor_Visit.sharedInstance.doctorVisitList[0]
-            if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" )
+            if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" && !isfromProspect)
             {
                 let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
                 //let indexpath = sender.tag
@@ -636,36 +799,36 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     }
     
     func getServerTime() -> String
-       {
-           let date = Date()
-           return stringFromDate(date1: date)
-       }
+    {
+        let date = Date()
+        return stringFromDate(date1: date)
+    }
     func getVisitTimeMode() -> String
     {
         return BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitMode()
     }
     func getVisitMode(visitTimeEntry:String) ->(visitMode:String,visitTime:String)
-       {
-           var visitTime = EMPTY
-           var visitMode = EMPTY
-           
-           if visitTimeEntry == PrivilegeValues.AM_PM.rawValue
-           {
-               visitMode = getVisitModeType(visitTime: getServerTime())
-           }
-           else
-           {
-               visitMode = getVisitModeType(visitTime: getServerTime())
-               visitTime = getServerTime()
-           }
-           
-           return (visitMode,visitTime)
-       }
+    {
+        var visitTime = EMPTY
+        var visitMode = EMPTY
+        
+        if visitTimeEntry == PrivilegeValues.AM_PM.rawValue
+        {
+            visitMode = getVisitModeType(visitTime: getServerTime())
+        }
+        else
+        {
+            visitMode = getVisitModeType(visitTime: getServerTime())
+            visitTime = getServerTime()
+        }
+        
+        return (visitMode,visitTime)
+    }
     func getVisitModeType(visitTime : String) -> String
-      {
-          let lastcharacterIndex = visitTime.index(visitTime.endIndex, offsetBy: -2)
-          return visitTime.substring(from: lastcharacterIndex)
-      }
+    {
+        let lastcharacterIndex = visitTime.index(visitTime.endIndex, offsetBy: -2)
+        return visitTime.substring(from: lastcharacterIndex)
+    }
     func insertDCRDoctorVisit(completion : @escaping (_ status : Int) -> ())
     {
         let objDoctorVisit = DBHelper.sharedInstance.getAllDetailsWith(dcrId: DCRModel.sharedInstance.dcrId, customerCode: DCRModel.sharedInstance.customerCode, regionCode: DCRModel.sharedInstance.customerRegionCode)
@@ -677,7 +840,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             
             
             
-            if (!BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate())
+            if (!BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && isCurrentDate() && !isfromProspect)
             {
                 var visittime = ""
                 var visitmode = ""
@@ -715,11 +878,11 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                 
             }
             else {
-                if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
+                if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && !isfromProspect)
                 {
                     
                     let postData: NSMutableArray = []
-                 
+                    
                     let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": DCRModel.sharedInstance.customerCode,"Doctor_Name":flexiDoctorName,"regionCode":customerMasterModel.Region_Code,"Speciality_Name":customerMasterModel.Speciality_Name,"Category_Code":customerMasterModel.Category_Code ?? EMPTY,"MDL_Number":customerMasterModel.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":DCRModel.sharedInstance.dcrDateString + " " + getServerTime(),"Lattitude":self.currentLocation.Latitude,"Longitude":self.currentLocation.Longitude ,"Modified_Entity":0,"Doctor_Region_Code":customerMasterModel.Region_Code,"Customer_Entity_Type":"D"]
                     
                     postData.add(dict)
@@ -741,7 +904,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                             BL_DCR_Doctor_Accompanists.sharedInstance.insertDCRDoctorAccompanists(dcrAccompanistList: BL_DCR_Doctor_Accompanists.sharedInstance.getDCRAccompanists())
                             
                             completion(SERVER_SUCCESS_CODE)
-
+                            
                         }
                         else
                         {
@@ -783,11 +946,11 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         else
         {
             
-            if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled())
+            if (BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && !isfromProspect)
             {
                 
                 let postData: NSMutableArray = []
-            
+                
                 
                 let dict:[String:Any] = ["companyCode":getCompanyCode(),"userCode":getUserCode(),"Doctor_Code": DCRModel.sharedInstance.customerCode,"Doctor_Name":flexiDoctorName,"regionCode":customerMasterModel.Region_Code,"Speciality_Name":customerMasterModel.Speciality_Name,"Category_Code":customerMasterModel.Category_Code ?? EMPTY,"MDL_Number":customerMasterModel.MDL_Number,"DCR_Actual_Date":DCRModel.sharedInstance.dcrDateString,"Doctor_Visit_Date_Time":objDoctorVisit?.Punch_Start_Time ?? "" ,"Lattitude":objDoctorVisit?.Lattitude ?? 0.0,"Longitude":objDoctorVisit?.Longitude ?? 0.0 ,"Modified_Entity":1,"Doctor_Region_Code":objDoctorVisit?.Doctor_Region_Code ?? "","Customer_Entity_Type":"D"]
                 
@@ -801,7 +964,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         removeCustomActivityView()
                         
                         completion(SERVER_SUCCESS_CODE)
-
+                        
                     }
                     else
                     {
@@ -816,6 +979,9 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             }
         }
     }
+    
+    
+    
     @IBAction func act_stepper(_ sender: UIStepper) {
         
         for num in 0..<self.sampleList.count {
@@ -835,7 +1001,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         self.tblSelectedSample.reloadData()
         self.tblSamples.reloadData()
         self.scrollView.contentSize =
-        self.setScrollViewOffset()
+            self.setScrollViewOffset()
     }
     private func addTimePicker()
     {
@@ -865,7 +1031,65 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         self.visitMode = self.getVisitModeType(visitTime: selectedVisitTime)
         self.visitTime = selectedVisitTime
         self.visittime.resignFirstResponder()
+        let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
+        if dcrDoctorVisitList?.count ?? 0 > 0
+        {
+            for i in dcrDoctorVisitList!
+            {
+                if (i.Doctor_Code == DCRModel.sharedInstance.customerCode)
+                {
+                    let dcrDoctorVisitObj = i
+                    self.modifyDoctorVisitObj = dcrDoctorVisitObj
+                    self.modifyDoctorVisitObj.Visit_Time = visittime.text
+                    self.modifyDoctorVisitObj.Call_Objective_ID = i.Call_Objective_ID
+                    self.modifyDoctorVisitObj.Call_Objective_Name = i.Call_Objective_Name
+                    if !isAddDetailProduct{
+                       updatedoctorvisitdetails()
+                    }
+                }
+            }
+        }
+        else
+        {
+            if !isAddDetailProduct {
+               savedoctorvisitdetails()
+                let docvisitidobj = DBHelper.sharedInstance.getDCRDoctorVisitForUpload(dcrId: BL_Stepper.sharedInstance.dcrId)
+                if (docvisitidobj.count > 0 )
+                {
+                    DCRModel.sharedInstance.doctorVisitId = docvisitidobj[0].DCR_Doctor_Visit_Id
+                }
+                let accompanistList = DBHelper.sharedInstance.getDCRAccompanists(dcrId: DCRModel.sharedInstance.dcrId)
+                for dcrAccompanistModelObj in accompanistList {
+                                if (docvisitidobj.count > 0 )
+                                {
+                                    var isaccompanied = 0
+                                    if (DCRModel.sharedInstance.customerRegionCode == dcrAccompanistModelObj.Acc_Region_Code)
+                                        {
+                                           isaccompanied = 1
+                                        }
+                                        let dict: NSDictionary = ["DCR_Id": BL_Stepper.sharedInstance.dcrId, "Acc_Region_Code": dcrAccompanistModelObj.Acc_Region_Code, "Acc_User_Code": dcrAccompanistModelObj.Acc_User_Code , "Acc_User_Name": dcrAccompanistModelObj.Acc_User_Name, "Acc_User_Type_Name": dcrAccompanistModelObj.Acc_User_Type_Name, "Employee_Name":dcrAccompanistModelObj.Employee_Name,"Visit_ID": DCRModel.sharedInstance.doctorVisitId,"accompainedCall":isaccompanied]
+
+                let dcrAccompanistModelObj: DCRDoctorAccompanist = DCRDoctorAccompanist(dict: dict)
+                                    if checkIsDco_AccompanistAvilable(dcrAccompanistModelObj: dcrAccompanistModelObj) {
+                                        DBHelper.sharedInstance.insertDoctorAccompanist(dcrDoctorAccompanistObj: dcrAccompanistModelObj)
+                        }
+                    }
+                }
+                 self.getAccompanist()
+            }
+        }
     }
+    
+    func checkIsDco_AccompanistAvilable(dcrAccompanistModelObj: DCRDoctorAccompanist) -> Bool {
+        let dcrDoctorAccompanist =  DBHelper.sharedInstance.getDCRDoctorAccompanists(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+        let filterArr = dcrDoctorAccompanist.filter({$0.Acc_User_Code == dcrAccompanistModelObj.Acc_User_Code})
+        if filterArr.count != 0 {
+           return false
+        } else {
+           return true
+        }
+    }
+    
     
     private func setDateDetails(sender : UIDatePicker)
     {
@@ -954,10 +1178,9 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         {
             if (DCRModel.sharedInstance.dcrDateString == getServerFormattedDateString(date: getCurrentDateAndTime()))
             {
-                if (DCRModel.sharedInstance.customerCode != EMPTY)
-                {
+                
                     showEDetailingButton()
-                }
+                
             }
         }
     }
@@ -1002,69 +1225,69 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         return height
     }
     func setDefaults()
-       {
-           if DCRModel.sharedInstance.customerCode == ""
-           {
-               self.navigationItem.title = String(format: "%@", flexiDoctorName)
-               DCRModel.sharedInstance.doctorName = flexiDoctorName
-           }
-           else
-           {
-               self.navigationItem.title = String(format: "%@", customerMasterModel.Customer_Name)
-               DCRModel.sharedInstance.doctorName = customerMasterModel.Customer_Name
-           }
-           
-           let suffixConfigVal = BL_DCR_Doctor_Visit.sharedInstance.getDoctorSuffixColumnName()
-           var detailText : String = ""
-           
-           if DCRModel.sharedInstance.customerCode == ""
-           {
-               let userObj = getUserModelObj()
-               doctorDetail.text = String(format: "%@ | %@", flexiSpecialityName, (userObj?.Region_Name)!)
-               DCRModel.sharedInstance.doctorSpeciality = flexiSpecialityName
-           }
-           else
-           {
-               if customerMasterModel.MDL_Number != ""
-               {
-                   let strHospitalName = checkNullAndNilValueForString(stringData: customerMasterModel.Hospital_Name!) as? String
-                   let strHospitalAccountNumber = checkNullAndNilValueForString(stringData: customerMasterModel.Hospital_Account_Number!) as? String
-                   
-                   if customerMasterModel.Hospital_Account_Number != ""
-                   {
-                       detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
-                   }
-                   else
-                   {
-                       detailText = String(format: "%@ | %@ | %@ | %@ ", strHospitalName!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
-                   }
-               }
-               else
-               {
-                   detailText = String(format: "%@ | %@ | %@", customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
-               }
-               
-               if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && customerMasterModel.Sur_Name != ""
-               {
-                   detailText = String(format: "%@ | %@", detailText, customerMasterModel.Sur_Name!)
-               }
-               
-               if suffixConfigVal.contains(ConfigValues.LOCAL_AREA.rawValue) && customerMasterModel.Local_Area != ""
-               {
-                   detailText = String(format: "%@ | %@", detailText, customerMasterModel.Local_Area!)
-               }
-               
-               doctorDetail.text = detailText
-               DCRModel.sharedInstance.doctorSpeciality = customerMasterModel.Speciality_Name
-           }
-           
-           let dcrDateVal = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate)
-           doctorVisitDate.text = String(format: "Date: %@", dcrDateVal)
-           
-           submitbtn.setTitle("Submit", for: .normal)
-           
-           toggleEDetailingButton()
-       }
+    {
+        if DCRModel.sharedInstance.customerCode == ""
+        {
+            self.navigationItem.title = String(format: "%@", flexiDoctorName)
+            DCRModel.sharedInstance.doctorName = flexiDoctorName
+        }
+        else
+        {
+            self.navigationItem.title = String(format: "%@", customerMasterModel.Customer_Name)
+            DCRModel.sharedInstance.doctorName = customerMasterModel.Customer_Name
+        }
+        
+        let suffixConfigVal = BL_DCR_Doctor_Visit.sharedInstance.getDoctorSuffixColumnName()
+        var detailText : String = ""
+        
+        if DCRModel.sharedInstance.customerCode == ""
+        {
+            let userObj = getUserModelObj()
+            doctorDetail.text = String(format: "%@ | %@", flexiSpecialityName, (userObj?.Region_Name)!)
+            DCRModel.sharedInstance.doctorSpeciality = flexiSpecialityName
+        }
+        else
+        {
+            if customerMasterModel.MDL_Number != ""
+            {
+                let strHospitalName = checkNullAndNilValueForString(stringData: customerMasterModel.Hospital_Name!) as? String
+                let strHospitalAccountNumber = checkNullAndNilValueForString(stringData: customerMasterModel.Hospital_Account_Number!) as? String
+                
+                if customerMasterModel.Hospital_Account_Number != ""
+                {
+                    detailText = String(format: "%@ | %@ | %@ | %@ | %@", strHospitalName!, strHospitalAccountNumber!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                }
+                else
+                {
+                    detailText = String(format: "%@ | %@ | %@ | %@ ", strHospitalName!, customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+                }
+            }
+            else
+            {
+                detailText = String(format: "%@ | %@ | %@", customerMasterModel.Speciality_Name, customerMasterModel.Category_Name!, customerMasterModel.Region_Name)
+            }
+            
+            if suffixConfigVal.contains(ConfigValues.SUR_NAME.rawValue) && customerMasterModel.Sur_Name != ""
+            {
+                detailText = String(format: "%@ | %@", detailText, customerMasterModel.Sur_Name!)
+            }
+            
+            if suffixConfigVal.contains(ConfigValues.LOCAL_AREA.rawValue) && customerMasterModel.Local_Area != ""
+            {
+                detailText = String(format: "%@ | %@", detailText, customerMasterModel.Local_Area!)
+            }
+            
+            doctorDetail.text = detailText
+            DCRModel.sharedInstance.doctorSpeciality = customerMasterModel.Speciality_Name
+        }
+        
+        let dcrDateVal = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate)
+        doctorVisitDate.text = String(format: "Date: %@", dcrDateVal)
+        
+        submitbtn.setTitle("Save Visit", for: .normal)
+        
+        toggleEDetailingButton()
+    }
     private func deleteShowList()
     {
         //DBHelper.sharedInstance.clearTempList()
@@ -1120,143 +1343,149 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     
     // Mark: - Attachment
     @IBAction func act_AddAttachment(_ sender: UIButton) {
-           self.show_AddActionSheet()
-       }
-       
-       func show_AddActionSheet() {
-           showiCloudActionSheet()
-       }
-       
-       @IBAction func removeAttachment(_ sender: UIButton) {
-           let attachment_Name = self.attachmentList[sender.tag].attachmentName
-           let alertController = UIAlertController(title: "\(attachment_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
-           let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
-               UIAlertAction in
-               let filename = self.attachmentList[sender.tag].attachmentName ?? ""
-              Bl_Attachment.sharedInstance.deleteAttachmentFile(fileName: filename)
-           let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+        self.show_AddActionSheet()
+    }
+    
+    func show_AddActionSheet() {
+        showiCloudActionSheet()
+    }
+    
+    @IBAction func removeAttachment(_ sender: UIButton) {
+        let attachment_Name = self.attachmentList[sender.tag].attachmentName
+        let alertController = UIAlertController(title: "\(attachment_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+            let filename = self.attachmentList[sender.tag].attachmentName ?? ""
+            Bl_Attachment.sharedInstance.deleteAttachmentFile(fileName: filename)
+            let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
             if attachmentArr != nil
             {
                 self.attachmentList = attachmentArr!
             }
-               self.tblAttachments.reloadData()
-           }
-           let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
-               UIAlertAction in
-               
-           }
-           alertController.addAction(okAction)
-           alertController.addAction(cancelAction)
-           self.present(alertController, animated: true, completion: nil)
-       }
-       
-       private func showiCloudActionSheet()
-       {
-           let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-           
-           let iCloudDrive = UIAlertAction(title: "iCloud Library", style: .default, handler: {
-               (alert: UIAlertAction) -> Void in
-               self.uploadFilesFromiCloud()
-           })
-           actionSheetController.addAction(iCloudDrive)
-           
-           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
-               (alert: UIAlertAction) -> Void in
-               
-           })
-           actionSheetController.addAction(cancelAction)
-           
-           if SwifterSwift().isPhone
-           {
-               self.present(actionSheetController, animated: true, completion: nil)
-           }
-           else
-           {
-               if let currentPopoverpresentioncontroller = actionSheetController.popoverPresentationController{
-                   currentPopoverpresentioncontroller.sourceView = self.view
-                   currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
-                   currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
-                   self.present(actionSheetController, animated: true, completion: nil)
-               }
-           }
-       }
-       
-       //MARK:- Get Image using iCloud Drive
-       private func uploadFilesFromiCloud()
-       {
-           let value1 = [String(kUTTypePDF),String(kUTTypeImage),String(kUTTypeSpreadsheet), String(kUTTypeBMP)]
-           let value2 = [String(kUTTypeTIFF), String(kUTTypeZipArchive),String(kUTTypeText),docxTypeId,docTypeId]
-           var valueType: [String] = []
-           valueType.append(contentsOf: value1)
-           valueType.append(contentsOf: value2)
-           
-           let documentPickerController = UIDocumentPickerViewController(documentTypes:valueType, in: .import)
-           documentPickerController.delegate = self
-           documentPickerController.navigationController?.navigationBar.topItem?.title = " "
-           
-           self.present(documentPickerController, animated: true, completion: nil)
-       }
-       
-       //MARK:- Document picker delegates
-       func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL)
-       {
-           var fileCount = Int()
-           fileCount = self.attachmentList.count
-           if fileCount < maxFileUploadCount
-           {
-               if let getData = NSData(contentsOf: url)
-               {
-                   var fileSize = Float(getData.length)
-                   fileSize = fileSize/(1024*1024)
-                   if fileSize > maxFileSize
-                   {
-                       AlertView.showAlertView(title: "Alert", message: "File size should not exceed \(maxFileSize) MB")
-                   }
-                   else
-                   {
-                       let urlPath = url.path
-                       let fileSplittedString = urlPath.components(separatedBy: "/")
-                       if fileSplittedString.count > 0
-                       {
-                           let fileName = fileSplittedString.last!
-                           
-                           let formatter = DateFormatter()
-                           formatter.dateFormat = "ddMMyyyyhhmmssSSS"
-                           let timestamp:String = formatter.string(from: getCurrentDateAndTime())
-                           let modifiedFileName = "\(timestamp)-\(fileName)"
-                           let fileSize = Bl_Attachment.sharedInstance.convertToBytes(number: fileSize)
-                           Bl_Attachment.sharedInstance.saveAttachmentFile(fileData: getData as Data, fileName: modifiedFileName)
-                     Bl_Attachment.sharedInstance.insertAttachment(attachmentName: fileName, attachmentSize: fileSize)
-                       }
-                      let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
-                       if attachmentArr != nil
-                       {
-                           attachmentList = attachmentArr!
-                       }
-                       self.tblAttachments.reloadData()
-                   }
-                   
-               }
-           }
-           else
-           {
-                        AlertView.showAlertView(title: alertTitle, message: "You can not upload more than \(maxFileUploadCount) files")
-                   }
-       }
-
-       
+            self.tblAttachments.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
     
+    private func showiCloudActionSheet()
+    {
+        let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let iCloudDrive = UIAlertAction(title: "iCloud Library", style: .default, handler: {
+            (alert: UIAlertAction) -> Void in
+            self.uploadFilesFromiCloud()
+        })
+        actionSheetController.addAction(iCloudDrive)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{
+            (alert: UIAlertAction) -> Void in
+            
+        })
+        actionSheetController.addAction(cancelAction)
+        
+        if SwifterSwift().isPhone
+        {
+            self.present(actionSheetController, animated: true, completion: nil)
+        }
+        else
+        {
+            if let currentPopoverpresentioncontroller = actionSheetController.popoverPresentationController{
+                currentPopoverpresentioncontroller.sourceView = self.view
+                currentPopoverpresentioncontroller.sourceRect = CGRect(x:self.view.frame.size.width-50,y:0, width:100,height:100)
+                currentPopoverpresentioncontroller.permittedArrowDirections = UIPopoverArrowDirection.up
+                self.present(actionSheetController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    //MARK:- Get Image using iCloud Drive
+    private func uploadFilesFromiCloud()
+    {
+        let value1 = [String(kUTTypePDF),String(kUTTypeImage),String(kUTTypeSpreadsheet), String(kUTTypeBMP)]
+        let value2 = [String(kUTTypeTIFF), String(kUTTypeZipArchive),String(kUTTypeText),docxTypeId,docTypeId]
+        var valueType: [String] = []
+        valueType.append(contentsOf: value1)
+        valueType.append(contentsOf: value2)
+        
+        let documentPickerController = UIDocumentPickerViewController(documentTypes:valueType, in: .import)
+        documentPickerController.delegate = self
+        documentPickerController.navigationController?.navigationBar.topItem?.title = " "
+        
+        self.present(documentPickerController, animated: true, completion: nil)
+    }
+    
+    //MARK:- Document picker delegates
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL)
+    {
+        var fileCount = Int()
+        fileCount = self.attachmentList.count
+        if fileCount < maxFileUploadCount
+        {
+            if let getData = NSData(contentsOf: url)
+            {
+                var fileSize = Float(getData.length)
+                fileSize = fileSize/(1024*1024)
+                if fileSize > maxFileSize
+                {
+                    AlertView.showAlertView(title: "Alert", message: "File size should not exceed \(maxFileSize) MB")
+                }
+                else
+                {
+                    let urlPath = url.path
+                    let fileSplittedString = urlPath.components(separatedBy: "/")
+                    if fileSplittedString.count > 0
+                    {
+                        let fileName = fileSplittedString.last!
+                        
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "ddMMyyyyhhmmssSSS"
+                        let timestamp:String = formatter.string(from: getCurrentDateAndTime())
+                        let modifiedFileName = "\(timestamp)-\(fileName)"
+                        let fileSize = Bl_Attachment.sharedInstance.convertToBytes(number: fileSize)
+                        Bl_Attachment.sharedInstance.saveAttachmentFile(fileData: getData as Data, fileName: modifiedFileName)
+                        Bl_Attachment.sharedInstance.insertAttachment(attachmentName: fileName, attachmentSize: fileSize)
+                    }
+                    let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+                    if attachmentArr != nil
+                    {
+                        attachmentList = attachmentArr!
+                    }
+                    self.tblAttachments.reloadData()
+                }
+                
+            }
+        }
+        else
+        {
+            AlertView.showAlertView(title: alertTitle, message: "You can not upload more than \(maxFileUploadCount) files")
+        }
+    }
 }
 //MARK:- Table View Delegate Methods
 
 extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-       return 1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == tblAttachments
+        if tableView == accompanisttblview {
+            if accompanistList.count == 0 {
+               return 1
+            } else {
+                return self.accompanistList.count
+            }
+        } else if tableView == detailedproducttblview {
+            return detailProductList.count
+        }
+        else if tableView == tblAttachments
         {
             self.cons_AttachmentHeight.constant = CGFloat(self.attachmentList.count * 50)
             return self.attachmentList.count
@@ -1276,26 +1505,51 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       if tableView == tblAttachments
-       {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjAttachmentcell") as! TpMeetingObjAttachmentcell
-        cell.lblAttachmentName.text = self.attachmentList[indexPath.row].attachmentName
-        cell.btnDelete.tag = indexPath.row
-        return cell
-       }
-       else if tableView == tblSelectedSample
-       {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TPSelectedSampleListCell") as! TPSelectedSampleListCell
-        let obj = self.selectedSampleArr[indexPath.row]
-        cell.Stepper.tag =  obj.Product_Id
-        cell.Stepper.value = Double(obj.Selected_Quantity)
-        cell.lblSampleName.text = obj.Product_Name
-        cell.lblSampleCount.text = String(Int(cell.Stepper.value))
-        return cell
+        if tableView == accompanisttblview {
+            if self.accompanistList.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DoctorVisitRideAlongEmptycell")
+                return cell!
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DoctorVisitRideAlongCell") as! DoctorVisitRideAlongCell
+                cell.lblRideAlongName.text = self.accompanistList[indexPath.row].Employee_Name
+                cell.segment.tag = indexPath.row
+                if self.accompanistList[indexPath.row].Is_Accompanied  == "1" {
+                    cell.segment.selectedSegmentIndex = 0
+                } else {
+                    cell.segment.selectedSegmentIndex = 1
+                }
+                
+                return cell
+            }
+        }
+        else if tableView == detailedproducttblview
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DoctorVisitDetailProductCell") as! DoctorVisitDetailProductCell
+            cell.lblProductName.text = self.detailProductList[indexPath.row].Product_Name
+            cell.lblRemarks.text = self.detailProductList[indexPath.row].stepperDisplayData
+            cell.btnDelete.tag = indexPath.row
+            return cell
+        }
+        else if tableView == tblAttachments
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjAttachmentcell") as! TpMeetingObjAttachmentcell
+            cell.lblAttachmentName.text = self.attachmentList[indexPath.row].attachmentName
+            cell.btnDelete.tag = indexPath.row
+            return cell
+        }
+        else if tableView == tblSelectedSample
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TPSelectedSampleListCell") as! TPSelectedSampleListCell
+            let obj = self.selectedSampleArr[indexPath.row]
+            cell.Stepper.tag =  obj.Product_Id
+            cell.Stepper.value = Double(obj.Selected_Quantity)
+            cell.lblSampleName.text = obj.Product_Name
+            cell.lblSampleCount.text = String(Int(cell.Stepper.value))
+            return cell
         }
         else
         {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjSamplescell") as! TpMeetingObjSamplescell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjSamplescell") as! TpMeetingObjSamplescell
             var obj: UserProductMapping!
             if self.isSearchEnable ==  true {
                 obj = self.searchSampleArr[indexPath.row]
@@ -1306,27 +1560,45 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
             cell.Stepper.value = Double(obj.Selected_Quantity)
             cell.lblSampleName.text = obj.Product_Name
             cell.lblSampleCount.text = String(Int(cell.Stepper.value))
-        return cell
-       }
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == tblAttachments
+        if tableView == accompanisttblview
         {
            return 50
         }
+        else if tableView == detailedproducttblview
+        {
+           return 80
+        }
+        else if tableView == tblAttachments
+        {
+            return 50
+        }
         else if tableView == tblSelectedSample
         {
-          return 70
+            return 70
         }
         else
         {
-           return 70
+            return 70
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == tblAttachments
+        
+        if tableView == detailedproducttblview {
+            self.isAddDetailProduct = true
+                 let sb = UIStoryboard(name: detailProductSb, bundle: nil)
+                  let vc = sb.instantiateViewController(withIdentifier: DetailProductVcID) as! DetailedProductViewController
+                  vc.isComingFromModifyPage = true
+                  vc.isFromDoctor = true
+                  //self.present(vc, animated: false, completion: nil)
+                  self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if tableView == tblAttachments
         {
             let sb = UIStoryboard(name: mainSb, bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: webViewVCID) as! WebViewController
@@ -1336,7 +1608,6 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
 }
 
 //MARK:- Search Bar Delegate Methods
@@ -1378,7 +1649,7 @@ extension DoctorStepperNewController: UISearchBarDelegate {
             return userName.contains(lowerCasedText) && userDetails.Selected_Quantity == 0
         }
         self.searchSampleArr = searchList
-         self.tblSamples.reloadData()
+        self.tblSamples.reloadData()
     }
 }
 //MARK:- Picker View Delegate Methods
@@ -1402,6 +1673,27 @@ extension DoctorStepperNewController: UIPickerViewDelegate,UIPickerViewDataSourc
         self.txtMeetingObjective.text = self.meetingObjectiveList[row].Call_Objective_Name
         self.txtMeetingObjective.resignFirstResponder()
         let dic = ["Business_Status_Id" : self.meetingObjectiveList[row].Call_Objective_ID ?? 0,"Status_Name" : self.meetingObjectiveList[row].Call_Objective_Name ?? EMPTY] as [String : Any]
-            self.objCallObjective = BusinessStatusModel(dict : dic as NSDictionary)
+        self.objCallObjective = BusinessStatusModel(dict : dic as NSDictionary)
     }
 }
+
+//MARK:- UITable View Cell Classes.
+
+class DoctorVisitRideAlongCell: UITableViewCell {
+    @IBOutlet weak var segment: UISegmentedControl!
+    @IBOutlet weak var lblRideAlongName: UILabel!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class DoctorVisitDetailProductCell: UITableViewCell {
+    @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var lblProductName: UILabel!
+    @IBOutlet weak var lblRemarks: UILabel!
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+

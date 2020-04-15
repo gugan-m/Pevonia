@@ -12,6 +12,8 @@ class TPAttendanceStepperViewController: UIViewController
 {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitViewHgtConst: NSLayoutConstraint!
+    @IBOutlet weak var submitView: UIView!
+    
     
     // MARK:- Variables
     var pickerView = UIPickerView()
@@ -33,9 +35,11 @@ class TPAttendanceStepperViewController: UIViewController
         activityList = BL_DCR_Attendance.sharedInstance.getProjectActivityList()!
         if IS_VIEW_MODE {
             self.tableView.isUserInteractionEnabled = false
+            self.submitView.isHidden = true
             self.submitViewHgtConst.constant = 0
         } else {
             self.tableView.isUserInteractionEnabled = true
+            self.submitView.isHidden = false
             self.submitViewHgtConst.constant = 40
         }
     }

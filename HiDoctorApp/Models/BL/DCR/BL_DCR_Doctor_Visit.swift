@@ -2534,10 +2534,10 @@ class BL_DCR_Doctor_Visit: NSObject
                 //productAttributes += "\(space)N/A"
             }
             
-            productAttributes += "\n\(space) Remarks\n"
+           // productAttributes += "\nRemarks\n"
             if (checkNullAndNilValueForString(stringData: obj.objWrapper.remarks) != EMPTY)
             {
-                productAttributes += space + obj.objWrapper.remarks
+                productAttributes = obj.objWrapper.remarks
             }
             else
             {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sch-um-HKN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nay-qV-EpN">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -325,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4D7-ed-Ju3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="776.79999999999995" y="44.527736131934034"/>
+            <point key="canvasLocation" x="1772.8125" y="43.838028169014088"/>
         </scene>
         <!--Create Cpmpetitor Product Controller-->
         <scene sceneID="Voj-us-p3O">
@@ -1241,17 +1241,17 @@
                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CompetitorCell" id="5tc-x8-dkK" customClass="CompetitiorListTableViewCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="37"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="37.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5tc-x8-dkK" id="yxR-s9-PnC">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="37.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H33-Vk-JbH">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2u-lo-gQS">
-                                                            <rect key="frame" x="8" y="8" width="304" height="21"/>
+                                                            <rect key="frame" x="8" y="8" width="304" height="21.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1477,7 +1477,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zK4-OK-hb1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2677.5" y="21.25"/>
+            <point key="canvasLocation" x="3675" y="21.12676056338028"/>
         </scene>
         <!--Detailed Products View Controller-->
         <scene sceneID="Mir-3q-geZ">
@@ -1585,7 +1585,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A1q-c9-SH1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4492" y="14.842578710644679"/>
+            <point key="canvasLocation" x="5488.125" y="14.788732394366198"/>
         </scene>
         <!--Detailed Competitor Report Controller-->
         <scene sceneID="6j1-oq-wzp">
@@ -1701,7 +1701,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="om5-eV-8KV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4425" y="692.95774647887322"/>
+            <point key="canvasLocation" x="5422.5" y="692.95774647887322"/>
         </scene>
         <!--Competitor Product Detail View Controller-->
         <scene sceneID="ceL-gx-qmp">
@@ -1868,25 +1868,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gnz-Hy-ea8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5240.625" y="-7.394366197183099"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="6GR-QC-ng4">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sch-um-HKN" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JfW-aU-QyD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="E3f-l9-nPe" kind="relationship" relationship="rootViewController" id="Z6c-Ta-yAd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t2n-Kr-tzz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-219.375" y="45"/>
+            <point key="canvasLocation" x="6238.125" y="-7.394366197183099"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qH5-m4-NU4">
@@ -1904,7 +1886,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dvh-7a-JDm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1680" y="21.25"/>
+            <point key="canvasLocation" x="2677.5" y="21.12676056338028"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VTU-2A-1Z7">
@@ -1922,7 +1904,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgP-Uh-dMt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3552.8000000000002" y="14.842578710644679"/>
+            <point key="canvasLocation" x="4548.75" y="14.788732394366198"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0fe-Z2-zgT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nay-qV-EpN" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fnH-5H-zNr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="E3f-l9-nPe" kind="relationship" relationship="rootViewController" id="QPx-S1-bkY"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I5k-6I-W2U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776.25" y="44.366197183098592"/>
         </scene>
     </scenes>
     <resources>

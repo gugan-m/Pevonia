@@ -68,6 +68,14 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
                 selectedWorkCategoryID = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Id ?? 0
             }
         }
+        let doctorlistArr = BL_Stepper.sharedInstance.doctorList
+        if doctorlistArr.count > 0 {
+            let filterArr = doctorlistArr.filter({$0.Doctor_Code == "" })
+            if (isProspect)
+            {
+                BL_Stepper.sharedInstance.doctorList = filterArr
+            }
+        }
         reloadTableView()
         //        showAlertCaptureLocationCount = 0
         //
@@ -1256,7 +1264,13 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         {
             vc.flexiDoctorName = model.Doctor_Name
             vc.flexiSpecialityName = model.Speciality_Name
-            
+            if (isProspect)
+            {
+              vc.isfromProspect = true
+            } else
+            {
+              vc.isfromProspect = false
+            }
             BL_DoctorList.sharedInstance.regionCode = EMPTY
             BL_DoctorList.sharedInstance.customerCode = EMPTY
         }
@@ -1328,9 +1342,6 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
     //------> Display Cells
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
         if indexPath.section == 1
         {
             let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
@@ -1412,10 +1423,6 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
         {
             return UITableViewCell.init()
         }
-        
-        
-        
-        
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         generalText = textField.text ?? ""
@@ -1596,7 +1603,7 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
         
         if indexPath.section == 1 {
             let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
-            if (isCurrentDate() && checkPunchin(indexPath: indexPath))
+            if (isCurrentDate() && checkPunchin(indexPath: indexPath) && !isProspect)
             {
                 
                 let currentLocation = getCurrentLocaiton()

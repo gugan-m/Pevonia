@@ -43,15 +43,11 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
         workCategory = BL_WorkPlace.sharedInstance.getWorkCategoriesList()
         self.pickerview.delegate = self
         setWorkPlace()
-        BL_TPStepper.sharedInstance.insertTourPlannerHeader()
-        self.updateWorkPlaceDetails()
-        //        self.tableView.delegate = self
-        //        self.tableView.dataSource = self
-        //
-        //        BL_TPStepper.sharedInstance.clearAllArray()
         if IS_VIEW_MODE {
             self.submitButton.isHidden = true
         } else {
+         BL_TPStepper.sharedInstance.insertTourPlannerHeader()
+            self.updateWorkPlaceDetails()
           self.submitButton.isHidden = false
         }
         
@@ -1178,9 +1174,7 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                      MeetingObjCell.isUserInteractionEnabled = true
                     MeetingObjCell.btnRemoveDoctor.isUserInteractionEnabled = true
                 }
-                
-                 
-                
+            
                 var line2Text: String = ""
                 
                 if doctorObj.Hospital_Name! != ""{
@@ -1207,6 +1201,11 @@ extension TPStepperViewController : UITableViewDelegate,UITableViewDataSource {
                     else
                     {
                         line2Text = doctorObj.Region_Name!
+                    }
+                } else {
+                    
+                    if line2Text.count != 0 {
+                        line2Text.removeLast()
                     }
                 }
                 MeetingObjCell.txtContactDetails.text = line2Text

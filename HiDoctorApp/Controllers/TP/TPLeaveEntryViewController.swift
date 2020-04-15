@@ -52,10 +52,10 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         leaveReason.delegate = self
         updateViews()
         if IS_VIEW_MODE {
-            self.scrollView.isUserInteractionEnabled = true
+            self.scrollView.isUserInteractionEnabled = false
             self.submitbtn.isHidden = true
         } else {
-           self.scrollView.isUserInteractionEnabled = false
+           self.scrollView.isUserInteractionEnabled = true
             self.submitbtn.isHidden = false
         }
     }

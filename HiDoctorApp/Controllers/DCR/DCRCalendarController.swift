@@ -17,6 +17,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     }
     
     
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contentViewHeightConst: NSLayoutConstraint!
@@ -362,7 +363,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         }
                     })
                     dcrCategoryMenu.addAction(categoryAction)
-                    let tpModelList = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: DCRActivity.fieldRcpa.rawValue, status: TPStatus.approved.rawValue)
+                    let tpModelList = DBHelper.sharedInstance.getTPForDCRdate(date: selectedDate, activity: DCRActivity.fieldRcpa.rawValue, status: TPStatus.approved.rawValue)
                     let tpModelListA = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 2, status: TPStatus.approved.rawValue)
                     let tpModelListL = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 3, status: TPStatus.approved.rawValue)
                     
@@ -372,7 +373,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         
                         if tpModelList.count > 0
                         {
-                        if tpModelList[0].TpType == "F" && tpModelList[0].Project_Code == "Field_RCPA"
+                        if tpModelList[0].TpType == "F"
                         {
                             
                             Radiobtnfeild.isSelected = true

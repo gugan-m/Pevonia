@@ -1399,6 +1399,16 @@ class DBHelper: NSObject
         return id
     }
     
+    func getTPForDCRdate(date : Date, activity : Int,  status: Int) -> [TourPlannerHeader]{
+        var tourPlannerList : [TourPlannerHeader] = []
+         try? dbPool.read { db in
+             tourPlannerList = try TourPlannerHeader.fetchAll(db, "SELECT * FROM tran_TP_Header WHERE TP_Date = ? AND Activity = ? AND Status = ?", arguments : [date, activity, status])
+         }
+        return tourPlannerList
+    }
+    
+    
+    
     func getTpDataforDCRDate(date : Date, activity : Int,  status: Int) -> [TourPlannerHeader]
     {
         var tourPlannerList : [TourPlannerHeader] = []
@@ -2849,6 +2859,15 @@ class DBHelper: NSObject
         return dcrDetailedList
     }
     
+    func deleteDCRDetailedProduct(dcrId: Int, doctorVisitId: Int,product_Code: Int) {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRDetailedProductsModel.fetchOne(db, "DELETE FROM \(TRAN_DCR_DETAILED_PRODUCTS) WHERE DCR_Id = ? AND DCR_Doctor_Visit_Id = ? AND Product_Code = ?", arguments: [dcrId, doctorVisitId,product_Code])
+            {
+                try! rowValue.delete(db)
+            }
+        })
+    }
+    
     func deleteDCRDetailedProducts(dcrId: Int, doctorVisitId: Int)
     {
         try? dbPool.write({ db in
@@ -3656,7 +3675,7 @@ class DBHelper: NSObject
     func updateLeave(dcrHeaderObj: DCRHeaderModel)
     {
         try? dbPool.write({ db in
-            if let rowValue = try DCRHeaderModel.fetchOne(db, "SELECT * FROM \(TRAN_DCR_HEADER) WHERE DCR_Actual_Date = ? AND Flag = ?", arguments: [dcrHeaderObj.DCR_Actual_Date, DCRFlag.leave.rawValue])
+            if let rowValue = try DCRHeaderModel.fetchOne(db, "SELECT * FROM \(TRAN_DCR_HEADER) WHERE DCR_Actual_Date = ? AND Flag = ?", arguments: [dcrHeaderObj.DCR_Actual_Date!, DCRFlag.leave.rawValue])
             {
                 rowValue.Leave_Type_Id = dcrHeaderObj.Leave_Type_Id
                 rowValue.Leave_Type_Code = dcrHeaderObj.Leave_Type_Code
@@ -4208,6 +4227,21 @@ class DBHelper: NSObject
             }
         })
     }
+    
+    func updateDCRAttendance(dcrId: Int,leaveReason: String,status: String)
+    {
+        try? dbPool.write({ db in
+            if let rowValue = try DCRHeaderModel.fetchOne(db, "SELECT * FROM \(TRAN_DCR_HEADER) WHERE DCR_Id = ?", arguments: [dcrId])
+            {
+                rowValue.DCR_Status = status
+                rowValue.Reason = leaveReason
+                
+                try! rowValue.update(db)
+            }
+        })
+    }
+    
+    
     
     func getPOBHeaderForUpload(dcrId: Int) -> [DCRDoctorVisitPOBHeaderModel]
     {
@@ -4790,7 +4824,7 @@ class DBHelper: NSObject
         
         
         try? dbPool.read { db in
-            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code,\(TRAN_TP_DOCTOR).Call_Objective_ID,\(TRAN_TP_DOCTOR).Call_Objective_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code  where TP_Date = ?", arguments: [dateStr])
+            tpDoctorList = try TourPlannerDoctor.fetchAll(db , "SELECT \(MST_CUSTOMER_MASTER).MDL_Number,\(MST_CUSTOMER_MASTER).Customer_Name,\(MST_CUSTOMER_MASTER).Hospital_Name,\(MST_CUSTOMER_MASTER).Customer_Code,\(MST_CUSTOMER_MASTER).Speciality_Name,\(MST_CUSTOMER_MASTER).Category_Name,\(TRAN_TP_DOCTOR).Doctor_Region_Name,\(TRAN_TP_DOCTOR).TP_Date,\(TRAN_TP_DOCTOR).TP_Id,\(TRAN_TP_DOCTOR).TP_Doctor_Id,\(TRAN_TP_DOCTOR).TP_Entry_Id,\(TRAN_TP_DOCTOR).Doctor_Name,\(TRAN_TP_DOCTOR).Doctor_Code,\(TRAN_TP_DOCTOR).Doctor_Region_Code,\(TRAN_TP_DOCTOR).Call_Objective_ID,\(TRAN_TP_DOCTOR).Call_Objective_Name FROM \(TRAN_TP_DOCTOR) INNER JOIN \(MST_CUSTOMER_MASTER) on \(MST_CUSTOMER_MASTER).Customer_Code = \(TRAN_TP_DOCTOR).Doctor_Code AND \(MST_CUSTOMER_MASTER).Region_Code = \(TRAN_TP_DOCTOR).Doctor_Region_Code  where TP_Date = ?", arguments: [dateStr])
             
         }
         

@@ -19,7 +19,6 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var uploadAttachmentBtn: UIButton!
     @IBOutlet weak var uploadAttachmentHeightConst: NSLayoutConstraint!
@@ -33,8 +32,6 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var dividerViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var buttonView: UIView!
    
-    
-    
     var uploadDetailList: [DCRUploadDetail]!
     var inProgressFlag : Bool = false
     var retryFlag : Bool = false
@@ -409,84 +406,25 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     // tranxit
     func uploadDCRList()
     {
-        let model = uploadDetailList[index]
-        let dcrDateVal: String? = convertDateIntoServerStringFormat(date: model.dcrDate)
-        
-        if (doAttendanceRemarksLengthValidation(model: model))
-        {
-            if let dcrDate = dcrDateVal
+        if uploadDetailList.count != 0 {
+            let model = uploadDetailList[index]
+            let dcrDateVal: String? = convertDateIntoServerStringFormat(date: model.dcrDate)
+            
+            if (doAttendanceRemarksLengthValidation(model: model))
             {
-                BL_Upload_DCR.sharedInstance.uploadDCR(dcrId: model.dcrId, dcrDate: dcrDate, checkSumId: 0, flag: model.flag) { (apiResponseModel) in
-                    if apiResponseModel.Status == SERVER_ERROR_CODE
-                    {
-                        let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
-                        
-                        BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
-                        
-                        if (apiResponseModel.Message == "Your DVR has been Locked for this day, Due to delay in uploading DVR. Please contact H.O. to release the lock.") || (apiResponseModel.Message == "Your DVR has been Locked, due to unapproved DVR activity Lock.")
+                if let dcrDate = dcrDateVal
+                {
+                    BL_Upload_DCR.sharedInstance.uploadDCR(dcrId: model.dcrId, dcrDate: dcrDate, checkSumId: 0, flag: model.flag) { (apiResponseModel) in
+                        if apiResponseModel.Status == SERVER_ERROR_CODE
                         {
-                            self.updateUploadDetail(statusMsg: skippedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
+                            let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
                             
-                            self.index = self.index + 1
+                            BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
                             
-                            if self.index < self.uploadDetailList.count
+                            if (apiResponseModel.Message == "Your DVR has been Locked for this day, Due to delay in uploading DVR. Please contact H.O. to release the lock.") || (apiResponseModel.Message == "Your DVR has been Locked, due to unapproved DVR activity Lock.")
                             {
-                                self.uploadDCRList()
-                            }
-                            else
-                            {
-                                self.dcrRefresh()
-                            }
-                        }
-                        else
-                        {
-                            self.setButtonText(title: failedStatus)
-                            self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
-                        }
-                    }
-                    else if apiResponseModel.Status == NO_INTERNET_ERROR_CODE || apiResponseModel.Status == 99
-                    {
-                        self.retryFlag = true
-                        self.setButtonText(title: retryStatus)
-                        self.updateUploadDetail(statusMsg: failedStatus, reason: "Please check your internet connection", showPopup: false, failedStatusCode: apiResponseModel.Status)
-                    }
-                    else if apiResponseModel.Status == 1
-                    {
-                        if apiResponseModel.list.count > 0
-                        {
-                            let dictionary = apiResponseModel.list[0] as! NSDictionary
-                            if BL_Upload_DCR.sharedInstance.verifySyncedRecordCount(dict: dictionary)
-                            {
-                                DBHelper.sharedInstance.deleteAnalyticsByDCRDate(dcrDate: dcrDateVal!)
+                                self.updateUploadDetail(statusMsg: skippedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
                                 
-                                if let array = dictionary.value(forKey: "lstDCRAttachment") as? NSArray
-                                {
-                                    for dict in array
-                                    {
-                                        if let getDict = dict as? NSDictionary
-                                        {
-                                            let dcrId = getDict.value(forKey: "DCR_Id") as! Int
-                                            let doctorVisitId = getDict.value(forKey: "Visit_Id") as! Int
-                                            let dcrVisitCode = getDict.value(forKey: "DCR_Visit_Code") as! String
-                                            DBHelper.sharedInstance.updateAttachmentDCRVisitCode(dcrId: dcrId, doctorVisitId: doctorVisitId, dcrVisitCode: dcrVisitCode)
-                                        }
-                                    }
-                                }
-                                
-                                if let array = dictionary.value(forKey: "lstDCRChemistAttachment") as? NSArray
-                                {
-                                    for dict in array
-                                    {
-                                        if let getDict = dict as? NSDictionary
-                                        {
-                                            let chemistDayVisitId = getDict.value(forKey: "CV_Visit_Id") as! Int
-                                            let cvVisitId = getDict.value(forKey: "chemistVisit_Id") as! Int
-                                            DBHelper.sharedInstance.updateChemistAttachmentVisitId(chemistDayVisitId: chemistDayVisitId, cvVisitId: cvVisitId)
-                                        }
-                                    }
-                                }
-                                
-                                self.updateUploadDetail(statusMsg: successStatus, reason: "", showPopup: false, failedStatusCode: apiResponseModel.Status)
                                 self.index = self.index + 1
                                 
                                 if self.index < self.uploadDetailList.count
@@ -500,67 +438,128 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
                             }
                             else
                             {
+                                self.setButtonText(title: failedStatus)
+                                self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
+                            }
+                        }
+                        else if apiResponseModel.Status == NO_INTERNET_ERROR_CODE || apiResponseModel.Status == 99
+                        {
+                            self.retryFlag = true
+                            self.setButtonText(title: retryStatus)
+                            self.updateUploadDetail(statusMsg: failedStatus, reason: "Please check your internet connection", showPopup: false, failedStatusCode: apiResponseModel.Status)
+                        }
+                        else if apiResponseModel.Status == 1
+                        {
+                            if apiResponseModel.list.count > 0
+                            {
+                                let dictionary = apiResponseModel.list[0] as! NSDictionary
+                                if BL_Upload_DCR.sharedInstance.verifySyncedRecordCount(dict: dictionary)
+                                {
+                                    DBHelper.sharedInstance.deleteAnalyticsByDCRDate(dcrDate: dcrDateVal!)
+                                    
+                                    if let array = dictionary.value(forKey: "lstDCRAttachment") as? NSArray
+                                    {
+                                        for dict in array
+                                        {
+                                            if let getDict = dict as? NSDictionary
+                                            {
+                                                let dcrId = getDict.value(forKey: "DCR_Id") as! Int
+                                                let doctorVisitId = getDict.value(forKey: "Visit_Id") as! Int
+                                                let dcrVisitCode = getDict.value(forKey: "DCR_Visit_Code") as! String
+                                                DBHelper.sharedInstance.updateAttachmentDCRVisitCode(dcrId: dcrId, doctorVisitId: doctorVisitId, dcrVisitCode: dcrVisitCode)
+                                            }
+                                        }
+                                    }
+                                    
+                                    if let array = dictionary.value(forKey: "lstDCRChemistAttachment") as? NSArray
+                                    {
+                                        for dict in array
+                                        {
+                                            if let getDict = dict as? NSDictionary
+                                            {
+                                                let chemistDayVisitId = getDict.value(forKey: "CV_Visit_Id") as! Int
+                                                let cvVisitId = getDict.value(forKey: "chemistVisit_Id") as! Int
+                                                DBHelper.sharedInstance.updateChemistAttachmentVisitId(chemistDayVisitId: chemistDayVisitId, cvVisitId: cvVisitId)
+                                            }
+                                        }
+                                    }
+                                    
+                                    self.updateUploadDetail(statusMsg: successStatus, reason: "", showPopup: false, failedStatusCode: apiResponseModel.Status)
+                                    self.index = self.index + 1
+                                    
+                                    if self.index < self.uploadDetailList.count
+                                    {
+                                        self.uploadDCRList()
+                                    }
+                                    else
+                                    {
+                                        self.dcrRefresh()
+                                    }
+                                }
+                                else
+                                {
+                                    let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
+                                    extProp.setValue(apiResponseModel.Message, forKey: "API_RESPONSE_MESSAGE")
+                                    
+                                    BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
+                                    
+                                    self.setButtonText(title: failedStatus)
+                                    self.updateUploadDetail(statusMsg: failedStatus, reason: "Count mismatch", showPopup: false, failedStatusCode: apiResponseModel.Status)
+                                }
+                            }
+                            else
+                            {
                                 let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
                                 extProp.setValue(apiResponseModel.Message, forKey: "API_RESPONSE_MESSAGE")
                                 
                                 BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
                                 
                                 self.setButtonText(title: failedStatus)
-                                self.updateUploadDetail(statusMsg: failedStatus, reason: "Count mismatch", showPopup: false, failedStatusCode: apiResponseModel.Status)
+                                self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
                             }
                         }
-                        else
+                        else if apiResponseModel.Status == 2
                         {
-                            let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
-                            extProp.setValue(apiResponseModel.Message, forKey: "API_RESPONSE_MESSAGE")
+                            self.setButtonText(title: failedStatus)
+                            self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
                             
-                            BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
+                            BL_Upload_DCR.sharedInstance.updateDCRStatusAsDraft(dcrId: model.dcrId, dcrDate: model.dcrDate)
+                        }
+                        else if apiResponseModel.Status == 3
+                        {
+                            self.updateUploadDetail(statusMsg: skippedStatus, reason: "", showPopup: false, failedStatusCode: apiResponseModel.Status)
+                            self.index = self.index + 1
                             
+                            if self.index < self.uploadDetailList.count
+                            {
+                                self.uploadDCRList()
+                            }
+                            else
+                            {
+                                self.dcrRefresh()
+                            }
+                        }
+                        else if apiResponseModel.Status == 5
+                        {
+                            self.setButtonText(title: failedStatus)
+                            self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: true, failedStatusCode: apiResponseModel.Status)
+                        }
+                        else if (apiResponseModel.Status == 4)
+                        {
                             self.setButtonText(title: failedStatus)
                             self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
                         }
                     }
-                    else if apiResponseModel.Status == 2
-                    {
-                        self.setButtonText(title: failedStatus)
-                        self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
-                        
-                        BL_Upload_DCR.sharedInstance.updateDCRStatusAsDraft(dcrId: model.dcrId, dcrDate: model.dcrDate)
-                    }
-                    else if apiResponseModel.Status == 3
-                    {
-                        self.updateUploadDetail(statusMsg: skippedStatus, reason: "", showPopup: false, failedStatusCode: apiResponseModel.Status)
-                        self.index = self.index + 1
-                        
-                        if self.index < self.uploadDetailList.count
-                        {
-                            self.uploadDCRList()
-                        }
-                        else
-                        {
-                            self.dcrRefresh()
-                        }
-                    }
-                    else if apiResponseModel.Status == 5
-                    {
-                        self.setButtonText(title: failedStatus)
-                        self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: true, failedStatusCode: apiResponseModel.Status)
-                    }
-                    else if (apiResponseModel.Status == 4)
-                    {
-                        self.setButtonText(title: failedStatus)
-                        self.updateUploadDetail(statusMsg: failedStatus, reason: apiResponseModel.Message, showPopup: false, failedStatusCode: apiResponseModel.Status)
-                    }
                 }
-            }
-            else
-            {
-                removeCustomActivityView()
-                AlertView.showAlertView(title: errorTitle, message: Display_Messages.Error_Log.ERROR_OCCURED_ALERT, viewController: self)
-                
-                let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
-                
-                BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
+                else
+                {
+                    removeCustomActivityView()
+                    AlertView.showAlertView(title: errorTitle, message: Display_Messages.Error_Log.ERROR_OCCURED_ALERT, viewController: self)
+                    
+                    let extProp = getErrorLogDefaultExtProperty(functionName: #function, className: #file, lineNo: #line)
+                    
+                    BL_Error_Log.sharedInstance.LogError(moduleName: Constants.Module_Names.DCR, subModuleName: Constants.Module_Names.DCR, screenName: Constants.Screen_Names.UPLOAD_DCR, controlName: #file, additionalInfo: extProp, exception: NSException(name: .genericException, reason: nil))
+                }
             }
         }
     }

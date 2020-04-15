@@ -229,8 +229,8 @@ class AddNewProspectViewController: UIViewController {
             
             if self.navigationController != nil
             {
-                let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-                let vc = sb.instantiateViewController(withIdentifier: doctorVisitStepperVcID) as! DoctorVisitStepperController
+                let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "DCRDoctorStepperNew") as! DoctorStepperNewController
                 vc.flexiDoctorName = DoctorName
                 vc.flexiSpecialityName = Title
                 vc.flexiDoctorName = DoctorName

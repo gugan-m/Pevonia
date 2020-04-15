@@ -116,7 +116,19 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         {
             updateViews()
         }
-        
+        let remarks = DBHelper.sharedInstance.getDCRHeaderByDCRDate(dcrActualDate:  convertDateIntoServerStringFormat(date: DCRModel.sharedInstance.dcrDate))
+        if remarks != nil {
+            if remarks!.count > 0 {
+                if remarks![0].Reason!.count > 0 {
+                    if DCRModel.sharedInstance.dcrStatus != DCRStatus.unApproved.rawValue
+                    {
+                      self.leaveReason.text = remarks![0].Reason
+                    }
+                } else {
+                    self.leaveReason.text = EMPTY
+                }
+            }
+        }
         if IS_VIEW_MODE {
             self.scrollView.isUserInteractionEnabled = false
             self.submitbtn.isHidden = true
@@ -500,12 +512,13 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
                 
                 
                 if dcrActivityList != nil && dcrActivityList?.count == 0 {
-                    BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+                   // BL_DCR_Leave.sharedInstance.applyOffice(dcrDate: DCRModel.sharedInstance.dcrDate, endDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
+                    DBHelper.sharedInstance.updateDCRAttendance(dcrId: DCRModel.sharedInstance.dcrId, leaveReason: self.leaveReason.text, status: String(DCRStatus.applied.rawValue))
                     
                     BL_DCR_Attendance.sharedInstance.saveDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, dcrId: DCRModel.sharedInstance.dcrId)
                 } else {
-                    DBHelper.sharedInstance.updateDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, Dcr_id: DCRModel.sharedInstance.dcrId)
-                    
+                   // DBHelper.sharedInstance.updateDCRAttendanceActivity1(Project_Code: self.ProjectCode, Activity_Code: self.ActivityCode, startTime: "", endTime: "", remarks: self.leaveReason.text!, Dcr_id: DCRModel.sharedInstance.dcrId)
+                    DBHelper.sharedInstance.updateDCRAttendance(dcrId: DCRModel.sharedInstance.dcrId, leaveReason: self.leaveReason.text, status: String(DCRStatus.applied.rawValue))
                     BL_DCR_Leave.sharedInstance.updateOffice(leaveDate: DCRModel.sharedInstance.dcrDate, leaveTypeId: "", leaveTypeCode: "", leaveReason: self.leaveReason.text, dcrCode: DCRModel.sharedInstance.dcrCode ?? "")
                 }
                 

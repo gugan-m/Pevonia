@@ -343,8 +343,12 @@ class DCRAttachmentUploadController: UIViewController, UITableViewDelegate, UITa
         if isfromTP {
             if let navigationController = self.navigationController
             {
-                let index = navigationController.viewControllers.count - 3
-                self.navigationController?.viewControllers.remove(at: index)
+                guard let navigationController = self.navigationController else { return }
+                var navigationArray = navigationController.viewControllers // To get all UIViewController stack as Array
+                navigationArray.remove(at: navigationArray.count - 1)
+                navigationArray.remove(at: navigationArray.count - 1)
+                navigationArray.remove(at: navigationArray.count - 1)// To remove previous UIViewController
+                self.navigationController?.viewControllers = navigationArray
             }
             _ = navigationController?.popViewController(animated: false)
         }

@@ -1240,7 +1240,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         self.present(vc, animated: false, completion: nil)
     }
     
-    private func confirmCustomerAddressAlert(indexPath: IndexPath, currentLocaiton: GeoLocationModel, objGeoValidation: GeoLocationValidationModel)
+    private func  confirmCustomerAddressAlert(indexPath: IndexPath, currentLocaiton: GeoLocationModel, objGeoValidation: GeoLocationValidationModel)
     {
         let objCustomer = userCurrentList[indexPath.section].userList[indexPath.row]
         let customerName = objCustomer.Customer_Name!

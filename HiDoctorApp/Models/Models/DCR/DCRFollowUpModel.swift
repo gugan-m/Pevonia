@@ -35,11 +35,17 @@ class DCRFollowUpModel: Record
         self.DCR_Code = checkNullAndNilValueForString(stringData: dict.value(forKey: "DCR_Code") as? String)
         self.Follow_Up_Text = checkNullAndNilValueForString(stringData: dict.value(forKey: "Tasks") as? String)
         let dueDate = dict.value(forKey: "Due_Date") as? String
+        // crased in saving follow ups in dvr visit stepper
         if dueDate != nil
         {
-        self.Due_Date =  getDateAndTimeInFormat(dateString: (dict.value(forKey: "Due_Date")as? String)! + " 00:00:00.000")
+            if (dueDate?.contains(" "))! {
+              let date1 = dueDate?.split(separator: " ")
+                let samDate = date1![0] + " 00:00:00.000"
+                 self.Due_Date =  getDateAndTimeInFormat(dateString: samDate + " 00:00:00.000")
+            } else {
+                self.Due_Date =  getDateAndTimeInFormat(dateString: (dict.value(forKey: "Due_Date")as? String)! + " 00:00:00.000")
+            }
         }
-        //self.DueDate = getDateAndTimeInFormat(dateString: (dict.value(forKey: "Due_Date")as? String)! + " 00:00:00.000")
         super.init()
     }
     
