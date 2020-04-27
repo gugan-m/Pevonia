@@ -35,6 +35,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentViewHeightConst: NSLayoutConstraint!
     
+    @IBOutlet weak var btnView: UIButton!
     @IBOutlet weak var summaryView: UIView!
     @IBOutlet weak var deleteBut: UIButton!
     @IBOutlet weak var editBut: UIButton!
@@ -607,9 +608,13 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                     {
                      tpStatusLbl.text = tpApplied
                     }
-                        tpBtmWrapper.isHidden = true
-                    tpBtmWrapper1.isHidden = true
-                    tpHeaderHeightConstraint.constant = 90
+                    tpBtmWrapper.isHidden = false
+                        tpBtmWrapper1.isHidden = false
+                        self.btnView.isHidden = false
+                        editBut.isHidden = true
+                        deleteBut.isHidden = true
+                    self.bottomHeaderSeperatorView.isHidden = true
+                    tpHeaderHeightConstraint.constant = 110
                     
                 }
                 else  if tourPlannerHeaderModelData!.Status == TPStatus.approved.rawValue
@@ -617,9 +622,14 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                     tpHeaderView.backgroundColor = TPCellColor.approvedBgColor.color
                     tpStatusLbl.text = tpApproved
                     //tpBtmHeightConst.constant = 0.0
-                    tpBtmWrapper.isHidden = true
-                    tpBtmWrapper1.isHidden = true
-                    tpHeaderHeightConstraint.constant = 90
+                    tpBtmWrapper.isHidden = false
+                    tpBtmWrapper1.isHidden = false
+                    self.btnView.isHidden = false
+                    editBut.isHidden = true
+                    deleteBut.isHidden = true
+                    self.bottomHeaderSeperatorView.isHidden = true
+                    self.tableWrapperHeightConst.constant = 0
+                    tpHeaderHeightConstraint.constant = 110
                 }
                 else  if tourPlannerHeaderModelData!.Status == TPStatus.unapproved.rawValue
                 {
@@ -630,6 +640,8 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                     tpBtmWrapper1.isHidden = false
                     editBut.isHidden = false
                     deleteBut.isHidden = false
+                    self.btnView.isHidden = true
+                    self.bottomHeaderSeperatorView.isHidden = false
                     //                    if(TPModel.sharedInstance.tpId == 0)
                     //                    {
                     //                        editBut.isHidden = false
@@ -651,6 +663,8 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
                     tpBtmWrapper1.isHidden = false
                     editBut.isHidden = false
                     deleteBut.isHidden = false
+                    self.btnView.isHidden = true
+                    self.bottomHeaderSeperatorView.isHidden = false
                     //                    if(TPModel.sharedInstance.tpId == 0)
                     //                    {
                     //                        editBut.isHidden = false
@@ -903,7 +917,7 @@ class TPCalendarController: UIViewController, UIPickerViewDelegate, UIPickerView
          let tourPlannerHeaderModelData:TourPlannerHeader? = BL_TPStepper.sharedInstance.getTPDataForSelectedDate(date: selectedDateString)
         if tourPlannerHeaderModelData != nil
                {
-                if tourPlannerHeaderModelData!.Status == TPStatus.approved.rawValue
+                if tourPlannerHeaderModelData!.Status == TPStatus.approved.rawValue || tourPlannerHeaderModelData!.Status == TPStatus.applied.rawValue
                 {
                     if tpActivityLbl.text == "Field"
                     {

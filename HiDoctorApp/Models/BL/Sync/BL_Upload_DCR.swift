@@ -223,6 +223,7 @@ class BL_Upload_DCR: NSObject
             var longitude: String = EMPTY
             var generalRemarks: String = EMPTY
             var Unapprove_Reason: String?
+            var DCR_Type: String = ""
             
             if (dcrHeaderObj.Unapprove_Reason != nil)
             {
@@ -286,6 +287,10 @@ class BL_Upload_DCR: NSObject
             {
                 generalRemarks = dcrHeaderObj.DCR_General_Remarks!
             }
+            if (dcrHeaderObj.DCR_Type != nil)
+            {
+                DCR_Type = dcrHeaderObj.DCR_Type
+            }
             let appVersion = getCurrentAppVersion()
             let arrayData = appVersion.components(separatedBy: "(")
             let versionName = arrayData[0]
@@ -294,7 +299,7 @@ class BL_Upload_DCR: NSObject
             let dcrStatus = "\(dcrHeaderObj.DCR_Status!)"
             let dcrFlag = "\(dcrHeaderObj.Flag!)"
             
-            let dict1: NSDictionary = ["DCR_Id": dcrHeaderObj.DCR_Id, "DCR_Code": EMPTY, "DCR_Actual_Date": actualDate, "DCR_Entered_Date": enteredDate, "DCR_Status": dcrStatus, "Flag": dcrFlag, "Place_Worked": placeWorked, "Category_Id": categoryId]
+            let dict1: NSDictionary = ["DCR_Id": dcrHeaderObj.DCR_Id, "DCR_Code": EMPTY, "DCR_Actual_Date": actualDate, "DCR_Entered_Date": enteredDate, "DCR_Status": dcrStatus, "Flag": dcrFlag, "Place_Worked": placeWorked, "Category_Id": categoryId,"DCR_Type":DCR_Type]
             
             let dict2: NSDictionary = ["Category_Name": categoryName, "Travelled_KMS": 0, "CP_Code": cpCode, "CP_Id": cpId,"CP_Name" : cpName, "Start_Time": startTime, "End_Time": endTime, "Approved_By": NSNull(), "Approved_Date": NSNull()]
             

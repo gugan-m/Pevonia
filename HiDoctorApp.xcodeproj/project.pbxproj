@@ -750,6 +750,10 @@
 		F1895A64213E668C0051D60C /* LockReleaseFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1895A63213E668C0051D60C /* LockReleaseFormController.swift */; };
 		F195635A22782C2D0026E197 /* TravelTrackingReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195635922782C2D0026E197 /* TravelTrackingReportViewController.swift */; };
 		F195635C2278661B0026E197 /* TravelTrackingReportMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195635B2278661A0026E197 /* TravelTrackingReportMapViewController.swift */; };
+		F1A233D724474F0F0025C5D4 /* AddProspectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A233D624474F0F0025C5D4 /* AddProspectModel.swift */; };
+		F1A233D92447500A0025C5D4 /* DoctorStepperNewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A233D82447500A0025C5D4 /* DoctorStepperNewController.swift */; };
+		F1A233DB2447503C0025C5D4 /* DCRAttendanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A233DA2447503B0025C5D4 /* DCRAttendanceController.swift */; };
+		F1A233DD244750A20025C5D4 /* LeaveEntryNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A233DC244750A10025C5D4 /* LeaveEntryNewViewController.swift */; };
 		F1BE13F32423A2490033CBAA /* SSRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F02423A2480033CBAA /* SSRadioButton.swift */; };
 		F1BE13F42423A2490033CBAA /* SSRadioButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F12423A2480033CBAA /* SSRadioButtonsController.swift */; };
 		F1BE13F52423A2490033CBAA /* AddNewProspectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */; };
@@ -1555,6 +1559,10 @@
 		F1895A63213E668C0051D60C /* LockReleaseFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockReleaseFormController.swift; sourceTree = "<group>"; };
 		F195635922782C2D0026E197 /* TravelTrackingReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTrackingReportViewController.swift; sourceTree = "<group>"; };
 		F195635B2278661A0026E197 /* TravelTrackingReportMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelTrackingReportMapViewController.swift; sourceTree = "<group>"; };
+		F1A233D624474F0F0025C5D4 /* AddProspectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddProspectModel.swift; path = Common/AddProspectModel.swift; sourceTree = "<group>"; };
+		F1A233D82447500A0025C5D4 /* DoctorStepperNewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorStepperNewController.swift; sourceTree = "<group>"; };
+		F1A233DA2447503B0025C5D4 /* DCRAttendanceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DCRAttendanceController.swift; path = HiDoctorApp/Controllers/DCR/DCRAttendanceController.swift; sourceTree = SOURCE_ROOT; };
+		F1A233DC244750A10025C5D4 /* LeaveEntryNewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveEntryNewViewController.swift; path = DCR/LeaveEntryNewViewController.swift; sourceTree = "<group>"; };
 		F1BE13F02423A2480033CBAA /* SSRadioButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButton.swift; sourceTree = "<group>"; };
 		F1BE13F12423A2480033CBAA /* SSRadioButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSRadioButtonsController.swift; sourceTree = "<group>"; };
 		F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewProspectViewController.swift; sourceTree = "<group>"; };
@@ -2553,6 +2561,7 @@
 		B11ACAEA1DF84E62002CE36D /* DoctorVisit */ = {
 			isa = PBXGroup;
 			children = (
+				F1A233D82447500A0025C5D4 /* DoctorStepperNewController.swift */,
 				B19D2B941EA9F512004B7436 /* Attachment */,
 				B1EF70941EA7778F0081EBCC /* CustomImageLibrary */,
 				B18D67F11DFFD00B00F74B57 /* AddFlexiDoctor.swift */,
@@ -2678,6 +2687,7 @@
 		B1826D181DBA3E5D00E2C55C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F1A233DC244750A10025C5D4 /* LeaveEntryNewViewController.swift */,
 				F14324B722F31A8D00C71E28 /* NotesKnowYourCalendar.swift */,
 				F1BE13F22423A2480033CBAA /* AddNewProspectViewController.swift */,
 				F1BE13F02423A2480033CBAA /* SSRadioButton.swift */,
@@ -2715,6 +2725,7 @@
 			isa = PBXGroup;
 			children = (
 				F1149128230A8863006873A5 /* LeaveAttachmentModel.swift */,
+				F1A233D624474F0F0025C5D4 /* AddProspectModel.swift */,
 				F14324D622F333CD00C71E28 /* CalendarDayCell.swift */,
 				F14324D922F333CF00C71E28 /* CalendarFlowLayout.swift */,
 				F14324D522F333CD00C71E28 /* CalendarHeaderView.swift */,
@@ -3286,6 +3297,7 @@
 			isa = PBXGroup;
 			children = (
 				6C0D8ABA1DFFD1EC00A29FF0 /* AddAttendanceActivityViewController.swift */,
+				F1A233DA2447503B0025C5D4 /* DCRAttendanceController.swift */,
 				6CAAB3C21DF96932002E0AA5 /* AttendanceStepperViewController.swift */,
 				6C0D8ABC1DFFD25B00A29FF0 /* ModifyAttendanceActivityViewController.swift */,
 				6C0D8AC01DFFD2D400A29FF0 /* ActivityListViewController.swift */,
@@ -3609,7 +3621,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/GRDB.swift/GRDB.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
@@ -3626,7 +3638,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8A1A4034AEF80721E7047EF7 /* [CP] Copy Pods Resources */ = {
@@ -3635,7 +3647,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
@@ -3646,7 +3658,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HiDoctorApp/Pods-HiDoctorApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ADC4EBA61E3F287500182340 /* ShellScript */ = {
@@ -3660,7 +3672,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 7204a98599c8825124d85c143858de323881ebcf 2f630552ac1873848d987005441d344a15935b4c66ee71e0de8ce1fbf3d4dd62";
+			shellScript = "\"${PODS_ROOT}/Fabric/upload-symbols\" -a 7204a98599c8825124d85c143858de323881ebcf -p ios \"/Users/swaas/Desktop/dSYMs\"\n";
 		};
 		F5B002C3E00B73D351D566B6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3749,11 +3761,13 @@
 				ADEC7DE71DDDBE2E00DD21A4 /* BL_DCR_Accompanist.swift in Sources */,
 				B1E1DF2A1F59600E007B1546 /* MessageTableViewCell.swift in Sources */,
 				AD8E408E1EAA090A005D52C1 /* Version_Upgrade.swift in Sources */,
+				F1A233DB2447503C0025C5D4 /* DCRAttendanceController.swift in Sources */,
 				6CD751EC1E3F470600A44DA1 /* ModelName.swift in Sources */,
 				B18D67FA1DFFD39200F74B57 /* DCRRefreshPopupController.swift in Sources */,
 				84C9B4911F06358200801707 /* CardStackView.swift in Sources */,
 				6C0D8ABB1DFFD1EC00A29FF0 /* AddAttendanceActivityViewController.swift in Sources */,
 				ADC06F471E2361C2006A457D /* LockReleaseHistoryViewController.swift in Sources */,
+				F1A233D724474F0F0025C5D4 /* AddProspectModel.swift in Sources */,
 				6C01D1361DE42BE300915C0E /* AccompanistModifyListTableViewCell.swift in Sources */,
 				841E2C3F1F74046C00FF19D4 /* TPCopyTourPlanMainTableViewCell.swift in Sources */,
 				842A6A161F3D841600636E15 /* BL_TP_Doctor_Visit.swift in Sources */,
@@ -3786,9 +3800,11 @@
 				6933E9E42063B3A3007FC934 /* MCListTableViewCell.swift in Sources */,
 				BAA0F92D1DC9E5C6005E482F /* PlaceMasterModel.swift in Sources */,
 				BA69F61E1E26592F00B66506 /* ApprovalDoctorDetailSubTableViewCell.swift in Sources */,
+				F1A233DD244750A20025C5D4 /* LeaveEntryNewViewController.swift in Sources */,
 				CE1551D922F44CF80049252D /* BussinessPotential.swift in Sources */,
 				B11ACAF11DF84F86002CE36D /* DoctorVisitStepperController.swift in Sources */,
 				AD4663E81DD4A60E00DBA42F /* BL_InitialSetup.swift in Sources */,
+				F1A233D92447500A0025C5D4 /* DoctorStepperNewController.swift in Sources */,
 				69A01B1020BEA70F00C788B9 /* IceFeedbackRemarkCell.swift in Sources */,
 				6C00D54F1E433A6C00773F85 /* DoctorListTableViewCell.swift in Sources */,
 				6C47674A1DF73F1600D9C88C /* ModifyRCPAViewController.swift in Sources */,
@@ -4519,7 +4535,7 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.32;
+				MARKETING_VERSION = 2.42;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
@@ -4549,7 +4565,7 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.32;
+				MARKETING_VERSION = 2.42;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";

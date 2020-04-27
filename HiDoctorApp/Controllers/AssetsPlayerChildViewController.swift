@@ -37,8 +37,11 @@ class AssetsPlayerChildViewController: UIViewController  {
     let avPlayer = CustomAVPlayer()
     let audioPlayer = CustomAudioPlayer()
     
-    var pdfWebkitView = UIWebView()
-    var htmlWebkitView = UIWebView()
+   // var pdfWebkitView = UIWebView()
+    //var htmlWebkitView = UIWebView()
+    
+    var pdf_WEBKIT = WKWebView()
+    var html_WEBKIT = WKWebView()
     
     @IBOutlet weak var imageVw: CustomImageView!
     
@@ -98,18 +101,78 @@ class AssetsPlayerChildViewController: UIViewController  {
         super.viewDidLoad()
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.allowsInlineMediaPlayback = true
-        self.pdfWebkitView = UIWebView(frame: self.view.frame)
-        self.pdfWebkitView.scalesPageToFit = true
-        self.pdfWebkitView.delegate = self
+     //   if #available(iOS 13.0, *) {
+            self.pdf_WEBKIT = WKWebView(frame: self.view.frame)
+            self.pdf_WEBKIT.navigationDelegate = self as WKNavigationDelegate
+            
+            self.html_WEBKIT = WKWebView(frame: self.view.frame)
+            self.html_WEBKIT.navigationDelegate = self
+            self.html_WEBKIT.contentMode = .scaleToFill
+            self.html_WEBKIT.clipsToBounds = true
+            
+            self.view.addSubview(pdf_WEBKIT)
+             self.view.addSubview(html_WEBKIT)
+
+            html_WEBKIT.isHidden = true
+            
+             pdf_WEBKIT.isHidden = true
+            
+            if isPreview != 1  {
+                 
+                 let doubleTouchAndTap = UITapGestureRecognizer(target: self, action: #selector(self.didTappedAndTouched(gesture:)))
+                 
+                 doubleTouchAndTap.delegate = self
+                 doubleTouchAndTap.numberOfTapsRequired = 2
+                 doubleTouchAndTap.numberOfTouchesRequired = 2
+                 self.view.addGestureRecognizer(doubleTouchAndTap)
+                 
+             }
+             
+             let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+             tapRecognizer.numberOfTapsRequired = 1
+             tapRecognizer.delegate = self
+            self.html_WEBKIT.addGestureRecognizer(tapRecognizer)
+//        } else {
+//            self.pdfWebkitView = UIWebView(frame: self.view.frame)
+//            self.pdfWebkitView.scalesPageToFit = true
+//            self.pdfWebkitView.delegate = self
+//
+//            self.htmlWebkitView = UIWebView(frame: self.view.frame)
+//            self.htmlWebkitView.delegate = self
+//            self.htmlWebkitView.scalesPageToFit = true
+//            self.htmlWebkitView.contentMode = .scaleToFill
+//            self.htmlWebkitView.clipsToBounds = true
+//
+//            self.view.addSubview(pdfWebkitView)
+//             self.view.addSubview(htmlWebkitView)
+//
+//            htmlWebkitView.isHidden = true
+//
+//             pdfWebkitView.isHidden = true
+//
+//            if isPreview != 1  {
+//
+//                 let doubleTouchAndTap = UITapGestureRecognizer(target: self, action: #selector(self.didTappedAndTouched(gesture:)))
+//
+//                 doubleTouchAndTap.delegate = self
+//                 doubleTouchAndTap.numberOfTapsRequired = 2
+//                 doubleTouchAndTap.numberOfTouchesRequired = 2
+//                 self.view.addGestureRecognizer(doubleTouchAndTap)
+//
+//             }
+//
+//             let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
+//             tapRecognizer.numberOfTapsRequired = 1
+//             tapRecognizer.delegate = self
+//            self.htmlWebkitView.addGestureRecognizer(tapRecognizer)
+//        }
+        
+        
+        
        // self.pdfWebkitView.uiDelegate = self
-        self.htmlWebkitView = UIWebView(frame: self.view.frame)
-        self.htmlWebkitView.delegate = self
-        self.htmlWebkitView.scalesPageToFit = true
+        
      //   self.htmlWebkitView.navigationDelegate = self
-        self.htmlWebkitView.contentMode = .scaleToFill
-        self.htmlWebkitView.clipsToBounds = true
-        self.view.addSubview(pdfWebkitView)
-        self.view.addSubview(htmlWebkitView)
+         
     
         // Do any additional setup after loading the view.
         audioPlayerControlsView.isHidden = true
@@ -119,29 +182,11 @@ class AssetsPlayerChildViewController: UIViewController  {
         avControlsView.isHidden = true
         pdfViewer.isHidden = true
      
-        htmlWebkitView.isHidden = true
-       
-        pdfWebkitView.isHidden = true
+        
         loadingIndicator.isHidden = true
         pdfCountView.isHidden = true
         
         avPlayer.delegate = self
-        
-        if isPreview != 1  {
-            
-            let doubleTouchAndTap = UITapGestureRecognizer(target: self, action: #selector(self.didTappedAndTouched(gesture:)))
-            
-            doubleTouchAndTap.delegate = self
-            doubleTouchAndTap.numberOfTapsRequired = 2
-            doubleTouchAndTap.numberOfTouchesRequired = 2
-            self.view.addGestureRecognizer(doubleTouchAndTap)
-            
-        }
-        
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(recognizer:)))
-        tapRecognizer.numberOfTapsRequired = 1
-        tapRecognizer.delegate = self
-       self.htmlWebkitView.addGestureRecognizer(tapRecognizer)
     }
     
     @objc func handleSingleTap(recognizer: UITapGestureRecognizer) {
@@ -270,7 +315,13 @@ class AssetsPlayerChildViewController: UIViewController  {
         let singleAction = UIAlertAction(title: "Single Page", style: .default, handler:{
             (alert: UIAlertAction) -> Void in
             self.pdfCountView.isHidden = true
-            self.pdfWebkitView.isHidden = true
+            
+            // if #available(iOS 13.0, *) {
+                self.pdf_WEBKIT.isHidden = true
+//             } else {
+//                self.pdfWebkitView.isHidden = true
+//            }
+            
             self.pdfViewer.isHidden = false
             self.readerViewController?.showDocumentPage(self.pdfCurrentPage)
         })
@@ -279,8 +330,14 @@ class AssetsPlayerChildViewController: UIViewController  {
         let continuousAction = UIAlertAction(title: "Continuous Page", style: .default, handler: {
             (alert: UIAlertAction) -> Void in
             self.pdfViewer.isHidden = false
-            self.pdfWebkitView.isHidden = false
-            self.pdfWebkitView.scrollView.contentOffset.y = CGFloat(self.getContentOffsetForPageNumber(pageNumber: self.pdfCurrentPage-1))
+          //  if #available(iOS 13.0, *) {
+                self.pdf_WEBKIT.isHidden = false
+                self.pdf_WEBKIT.scrollView.contentOffset.y = CGFloat(self.getContentOffsetForPageNumber(pageNumber: self.pdfCurrentPage-1))
+//             } else {
+//                self.pdfWebkitView.isHidden = false
+//                self.pdfWebkitView.scrollView.contentOffset.y = CGFloat(self.getContentOffsetForPageNumber(pageNumber: self.pdfCurrentPage-1))
+//            }
+            
         })
         actionSheetController.addAction(continuousAction)
         
@@ -929,8 +986,14 @@ class AssetsPlayerChildViewController: UIViewController  {
     
     func loadPDFView()
     {
-       pdfWebkitView.scrollView.delegate = self
-        pdfWebkitView.scrollView.tag = 100
+       // if #available(iOS 13.0, *) {
+            pdf_WEBKIT.scrollView.delegate = self
+                   pdf_WEBKIT.scrollView.tag = 100
+//        } else {
+//            pdfWebkitView.scrollView.delegate = self
+//                   pdfWebkitView.scrollView.tag = 100
+//        }
+      
         // pdfVwModeBtn.isHidden = false
         
         if currentAssetObj.assetObj.localUrl != nil && currentAssetObj.assetObj.localUrl.count > 0 {
@@ -946,8 +1009,14 @@ class AssetsPlayerChildViewController: UIViewController  {
                     //showCustomActivityIndicatorView(loadingText: "loading")
                     
                     let document = ReaderDocument.withDocumentFilePath(filePath, password: "")
-                    pdfWebkitView.tag = document?.pageCount as! Int
-                    pdfTotalPgLbl.text = "\(pdfWebkitView.tag)"
+                    //if #available(iOS 13.0, *) {
+                        pdf_WEBKIT.tag = document?.pageCount as! Int
+                        pdfTotalPgLbl.text = "\(pdf_WEBKIT.tag)"
+//                    } else {
+//                        pdfWebkitView.tag = document?.pageCount as! Int
+//                        pdfTotalPgLbl.text = "\(pdfWebkitView.tag)"
+//                    }
+                    
                     
                     if document != nil
                     {
@@ -965,8 +1034,12 @@ class AssetsPlayerChildViewController: UIViewController  {
                         self.readerViewController?.showDocumentPage(1)
                         self.readerViewController?.orientationDidChange()
                     }
+                   // if #available(iOS 13.0, *) {
+                        self.pdf_WEBKIT.load(request)
+//                    } else {
+//                      self.pdfWebkitView.loadRequest(request)
+//                    }
                     
-                    self.pdfWebkitView.loadRequest(request)
                     pdfViewer.isHidden = false
                     isViewed = true
                     // self.loadPdf(fileName: filePath)
@@ -1014,15 +1087,28 @@ class AssetsPlayerChildViewController: UIViewController  {
                                 
                                 if document != nil
                                 {
-                                  
-                                    self.pdfWebkitView.tag = document?.pageCount as! Int
+                                  //if #available(iOS 13.0, *) {
+                                    self.pdf_WEBKIT.tag = document?.pageCount as! Int
+//                                  } else {
+//                                    self.pdfWebkitView.tag = document?.pageCount as! Int
+//                                    }
+                                    
                                 }
                                 else
                                 {
-                                    self.pdfWebkitView.tag = 1
+                                  //  if #available(iOS 13.0, *) {
+                                      self.pdf_WEBKIT.tag = 1
+//                                    } else {
+//                                      self.pdfWebkitView.tag = 1
+//                                      }
                                 }
                                 
-                                self.pdfTotalPgLbl.text = "\(self.pdfWebkitView.tag)"
+                                //if #available(iOS 13.0, *) {
+                                    self.pdfTotalPgLbl.text = "\(self.pdf_WEBKIT.tag)"
+//                                } else {
+//                                   self.pdfTotalPgLbl.text = "\(self.pdfWebkitView.tag)"
+//                                }
+                                
                                 
                                 if document != nil
                                 {
@@ -1039,7 +1125,12 @@ class AssetsPlayerChildViewController: UIViewController  {
                                     self.readerViewController?.showDocumentPage(1)
                                     self.readerViewController?.orientationDidChange()
                                 }
-                                self.pdfWebkitView.loadRequest(request)
+                                // if #available(iOS 13.0, *) {
+                                    self.pdf_WEBKIT.load(request)
+//                                } else {
+//                                    self.pdfWebkitView.loadRequest(request)
+//                                }
+                                
                                 self.URLrequest = request
                                 // self.loadPdf(fileName: filePath)
                                 self.pdfViewer.isHidden = false
@@ -1072,9 +1163,14 @@ class AssetsPlayerChildViewController: UIViewController  {
     
     func loadHTMLView()
     {
+        // if #available(iOS 13.0, *) {
+            html_WEBKIT.scrollView.delegate = self
+            html_WEBKIT.scrollView.tag = 200
+//         } else {
+//            htmlWebkitView.scrollView.delegate = self
+//            htmlWebkitView.scrollView.tag = 200
+//        }
         
-        htmlWebkitView.scrollView.delegate = self
-        htmlWebkitView.scrollView.tag = 200
         currentAnalytics.Session_Id = sessionID
         
         if currentAssetObj.assetObj.localUrl != nil && currentAssetObj.assetObj.localUrl.count > 0
@@ -1090,7 +1186,13 @@ class AssetsPlayerChildViewController: UIViewController  {
                 loadingIndicator.startAnimating()
                 do {
                      let tex = try String(contentsOf: targetURL, encoding: .utf8)
-                    htmlWebkitView.loadHTMLString(tex, baseURL: targetURL)
+                    
+                    //if #available(iOS 13.0, *) {
+                        html_WEBKIT.loadHTMLString(tex, baseURL: targetURL)
+//                    } else {
+//                        htmlWebkitView.loadHTMLString(tex, baseURL: targetURL)
+//                    }
+                    
                 
                    // htmlWebkitView.loadFileURL(targetURL, allowingReadAccessTo: targetURL)
                     //htmlWebkitView.load(request)
@@ -1118,7 +1220,11 @@ class AssetsPlayerChildViewController: UIViewController  {
             {
                 //showCustomActivityIndicatorView(loadingText: "loading")
                 loadingIndicator.startAnimating()
-                 htmlWebkitView.loadRequest(myRequest)
+               // if #available(iOS 13.0, *) {
+                    html_WEBKIT.load(myRequest)
+//                } else {
+//                    htmlWebkitView.loadRequest(myRequest)
+//                }
             }
             else
             {
@@ -1129,8 +1235,11 @@ class AssetsPlayerChildViewController: UIViewController  {
             currentAnalytics.Part_URL = currentAssetObj.assetObj.onlineUrl
             currentAnalytics.PlayMode = "1"
         }
-        htmlWebkitView.isHidden = false
-        
+       // if #available(iOS 13.0, *) {
+            html_WEBKIT.isHidden = false
+//        } else {
+//          htmlWebkitView.isHidden = false
+//        }
     }
     
     @objc func forwardToNextAsset()
@@ -1334,7 +1443,6 @@ class AssetsPlayerChildViewController: UIViewController  {
     
 }
 
-
 extension AssetsPlayerChildViewController : ReaderViewControllerDelegate{
     
     func didChangePDFPage(_ pageNumber: Int32, totalPage totalPageNo: Int32) {
@@ -1391,69 +1499,137 @@ extension AssetsPlayerChildViewController : ReaderViewControllerDelegate{
 extension AssetsPlayerChildViewController : UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !pdfWebkitView.isHidden {
-            if scrollView.tag == 100 {
-                
-                let webView = scrollView.superview as! UIWebView
-                
-                let pageOffset : Float = Float(scrollView.contentOffset.y)
-                
-                var pagenumber = 0
-                
-                let scrollViewHeight = Int(scrollView.contentSize.height)
-                if webView.tag == 0{
-                    pagenumber =  Int(pageOffset / Float(webView.frame.size.height)) + 1;
-                }else{
+        // if #available(iOS 13.0, *) {
+
+            if !pdf_WEBKIT.isHidden {
+                if scrollView.tag == 100 {
                     
-                    let singlePageHeight = (scrollViewHeight/webView.tag)
-                    let halfPage = webView.frame.size.height / 2
+                    let webView = scrollView.superview as! WKWebView
                     
-                    pagenumber = Int(pageOffset + Float(halfPage))/singlePageHeight + 1
-                }
-                print("pagenumber" , pagenumber)
-                
-                pdfCountView.isHidden = false
-                pdfTotalPgLbl.text = "\(webView.tag)"
-                pdfCurrentPgLbl.text = "\(pagenumber)"
-                pdfCurrentPage = pagenumber
-                let currentPage = pagenumber
-                let previousAssetAnalytics = pdfAnalyticsArray.last
-                if pdfAnalyticsArray.count > 0 {
+                    let pageOffset : Float = Float(scrollView.contentOffset.y)
                     
-                    if previousAssetAnalytics?.Part_Id != currentPage
-                    {
-                        let endTime = getCurrentDateAndTime()
-                        previousAssetAnalytics?.Player_EndTime = endTime
-                        previousAssetAnalytics?.Detailed_EndTime = getCurrentDateAndTime()
+                    var pagenumber = 0
+                    
+                    let scrollViewHeight = Int(scrollView.contentSize.height)
+                    if webView.tag == 0{
+                        pagenumber =  Int(pageOffset / Float(webView.frame.size.height)) + 1;
+                    }else{
                         
+                        let singlePageHeight = (scrollViewHeight/webView.tag)
+                        let halfPage = webView.frame.size.height / 2
                         
-                        let dict : NSDictionary = ["DA_Code" : previousAssetAnalytics!.DA_Code, "Part_Id" : currentPage , "Part_URL" : previousAssetAnalytics!.Part_URL , "SessionId" : sessionID  , "Detailed_DateTime" : getCurrentDate() , "Detailed_StartTime" : getCurrentDateAndTime() , "Detailed_EndTime" : ""  ,"Player_Start_Time" :self.getCurrentDateAndTime() ,  "Played_Time_Duration":"", "isPreview" : isPreview, "Is_Synced" : 0 ,"Like": "", "Rating":""]
+                        pagenumber = Int(pageOffset + Float(halfPage))/singlePageHeight + 1
+                    }
+                    print("pagenumber" , pagenumber)
+                    
+                    pdfCountView.isHidden = false
+                    pdfTotalPgLbl.text = "\(webView.tag)"
+                    pdfCurrentPgLbl.text = "\(pagenumber)"
+                    pdfCurrentPage = pagenumber
+                    let currentPage = pagenumber
+                    let previousAssetAnalytics = pdfAnalyticsArray.last
+                    if pdfAnalyticsArray.count > 0 {
                         
-                        let assetAnalytics  = AssetAnalyticsDetail(dict: dict)
-                        assetAnalytics.PlayMode = previousAssetAnalytics?.PlayMode
-                        pdfAnalyticsArray.append(assetAnalytics)
+                        if previousAssetAnalytics?.Part_Id != currentPage
+                        {
+                            let endTime = getCurrentDateAndTime()
+                            previousAssetAnalytics?.Player_EndTime = endTime
+                            previousAssetAnalytics?.Detailed_EndTime = getCurrentDateAndTime()
+                            
+                            
+                            let dict : NSDictionary = ["DA_Code" : previousAssetAnalytics!.DA_Code, "Part_Id" : currentPage , "Part_URL" : previousAssetAnalytics!.Part_URL , "SessionId" : sessionID  , "Detailed_DateTime" : getCurrentDate() , "Detailed_StartTime" : getCurrentDateAndTime() , "Detailed_EndTime" : ""  ,"Player_Start_Time" :self.getCurrentDateAndTime() ,  "Played_Time_Duration":"", "isPreview" : isPreview, "Is_Synced" : 0 ,"Like": "", "Rating":""]
+                            
+                            let assetAnalytics  = AssetAnalyticsDetail(dict: dict)
+                            assetAnalytics.PlayMode = previousAssetAnalytics?.PlayMode
+                            pdfAnalyticsArray.append(assetAnalytics)
+                        }
+                        
+                        previousPdfPage = currentPage
                     }
                     
-                    previousPdfPage = currentPage
-                }
-                
-                if currentPage == webView.tag{
-                    self.delegate?.didAssetFinishedPlaying(index: index)
+                    if currentPage == webView.tag{
+                        self.delegate?.didAssetFinishedPlaying(index: index)
+                    }
                 }
             }
-        }
+//         } else {
+//
+//            if !pdfWebkitView.isHidden {
+//                if scrollView.tag == 100 {
+//
+//                    let webView = scrollView.superview as! UIWebView
+//
+//                    let pageOffset : Float = Float(scrollView.contentOffset.y)
+//
+//                    var pagenumber = 0
+//
+//                    let scrollViewHeight = Int(scrollView.contentSize.height)
+//                    if webView.tag == 0{
+//                        pagenumber =  Int(pageOffset / Float(webView.frame.size.height)) + 1;
+//                    }else{
+//
+//                        let singlePageHeight = (scrollViewHeight/webView.tag)
+//                        let halfPage = webView.frame.size.height / 2
+//
+//                        pagenumber = Int(pageOffset + Float(halfPage))/singlePageHeight + 1
+//                    }
+//                    print("pagenumber" , pagenumber)
+//
+//                    pdfCountView.isHidden = false
+//                    pdfTotalPgLbl.text = "\(webView.tag)"
+//                    pdfCurrentPgLbl.text = "\(pagenumber)"
+//                    pdfCurrentPage = pagenumber
+//                    let currentPage = pagenumber
+//                    let previousAssetAnalytics = pdfAnalyticsArray.last
+//                    if pdfAnalyticsArray.count > 0 {
+//
+//                        if previousAssetAnalytics?.Part_Id != currentPage
+//                        {
+//                            let endTime = getCurrentDateAndTime()
+//                            previousAssetAnalytics?.Player_EndTime = endTime
+//                            previousAssetAnalytics?.Detailed_EndTime = getCurrentDateAndTime()
+//
+//
+//                            let dict : NSDictionary = ["DA_Code" : previousAssetAnalytics!.DA_Code, "Part_Id" : currentPage , "Part_URL" : previousAssetAnalytics!.Part_URL , "SessionId" : sessionID  , "Detailed_DateTime" : getCurrentDate() , "Detailed_StartTime" : getCurrentDateAndTime() , "Detailed_EndTime" : ""  ,"Player_Start_Time" :self.getCurrentDateAndTime() ,  "Played_Time_Duration":"", "isPreview" : isPreview, "Is_Synced" : 0 ,"Like": "", "Rating":""]
+//
+//                            let assetAnalytics  = AssetAnalyticsDetail(dict: dict)
+//                            assetAnalytics.PlayMode = previousAssetAnalytics?.PlayMode
+//                            pdfAnalyticsArray.append(assetAnalytics)
+//                        }
+//
+//                        previousPdfPage = currentPage
+//                    }
+//
+//                    if currentPage == webView.tag{
+//                        self.delegate?.didAssetFinishedPlaying(index: index)
+//                    }
+//                }
+//            }
+//        }
     }
     
     func getContentOffsetForPageNumber(pageNumber : Int) -> Float {
         
         var pageOffset : Float = 0.0
-        let scrollViewHeight = Int(pdfWebkitView.scrollView.contentSize.height)
-        if pdfWebkitView.tag != 0{
-            let singlePageHeight = (scrollViewHeight/pdfWebkitView.tag)
-            // let halfPage = pdfWebVIewer.frame.size.height / 2
-            
-            pageOffset = Float(pageNumber) * (Float(singlePageHeight) )
-        }
+        var scrollViewHeight = Int(pdf_WEBKIT.scrollView.contentSize.height)
+       // if #available(iOS 13.0, *) {
+            scrollViewHeight = Int(pdf_WEBKIT.scrollView.contentSize.height)
+            if pdf_WEBKIT.tag != 0{
+                let singlePageHeight = (scrollViewHeight/pdf_WEBKIT.tag)
+                // let halfPage = pdfWebVIewer.frame.size.height / 2
+                
+                pageOffset = Float(pageNumber) * (Float(singlePageHeight) )
+            }
+//        } else {
+//            scrollViewHeight = Int(pdfWebkitView.scrollView.contentSize.height)
+//            if pdfWebkitView.tag != 0{
+//                let singlePageHeight = (scrollViewHeight/pdfWebkitView.tag)
+//                // let halfPage = pdfWebVIewer.frame.size.height / 2
+//
+//                pageOffset = Float(pageNumber) * (Float(singlePageHeight) )
+//            }
+        //}
+        
         return pageOffset
         
     }
@@ -1515,46 +1691,111 @@ extension AssetsPlayerChildViewController : UIGestureRecognizerDelegate{
 }
 
 //
-//extension AssetsPlayerChildViewController : WKNavigationDelegate,WKUIDelegate {
-//    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-//        loadingIndicator.stopAnimating()
-//        loadingIndicator.isHidden = true
-//    }
+extension AssetsPlayerChildViewController : WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        loadingIndicator.stopAnimating()
+        loadingIndicator.isHidden = true
+    }
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        print("didStartProvisionalNavigation")
+    }
+
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+         decisionHandler(.allow)
+        if webView.scrollView.tag == 200 {
+            var requestUrl = webView.url?.absoluteString
+            if htmlAnalyticsArraay.count > 0 {
+
+                if (requestUrl?.hasPrefix("js-frame:"))! {
+                    let components: [Any] = requestUrl!.components(separatedBy: ":")
+
+                    let receivedArgs = (components[1] as? String)
+                    enterTheHtmlAnalytics(requestUrl: receivedArgs!)
+                }else{
+
+                    requestUrl = requestUrl?.replacingOccurrences(of: "file://", with: "")
+                    lastActiveStateURL = requestUrl!
+                    let previousAssetAnalytics = htmlAnalyticsArraay.last
+                    if previousAssetAnalytics?.Part_URL != requestUrl {
+                        enterTheHtmlAnalytics(requestUrl: requestUrl!)
+                    }
+                }
+            }
+        }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        loadingIndicator.stopAnimating()
+        loadingIndicator.isHidden = true
+
+        if webView.scrollView.tag == 200
+        {
+            currentAnalytics?.Player_StartTime = getCurrentDateAndTime()
+        }
+        else if webView.scrollView.tag == 100
+        {
+            currentAnalytics?.Player_StartTime = getCurrentDateAndTime()
+        }
+
+        removeCustomActivityView()
+        webView.backgroundColor = UIColor.white
+        for subView: UIView in webView.subviews {
+            if (subView is UIScrollView) {
+                for shadowView: UIView in subView.subviews {
+                    if (shadowView is UILabel) {
+                        shadowView.isHidden = true
+                    }
+                }
+            }
+        }
+        URLCache.shared.removeAllCachedResponses()
+        URLCache.shared.diskCapacity = 0
+        URLCache.shared.memoryCapacity = 0
+
+        if let cookies = HTTPCookieStorage.shared.cookies {
+            for cookie in cookies {
+                HTTPCookieStorage.shared.deleteCookie(cookie)
+            }
+        }
+        html_WEBKIT.stopLoading()
+    }
+    
+    
+    func enterTheHtmlAnalytics(requestUrl : String){
+
+
+        let previousAssetAnalytics = htmlAnalyticsArraay.last
+
+        let endTime = getCurrentDateAndTime()
+        previousAssetAnalytics?.Player_EndTime = endTime
+        previousAssetAnalytics?.Detailed_EndTime = endTime
+
+        let dict : NSDictionary = ["DA_Code" : previousAssetAnalytics!.DA_Code, "Part_Id" : 1 , "Part_URL" : requestUrl , "SessionId" : previousAssetAnalytics?.Session_Id ?? 1  , "Detailed_DateTime" : getCurrentDate() , "Detailed_StartTime" : endTime , "Detailed_EndTime" : ""  , "Player_Start_Time" : endTime , "Detailed_EndTime" : "" , "Played_Time_Duration":"", "isPreview" : isPreview, "Is_Synced" : 0 ,"Like": "", "Rating":""]
+
+        let assetAnalytics  = AssetAnalyticsDetail(dict: dict)
+        assetAnalytics.PlayMode = previousAssetAnalytics?.PlayMode
+
+        currentAnalytics = assetAnalytics
+        currentAnalytics.Doc_Type = currentAssetObj.assetObj.docType
+
+        htmlAnalyticsArraay.append(currentAnalytics)
+    }
+
+        func didTapHTMLScreen() {
+            self.delegate?.childScreenTapped()
+        }
+}
+
+
+
+
+//extension AssetsPlayerChildViewController : UIWebViewDelegate{
 //
-//    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//        print("didStartProvisionalNavigation")
-//    }
+//    func webViewDidFinishLoad(_ webView: UIWebView) {
 //
 //
-//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        if (navigationAction.navigationType == .linkActivated){
-//            decisionHandler(.cancel)
-//        } else {
-//            decisionHandler(.allow)
-//        }
-//        if webView.scrollView.tag == 200 {
-//            var requestUrl = webView.url?.absoluteString
-//            if htmlAnalyticsArraay.count > 0 {
-//
-//                if (requestUrl?.hasPrefix("js-frame:"))! {
-//                    let components: [Any] = requestUrl!.components(separatedBy: ":")
-//
-//                    let receivedArgs = (components[1] as? String)
-//                    enterTheHtmlAnalytics(requestUrl: receivedArgs!)
-//                }else{
-//
-//                    requestUrl = requestUrl?.replacingOccurrences(of: "file://", with: "")
-//                    lastActiveStateURL = requestUrl!
-//                    let previousAssetAnalytics = htmlAnalyticsArraay.last
-//                    if previousAssetAnalytics?.Part_URL != requestUrl {
-//                        enterTheHtmlAnalytics(requestUrl: requestUrl!)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 //        loadingIndicator.stopAnimating()
 //        loadingIndicator.isHidden = true
 //
@@ -1587,104 +1828,44 @@ extension AssetsPlayerChildViewController : UIGestureRecognizerDelegate{
 //                HTTPCookieStorage.shared.deleteCookie(cookie)
 //            }
 //        }
-//        htmlWebkitView.stopLoading()
+//     //   if #available(iOS 13.0, *) {
+//            html_WEBKIT.stopLoading()
+////        }  else {
+////           htmlWebkitView.stopLoading()
+////        }
+//
 //    }
 //
+//    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+//
+//        if webView.scrollView.tag == 200{
+//            var requestUrl = request.url?.absoluteString
+//
+//
+//            if htmlAnalyticsArraay.count > 0 {
+//
+//                if (requestUrl?.hasPrefix("js-frame:"))! {
+//                    let components: [Any] = requestUrl!.components(separatedBy: ":")
+//
+//                    let receivedArgs = (components[1] as? String)
+//                    enterTheHtmlAnalytics(requestUrl: receivedArgs!)
+//                }else{
+//
+//                    requestUrl = requestUrl?.replacingOccurrences(of: "file://", with: "")
+//                    lastActiveStateURL = requestUrl!
+//                    let previousAssetAnalytics = htmlAnalyticsArraay.last
+//                    if previousAssetAnalytics?.Part_URL != requestUrl {
+//                        enterTheHtmlAnalytics(requestUrl: requestUrl!)
+//                    }
+//                }
+//
+//            }
+//
+//        }
+//        return true
+//    }
+//
+
+//
+
 //}
-
-
-
-
-extension AssetsPlayerChildViewController : UIWebViewDelegate{
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        
-        
-        loadingIndicator.stopAnimating()
-        loadingIndicator.isHidden = true
-        
-        if webView.scrollView.tag == 200
-        {
-            currentAnalytics?.Player_StartTime = getCurrentDateAndTime()
-        }
-        else if webView.scrollView.tag == 100
-        {
-            currentAnalytics?.Player_StartTime = getCurrentDateAndTime()
-        }
-        
-        removeCustomActivityView()
-        webView.backgroundColor = UIColor.white
-        for subView: UIView in webView.subviews {
-            if (subView is UIScrollView) {
-                for shadowView: UIView in subView.subviews {
-                    if (shadowView is UILabel) {
-                        shadowView.isHidden = true
-                    }
-                }
-            }
-        }
-        URLCache.shared.removeAllCachedResponses()
-        URLCache.shared.diskCapacity = 0
-        URLCache.shared.memoryCapacity = 0
-        
-        if let cookies = HTTPCookieStorage.shared.cookies {
-            for cookie in cookies {
-                HTTPCookieStorage.shared.deleteCookie(cookie)
-            }
-        }
-        htmlWebkitView.stopLoading()
-    }
-    
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        
-        if webView.scrollView.tag == 200{
-            var requestUrl = request.url?.absoluteString
-            
-            
-            if htmlAnalyticsArraay.count > 0 {
-                
-                if (requestUrl?.hasPrefix("js-frame:"))! {
-                    let components: [Any] = requestUrl!.components(separatedBy: ":")
-                    
-                    let receivedArgs = (components[1] as? String)
-                    enterTheHtmlAnalytics(requestUrl: receivedArgs!)
-                }else{
-                    
-                    requestUrl = requestUrl?.replacingOccurrences(of: "file://", with: "")
-                    lastActiveStateURL = requestUrl!
-                    let previousAssetAnalytics = htmlAnalyticsArraay.last
-                    if previousAssetAnalytics?.Part_URL != requestUrl {
-                        enterTheHtmlAnalytics(requestUrl: requestUrl!)
-                    }
-                }
-                
-            }
-            
-        }
-        return true
-    }
-    
-    func enterTheHtmlAnalytics(requestUrl : String){
-        
-        
-        let previousAssetAnalytics = htmlAnalyticsArraay.last
-        
-        let endTime = getCurrentDateAndTime()
-        previousAssetAnalytics?.Player_EndTime = endTime
-        previousAssetAnalytics?.Detailed_EndTime = endTime
-        
-        let dict : NSDictionary = ["DA_Code" : previousAssetAnalytics!.DA_Code, "Part_Id" : 1 , "Part_URL" : requestUrl , "SessionId" : previousAssetAnalytics?.Session_Id ?? 1  , "Detailed_DateTime" : getCurrentDate() , "Detailed_StartTime" : endTime , "Detailed_EndTime" : ""  , "Player_Start_Time" : endTime , "Detailed_EndTime" : "" , "Played_Time_Duration":"", "isPreview" : isPreview, "Is_Synced" : 0 ,"Like": "", "Rating":""]
-        
-        let assetAnalytics  = AssetAnalyticsDetail(dict: dict)
-        assetAnalytics.PlayMode = previousAssetAnalytics?.PlayMode
-        
-        currentAnalytics = assetAnalytics
-        currentAnalytics.Doc_Type = currentAssetObj.assetObj.docType
-        
-        htmlAnalyticsArraay.append(currentAnalytics)
-    }
-    
-    func didTapHTMLScreen() {
-        self.delegate?.childScreenTapped()
-    }
-}

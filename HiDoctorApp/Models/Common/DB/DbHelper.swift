@@ -8747,7 +8747,7 @@ class DBHelper: NSObject
         var prospectList: [AddProspectModel]?
         
         try? dbPool.read { db in
-            prospectList = try AddProspectModel.fetchAll(db, "SELECT * FROM \(TRAN_PROSPECTING)")
+            prospectList = try AddProspectModel.fetchAll(db, "SELECT * FROM \(TRAN_PROSPECTING) WHERE Created_Region_Code = '\(getRegionCode())'")
         }
         
         return prospectList
@@ -8758,7 +8758,16 @@ class DBHelper: NSObject
            executeQuery(query: "DELETE FROM \(TRAN_PROSPECTING) WHERE Prospect_Id = \(Prospect_Id)")
        }
     
-    
+    func insertProspect(dataArray: NSArray)
+    {
+        try? dbPool.writeInTransaction { db in
+            for data in dataArray
+            {
+                try AddProspectModel(dict: data as! NSDictionary).insert(db)
+            }
+            return .commit
+        }
+    }
     
     
     

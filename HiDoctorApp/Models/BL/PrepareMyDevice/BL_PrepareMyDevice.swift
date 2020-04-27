@@ -1097,6 +1097,20 @@ class BL_PrepareMyDevice: NSObject
         }
     }
     
+    func getProspectDetail() {
+        WebServiceHelper.sharedInstance.insertProspect {
+            (apiResponseObj) in
+            let statusCode = apiResponseObj.Status
+            if (statusCode == SERVER_SUCCESS_CODE)
+            {
+                if apiResponseObj.list.count > 0 {
+                    executeQuery(query: "DELETE FROM \(TRAN_PROSPECTING)")
+                    DBHelper.sharedInstance.insertProspect(dataArray: apiResponseObj.list)
+                }
+            }
+        }
+    }
+    
     func getAssetAnalyticsDetails(masterDataGroupName:String, completion: @escaping (Int) -> ())
     {
         let apiName: String = ApiName.AssetAnalyticsDetails.rawValue

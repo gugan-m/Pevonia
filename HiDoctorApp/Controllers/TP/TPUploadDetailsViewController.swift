@@ -32,6 +32,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     var isHidoctorLastDate = Bool()
     var tpSFCErrorList:[TPSFCList] = []
     var errorMessage = String()
+    var tpAttachmentList: [TPAttachmentModel] = []
     
     //MARK:- View Controller Lifecycle
     override func viewDidLoad()
@@ -47,6 +48,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         self.setDefaults()
         self.showBackButton()
         self.navigationController?.navigationItem.hidesBackButton = true
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTPAttachmentStatus(_:)), name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil)
     }
 
     
@@ -57,6 +59,10 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         self.uploadAction()
     }
     
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: tpaAttachmentNotification), object: nil)
+    }
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -650,10 +656,19 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
     }
     
      func act_UploadAttachment() {
-         let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.AttachmentUploadVCID) as! DCRAttachmentUploadController
-        vc.isfromTP = true
-        self.navigationController!.pushViewController(vc, animated: true)
+//         let sb = UIStoryboard(name: DCRCalenderSb, bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.AttachmentUploadVCID) as! DCRAttachmentUploadController
+//        vc.isfromTP = true
+//        self.navigationController!.pushViewController(vc, animated: true)
+        
+        DBHelper.sharedInstance.updateFailureTPAttachmentStatus()
+        let tpAttachment = DBHelper.sharedInstance.getUploadableTPAttachments()
+        tpAttachmentList = tpAttachment
+        
+        if BL_AttachmentOperation.sharedInstance.statusList.count == 0
+        {
+            BL_AttachmentOperation.sharedInstance.initiateTPOperation()
+        }
         
     }
 
@@ -675,7 +690,7 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
         if startUploadBtn.title(for: .normal) == "COMPLETED"
         {
             if attachmentList.count != 0 {
-                backToCalHeightConstraint.constant = 0
+                backToCalHeightConstraint.constant = 50
                 act_UploadAttachment()
             } else {
                 self.btnUploadAttachment.isHidden = true
@@ -688,4 +703,17 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
            backToCalHeightConstraint.constant = 0
         }
     }
+    
+    @objc func updateTPAttachmentStatus(_ notification: NSNotification)
+    {
+        if let attachmentId = notification.userInfo?["id"] as? Int
+        {
+            if let status = notification.userInfo?["status"] as? Int
+            {
+              tpAttachmentList = Bl_Attachment.sharedInstance.updateTPAttachmentStatus(id: attachmentId, status: status, attachmentModel: tpAttachmentList)
+                
+            }
+        }
+    }
+    
 }

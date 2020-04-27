@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import WebKit
 
-
-class WebViewController: UIViewController, UIWebViewDelegate {
+class WebViewController: UIViewController {
     
    // @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
@@ -19,14 +19,22 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     var webViewTitle: String!
     var pageSource: Int = 0
     var isFromKennect : Bool = false
-    var webView: UIWebView!
+   // var webView: UIWebView!
+    var webkit : WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView = UIWebView(frame: self.view.frame)
-        webView.scalesPageToFit = true
-        webView.delegate = self
-        self.view.addSubview(webView)
+      //  if #available(iOS 13.0, *) {
+            webkit = WKWebView(frame: self.view.frame)
+            webkit.navigationDelegate = self
+            self.view.addSubview(webkit)
+//        } else {
+//           webView = UIWebView(frame: self.view.frame)
+//            webView.scalesPageToFit = true
+//            webView.delegate = self
+//            self.view.addSubview(webView)
+//        }
+        
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = webViewTitle
@@ -57,15 +65,20 @@ class WebViewController: UIViewController, UIWebViewDelegate {
                     if let checkedUrl = URL(string: encodedUrl)
                     {
                         showActivityIndicator()
-                        var req = NSURLRequest(url: checkedUrl)
+                       // var req = NSURLRequest(url: checkedUrl)
                         //                        if isFromKennect
                         //                        {
                         //                           let urlValue =  URL(string:siteURL)
                         //                            req = NSURLRequest(url: urlValue!)
                         //                        }
-                        let urlValue =  checkedUrl
-                        req = NSURLRequest(url: urlValue)
-                        self.webView.loadRequest(req as URLRequest)
+                      //  if #available(iOS 13.0, *) {
+                           let req = URLRequest(url: checkedUrl)
+                           self.webkit.load(req)
+//                        } else {
+//                           let req = URLRequest(url: checkedUrl)
+//                            self.webView.loadRequest(req)
+//                        }
+                        
                     }
                     else
                     {
@@ -81,9 +94,15 @@ class WebViewController: UIViewController, UIWebViewDelegate {
             {
                 if let checkedUrl = URL(string: encodedUrl)
                 {
-                    showActivityIndicator()
-                    let req = NSURLRequest(url: checkedUrl)
-                    self.webView.loadRequest(req as URLRequest)
+                    // if #available(iOS 13.0, *) {
+                        showActivityIndicator()
+                        let req = URLRequest(url: checkedUrl)
+                        self.webkit.load(req)
+//                     } else {
+//                    showActivityIndicator()
+//                    let req = NSURLRequest(url: checkedUrl)
+//                    self.webView.loadRequest(req as URLRequest)
+//                }
                 }
                 else
                 {
@@ -98,48 +117,58 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     //MARK:- Webview delegates
-    func webViewDidFinishLoad(_ webView: UIWebView)
-    {
-        hideActivityIndicator()
-        setMainViewVisibility(isEmpty: false, text: "")
-    }
-    
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
-    {
-        return true
-    }
-    
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
-    {
-        hideActivityIndicator()
-        if localURL == false{
-            if checkInternetConnectivity()
-            {
-                setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
-            }
-            else
-            {
-                setMainViewVisibility(isEmpty: true, text: internetOfflineMessage)
-            }
-        }
-        else
-        {
-            setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
-        }
-        
-    }
+//    func webViewDidFinishLoad(_ webView: UIWebView)
+//    {
+//        hideActivityIndicator()
+//        setMainViewVisibility(isEmpty: false, text: "")
+//    }
+//
+//    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+//    {
+//        return true
+//    }
+//
+//    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
+//    {
+//        hideActivityIndicator()
+//        if localURL == false{
+//            if checkInternetConnectivity()
+//            {
+//                setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+//            }
+//            else
+//            {
+//                setMainViewVisibility(isEmpty: true, text: internetOfflineMessage)
+//            }
+//        }
+//        else
+//        {
+//            setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+//        }
+//
+//    }
     
     func showActivityIndicator()
     {
-        if webView.isHidden == false
-        {
-            webView.isHidden = true
-        }
-        if emptyStateWrapper.isHidden == false
-        {
-            emptyStateWrapper.isHidden = true
-        }
-        
+       // if #available(iOS 13.0, *) {
+            if webkit.isHidden == false
+            {
+                webkit.isHidden = true
+            }
+            if emptyStateWrapper.isHidden == false
+            {
+                emptyStateWrapper.isHidden = true
+            }
+//        } else {
+//            if webView.isHidden == false
+//            {
+//                webView.isHidden = true
+//            }
+//            if emptyStateWrapper.isHidden == false
+//            {
+//                emptyStateWrapper.isHidden = true
+//            }
+//        }
         showCustomActivityIndicatorView(loadingText: "Loading the content..")
     }
     
@@ -152,13 +181,21 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     {
         if isEmpty
         {
-            webView.isHidden = true
+            // if #available(iOS 13.0, *) {
+                webkit.isHidden = true
+//             } else {
+//                webView.isHidden = true
+//            }
             emptyStateWrapper.isHidden = false
             emptyStateLbl.text = text
         }
         else
         {
-            webView.isHidden = false
+          //  if #available(iOS 13.0, *) {
+                webkit.isHidden = false
+//             } else {
+//                webView.isHidden = false
+//            }
             emptyStateWrapper.isHidden = true
         }
     }
@@ -213,3 +250,40 @@ class WebViewController: UIViewController, UIWebViewDelegate {
 }
 
 
+
+extension WebViewController : WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideActivityIndicator()
+        setMainViewVisibility(isEmpty: false, text: "")
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        print(navigationAction.request.url?.absoluteString as! String)
+        if webView == self.webkit{
+            decisionHandler(.allow)
+        }
+        return
+        guard let url = navigationAction.request.url else { return }
+        print("decidePolicyFor - url: \(url)")
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideActivityIndicator()
+        if localURL == false{
+            if checkInternetConnectivity()
+            {
+                setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+            }
+            else
+            {
+                setMainViewVisibility(isEmpty: true, text: internetOfflineMessage)
+            }
+        }
+        else
+        {
+            setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+        }
+    }
+    
+}

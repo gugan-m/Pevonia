@@ -31,4 +31,5 @@ class DCRDetail: NSObject {
     var categoryId : Int!
     var isLocked: Int!
     var selectedDate: Date!
+    var dcrType: String = ""
 }

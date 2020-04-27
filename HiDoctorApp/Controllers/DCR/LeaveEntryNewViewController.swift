@@ -13,9 +13,8 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     //MARK:- IBoutlet
     @IBOutlet weak var scrollViewBtm: NSLayoutConstraint!
     @IBOutlet weak var txtCount: UILabel!
-    @IBOutlet weak var fromDateLbl: UITextField!
     @IBOutlet weak var leaveReason: UITextView!
-    @IBOutlet weak var selectLeaveType: UILabel!
+    @IBOutlet weak var selectLeaveType: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var frameView: CornerRadiusWithShadowView!
@@ -31,6 +30,8 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
     var isInsertedFromDCR: Bool = false
     let placeHolderForLeaveType : String = "Select Not Working Type"
     var IS_VIEW_MODE = false
+    var leaveTypePicker = UIPickerView()
+    var NotWorkingTypeArr: [LeaveTypeMaster]? =  []
     
     override func viewDidLoad()
     {
@@ -46,11 +47,18 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         let tpDate = DCRModel.sharedInstance.dcrDate
         txtCount.text = "\(String(0))/\(tpLeaveReasonLength)"
         startDate = tpDate!
+        UserDefaults.standard.set("1", forKey: "LeaveDCR")
+        UserDefaults.standard.synchronize()
+         NotWorkingTypeArr = BL_DCR_Leave.sharedInstance.getLeaveTypes()
         self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Not Working)"
-        fromDateLbl.text = stringDateFormat(date1: tpDate!)
-        fromDateLbl.isEnabled = false
         leaveReason.delegate = self
-        
+        self.leaveTypePicker.delegate = self
+        self.leaveTypePicker.dataSource = self
+        self.selectLeaveType.inputView = leaveTypePicker
+        if NotWorkingTypeArr!.count != 0 {
+            self.selectLeaveType.text = self.NotWorkingTypeArr![0].Leave_Type_Name
+            self.getLeaveEntrySelectedObj(obj: self.NotWorkingTypeArr![0])
+        }
         if DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue
         {
             let unApprovedObj = BL_DCR_Leave.sharedInstance.getUnapprovedLeaveData(leaveDate: startDate)
@@ -60,10 +68,6 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
             leaveTypeCode = (unApprovedObj?.Leave_Type_Code)!
             leaveTypeId = String((unApprovedObj?.Leave_Type_Id)!)
             leaveTypeName = BL_DCR_Leave.sharedInstance.getLeaveTypeName(leaveTypeCode: self.leaveTypeCode)
-            
-            fromDateLbl.text = stringDateFormat(date1: startDate)
-            fromDateLbl.isEnabled = false
-        
             selectLeaveType.text = leaveTypeName
             leaveReason.text = unApprovedObj?.Reason
             
@@ -72,7 +76,7 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
         }
         else
         {
-            updateViews()
+           // updateViews()
         }
         
         if IS_VIEW_MODE {
@@ -82,6 +86,9 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
             self.scrollView.isUserInteractionEnabled = true
             self.submitbtn.isHidden = false
         }
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning()
@@ -406,8 +413,6 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
             }
         else
         {
-            fromDateLbl.text = stringDateFormat(date1: startDate)
-            fromDateLbl.isEnabled = false
             txtCount.text = "\0/\(tpLeaveReasonLength)"
             leaveReason.text = EMPTY
             selectLeaveType.text = placeHolderForLeaveType
@@ -517,4 +522,22 @@ class LeaveEntryNewViewController: UIViewController,UITextViewDelegate,leaveEntr
             
              BL_DCRCalendar.sharedInstance.getDCRUploadError(viewController: self, isFromLandingUpload: false, enabledAutoSync: enabledAutoSync)
         }
+}
+extension LeaveEntryNewViewController: UIPickerViewDelegate , UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.NotWorkingTypeArr!.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectLeaveType.text = self.NotWorkingTypeArr![row].Leave_Type_Name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.NotWorkingTypeArr![row].Leave_Type_Name
+    }
+    
 }

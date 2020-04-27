@@ -23,26 +23,31 @@
 
 import UIKit
 
-
 private var kIQLayoutGuideConstraint = "kIQLayoutGuideConstraint"
 
+@objc public extension UIViewController {
 
-public extension UIViewController {
-
+    /**
+     This method is provided to override by viewController's if the library lifts a viewController which you doesn't want to lift . This may happen if you have implemented side menu feature in your app and the library try to lift the side menu controller. Overriding this method in side menu class to return correct controller should fix the problem.
+    */
+    func parentIQContainerViewController() -> UIViewController? {
+        return self
+    }
+    
     /**
     To set customized distance from keyboard for textField/textView. Can't be less than zero
      
-     @deprecated    Library is internally handling Safe Area (If you are using Safe Area from Xcode9 and iOS11) and there is no need to do any tweak if you already migrated to use Safe Area
+     @deprecated    Due to change in core-logic of handling distance between textField and keyboard distance, this layout contraint tweak is no longer needed and things will just work out of the box regardless of constraint pinned with safeArea/layoutGuide/superview
     */
-    @available(iOS, deprecated: 11.0)
-    @IBOutlet public var IQLayoutGuideConstraint: NSLayoutConstraint? {
+    @available(*, deprecated, message: "Due to change in core-logic of handling distance between textField and keyboard distance, this layout contraint tweak is no longer needed and things will just work out of the box regardless of constraint pinned with safeArea/layoutGuide/superview.")
+    @IBOutlet @objc var IQLayoutGuideConstraint: NSLayoutConstraint? {
         get {
             
             return objc_getAssociatedObject(self, &kIQLayoutGuideConstraint) as? NSLayoutConstraint
         }
 
         set(newValue) {
-            objc_setAssociatedObject(self, &kIQLayoutGuideConstraint, newValue,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &kIQLayoutGuideConstraint, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }

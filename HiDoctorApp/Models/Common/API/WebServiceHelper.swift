@@ -2841,6 +2841,15 @@ class WebServiceHelper: NSObject
             completion(apiResponseObject)
         }
     }
-  
+    
+    func insertProspect(completion: @escaping (_ apiResponseObj:ApiResponseModel)->())
+    {
+        let urlString = wsRootUrl + wsDCRDoctorVisitApi + WSGetProspectDetailsMasterData + getCompanyCode() + "/" + getRegionCode()
+        WebServiceWrapper.sharedInstance.getApi(urlString: urlString, screenName: ScreenName.Empty) {(apiResponseObject) in
+        completion(apiResponseObject)
+    }
+    }
 }
+
+
 

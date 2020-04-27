@@ -150,7 +150,7 @@ class BL_DCR_Leave: NSObject
             {
 //                if (isHolidayOrWeekend(dcrActualDate: nextDate, calendarDetails: calenderDetails))
 //                {
-                    dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date: nextDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.leave.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
+                    dcrHeaderDict = ["DCR_Actual_Date": convertDateIntoServerStringFormat(date: nextDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.leave.rawValue, "Leave_Type_Id": Int(leaveTypeId), "Leave_Type_Code": leaveTypeCode, "Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode,"DCR_Type" : "L"]
                     
                     let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
                     
@@ -200,7 +200,7 @@ class BL_DCR_Leave: NSObject
         
     //                if (isHolidayOrWeekend(dcrActualDate: nextDate, calendarDetails: calenderDetails))
     //                {
-            dcrHeaderDict = ["DCR_Actual_Date":convertDateIntoServerStringFormat(date: dcrDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.attendance.rawValue,"Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode]
+            dcrHeaderDict = ["DCR_Actual_Date":convertDateIntoServerStringFormat(date: dcrDate), "Dcr_Entered_Date": enteredDate, "DCR_Status": String(DCRStatus.applied.rawValue), "Flag": DCRFlag.attendance.rawValue,"Lattitude": latitude, "Longitude": longitude, "Reason": leaveReason, "Region_Code": getRegionCode(), "DCR_Code": dcrCode,"DCR_Type" : "A"]
                         
                         let dcrHeaderObj: DCRHeaderModel = DCRHeaderModel(dict: dcrHeaderDict)
                         

@@ -52,7 +52,7 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         showOrganisation = (PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.SHOW_ORGANISATION_IN_CUSTOMER))
         
         
-        self.navigationItem.title = "\(appDoctorPlural) List"
+        self.navigationItem.title = "Contact List"
         self.segmentedControlHeight.constant = 28
         self.segmentedControlTopSpace.constant = 10
         self.segmentedControl.isHidden = false
@@ -87,26 +87,26 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
         {
             let tpData = BL_DCR_Doctor_Visit.sharedInstance.getTPDoctorsForSelectedDate()!
             let cpData = BL_DCR_Doctor_Visit.sharedInstance.getCPDoctorsForSelectedDate()!
-            
-            if tpData.count > 0
-            {
-                if BL_DCR_Doctor_Visit.sharedInstance.cpTab == true
-                {
-                    selectedIndex = 2
-                }
-                else if BL_DCR_Doctor_Visit.sharedInstance.tpTab == true
-                {
-                    selectedIndex = 1
-                }
-            }
-            else if cpData.count > 0
-            {
-                selectedIndex = 2
-            }
-            else
-            {
+//
+//            if tpData.count > 0
+//            {
+//                if BL_DCR_Doctor_Visit.sharedInstance.cpTab == true
+//                {
+//                    selectedIndex = 2
+//                }
+//                else if BL_DCR_Doctor_Visit.sharedInstance.tpTab == true
+//                {
+//                    selectedIndex = 1
+//                }
+//            }
+//            else if cpData.count > 0
+//            {
+//                selectedIndex = 2
+//            }
+//            else
+//            {
                 selectedIndex = 0
-            }
+          //  }
         }
         else
         {
@@ -139,11 +139,11 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
                         doctorMasterList.append(j)
                     }
                 }
-                    tempList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: getRegionCode())!
-                    for i in tempList
-                    {
-                        doctorMasterList.append(i)
-                    }
+//                    tempList = BL_DCR_Doctor_Visit.sharedInstance.getDoctorMasterList(regionCode: getRegionCode())!
+//                    for i in tempList
+//                    {
+//                        doctorMasterList.append(i)
+//                    }
                 }
                 else
                 {
@@ -1465,17 +1465,22 @@ class DoctorMasterController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func addAction(_ sender: AnyObject)
     {
         
+//        let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
+//        if isFromRCPA
+//        {
+//            vc.isfromChemistDay = isFromRCPA
+//        }
+//        else if isFromAttendance
+//        {
+//            vc.isFromAttendance = self.isFromAttendance
+//        }
+//        self.navigationController?.pushViewController(vc, animated: true)
         let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "AddFlexiDoctorVcId") as! AddFlexiDoctor
-        if isFromRCPA
-        {
-            vc.isfromChemistDay = isFromRCPA
-        }
-        else if isFromAttendance
-        {
-            vc.isFromAttendance = self.isFromAttendance
-        }
+        let vc = sb.instantiateViewController(withIdentifier: "AddNewProspectViewController") as! AddNewProspectViewController
+        vc.title = ""
         self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     private func addCustomBackButtonToNavigationBar()

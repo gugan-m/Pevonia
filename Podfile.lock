@@ -1,20 +1,20 @@
 PODS:
-  - Charts (3.0.5):
-    - Charts/Core (= 3.0.5)
-  - Charts/Core (3.0.5)
-  - Crashlytics (3.10.0):
-    - Fabric (~> 1.7.3)
-  - Fabric (1.7.3)
-  - GoogleMaps (2.6.0):
-    - GoogleMaps/Maps (= 2.6.0)
-  - GoogleMaps/Base (2.6.0)
-  - GoogleMaps/Maps (2.6.0):
+  - Charts (3.5.0):
+    - Charts/Core (= 3.5.0)
+  - Charts/Core (3.5.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - GooglePlaces (2.6.0):
-    - GoogleMaps/Base (= 2.6.0)
-  - GRDB.swift (2.8.0)
-  - IQKeyboardManagerSwift (5.0.7)
-  - JTAppleCalendar (7.1.5)
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
+  - GRDB.swift (3.7.0)
+  - IQKeyboardManagerSwift (6.5.5)
+  - JTAppleCalendar (7.1.7)
   - Zip (0.8.0)
 
 DEPENDENCIES:
@@ -28,6 +28,17 @@ DEPENDENCIES:
   - JTAppleCalendar
   - Zip (~> 0.7)
 
+SPEC REPOS:
+  trunk:
+    - Crashlytics
+    - Fabric
+    - GoogleMaps
+    - GooglePlaces
+    - GRDB.swift
+    - IQKeyboardManagerSwift
+    - JTAppleCalendar
+    - Zip
+
 EXTERNAL SOURCES:
   Charts:
     :branch: master
@@ -35,20 +46,20 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Charts:
-    :commit: ae43f31a3727582edb6dc913c187825f03e90280
+    :commit: 7ac4a05e83d279bac305a472af9128c2a0eca3d7
     :git: https://github.com/danielgindi/Charts.git
 
 SPEC CHECKSUMS:
-  Charts: 8a244acbb5054c54c1a54c3e82516f3aee30e68d
-  Crashlytics: a989ef242b66605577a425733797f810bd2725eb
-  Fabric: bb495bb9a7a7677c6d03a1f8b83d95bc49b47e41
-  GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
-  GooglePlaces: f6ddf33b75cef69e888907d9947c57198ed845f3
-  GRDB.swift: 7456b5a8503d150ec0ef6aaf5ade45996565a779
-  IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
-  JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
+  Charts: 40a08591df1f8ad5c223ddedfb1a06da92f24f7c
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
+  GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  JTAppleCalendar: 96da4d8388fa6dc82d6a60d41ef36a015e167e2f
   Zip: bb7d8370de00e50699633d91e03f2ec84f1ee437
 
-PODFILE CHECKSUM: 338289baddd99c1fac92966438dc4984f50136c9
+PODFILE CHECKSUM: cfdb391d5ad54f10500d137cd01b1bc6bcad423c
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.9.1

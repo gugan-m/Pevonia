@@ -41,8 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         Fabric.with([Crashlytics.self])
         
-        IQKeyboardManager.sharedManager().enable = true
-        
+        IQKeyboardManager.shared.enable = true
         createDirectoryFolders()
         
         // Google maps key

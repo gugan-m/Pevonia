@@ -80,7 +80,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                 DAL_TP_Stepper.sharedInstance.changeTPStatusToDraft(tpEntryId: TPModel.sharedInstance.tpEntryId)
             }
             
-            self.navigationItem.title = "Choose \(appDoctorPlural)"
+            self.navigationItem.title = "Choose Contact(s)"
             
             addBarButtonItem()
             addRefreshBtn()

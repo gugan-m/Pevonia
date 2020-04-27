@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -417,26 +417,16 @@
                                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBH-o8-eqs">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="290" height="65"/>
-                                                                                            <connections>
-                                                                                                <action selector="viewLeave:" destination="owI-2r-RjM" eventType="touchUpInside" id="El2-xp-jh7"/>
-                                                                                            </connections>
-                                                                                        </button>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <constraints>
                                                                                         <constraint firstItem="ygD-mr-1CD" firstAttribute="leading" secondItem="Xhm-n3-vzX" secondAttribute="trailing" constant="15" id="7Q2-2y-jBe"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="ygD-mr-1CD" secondAttribute="trailing" constant="15" id="GYy-JX-gcT"/>
-                                                                                        <constraint firstAttribute="bottom" secondItem="SBH-o8-eqs" secondAttribute="bottom" id="McA-eW-yJF"/>
-                                                                                        <constraint firstItem="SBH-o8-eqs" firstAttribute="leading" secondItem="vls-D7-n6d" secondAttribute="leading" id="dh8-D8-Ck4"/>
                                                                                         <constraint firstAttribute="height" constant="65" id="fIk-T9-LH4"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="wJ5-uY-gwP" secondAttribute="trailing" constant="15" id="fvA-Tu-ag7"/>
                                                                                         <constraint firstItem="ygD-mr-1CD" firstAttribute="top" secondItem="wJ5-uY-gwP" secondAttribute="bottom" constant="7" id="hF4-83-AFE"/>
-                                                                                        <constraint firstAttribute="trailing" secondItem="SBH-o8-eqs" secondAttribute="trailing" id="hWZ-Cf-SZs"/>
                                                                                         <constraint firstItem="wJ5-uY-gwP" firstAttribute="top" secondItem="vls-D7-n6d" secondAttribute="top" constant="14" id="j55-0q-c08"/>
                                                                                         <constraint firstItem="wJ5-uY-gwP" firstAttribute="leading" secondItem="Xhm-n3-vzX" secondAttribute="trailing" constant="15" id="ke7-hr-JG4"/>
-                                                                                        <constraint firstItem="SBH-o8-eqs" firstAttribute="top" secondItem="vls-D7-n6d" secondAttribute="top" id="oE7-xa-6f5"/>
                                                                                         <constraint firstItem="Xhm-n3-vzX" firstAttribute="centerY" secondItem="vls-D7-n6d" secondAttribute="centerY" id="t5y-vA-Euu"/>
                                                                                         <constraint firstItem="Xhm-n3-vzX" firstAttribute="leading" secondItem="vls-D7-n6d" secondAttribute="leading" constant="15" id="u3Z-R7-EXn"/>
                                                                                     </constraints>
@@ -616,7 +606,6 @@
                                                                 <connections>
                                                                     <outlet property="bottomView" destination="mXf-go-NXs" id="JS6-ue-oMh"/>
                                                                     <outlet property="btmViewHeightConst" destination="hWm-Ya-wlS" id="An6-E2-FKD"/>
-                                                                    <outlet property="btnViewLeave" destination="SBH-o8-eqs" id="K0o-EG-LVh"/>
                                                                     <outlet property="dcrLabel" destination="wJ5-uY-gwP" id="dJH-KR-uBU"/>
                                                                     <outlet property="dcrStatus" destination="ygD-mr-1CD" id="Q4G-LU-n9U"/>
                                                                     <outlet property="detailBtn" destination="mqr-k3-NNS" id="9f9-SN-SST"/>
@@ -669,25 +658,15 @@
                                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Fz-Yy-1v2">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="290" height="65"/>
-                                                                                            <connections>
-                                                                                                <action selector="viewRCPA:" destination="owI-2r-RjM" eventType="touchUpInside" id="m86-n4-3HU"/>
-                                                                                            </connections>
-                                                                                        </button>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <constraints>
                                                                                         <constraint firstItem="VJh-nl-lsG" firstAttribute="leading" secondItem="51T-hZ-q6H" secondAttribute="trailing" constant="15" id="7yS-IN-Wkw"/>
                                                                                         <constraint firstItem="VJh-nl-lsG" firstAttribute="top" secondItem="Md7-hZ-lTr" secondAttribute="top" constant="14" id="B7d-bZ-1up"/>
-                                                                                        <constraint firstItem="2Fz-Yy-1v2" firstAttribute="leading" secondItem="Md7-hZ-lTr" secondAttribute="leading" id="BQB-OM-46k"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="L2E-nv-aAO" secondAttribute="trailing" constant="5" id="J01-xW-RDW"/>
                                                                                         <constraint firstItem="51T-hZ-q6H" firstAttribute="leading" secondItem="Md7-hZ-lTr" secondAttribute="leading" constant="15" id="QOE-oi-m9T"/>
                                                                                         <constraint firstItem="L2E-nv-aAO" firstAttribute="leading" secondItem="51T-hZ-q6H" secondAttribute="trailing" constant="15" id="V6J-Pm-hm2"/>
-                                                                                        <constraint firstItem="2Fz-Yy-1v2" firstAttribute="top" secondItem="Md7-hZ-lTr" secondAttribute="top" id="Wew-Yo-Dsp"/>
                                                                                         <constraint firstItem="L2E-nv-aAO" firstAttribute="top" secondItem="VJh-nl-lsG" secondAttribute="bottom" constant="7" id="d4v-sb-y0q"/>
-                                                                                        <constraint firstAttribute="bottom" secondItem="2Fz-Yy-1v2" secondAttribute="bottom" id="drS-SY-yQC"/>
-                                                                                        <constraint firstAttribute="trailing" secondItem="2Fz-Yy-1v2" secondAttribute="trailing" id="gDA-MO-QDf"/>
                                                                                         <constraint firstAttribute="height" constant="65" id="kwx-L5-rXX"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="VJh-nl-lsG" secondAttribute="trailing" constant="5" id="pNY-B4-ftS"/>
                                                                                         <constraint firstItem="51T-hZ-q6H" firstAttribute="centerY" secondItem="Md7-hZ-lTr" secondAttribute="centerY" id="w7Y-uH-8Za"/>
@@ -1049,7 +1028,6 @@
                                                                 <connections>
                                                                     <outlet property="bottomView" destination="rr2-OE-2q5" id="lTN-si-s0j"/>
                                                                     <outlet property="btmViewHeightConst" destination="I7K-7D-VdF" id="IX0-CR-2sr"/>
-                                                                    <outlet property="btnViewRCPA" destination="2Fz-Yy-1v2" id="hyQ-O0-btQ"/>
                                                                     <outlet property="chemistEntryLbl" destination="74M-JL-nvj" id="dKg-Cf-nFd"/>
                                                                     <outlet property="chemistTick" destination="SMJ-mo-E4W" id="qVl-pS-G1t"/>
                                                                     <outlet property="chemistView" destination="Fr5-vP-Ral" id="nQT-f0-e4a"/>
@@ -1079,7 +1057,7 @@
                                                                 </connections>
                                                             </tableViewCell>
                                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="attendanceCell" rowHeight="215" id="UyJ-Mm-0Fg" customClass="AttendanceCell" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="610" width="300" height="215"/>
+                                                                <rect key="frame" x="0.0" y="302" width="300" height="215"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UyJ-Mm-0Fg" id="A2g-Dv-eEK">
                                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="215"/>
@@ -1116,25 +1094,15 @@
                                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ji-4g-LfU">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="290" height="65"/>
-                                                                                            <connections>
-                                                                                                <action selector="viewAttendance:" destination="owI-2r-RjM" eventType="touchUpInside" id="H2j-g2-OIF"/>
-                                                                                            </connections>
-                                                                                        </button>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <constraints>
-                                                                                        <constraint firstAttribute="trailing" secondItem="9ji-4g-LfU" secondAttribute="trailing" id="0oS-9j-Uuw"/>
-                                                                                        <constraint firstAttribute="bottom" secondItem="9ji-4g-LfU" secondAttribute="bottom" id="E4f-dz-WuG"/>
                                                                                         <constraint firstItem="iX8-RY-DdG" firstAttribute="top" secondItem="jSh-ea-A8f" secondAttribute="bottom" constant="7" id="J2g-VG-VJa"/>
                                                                                         <constraint firstItem="QGV-Z0-a1W" firstAttribute="centerY" secondItem="IC4-jD-iXg" secondAttribute="centerY" id="Jvv-Rs-9yL"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="iX8-RY-DdG" secondAttribute="trailing" constant="15" id="L3D-av-pOo"/>
                                                                                         <constraint firstItem="jSh-ea-A8f" firstAttribute="leading" secondItem="QGV-Z0-a1W" secondAttribute="trailing" constant="15" id="RZY-nZ-gAN"/>
                                                                                         <constraint firstAttribute="height" constant="65" id="WNS-w3-qfd"/>
                                                                                         <constraint firstItem="jSh-ea-A8f" firstAttribute="top" secondItem="IC4-jD-iXg" secondAttribute="top" constant="14" id="Z3I-5E-zib"/>
-                                                                                        <constraint firstItem="9ji-4g-LfU" firstAttribute="leading" secondItem="IC4-jD-iXg" secondAttribute="leading" id="buv-Mg-gAP"/>
-                                                                                        <constraint firstItem="9ji-4g-LfU" firstAttribute="top" secondItem="IC4-jD-iXg" secondAttribute="top" id="hcM-Wk-6HL"/>
                                                                                         <constraint firstItem="QGV-Z0-a1W" firstAttribute="leading" secondItem="IC4-jD-iXg" secondAttribute="leading" constant="15" id="jMo-5v-rJv"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="jSh-ea-A8f" secondAttribute="trailing" constant="15" id="saq-gp-g6k"/>
                                                                                         <constraint firstItem="iX8-RY-DdG" firstAttribute="leading" secondItem="QGV-Z0-a1W" secondAttribute="trailing" constant="15" id="v1Y-Pk-ka3"/>
@@ -1335,7 +1303,6 @@
                                                                     <outlet property="activityTick" destination="au3-l9-bK3" id="fkl-Vp-Hpk"/>
                                                                     <outlet property="bottomView" destination="LIA-dC-thO" id="bD0-g7-Qrg"/>
                                                                     <outlet property="btmViewHeightConst" destination="Dta-cd-zfV" id="oix-f9-Yfg"/>
-                                                                    <outlet property="btnViewAttendance" destination="9ji-4g-LfU" id="5dC-Pc-pRe"/>
                                                                     <outlet property="dcrStatus" destination="iX8-RY-DdG" id="hDT-MK-ks8"/>
                                                                     <outlet property="dcrlabel" destination="jSh-ea-A8f" id="K0k-XH-1P1"/>
                                                                     <outlet property="detailBtn" destination="QEC-NH-TmE" id="9HL-NE-Dde"/>
@@ -2125,27 +2092,6 @@
                                     <constraint firstItem="Bbd-O5-Gjl" firstAttribute="leading" secondItem="imF-IQ-pjj" secondAttribute="leading" constant="8" id="m3E-fm-fmm"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrE-Xg-m6O">
-                                <rect key="frame" x="60" y="518" width="200" height="30"/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.62745098040000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="dtc-2D-8Ub"/>
-                                    <constraint firstAttribute="width" constant="200" id="fjL-PF-rs4"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
-                                <state key="normal" title="UPLOAD ATTACHMENT">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="uploadAttachmentAction:" destination="dph-CF-hbG" eventType="touchUpInside" id="3xN-na-svD"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rVO-Ot-lqk" userLabel="Button View">
                                 <rect key="frame" x="0.0" y="518" width="320" height="30"/>
                                 <subviews>
@@ -2198,6 +2144,27 @@
                                     <constraint firstAttribute="bottom" secondItem="wRJ-Nk-tud" secondAttribute="bottom" id="zBI-Rn-jSL"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrE-Xg-m6O">
+                                <rect key="frame" x="60" y="518" width="200" height="30"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.62745098040000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="dtc-2D-8Ub"/>
+                                    <constraint firstAttribute="width" constant="200" id="fjL-PF-rs4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                                <state key="normal" title="UPLOAD ATTACHMENT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="uploadAttachmentAction:" destination="dph-CF-hbG" eventType="touchUpInside" id="3xN-na-svD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

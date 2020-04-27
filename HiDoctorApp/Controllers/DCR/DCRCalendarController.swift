@@ -926,15 +926,11 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                        BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
                       let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
                        let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
-                       let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
-                       let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
-                       if doctorlist.count != 0{
-                           if doctorlist.count == filterArr.count {
+                    if detailModel.dcrType == "P" {
                               vc.isProspect = true
                            } else {
                               vc.isProspect = false
                            }
-                       }
                        self.navigationController?.pushViewController(vc, animated: true)
                        
                    }
@@ -970,7 +966,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 let detailModel = dcrDetailList[0]
                 
-                if detailModel.dcrStatus == DCRStatus.approved.rawValue {
+                if detailModel.dcrStatus == DCRStatus.approved.rawValue || detailModel.dcrStatus == DCRStatus.applied.rawValue {
                     if !BL_DCRCalendar.sharedInstance.checkIsFutureDate(date: self.selectedDate)
                     {
                         if detailModel.dcrFlag != DCRFlag.leave.rawValue
@@ -1000,14 +996,10 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
                        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
                         let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
-                        let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
-                        let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
-                        if doctorlist.count != 0{
-                            if doctorlist.count == filterArr.count {
-                               vc.isProspect = true
-                            } else {
-                               vc.isProspect = false
-                            }
+                        if detailModel.dcrType == "P" {
+                           vc.isProspect = true
+                        } else {
+                           vc.isProspect = false
                         }
                         vc.IS_VIEW_MODE = true
                         self.navigationController?.pushViewController(vc, animated: true)
@@ -1054,59 +1046,59 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 let detailModel = dcrDetailList[sender.tag]
                 
-                if !BL_DCRCalendar.sharedInstance.checkIsFutureDate(date: self.selectedDate)
-                {
-                    if detailModel.dcrFlag != DCRFlag.leave.rawValue
+                if detailModel.dcrStatus == DCRStatus.approved.rawValue || detailModel.dcrStatus == DCRStatus.applied.rawValue {
+                    viewAction()
+                } else {
+                    if !BL_DCRCalendar.sharedInstance.checkIsFutureDate(date: self.selectedDate)
                     {
-                        let seqValidationMsg :  String = BL_DCRCalendar.sharedInstance.getSequentialEntryValidation(startDate : self.currentStartDate, endDate: self.selectedDate, isEditMode: true)
-                        
-                        if seqValidationMsg != ""
+                        if detailModel.dcrFlag != DCRFlag.leave.rawValue
                         {
-                            AlertView.showAlertView(title: alertTitle, message: seqValidationMsg, viewController: self)
-                            return
+                            let seqValidationMsg :  String = BL_DCRCalendar.sharedInstance.getSequentialEntryValidation(startDate : self.currentStartDate, endDate: self.selectedDate, isEditMode: true)
+                            
+                            if seqValidationMsg != ""
+                            {
+                                AlertView.showAlertView(title: alertTitle, message: seqValidationMsg, viewController: self)
+                                return
+                            }
                         }
                     }
-                }
-                
-                DCRModel.sharedInstance.dcrId = detailModel.dcrId
-                DCRModel.sharedInstance.dcrDate = selectedDate
-                DCRModel.sharedInstance.dcrDateString = convertDateIntoServerStringFormat(date: selectedDate)
-                DCRModel.sharedInstance.dcrFlag = detailModel.dcrFlag
-                DCRModel.sharedInstance.dcrStatus = detailModel.dcrStatus
-                DCRModel.sharedInstance.dcrCode = detailModel.dcrCode!
-                
-                if detailModel.dcrFlag == DCRFlag.fieldRcpa.rawValue
-                {
                     
-                    DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
-                    DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
-                    BL_Stepper.sharedInstance.getAccompanistDataPendingList()
-                    BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
-                    let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
-                    let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
-                    let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
-                    let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
-                    if doctorlist.count != 0{
-                        if doctorlist.count == filterArr.count {
+                    DCRModel.sharedInstance.dcrId = detailModel.dcrId
+                    DCRModel.sharedInstance.dcrDate = selectedDate
+                    DCRModel.sharedInstance.dcrDateString = convertDateIntoServerStringFormat(date: selectedDate)
+                    DCRModel.sharedInstance.dcrFlag = detailModel.dcrFlag
+                    DCRModel.sharedInstance.dcrStatus = detailModel.dcrStatus
+                    DCRModel.sharedInstance.dcrCode = detailModel.dcrCode!
+                    
+                    if detailModel.dcrFlag == DCRFlag.fieldRcpa.rawValue
+                    {
+                        
+                        DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                        BL_Stepper.sharedInstance.getAccompanistDataPendingList()
+                        BL_DCRCalendar.sharedInstance.prefillDoctorsForDCRDate(selectedDate: selectedDate, dcrId: detailModel.dcrId)
+                        let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
+                        let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
+                        if detailModel.dcrType == "P" {
                            vc.isProspect = true
                         } else {
                            vc.isProspect = false
                         }
+                        self.navigationController?.pushViewController(vc, animated: true)
+                        
                     }
-                    self.navigationController?.pushViewController(vc, animated: true)
-                    
+                    else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
+                    {
+                        DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
+                        DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
+                        self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
+                    }
+                    else if detailModel.dcrFlag == DCRFlag.leave.rawValue
+                    {
+                        navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
+                    }
+                    removeVersionToastView()
                 }
-                else if detailModel.dcrFlag == DCRFlag.attendance.rawValue
-                {
-                    DCRModel.sharedInstance.expenseEntityCode = detailModel.categoryCode
-                    DCRModel.sharedInstance.expenseEntityName = detailModel.categoryName
-                    self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
-                }
-                else if detailModel.dcrFlag == DCRFlag.leave.rawValue
-                {
-                    navigateToNextScreen(storyBoard: leaveEntrySb, viewControllerId: "DCRLeaveEntryNew")
-                }
-                removeVersionToastView()
             }
         }
     }
@@ -1139,6 +1131,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     {
         if title == DCRActivityName.fieldRcpa.rawValue || title == "Field_RCPA"
         {
+            BL_DCRCalendar.sharedInstance.DVRSub_Type = "F"
             BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.fieldRcpa.rawValue, selectedDate: self.selectedDate)
             BL_Stepper.sharedInstance.getAccompanistDataPendingList()
             if  BL_DCR_Doctor_Visit.sharedInstance.isGeoLocationMandatory() && BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
@@ -1150,19 +1143,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
             let sb = UIStoryboard(name: dcrStepperSb, bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "DCRStepperNew") as! DCRStepperNewViewController
-            let doctorlist:[DCRDoctorVisitModel] = BL_Stepper.sharedInstance.getDCRDoctorDetails()!
-            let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
-            if doctorlist.count != 0{
-                if doctorlist.count == filterArr.count {
-                   vc.isProspect = true
-                } else {
                    vc.isProspect = false
-                }
-            }
             self.navigationController?.pushViewController(vc, animated: true)
         }
             if title == DCRActivityName.prospect.rawValue || title == "Prospect"
             {
+                BL_DCRCalendar.sharedInstance.DVRSub_Type = "P"
                 BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.fieldRcpa.rawValue, selectedDate: self.selectedDate)
                 BL_Stepper.sharedInstance.getAccompanistDataPendingList()
                 if  BL_DCR_Doctor_Visit.sharedInstance.isGeoLocationMandatory() && BL_DCR_Doctor_Visit.sharedInstance.isHourlyReportEnabled() && isCurrentDate() && !BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled()
@@ -1178,6 +1164,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
         else if title == DCRActivityName.attendance.rawValue
         {
+            BL_DCRCalendar.sharedInstance.DVRSub_Type = "A"
             BL_DCRCalendar.sharedInstance.insertInitialDCR(flag: DCRActivity.attendance.rawValue, selectedDate: self.selectedDate)
             
             self.navigateToNextScreen(storyBoard: attendanceStepperSb, viewControllerId: "DCRAttendancenew")
@@ -1594,7 +1581,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
     
     @IBAction func showDetailAction(_ sender: AnyObject)
     {
-        editaction()
+        //editaction()
         let detailModel = dcrDetailList[sender.tag]
         let rowHeight = rowHeightArr.object(at: sender.tag) as! CGFloat
         var unapprovedText = "No Remarks"
@@ -1614,7 +1601,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 if detailModel.dcrStatus == DCRStatus.applied.rawValue
                 {
-                    rowHeightArr.replaceObject(at: sender.tag, with: (rcpaCellHeight + defaultRowHeight) - rowEditBtnHeight)
+                    rowHeightArr.replaceObject(at: sender.tag, with: rcpaCellHeight)
                 }
                 else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue
                 {
@@ -1632,6 +1619,10 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         rowHeightArr.replaceObject(at: sender.tag, with: rcpaCellHeight + defaultRowHeight + rcpaUnapprovedHeight)
                     }
                 }
+                else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+                               {
+                                 rowHeightArr.replaceObject(at: sender.tag, with: defaultRowHeight + rowEditBtnHeight)
+                               }
                 else
                 {
                     rowHeightArr.replaceObject(at: sender.tag, with: rcpaCellHeight + defaultRowHeight)
@@ -1677,7 +1668,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 if detailModel.dcrStatus == DCRStatus.applied.rawValue
                 {
-                    rowHeightArr.replaceObject(at: sender.tag, with: (attendanceCellHeight + defaultRowHeight) - rowEditBtnHeight)
+                    rowHeightArr.replaceObject(at: sender.tag, with: attendanceCellHeight)
                 }
                 else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue
                 {
@@ -1690,6 +1681,10 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                         rowHeightArr.replaceObject(at: sender.tag, with: attendanceCellHeight + defaultRowHeight + attendanceUnapprovedHeight)
                     }
                 }
+                else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+                               {
+                                 rowHeightArr.replaceObject(at: sender.tag, with: attendanceCellHeight)
+                               }
                 else
                 {
                     rowHeightArr.replaceObject(at: sender.tag, with: attendanceCellHeight + defaultRowHeight)
@@ -1735,7 +1730,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             {
                 if detailModel.dcrStatus == DCRStatus.applied.rawValue
                 {
-                    rowHeightArr.replaceObject(at: sender.tag, with: (leaveCellHeight + defaultRowHeight) - rowEditBtnHeight)
+                    rowHeightArr.replaceObject(at: sender.tag, with: leaveCellHeight)
                 }
                 else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue
                 {
@@ -1755,6 +1750,10 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                             rowHeightArr.replaceObject(at: sender.tag, with: leaveCellHeight + defaultRowHeight + leaveUnapprovedHeight)
                         }
                     }
+                }
+                else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+                {
+                  rowHeightArr.replaceObject(at: sender.tag, with: leaveCellHeight + rowEditBtnHeight)
                 }
                 else
                 {
@@ -1947,17 +1946,11 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             
             let cell:FieldRCPACell = tableView.dequeueReusableCell(withIdentifier: rcpaCellIdentifier) as! FieldRCPACell
             
-            let doctorlist:[DCRDoctorVisitModel] = DBHelper.sharedInstance.getDCRDoctors(dcrId: detailModel.dcrId)
-            let filterArr = doctorlist.filter{$0.Doctor_Code == ""}
-            if doctorlist.count != 0{
-                if doctorlist.count == filterArr.count {
+            if detailModel.dcrType == "P" {
                    cell.dcrLabel.text = "Prospecting"
                 } else {
                    cell.dcrLabel.text = fieldRcpa
                 }
-            } else {
-                cell.dcrLabel.text = fieldRcpa
-            }
             if detailModel.dcrStatus == DCRStatus.drafted.rawValue
             {
                 cell.headerView.backgroundColor = CellColor.draftedBgColor.color
@@ -2020,7 +2013,13 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             
             cell.detailBtn.tag = indexPath.row
             cell.editBtn.tag = indexPath.row
-            if detailModel.dcrStatus == DCRStatus.approved.rawValue || (detailModel.dcrStatus == DCRStatus.applied.rawValue && detailModel.dcrCode != "")
+            if detailModel.dcrStatus == DCRStatus.approved.rawValue || detailModel.dcrStatus == DCRStatus.applied.rawValue
+            {
+                cell.editBtn.setTitle("VIEW", for: .normal)
+            } else {
+                cell.editBtn.setTitle("EDIT & SUBMIT", for: .normal)
+            }
+            if (detailModel.dcrStatus == DCRStatus.approved.rawValue && detailModel.dcrCode != "") 
             {
                 cell.detailBtn.isUserInteractionEnabled = false
             } else {
@@ -2043,12 +2042,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     cell.bottomView.backgroundColor = UIColor.clear
                 } else
                 {
-                    cell.wrapperViewHeightConst.constant = (rcpaCellHeight + defaultHeaderHeight) - rowEditBtnHeight
-                    cell.btmViewHeightConst.constant = rcpaCellHeight - rowEditBtnHeight
+                    cell.wrapperViewHeightConst.constant = (rcpaCellHeight + defaultHeaderHeight) + rowEditBtnHeight
+                    cell.btmViewHeightConst.constant = 0
                     cell.unApprovedHeightConst.constant = 0
                     cell.unapprovedView.isHidden = true
                     cell.bottomView.backgroundColor = UIColor.white
-                    cell.editBtnWrapper.isHidden = true
+                    cell.editBtnWrapper.isHidden = false
                 }
             }
             else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue {
@@ -2082,7 +2081,17 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 {
                     cell.unapprovedBylabel.text = "No Remarks"
                 }
-            } else
+            }
+             else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+             {
+                 cell.wrapperViewHeightConst.constant = rcpaCellHeight + defaultHeaderHeight
+                 cell.btmViewHeightConst.constant = 0
+                 cell.unApprovedHeightConst.constant = 0
+                 cell.unapprovedView.isHidden = true
+                 cell.bottomView.backgroundColor = UIColor.white
+                 cell.editBtnWrapper.isHidden = false
+             }
+             else
             {
                 let rowHeight = rowHeightArr[indexPath.row] as! CGFloat
                 if rowHeight == defaultRowHeight
@@ -2229,7 +2238,13 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             
             cell.detailBtn.tag = indexPath.row
             cell.editBtn.tag = indexPath.row
-            if detailModel.dcrStatus == DCRStatus.approved.rawValue || (detailModel.dcrStatus == DCRStatus.applied.rawValue && detailModel.dcrCode != "")
+            if detailModel.dcrStatus == DCRStatus.approved.rawValue || detailModel.dcrStatus == DCRStatus.applied.rawValue
+            {
+                cell.editBtn.setTitle("VIEW", for: .normal)
+            } else {
+                cell.editBtn.setTitle("EDIT & SUBMIT", for: .normal)
+            }
+            if (detailModel.dcrStatus == DCRStatus.applied.rawValue && detailModel.dcrCode != "")
             {
                 cell.detailBtn.isUserInteractionEnabled = false
             } else {
@@ -2245,12 +2260,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     cell.bottomView.backgroundColor = UIColor.clear
                 } else
                 {
-                    cell.wrapperViewHeightConst.constant = (attendanceCellHeight + defaultHeaderHeight) - rowEditBtnHeight
-                    cell.btmViewHeightConst.constant = attendanceCellHeight - rowEditBtnHeight
+                    cell.wrapperViewHeightConst.constant = (attendanceCellHeight + defaultHeaderHeight) + rowEditBtnHeight
+                    cell.btmViewHeightConst.constant = 0
                     cell.unApprovedHeightConst.constant = 0
                     cell.unapprovedView.isHidden = true
                     cell.bottomView.backgroundColor = UIColor.white
-                    cell.editBtnWrapper.isHidden = true
+                    cell.editBtnWrapper.isHidden = false
                 }
             } else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue {
                 let rowHeight = rowHeightArr[indexPath.row] as! CGFloat
@@ -2283,7 +2298,17 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 {
                     cell.unapprovedBylabel.text = "No Remarks"
                 }
-            } else
+            }
+            else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+            {
+                cell.wrapperViewHeightConst.constant = attendanceCellHeight + defaultHeaderHeight
+                cell.btmViewHeightConst.constant = 0
+                cell.unApprovedHeightConst.constant = 0
+                cell.unapprovedView.isHidden = true
+                cell.bottomView.backgroundColor = UIColor.white
+                cell.editBtnWrapper.isHidden = false
+            }
+            else
             {
                 let rowHeight = rowHeightArr[indexPath.row] as! CGFloat
                 if rowHeight == defaultRowHeight
@@ -2368,7 +2393,13 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             
             cell.detailBtn.tag = indexPath.row
             cell.editBtn.tag = indexPath.row
-            if detailModel.dcrStatus == DCRStatus.approved.rawValue || (detailModel.dcrStatus == DCRStatus.applied.rawValue && detailModel.dcrCode != "")
+            if detailModel.dcrStatus == DCRStatus.approved.rawValue || detailModel.dcrStatus == DCRStatus.applied.rawValue
+            {
+                cell.editBtn.setTitle("VIEW", for: .normal)
+            } else {
+                cell.editBtn.setTitle("EDIT & SUBMIT", for: .normal)
+            }
+            if (detailModel.dcrStatus == DCRStatus.applied.rawValue  && detailModel.dcrCode != "")
             {
                 cell.detailBtn.isUserInteractionEnabled = false
             } else {
@@ -2384,12 +2415,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     cell.bottomView.backgroundColor = UIColor.clear
                 } else
                 {
-                    cell.wrapperViewHeightConst.constant = (leaveCellHeight + defaultHeaderHeight) - rowEditBtnHeight
-                    cell.btmViewHeightConst.constant = leaveCellHeight - rowEditBtnHeight
+                    cell.wrapperViewHeightConst.constant = (leaveCellHeight + defaultHeaderHeight) + rowEditBtnHeight
+                    cell.btmViewHeightConst.constant = 0
                     cell.unApprovedHeightConst.constant = 0
                     cell.unapprovedView.isHidden = true
                     cell.bottomView.backgroundColor = UIColor.white
-                    cell.editBtnWrapper.isHidden = true
+                    cell.editBtnWrapper.isHidden = false
                 }
             } else if detailModel.dcrStatus == DCRStatus.unApproved.rawValue {
                 if rowHeight == defaultRowHeight
@@ -2431,6 +2462,15 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 {
                     cell.unapprovedBylabel.text = "No Remarks"
                 }
+            }
+            else if detailModel.dcrStatus == DCRStatus.approved.rawValue
+            {
+                cell.wrapperViewHeightConst.constant = leaveCellHeight + defaultHeaderHeight
+                cell.btmViewHeightConst.constant = 0
+                cell.unApprovedHeightConst.constant = 0
+                cell.unapprovedView.isHidden = true
+                cell.bottomView.backgroundColor = UIColor.white
+                cell.editBtnWrapper.isHidden = false
             } else
             {
                 if rowHeight == defaultRowHeight

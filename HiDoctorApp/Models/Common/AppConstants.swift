@@ -316,7 +316,7 @@ let wsParentHierarchy : String = "ParentHierarchy/Users/"
 let wsLeaveApproval : String = "DCRHeaderApi/Leave/"
 let wsLeaveAppoveAndReject : String = "DCRHeaderApi/"
 let wsInsertProspectDetails : String = "InsertProspectDetails/"
-
+let WSGetProspectDetailsMasterData: String = "GetProspectDetailsMasterData/"
 //MARK:-- Kennect Authorization Key
 //let authorizationKey = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoyMCwib3duZXIiOiJhZG1pbiIsImlkIjoiNWJjMGY0ZTVkYjcxZjE3NDgzZTc0MGI3IiwidXNlcm5hbWUiOiJ3YWxsYWNlQGtlbm5lY3QuaW4iLCJpYXQiOjE1NDIxNzkxNTYsImV4cCI6MTU2ODA5OTE1Nn0.nh1OhL2IVBfTgRMHtYbCOmkVLnR8uNQ9CeumGciU7Kr8wIRpleywzjIOF9997rZWTCNHWt1y_jv2ePeyHoKN86BVGiw18Qx52u1yQZlbNS5MjS1FiiywJnOM3ynTzGnZgi_Zd1BRap0w2QzQiIH6iKh7BD2610WkaxtjxRuXf2CaaeP4--TDlT3JbFE2t_CEWebEBnPtJnjhVExSjSKFWlJ0P0J27LjjpWCUBsuCsSkIi7O_9ss9jbW4NEQhT9ks2c7OiFM4BbZ0dvuq2NsBnqkoAPskLoD-zHryYggmBAbaWzihxHSflCKTFfR930YFno803cVF5jPQ1kZn3f3Eew"
 
@@ -644,6 +644,7 @@ enum DatabaseMigrationString : String
     case ATTACHMENT = "Attachment"
     case ACCOUNTNUMBER = "AccountNumber"
     case TPATTACHMENT = "TPAttachment"
+    case DVR_SUBTYPE = "DVR_Subtype"
 }
 
 enum masterDataGroupName : String

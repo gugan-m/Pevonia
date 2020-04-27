@@ -1885,6 +1885,26 @@ func setupDatabase(_ application: UIApplication) throws
         isTPAttachemntRequired = true
         
     }
+    var isDVR_Subtype: Bool = false
+
+    migrator.registerMigration(DatabaseMigrationString.DVR_SUBTYPE.rawValue) { db in
+        var createTableString = ""
+         var rows: [Row] = []
+        
+        try dbPool.read { db in
+            rows = try Row.fetchAll(db, "PRAGMA table_info('\(TRAN_DCR_HEADER)')")
+        }
+        
+        if (!checkIsColumnExist(rowList: rows, columnName: "DCR_Type"))
+        {
+            createTableString = "ALTER TABLE \(TRAN_DCR_HEADER) ADD DCR_Type TEXT"
+            try db.execute(createTableString)
+        }
+        
+        isDVR_Subtype = true
+    }
+    
+    
     
     try migrator.migrate(dbPool)
     
@@ -2030,6 +2050,12 @@ func setupDatabase(_ application: UIApplication) throws
     {
         BL_Version_Upgrade.sharedInstance.insertVersionUpgradeInfo(versionNumber: DatabaseMigrationString.TPATTACHMENT.rawValue, isVersionUpdateCompleted: 0)
     }
+    
+    if isDVR_Subtype
+    {
+         BL_Version_Upgrade.sharedInstance.insertVersionUpgradeInfo(versionNumber: DatabaseMigrationString.DVR_SUBTYPE.rawValue, isVersionUpdateCompleted: 0)
+    }
+    
 }
 
 func executeQuery(query: String)

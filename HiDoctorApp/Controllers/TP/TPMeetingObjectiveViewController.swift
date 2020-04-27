@@ -86,7 +86,14 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
             self.lblMeetingObjective.text = ""
         }
         self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
-        self.txtMeetingObjective.text = objDoctor?.Call_Objective_Name ?? ""
+        if objDoctor?.Call_Objective_Name.count == 0{
+            if self.meetingObjectiveList.count > 0 {
+                selectedCallObj = self.meetingObjectiveList[0]
+                self.txtMeetingObjective.text = self.meetingObjectiveList[0].Call_Objective_Name
+            }
+        } else {
+            self.txtMeetingObjective.text = objDoctor?.Call_Objective_Name ?? ""
+        }
          self.tblAttachments.reloadData()
     }
     

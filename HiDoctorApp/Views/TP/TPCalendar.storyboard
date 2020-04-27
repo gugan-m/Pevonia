@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -283,12 +283,6 @@
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGE-ab-EZ7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="110"/>
-                                                        <connections>
-                                                            <action selector="act_View:" destination="rYR-Hb-WPF" eventType="touchUpInside" id="zod-TK-J4j"/>
-                                                        </connections>
-                                                    </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nos-VX-EXs" userLabel="BottomWrapper">
                                                         <rect key="frame" x="0.0" y="80" width="300" height="30"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -326,17 +320,31 @@
                                                                     <action selector="tpEditAction:" destination="rYR-Hb-WPF" eventType="touchUpInside" id="oir-xE-VSH"/>
                                                                 </connections>
                                                             </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGE-ab-EZ7">
+                                                                <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="15"/>
+                                                                <state key="normal" title="View">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="act_View:" destination="rYR-Hb-WPF" eventType="touchUpInside" id="zod-TK-J4j"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
+                                                            <constraint firstItem="JGE-ab-EZ7" firstAttribute="leading" secondItem="qKd-Hu-sg5" secondAttribute="leading" id="1PZ-fm-arT"/>
+                                                            <constraint firstAttribute="trailing" secondItem="JGE-ab-EZ7" secondAttribute="trailing" id="CmN-Cw-Lnb"/>
                                                             <constraint firstItem="ThQ-zx-0YS" firstAttribute="leading" secondItem="qKd-Hu-sg5" secondAttribute="leading" constant="15" id="DVP-ne-fLF"/>
                                                             <constraint firstAttribute="bottom" secondItem="t1Q-Pq-LeB" secondAttribute="bottom" id="DsM-mg-s3T"/>
                                                             <constraint firstAttribute="height" constant="30" id="FNu-pA-nPO"/>
                                                             <constraint firstItem="TQS-FG-xRM" firstAttribute="top" secondItem="qKd-Hu-sg5" secondAttribute="top" id="K2j-x4-3Mt"/>
+                                                            <constraint firstAttribute="bottom" secondItem="JGE-ab-EZ7" secondAttribute="bottom" id="Ruk-VW-uka"/>
                                                             <constraint firstAttribute="bottom" secondItem="TQS-FG-xRM" secondAttribute="bottom" id="VqQ-hL-hPc"/>
                                                             <constraint firstItem="t1Q-Pq-LeB" firstAttribute="leading" secondItem="TQS-FG-xRM" secondAttribute="trailing" id="Y8j-eg-SZq"/>
                                                             <constraint firstItem="t1Q-Pq-LeB" firstAttribute="top" secondItem="qKd-Hu-sg5" secondAttribute="top" id="ZTc-CH-0dH"/>
                                                             <constraint firstAttribute="bottom" secondItem="ThQ-zx-0YS" secondAttribute="bottom" id="dAe-Xo-5zL"/>
+                                                            <constraint firstItem="JGE-ab-EZ7" firstAttribute="top" secondItem="qKd-Hu-sg5" secondAttribute="top" id="ick-I0-NjL"/>
                                                             <constraint firstAttribute="trailing" secondItem="t1Q-Pq-LeB" secondAttribute="trailing" constant="15" id="ieW-Dl-xpY"/>
                                                             <constraint firstItem="TQS-FG-xRM" firstAttribute="leading" secondItem="ThQ-zx-0YS" secondAttribute="trailing" id="jlg-bH-U0B"/>
                                                             <constraint firstItem="TQS-FG-xRM" firstAttribute="centerX" secondItem="qKd-Hu-sg5" secondAttribute="centerX" id="lAK-PM-OxQ"/>
@@ -347,13 +355,11 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="h8c-Ze-PcN" firstAttribute="leading" secondItem="sm2-gN-NkC" secondAttribute="leading" id="0JQ-BA-MfY"/>
-                                                    <constraint firstAttribute="trailing" secondItem="JGE-ab-EZ7" secondAttribute="trailing" id="0tb-xp-I9M"/>
                                                     <constraint firstItem="qKd-Hu-sg5" firstAttribute="leading" secondItem="Srs-FQ-AHC" secondAttribute="leading" id="3us-jl-YQ6"/>
                                                     <constraint firstAttribute="trailing" secondItem="qKd-Hu-sg5" secondAttribute="trailing" id="67O-wU-fyD"/>
                                                     <constraint firstItem="sm2-gN-NkC" firstAttribute="leading" secondItem="LSZ-yx-OAs" secondAttribute="trailing" constant="10" id="8kY-Ce-wXG"/>
                                                     <constraint firstItem="LSZ-yx-OAs" firstAttribute="leading" secondItem="Srs-FQ-AHC" secondAttribute="leading" constant="10" id="9Qw-CZ-QCO"/>
                                                     <constraint firstAttribute="bottom" secondItem="qKd-Hu-sg5" secondAttribute="bottom" id="9iA-El-9n9"/>
-                                                    <constraint firstItem="JGE-ab-EZ7" firstAttribute="leading" secondItem="Srs-FQ-AHC" secondAttribute="leading" id="A2p-dy-eKU"/>
                                                     <constraint firstAttribute="trailing" secondItem="sm2-gN-NkC" secondAttribute="trailing" constant="10" id="G5t-sP-rjX"/>
                                                     <constraint firstAttribute="bottom" secondItem="nos-VX-EXs" secondAttribute="bottom" id="GAZ-uy-9Tc"/>
                                                     <constraint firstItem="LSZ-yx-OAs" firstAttribute="top" secondItem="Srs-FQ-AHC" secondAttribute="top" constant="10" id="HRr-0o-5PU"/>
@@ -364,9 +370,7 @@
                                                     <constraint firstItem="sm2-gN-NkC" firstAttribute="top" secondItem="Srs-FQ-AHC" secondAttribute="top" constant="10" id="c3K-lA-LhP"/>
                                                     <constraint firstItem="h8c-Ze-PcN" firstAttribute="trailing" secondItem="sm2-gN-NkC" secondAttribute="trailing" id="c47-WU-97A"/>
                                                     <constraint firstAttribute="height" constant="110" id="dhj-Jf-4QU"/>
-                                                    <constraint firstAttribute="bottom" secondItem="JGE-ab-EZ7" secondAttribute="bottom" id="nhF-M8-5Nd"/>
                                                     <constraint firstItem="G20-Va-9by" firstAttribute="leading" secondItem="h8c-Ze-PcN" secondAttribute="leading" id="tOw-Q2-CEK"/>
-                                                    <constraint firstItem="JGE-ab-EZ7" firstAttribute="top" secondItem="Srs-FQ-AHC" secondAttribute="top" id="u2f-R9-yGV"/>
                                                     <constraint firstItem="G20-Va-9by" firstAttribute="trailing" secondItem="h8c-Ze-PcN" secondAttribute="trailing" id="uaD-Kf-TWd"/>
                                                 </constraints>
                                             </view>
@@ -926,6 +930,7 @@
                         <outlet property="addBtn" destination="sKz-V5-s6t" id="bJX-QN-DFf"/>
                         <outlet property="bg_BlurView" destination="KL1-tF-vti" id="YQQ-Uz-BuC"/>
                         <outlet property="bottomHeaderSeperatorView" destination="TQS-FG-xRM" id="z8v-jZ-uuK"/>
+                        <outlet property="btnView" destination="JGE-ab-EZ7" id="cyl-0W-H6S"/>
                         <outlet property="calendarView" destination="5jY-nW-Jtj" id="akX-9R-i4a"/>
                         <outlet property="deleteBut" destination="ThQ-zx-0YS" id="McK-O9-H2F"/>
                         <outlet property="editBut" destination="t1Q-Pq-LeB" id="NH3-QJ-GdZ"/>

@@ -14,10 +14,21 @@ class BL_TPRefresh: NSObject
     
     func refreshTourPlanner(month: Int, year: Int, completion: @escaping (Int) -> ())
     {
-        let dates = getStartAndEndDateForMonth(month: month, year: year)
-        let startDate = dates.0
-        let endDate = dates.1
         
+        
+        let dictionary = BL_TPCalendar.sharedInstance.getTPMonth()
+           let startDate1 = dictionary.value(forKey: "startDate") as! Date
+           let endDate1 = dictionary.value(forKey: "endDate") as! Date
+         
+           let dateFormatter = DateFormatter()
+           dateFormatter.dateFormat = defaultServerDateFormat
+        let startDate = dateFormatter.string(from: startDate1)
+        let d2 = dateFormatter.string(from: endDate1)
+        let arr = d2.split(separator: "-")
+        let mon = Int(arr[1])
+        let yer = Int(arr[0])
+        let dates = getStartAndEndDateForMonth(month: mon! , year: yer!)
+        let endDate = dates.1
         self.downloadTpData(startDate: startDate, endDate: endDate) { (status) in
             completion(status)
         }

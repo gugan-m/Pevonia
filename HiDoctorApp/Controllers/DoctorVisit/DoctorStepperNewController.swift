@@ -128,6 +128,19 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             let outtime = ""
             self.checkinlabel.text = "Check In: \(intime)"
             self.checkoutlabel.text = "Check Out: \(outtime)"
+            if intime.count == 0 {
+               self.checkinlabel.isHidden = true
+            } else {
+                self.checkinlabel.isHidden = false
+                self.checkinlabel.text = "Check In: \(intime)"
+            }
+            if outtime.count == 0 {
+               self.checkoutlabel.isHidden = true
+            } else {
+                self.checkoutlabel.isHidden = false
+               self.checkoutlabel.text = "Check Out: \(outtime)"
+            }
+            
             let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
             if dcrDoctorVisitList?.count ?? 0 > 0
             {
@@ -170,9 +183,18 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
             
             var outtime = ""
-            self.checkinlabel.text = "Check In: \(intime)"
-            self.checkoutlabel.text = "Check Out: \(outtime)"
-            
+            if intime.count == 0 {
+               self.checkinlabel.isHidden = true
+            } else {
+                self.checkinlabel.isHidden = false
+                self.checkinlabel.text = "Check In: \(intime)"
+            }
+            if outtime.count == 0 {
+               self.checkoutlabel.isHidden = true
+            } else {
+                self.checkoutlabel.isHidden = false
+               self.checkoutlabel.text = "Check Out: \(outtime)"
+            }
         }
         let followUpModifyList = BL_DCR_Follow_Up.sharedInstance.getDCRFollowUpDetails()
                if (followUpModifyList != nil && followUpModifyList.count > 0)
@@ -194,11 +216,33 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         let dcrDoctorVisitObj = i
                         self.modifyDoctorVisitObj = dcrDoctorVisitObj
                         visittime.text = dcrDoctorVisitObj.Visit_Time
-                        self.txtMeetingObjective.text = dcrDoctorVisitObj.Call_Objective_Name
+                        
+                        
+                        if dcrDoctorVisitObj.Call_Objective_Name.count == 0 {
+                            if self.meetingObjectiveList.count > 0 {
+                                selectedCallObj = self.meetingObjectiveList[0]
+                                self.txtMeetingObjective.text = self.meetingObjectiveList[0].Call_Objective_Name
+                                let dic = ["Business_Status_Id" : self.meetingObjectiveList[0].Call_Objective_ID ?? 0,"Status_Name" : self.meetingObjectiveList[0].Call_Objective_Name ?? EMPTY] as [String : Any]
+                                self.objCallObjective = BusinessStatusModel(dict : dic as NSDictionary)
+                            }
+                        } else {
+                            self.txtMeetingObjective.text = dcrDoctorVisitObj.Call_Objective_Name
+                        }
                     }
                 }
               }
+        
+        
+        if self.txtMeetingObjective.text!.count == 0 {
+            if self.meetingObjectiveList.count > 0 {
+            selectedCallObj = self.meetingObjectiveList[0]
+            self.txtMeetingObjective.text = self.meetingObjectiveList[0].Call_Objective_Name
+            let dic = ["Business_Status_Id" : self.meetingObjectiveList[0].Call_Objective_ID ?? 0,"Status_Name" : self.meetingObjectiveList[0].Call_Objective_Name ?? EMPTY] as [String : Any]
+            self.objCallObjective = BusinessStatusModel(dict : dic as NSDictionary)
+        }
     }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         let followUpModifyList = BL_DCR_Follow_Up.sharedInstance.getDCRFollowUpDetails()
         if (followUpModifyList != nil && followUpModifyList.count > 0)

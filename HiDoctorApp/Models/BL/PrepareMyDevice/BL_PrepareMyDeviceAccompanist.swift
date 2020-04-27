@@ -108,12 +108,6 @@ class BL_PrepareMyDeviceAccompanist: NSObject
            }
        }
     
-    
-    
-    
-    
-    
-    
     func getAccDetailedProductData(completion: @escaping (Int) -> ())
     {
         let regionCodes = getAccompanistRegionCodes()

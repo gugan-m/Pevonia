@@ -20,9 +20,11 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var frameView: CornerRadiusWithShadowView!
     @IBOutlet weak var submitbtn: UIButton!
+    @IBOutlet weak var txtNotWorkingType: UITextField!
     
     //MARK:- Variables
     var toTimePicker = UIDatePicker()
+    var leaveTypePicker = UIPickerView()
     var leaveTypeName : String = ""
     var startDate : Date = Date()
     var endDate : Date = Date()
@@ -31,6 +33,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
     var isInsertedFromTP: Bool = false
     let placeHolderForLeaveType : String = "Select Not Working Type"
     var IS_VIEW_MODE = false
+    var NotWorkingTypeArr: [LeaveTypeMaster]? =  []
     
     override func viewDidLoad()
     {
@@ -47,8 +50,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         txtCount.text = "\(String(0))/\(tpLeaveReasonLength)"
         startDate = tpDate!
         self.title = convertDateIntoString(date: TPModel.sharedInstance.tpDate) + " (Not Working)"
-        fromDateLbl.text = stringDateFormat(date1: tpDate!)
-        fromDateLbl.isEnabled = false
+        NotWorkingTypeArr = BL_DCR_Leave.sharedInstance.getLeaveTypes()
         leaveReason.delegate = self
         updateViews()
         if IS_VIEW_MODE {
@@ -57,6 +59,12 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         } else {
            self.scrollView.isUserInteractionEnabled = true
             self.submitbtn.isHidden = false
+        }
+        self.leaveTypePicker.delegate = self
+        self.leaveTypePicker.dataSource = self
+        self.txtNotWorkingType.inputView = leaveTypePicker
+        if NotWorkingTypeArr!.count != 0 {
+            self.txtNotWorkingType.text = self.NotWorkingTypeArr![0].Leave_Type_Name
         }
     }
     
@@ -338,7 +346,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
                 leaveTypeId = String((unApprovedObj?.Project_Code)!)
                 leaveTypeName = String((unApprovedObj?.Activity_Name)!)
                 
-                selectLeaveType.text = placeHolderForLeaveType
+               // selectLeaveType.text = placeHolderForLeaveType
                 
                 if checkNullAndNilValueForString(stringData: leaveTypeName) != EMPTY
                 {
@@ -356,7 +364,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
 //                        }
 //                    }
                     
-                    selectLeaveType.text = leaveTypeName
+                  //  selectLeaveType.text = leaveTypeName
                 }
                 
                 if checkNullAndNilValueForString(stringData: unApprovedObj?.UnApprove_Reason) != EMPTY
@@ -368,18 +376,16 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         }
         else
         {
-            fromDateLbl.text = stringDateFormat(date1: startDate)
-            fromDateLbl.isEnabled = false
             txtCount.text = "\0/\(tpLeaveReasonLength)"
             leaveReason.text = EMPTY
-            selectLeaveType.text = placeHolderForLeaveType
+           // selectLeaveType.text = placeHolderForLeaveType
         }
         
     }
     
     //MARK:- Custom Delegate Function
     func getLeaveEntrySelectedObj(obj: LeaveTypeMaster) {
-        selectLeaveType.text = obj.Leave_Type_Name
+      //  selectLeaveType.text = obj.Leave_Type_Name
         leaveTypeCode = obj.Leave_Type_Code
         leaveTypeName = obj.Leave_Type_Name
         leaveTypeId = String(obj.Leave_Type_Id)
@@ -396,7 +402,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         }))
         
         alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-            BL_TPStepper.sharedInstance.updateTourPlannerLeave(tpEntryId: TPModel.sharedInstance.tpEntryId, leave_type_code: self.leaveTypeCode, leave_type: "Approved in Paycom", leave_reason: self.leaveReason.text!)
+            BL_TPStepper.sharedInstance.updateTourPlannerLeave(tpEntryId: TPModel.sharedInstance.tpEntryId, leave_type_code: self.leaveTypeCode, leave_type: self.txtNotWorkingType.text!, leave_reason: self.leaveReason.text!)
             if(!BL_TPUpload.sharedInstance.isSFCMinCountValidInTP())
             {
                 self.showAlertToUploadTP()
@@ -424,7 +430,7 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         }))
         
         alertViewController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { alertAction in
-            BL_TPStepper.sharedInstance.insertTourPlannerHeaderForLeave(date: TPModel.sharedInstance.tpDate, leaveTypeCode: self.leaveTypeCode, leaveTypeName: self.selectLeaveType.text!, remarks: self.leaveReason.text!)
+            BL_TPStepper.sharedInstance.insertTourPlannerHeaderForLeave(date: TPModel.sharedInstance.tpDate, leaveTypeCode: self.leaveTypeCode, leaveTypeName: self.txtNotWorkingType.text! , remarks: self.leaveReason.text!)
             if(!BL_TPUpload.sharedInstance.isSFCMinCountValidInTP())
             {
                 self.showAlertToUploadTP()
@@ -465,4 +471,24 @@ class TPLeaveEntryViewController: UIViewController,UITextViewDelegate,leaveEntry
         let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.TPUploadSelectVCID)
         self.navigationController?.pushViewController(vc, animated: false)
     }
+}
+
+
+extension TPLeaveEntryViewController: UIPickerViewDelegate , UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.NotWorkingTypeArr!.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.txtNotWorkingType.text = self.NotWorkingTypeArr![row].Leave_Type_Name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.NotWorkingTypeArr![row].Leave_Type_Name
+    }
+    
 }

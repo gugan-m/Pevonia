@@ -8,8 +8,9 @@
 
 
 import UIKit
+import WebKit
 
-class FileViewController: UIViewController, UIWebViewDelegate {
+class FileViewController: UIViewController {
     
    // @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var emptyStateWrapper: UIView!
@@ -20,14 +21,22 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     var model: DCRAttachmentModel?
     var leaveModel: DCRLeaveModel?
     var fileURL: String = ""
-    var webView: UIWebView!
+    //var webView: UIWebView!
+    var webkit: WKWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView = UIWebView(frame: self.view.frame)
-        webView.scalesPageToFit = true
-        webView.delegate = self
-        self.view.addSubview(webView)
+      //  if #available(iOS 13.0, *) {
+            webkit = WKWebView(frame: self.view.frame)
+            webkit.navigationDelegate = self
+            self.view.addSubview(webkit)
+//        } else {
+//            webView = UIWebView(frame: self.view.frame)
+//            webView.scalesPageToFit = true
+//            webView.delegate = self
+//            self.view.addSubview(webView)
+//        }
+        
         // Do any additional setup after loading the view.
         self.navigationItem.title = model?.attachmentName
         addCustomBackButtonToNavigationBar()
@@ -57,7 +66,12 @@ class FileViewController: UIViewController, UIWebViewDelegate {
             {
                 showActivityIndicator()
                 let req = NSURLRequest(url: checkedUrl)
-                self.webView.loadRequest(req as URLRequest)
+                 //if #available(iOS 13.0, *) {
+                    self.webkit.load(req as URLRequest)
+//                 } else {
+//                   self.webView.loadRequest(req as URLRequest)
+//                }
+                
             }
             else
             {
@@ -71,29 +85,37 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     }
     
     //MARK:- Webview delegates
-    func webViewDidFinishLoad(_ webView: UIWebView)
-    {
-        hideActivityIndicator()
-        setMainViewVisibility(isEmpty: false, text: "")
-    }
-    
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
-    {
-        return true
-    }
-    
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
-    {
-        hideActivityIndicator()
-        setMainViewVisibility(isEmpty: true, text: attachWebTryAgainMsg)
-    }
+//    func webViewDidFinishLoad(_ webView: UIWebView)
+//    {
+//        hideActivityIndicator()
+//        setMainViewVisibility(isEmpty: false, text: "")
+//    }
+//
+//    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
+//    {
+//        return true
+//    }
+//
+//    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
+//    {
+//        hideActivityIndicator()
+//        setMainViewVisibility(isEmpty: true, text: attachWebTryAgainMsg)
+//    }
     
     func showActivityIndicator()
     {
-        if webView.isHidden == false
-        {
-            webView.isHidden = true
-        }
+       // if #available(iOS 13.0, *) {
+            if webkit.isHidden == false
+            {
+                webkit.isHidden = true
+            }
+//        } else {
+//            if webView.isHidden == false
+//            {
+//                webView.isHidden = true
+//            }
+//        }
+        
         if emptyStateWrapper.isHidden == false
         {
             emptyStateWrapper.isHidden = true
@@ -111,13 +133,21 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     {
         if isEmpty
         {
-            webView.isHidden = true
+            //if #available(iOS 13.0, *) {
+              webkit.isHidden = true
+//            } else {
+//             webView.isHidden = true
+//            }
             emptyStateWrapper.isHidden = false
             emptyStateLbl.text = text
         }
         else
         {
-            webView.isHidden = false
+           // if #available(iOS 13.0, *) {
+                webkit.isHidden = false
+//            } else {
+//               webView.isHidden = false
+//            }
             emptyStateWrapper.isHidden = true
         }
     }
@@ -142,4 +172,19 @@ class FileViewController: UIViewController, UIWebViewDelegate {
     
 }
 
-
+extension FileViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        hideActivityIndicator()
+               setMainViewVisibility(isEmpty: false, text: "")
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        hideActivityIndicator()
+        setMainViewVisibility(isEmpty: true, text: attachWebTryAgainMsg)
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+            decisionHandler(.allow)
+    }
+}

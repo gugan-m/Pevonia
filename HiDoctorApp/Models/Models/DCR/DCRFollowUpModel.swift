@@ -40,7 +40,7 @@ class DCRFollowUpModel: Record
         {
             if (dueDate?.contains(" "))! {
               let date1 = dueDate?.split(separator: " ")
-                let samDate = date1![0] + " 00:00:00.000"
+                let samDate = date1![0]
                  self.Due_Date =  getDateAndTimeInFormat(dateString: samDate + " 00:00:00.000")
             } else {
                 self.Due_Date =  getDateAndTimeInFormat(dateString: (dict.value(forKey: "Due_Date")as? String)! + " 00:00:00.000")

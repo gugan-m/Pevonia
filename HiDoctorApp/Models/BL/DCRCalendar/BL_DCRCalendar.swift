@@ -19,7 +19,7 @@ class BL_DCRCalendar: NSObject
     var resignedAccompanists: [String] = []
     var selectedStatus : Int = 99
     var tpPreFillAlert : [String] = []
-
+    var DVRSub_Type: String = ""
     // Get Current, Prev & Next month
     func getCPNMonth() -> NSDictionary
     {
@@ -174,7 +174,7 @@ class BL_DCRCalendar: NSObject
             dictionary.setValue(model.LeaveType_Id, forKey: "Leave_Type_Id")
             dictionary.setValue(model.Activity_Code, forKey: "Leave_Type_Code")
             dictionary.setValue(model.Remarks, forKey: "Reason")
-            
+            dictionary.setValue(model.TpType, forKey: "DCR_Type")
             let dcrId = DBHelper.sharedInstance.insertInitialDCREntry(dict: dictionary)
             
             DCRModel.sharedInstance.dcrId = dcrId
@@ -238,7 +238,7 @@ class BL_DCRCalendar: NSObject
         dictionary.setValue(getLatitude(), forKey: "Lattitude")
         dictionary.setValue(getLongitude(), forKey: "Longitude")
         dictionary.setValue(0, forKey: "IsTPFrozenData")
-        
+        dictionary.setValue(self.DVRSub_Type, forKey: "DCR_Type")
         DCRModel.sharedInstance.dcrStatus = -1
         
         var tpId : Int = 0
@@ -259,7 +259,7 @@ class BL_DCRCalendar: NSObject
             dictionary.setValue(model.Category_Id, forKey: "Category_Id")
             dictionary.setValue(model.Category_Name, forKey: "Category_Name")
             dictionary.setValue(model.Remarks, forKey: "DCR_General_Remarks")
-            
+            dictionary.setValue(model.TpType, forKey: "DCR_Type")
             let isTPFreezed = isFrozenTP(flag: flag, date: convertDateIntoServerStringFormat(date: selectedDate))
             dictionary.setValue(isTPFreezed, forKey: "IsTPFrozenData")
             
@@ -1085,6 +1085,7 @@ class BL_DCRCalendar: NSObject
             dcrDetailData.unapprovedBy = dcrHeaderData.Unapprove_Reason
             dcrDetailData.isLocked = 0
             dcrDetailData.selectedDate = date
+            dcrDetailData.dcrType = dcrHeaderData.DCR_Type
             
             let filteredArray = dcrCalendarList.filter{
                 ($0.Is_Field_Lock == 1 || $0.Is_Attendance_Lock == 1 || $0.Is_LockLeave == 1)  && $0.Activity_Date_In_Date == dcrHeaderData.DCR_Actual_Date

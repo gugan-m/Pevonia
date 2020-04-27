@@ -568,7 +568,7 @@ class BL_MasterDataDownload: NSObject
                     {
                         BL_PrepareMyDevice.sharedInstance.updateCPIdInCPSFC()
                         BL_PrepareMyDevice.sharedInstance.updateCPIdInCPDoctor()
-                        
+                        BL_PrepareMyDevice.sharedInstance.getProspectDetail()
                         self.updateMasterDataDownloadedAlert(completion: { (status) in
                             completion(status)
                         })

@@ -39,9 +39,11 @@ class DCRHeaderModel: Record
     var DCR_Code: String?
     var DCR_General_Remarks: String?
     var Is_TP_Frozen: Int = 0
+    var DCR_Type: String = ""
     
     init(dict: NSDictionary)
     {
+        self.DCR_Type = checkNullAndNilValueForString(stringData: dict.value(forKey: "DCR_Type") as? String)
         self.DCR_Actual_Date = getStringInFormatDate(dateString: dict.value(forKey: "DCR_Actual_Date") as! String)
         let enteredDate = checkNullAndNilValueForString(stringData: dict.value(forKey: "Dcr_Entered_Date") as? String)
         
@@ -123,6 +125,7 @@ class DCRHeaderModel: Record
     
     required init(row: Row)
     {
+        DCR_Type = row["DCR_Type"]
         DCR_Id = row["DCR_Id"]
         DCR_Actual_Date = row["DCR_Actual_Date"]
         DCR_Entered_Date = row["DCR_Entered_Date"]
@@ -157,6 +160,7 @@ class DCRHeaderModel: Record
     
     override func encode(to container: inout PersistenceContainer) {
         
+        container["DCR_Type"] = DCR_Type
         container["DCR_Id"] =  DCR_Id
         container["DCR_Actual_Date"] =  DCR_Actual_Date
         container["DCR_Entered_Date"] =  DCR_Entered_Date

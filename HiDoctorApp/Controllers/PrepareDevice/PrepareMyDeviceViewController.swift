@@ -1441,6 +1441,7 @@ class PrepareMyDeviceViewController: UIViewController
             if status == SERVER_SUCCESS_CODE
             {
                 self.getMCDoctorProductMapping(selectedRegionCode: EMPTY)
+                 BL_PrepareMyDevice.sharedInstance.getProspectDetail()
             }
             else
             {

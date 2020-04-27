@@ -130,7 +130,7 @@ class ChartReportDataViewController: UIViewController,ChartViewDelegate
             }
         }
 
-        let set = PieChartDataSet( values: entries, label: "")
+        let set = PieChartDataSet( entries: entries, label: "")
         set.colors = colors
 
         let data = PieChartData(dataSet: set)
