@@ -27,7 +27,7 @@ class TPStepperViewController: UIViewController {//,SelectedAccompanistPopUpDele
     var plnnedContactColor = UIColor(red: 0/255.0, green: 150.0/255.0, blue: 136/255.0, alpha: 1.0)
     var isProspect = false
     var IS_VIEW_MODE = false
-    
+    var isBAckSpace = false
     // MARK:- Life Cycle Events
     override func viewDidLoad()
     {
@@ -1601,4 +1601,24 @@ extension TPStepperViewController : UITextViewDelegate {
         BL_TPStepper.sharedInstance.updateRemarksDetails(tp_Entry_Id: TPModel.sharedInstance.tpEntryId, remarks: str)
         return true
     }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "" {
+                   isBAckSpace = true
+                 } else {
+                   isBAckSpace = false
+               }
+        return true
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+              if textView.text.count == 1 {
+                  textView.text = " • " + textView.text
+              }
+           if isBAckSpace == false {
+               if textView.text.last == "\n" {
+                  textView.text =  textView.text + " • "
+               }
+           }
+          }
 }

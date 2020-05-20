@@ -203,6 +203,21 @@ class BL_MenuAccess: NSObject
             return false
         }
     }
+    
+    func isCustomerLocationEditAvailable() -> Bool
+    {
+        let menuIDs = getMenus(menuIds: String(MenuIDs.canEditCustomerLocation.rawValue))
+        
+        if (menuIDs.count > 0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
     func isKennectAvailable() -> Bool
     {
         let menuIDs = getMenus(menuIds: String(MenuIDs.Kennect.rawValue))

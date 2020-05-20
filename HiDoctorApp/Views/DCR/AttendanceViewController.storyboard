@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1731,7 +1731,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Gp-sH-B9X">
-                                                <rect key="frame" x="0.0" y="140" width="320" height="139"/>
+                                                <rect key="frame" x="0.0" y="140" width="320" height="200"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General Remarks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGs-ww-APL">
                                                         <rect key="frame" x="10" y="10" width="300" height="18"/>
@@ -1740,19 +1740,23 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6nL-N3-t1e" customClass="CornerRadiusWithShadowView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                        <rect key="frame" x="10" y="31.5" width="300" height="84.5"/>
+                                                        <rect key="frame" x="10" y="31.5" width="300" height="145.5"/>
                                                         <subviews>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dVN-35-AgV" customClass="PlaceHolderForTextView" customModule="HiDOCTOR" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="5" width="300" height="74.5"/>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="dVN-35-AgV" customClass="PlaceHolderForTextView" customModule="HiDOCTOR" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="5" width="300" height="135.5"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
+                                                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="yes" keyboardType="alphabet" enablesReturnKeyAutomatically="YES"/>
+                                                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                                         <color key="value" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Enter the reason here"/>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="r4S-OR-Va9" id="rZc-H3-69A"/>
+                                                                </connections>
                                                             </textView>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1764,7 +1768,7 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40f-un-cpt">
-                                                        <rect key="frame" x="240" y="121" width="70" height="0.0"/>
+                                                        <rect key="frame" x="240" y="182" width="70" height="0.0"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="70" id="hUe-NO-ggJ"/>
                                                         </constraints>
@@ -1780,7 +1784,7 @@
                                                     <constraint firstItem="XGs-ww-APL" firstAttribute="leading" secondItem="4Gp-sH-B9X" secondAttribute="leading" constant="10" id="XZI-lJ-eOh"/>
                                                     <constraint firstItem="6nL-N3-t1e" firstAttribute="top" secondItem="XGs-ww-APL" secondAttribute="bottom" constant="3.5" id="cVs-pH-Mzt"/>
                                                     <constraint firstAttribute="trailing" secondItem="XGs-ww-APL" secondAttribute="trailing" constant="10" id="dej-Cm-gbm"/>
-                                                    <constraint firstAttribute="height" constant="139" id="ekx-yj-G7r"/>
+                                                    <constraint firstAttribute="height" constant="200" id="ekx-yj-G7r"/>
                                                     <constraint firstAttribute="trailing" secondItem="40f-un-cpt" secondAttribute="trailing" constant="10" id="gQF-hR-2NL"/>
                                                     <constraint firstAttribute="bottom" secondItem="6nL-N3-t1e" secondAttribute="bottom" constant="23" id="i3g-rz-Drq"/>
                                                     <constraint firstItem="40f-un-cpt" firstAttribute="top" secondItem="6nL-N3-t1e" secondAttribute="bottom" constant="5" id="xq6-Ll-31x"/>
@@ -1802,7 +1806,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNW-0g-5Su">
-                                        <rect key="frame" x="0.0" y="289" width="320" height="97"/>
+                                        <rect key="frame" x="0.0" y="350" width="320" height="97"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAo-Ri-pbu">
                                                 <rect key="frame" x="110" y="15" width="100" height="40"/>

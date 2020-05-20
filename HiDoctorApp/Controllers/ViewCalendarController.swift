@@ -3,6 +3,8 @@ import EventKit
 
 class ViewCalendarController: UIViewController, CalendarViewDataSource, CalendarViewDelegate, UIActionSheetDelegate {
     
+    @IBOutlet weak var alertview: UIView!
+    @IBOutlet weak var blurview: UIView!
     @IBOutlet weak var calendarView: CalendarView!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var showpickerbtn: UIButton!
@@ -33,8 +35,54 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         vc.selecteddate = self.date
         vc.date = self.date
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
+    
+    func hidePlanningPopup() {
+        self.alertview.isHidden = true
+        self.blurview.isHidden = true
+    }
+    
+    func showPlanningPopup() {
+        // let newButtonWidth: CGFloat = 60
+         self.alertview.isHidden = false
+         self.blurview.isHidden = false
+         UIView.animate(withDuration: 0.5, //1
+             delay: 0.0, //2
+             usingSpringWithDamping:0.1, //3
+             initialSpringVelocity: 3, //4
+             options: UIView.AnimationOptions.curveEaseInOut, //5
+             animations: ({ //6
+                // self.planning_alertView.frame = CGRect(x: 0, y: 0, width: newButtonWidth, height: newButtonWidth)
+                // self.alertview.center = self.view.center
+         }), completion: nil)
+     }
+    
+    @IBAction func close_Alert(_ sender: UIButton) {
+        hidePlanningPopup()
+    }
+    
+    
+    @IBAction func act_Moveto_Notes(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "calendar", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
+        vc.isfromnotes = true
+        vc.dateselected = self.date
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func act_Moveto_Task(_ sender: UIButton) {
+        let sb = UIStoryboard(name: "calendar", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "NotesVcid") as! NotesTaskViewController
+        vc.dateselected = self.date
+        vc.isfromtask = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    func backAction() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
     @IBAction func addbtnclick() {
         
@@ -102,7 +150,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         CalendarView.Style.cellColorToday           = UIColor(red: 99/255, green: 86/255, blue: 0/255, alpha: 1.0)
         CalendarView.Style.cellSelectedBorderColor  = UIColor(red:1.00, green:0.63, blue:0.24, alpha:1.00)
         CalendarView.Style.cellEventColor           = UIColor(red:1.00, green:0.63, blue:0.24, alpha:1.00)
-        CalendarView.Style.headerTextColor          = UIColor.white
+        CalendarView.Style.headerTextColor          = UIColor.clear
         CalendarView.Style.cellTextColorDefault     = UIColor.white
         CalendarView.Style.cellTextColorToday       = UIColor.orange
         
@@ -126,6 +174,9 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         calendarView.multipleSelectionEnable = false
         calendarView.marksWeekends = true
         
+        
+        
+        
         draftview.layer.cornerRadius = 5.0
         draftview.backgroundColor = UIColor(red: 53/255, green: 127/255, blue: 206/255, alpha: 1.0)
         calendarView.layer.cornerRadius = 0.0
@@ -134,14 +185,20 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         //getnotes()
         //getcalender(year: String(getCurrentDate().prefix(4)))
         addNavigationBarBut()
-        calendarView.collectionView.reloadData()
+      //  calendarView.collectionView.reloadData()
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         
         //CalendarView.loadEvents()
+        hidePlanningPopup()
     }
     override open var shouldAutorotate: Bool {
         return false
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        hidePlanningPopup()
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -151,19 +208,29 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         self.showpickerbtn.isHidden = true
         self.datelabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: getDateFromString(dateString: getCurrentDate()) )
         self.emptyview.isHidden = false
+        SetTile(date: Date())
     }
+    
+    func SetTile(date: Date) {
+        let month = Calendar.current.dateComponents([.month], from: date).month!
+                let monthName = DateFormatter().shortMonthSymbols[(month-1) % 12]
+                let year = Calendar.current.component(.year, from: date)
+        //       monthLabel.text = monthName + " " + String(year)
+                self.navigationItem.title = monthName + " " + String(year)
+    }
+    
     
     func addNavigationBarBut()
     {
         let button = UIButton(type: .custom)
         //set image for button
-        button.setImage(UIImage(named: "icon-plus"), for: .normal)
+        button.setTitle("Home", for: .normal)
         //add function for button
-        button.addTarget(self, action: #selector(addbtnclick), for: .touchUpInside)
+        button.addTarget(self, action: #selector(backAction), for: .touchUpInside)
         //set frame
-        button.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         
-        let barButton = UIBarButtonItem(customView: button)
+        let backButton = UIBarButtonItem(customView: button)
         
         let button1 = UIButton(type: .custom)
         //set image for button
@@ -175,7 +242,8 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         
         let barButton1 = UIBarButtonItem(customView: button1)
         //assign button to navigationbar
-        self.navigationItem.rightBarButtonItems = [barButton1,barButton]
+        self.navigationItem.rightBarButtonItems = [barButton1]
+        self.navigationItem.leftBarButtonItems = [backButton]
     }
     func getnotes()
     {
@@ -210,7 +278,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let s = dateFormatter.date(from: dateString)
-        self.calendarView.selectDate(s!)
+       // self.calendarView.selectDate(s!)
         
         
         #if KDCALENDAR_EVENT_MANAGER_ENABLED
@@ -287,14 +355,14 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                 emptyview.isHidden = true
             }
         }
-        
+         showPlanningPopup()
         //getcalender(year: String(self.date.prefix(4)))
     }
     
     //    func calendar
     
     func calendar(_ calendar: CalendarView, didScrollToMonth date : Date) {
-        
+        self.SetTile(date: date)
         self.datePicker.setDate(date, animated: true)
     }
     

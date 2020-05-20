@@ -132,6 +132,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                self.checkinlabel.isHidden = true
             } else {
                 self.checkinlabel.isHidden = false
+                self.visittime.text = intime
                 self.checkinlabel.text = "Check In: \(intime)"
             }
             if outtime.count == 0 {
@@ -153,6 +154,8 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         self.modifyDoctorVisitObj.Visit_Time = visittime.text
                         self.modifyDoctorVisitObj.Call_Objective_ID = i.Call_Objective_ID
                         self.modifyDoctorVisitObj.Call_Objective_Name = i.Call_Objective_Name
+                        defaultCallObjectiveId = i.Call_Objective_ID
+                        defaultCallObjectiveName = i.Call_Objective_Name
                         if !isAddDetailProduct && !isEdetailing {
                            updatedoctorvisitdetails()
                         }
@@ -174,19 +177,48 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         self.getDetailProducts()
     }
     
+    func getPunchOutTime() -> String {
+        if DCRModel.sharedInstance.customerCode == ""
+               {
+                let doctorobj:[DCRDoctorVisitModel] = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitFlexiDoctor(doctorVisitId: DCRModel.sharedInstance.doctorVisitId)!
+                for obj in doctorobj {
+                    if obj.Doctor_Code == customerMasterModel.Customer_Code {
+                        return obj.Punch_End_Time!
+                    }
+                }
+        } else {
+            let doctorobj:[DCRDoctorVisitModel] = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()!
+            for obj in doctorobj {
+                if obj.Doctor_Code == customerMasterModel.Customer_Code {
+                    return obj.Punch_End_Time!
+                }
+            }
+        }
+        
+        var punchOutTime = ""
+        
+        return punchOutTime
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
         if (isCurrentDate()) && !isfromProspect
         {
             visittime.isEnabled = false
             var intime : String = ""
-            intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
-            
             var outtime = ""
+            intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
+            if getPunchOutTime().count != 0 {
+                let dateFormatter = DateFormatter()
+                           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                           let date = dateFormatter.date(from: getPunchOutTime())
+                            outtime = stringFromDate(date1: date!)
+            }
             if intime.count == 0 {
                self.checkinlabel.isHidden = true
             } else {
                 self.checkinlabel.isHidden = false
+                self.visittime.text = intime
                 self.checkinlabel.text = "Check In: \(intime)"
             }
             if outtime.count == 0 {
@@ -200,10 +232,12 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                if (followUpModifyList != nil && followUpModifyList.count > 0)
                {
                    let modifyFollowUpObj = followUpModifyList[0]
-                let date = getStringFromDate(date: modifyFollowUpObj.Due_Date!)
-                dueDate = date
-                followupremarks.text = modifyFollowUpObj.Follow_Up_Text
-                followupsdate.text = dueDate
+                if modifyFollowUpObj.Due_Date != nil{
+                    let date = getStringFromDate(date: modifyFollowUpObj.Due_Date!)
+                                   dueDate = date
+                                   followupremarks.text = modifyFollowUpObj.Follow_Up_Text
+                                   followupsdate.text = dueDate
+                }
                    // BL_DCR_Follow_Up.sharedInstance.updateDCRFollowUpDetail(followUpObj: modifyFollowUpObj!)
                }
         let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
@@ -248,18 +282,25 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         if (followUpModifyList != nil && followUpModifyList.count > 0)
         {
             let modifyFollowUpObj = followUpModifyList[0]
-            let date = getDateFromString(dateString: dueDate!)
-            modifyFollowUpObj.Due_Date = date
+            if dueDate != nil {
+                
+                let date = getDateFromString(dateString: dueDate!)
+                modifyFollowUpObj.Due_Date = date
+            }
             modifyFollowUpObj.Follow_Up_Text = followupremarks.text
             BL_DCR_Follow_Up.sharedInstance.updateDCRFollowUpDetail(followUpObj: modifyFollowUpObj)
         }
         else
         {
-            if (dueDate == nil)
-            {
-                dueDate = convertDateIntoServerStringFormat(date:DCRModel.sharedInstance.dcrDate)
+//            if (dueDate == nil)
+//            {
+//                dueDate = convertDateIntoServerStringFormat(date:DCRModel.sharedInstance.dcrDate)
+//            }
+             if (dueDate != nil) {
+                 if DCRModel.sharedInstance.doctorVisitId != 0 {
+                BL_DCR_Follow_Up.sharedInstance.saveDCRFollowUpDetail(remarksText:followupremarks.text, dueDate: dueDate!)
+                            }
             }
-            BL_DCR_Follow_Up.sharedInstance.saveDCRFollowUpDetail(remarksText:followupremarks.text, dueDate: dueDate!)
         }
         let dcrDoctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
         if dcrDoctorVisitList?.count ?? 0 > 0
@@ -366,7 +407,9 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     }
     
     @IBAction func submitdoctoraction() {
-        
+         if self.visittime.text!.count == 0 {
+                showToastView(toastText: "Please enter visit time")
+         } else {
         
         if DCRModel.sharedInstance.customerCode == ""
         {
@@ -440,7 +483,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             }
         }
     }
-    
+    }
     @IBAction func edetailingaction() {
         self.isEdetailing = true
         if isfromProspect {
@@ -649,7 +692,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         let visittime = stringFromDate(date1: Date())
                         let lastcharacterIndex = visittime.index(visittime.endIndex, offsetBy: -2)
                         let visitmode = visittime.substring(from: lastcharacterIndex)
-                        
+                        self.time = getStringFromDateforPunch(date: Date())
                         var localTimeZoneName: String { return TimeZone.current.identifier }
                         BL_DCR_Doctor_Visit.sharedInstance.savePunchInDoctorVisitDetails( customerCode: customerCode, visitTime: visittime, visitMode: visitmode, pobAmount: self.pobAmt, remarks: remarksText, regionCode: DCRModel.sharedInstance.customerRegionCode, viewController: self, geoFencingSkipRemarks: "", latitude: 0.0, longitude: 0.0, businessStatusId: statusId, businessStatusName: statusName, objCallObjective: self.objCallObjective, campaignName: self.campaignName, campaignCode: self.campaignCode, Punch_Start_Time: self.time, Punch_Status: 1, Punch_Offset: getOffset(), Punch_TimeZone: localTimeZoneName, Punch_UTC_DateTime: getUTCDateForPunch() )
                         // self.insertDCRDoctorAccompanists()
@@ -724,7 +767,82 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         self.meetingObjectiveList = DBHelper.sharedInstance.getCallObjectiveByEntityType(entityType: Constants.Call_Objective_Entity_Type_Ids.Doctor)
     }
     @objc func doneAction() {
-        self.navigationController?.popViewController(animated: true)
+        if self.visittime.text!.count == 0 {
+         showToastView(toastText: "Please enter visit time")
+        } else {
+            
+            if DCRModel.sharedInstance.customerCode == ""
+            {
+                let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitFlexiDoctor(doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+                if doctorVisitList != nil
+                {
+                    self.doctorVisitList = doctorVisitList!
+                }
+            }
+            else
+            {
+                let doctorVisitList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorVisitList()
+                if doctorVisitList != nil
+                {
+                    self.doctorVisitList = doctorVisitList!
+                }
+            }
+            
+            
+            
+            if self.doctorVisitList.count > 0
+            {
+                let dcrDoctorVisitObj = self.doctorVisitList.first
+                self.modifyDoctorVisitObj = dcrDoctorVisitObj
+            }
+            else
+                
+            {
+                savedoctorvisitdetails()
+            }
+            if self.doctorVisitList.count > 0 {
+                
+                let doctorobj = self.doctorVisitList[0]
+                if(isCurrentDate() && BL_MenuAccess.sharedInstance.is_Punch_In_Out_Enabled() && doctorobj.Punch_Start_Time != "" && doctorobj.Punch_End_Time == "" && !isfromProspect)
+                {
+                    
+                    let initialAlert = "Check-out time for " + doctorobj.Doctor_Name + " is " + getcurrenttime() + ". You cannot Check-in for other \(appDoctor) until you Check-out for " + doctorobj.Doctor_Name
+                    //let indexpath = sender.tag
+                    let alertViewController = UIAlertController(title: "Check Out", message: initialAlert, preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    alertViewController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { alertAction in
+                        //_ = self.navigationController?.popViewController(animated: false)
+                        alertViewController.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    alertViewController.addAction(UIAlertAction(title: "Check Out", style: UIAlertActionStyle.default, handler: { alertAction in
+                        //function
+                        DBHelper.sharedInstance.updatepunchendtime(Customercode: doctorobj.Doctor_Code!, regioncode:doctorobj.Doctor_Region_Code!, time:getStringFromDateforPunch(date: getCurrentDateAndTime()))
+                        self.updatepunchout(dcrID: doctorobj.DCR_Id, visitid: doctorobj.DCR_Doctor_Visit_Id!)
+                        alertViewController.dismiss(animated: true, completion: nil)
+                    }))
+                    
+                    self.present(alertViewController, animated: true, completion: nil)
+                }
+                else
+                {
+                    let statusMsg = BL_DCR_Doctor_Visit.sharedInstance.doDoctorVisitAllValidations(doctorVisitObj: doctorobj)
+                    if statusMsg != ""
+                    {
+                        AlertView.showAlertView(title: alertTitle, message: statusMsg, viewController: self)
+                    }
+                    else if BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus() != nil
+                    {
+                        let alertMsg = accompMissedPrefixErrorMsg + (BL_DCR_Doctor_Visit.sharedInstance.checkAccompanistCallStatus()?.Employee_Name)! + accompMissedSuffixErrorMsg
+                        AlertView.showAlertView(title: alertTitle, message: alertMsg, viewController: self)
+                    }
+                    else
+                    {
+                        _ = navigationController?.popViewController(animated: false)
+                    }
+                }
+            }
+        }
     }
     
     func getSamplesList() {
@@ -823,13 +941,21 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             }
             else
             {
-                _ = navigationController?.popViewController(animated: false)
+                if self.visittime.text!.count == 0 {
+                 showToastView(toastText: "Please enter visit time")
+                } else {
+                    _ = navigationController?.popViewController(animated: false)
+                }
+                
             }
         }
         else
         {
-            _ = navigationController?.popViewController(animated: false)
-            
+            if self.visittime.text!.count == 0 {
+             showToastView(toastText: "Please enter visit time")
+            } else {
+                _ = navigationController?.popViewController(animated: false)
+            }
         }
     }
     
@@ -1493,7 +1619,7 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                         let modifiedFileName = "\(timestamp)-\(fileName)"
                         let fileSize = Bl_Attachment.sharedInstance.convertToBytes(number: fileSize)
                         Bl_Attachment.sharedInstance.saveAttachmentFile(fileData: getData as Data, fileName: modifiedFileName)
-                        Bl_Attachment.sharedInstance.insertAttachment(attachmentName: fileName, attachmentSize: fileSize)
+                        Bl_Attachment.sharedInstance.insertAttachment(attachmentName: modifiedFileName, attachmentSize: fileSize)
                     }
                     let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
                     if attachmentArr != nil

@@ -478,27 +478,35 @@ class BL_MasterDataDownload: NSObject
     func dowloadAllData(masterDataGroupName1: String, completion: @escaping (Int) -> ())
     {
         self.downloadSystemSettings(masterDataGroupName: masterDataGroupName.SystemSettings.rawValue) { (status) in
+            showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 2/9")
             if (status == SERVER_SUCCESS_CODE)
             {
                 self.downloadHolidayData(masterDataGroupName: masterDataGroupName.HolidayData.rawValue) { (status) in
+                    showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 3/9")
                     if (status == SERVER_SUCCESS_CODE)
                     {
                         self.downloadCustomerData(masterDataGroupName: masterDataGroupName.DoctorData.rawValue) { (status) in
+                            showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 4/9")
                             if (status == SERVER_SUCCESS_CODE)
                             {
                                 self.downloadExpenseData(masterDataGroupName: masterDataGroupName.ExpenseData.rawValue) { (status) in
+                                    showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 5/9")
                                     if (status == SERVER_SUCCESS_CODE)
                                     {
                                         self.downloadProductData(masterDataGroupName: masterDataGroupName.ProductData.rawValue) { (status) in
+                                            showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 6/9")
                                             if (status == SERVER_SUCCESS_CODE)
                                             {
                                                 self.downloadCPTPData(masterDataGroupName: masterDataGroupName.CpTpDetails.rawValue) { (status) in
+                                                    showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 7/9")
                                                     if (status == SERVER_SUCCESS_CODE)
                                                     {
                                                         self.downloadSFCAndAccompanistData(masterDataGroupName: masterDataGroupName.SFCAccompanistData.rawValue) { (status) in
+                                                            showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 8/9")
                                                             if (status == SERVER_SUCCESS_CODE)
                                                             {
                                                                 self.getDigitalAssetsData(masterDataGroupName: masterDataGroupName.DigitalAssets.rawValue) { (status) in
+                                                                    showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 8/9")
                                                                     if (status == SERVER_SUCCESS_CODE)
                                                                     {
                                                                         self.allDataContd(masterDataGroupName: masterDataGroupName.MenuData.rawValue, completion: { (status) in
@@ -561,6 +569,7 @@ class BL_MasterDataDownload: NSObject
     private func allDataContd(masterDataGroupName: String, completion: @escaping (Int) -> ())
     {
         self.getStoryData(masterDataGroupName: masterDataGroupName) { (status) in
+            showCustomActivityIndicatorView (loadingText: "Downloading all Master Data 9/9")
             if (status == SERVER_SUCCESS_CODE)
             {
                 self.getUserTypeMenuAccess(masterDataGroupName: masterDataGroupName, completion: { (status) in

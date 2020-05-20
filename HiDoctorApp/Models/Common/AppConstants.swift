@@ -2,8 +2,8 @@ import UIKit
 import Foundation
 
 //MARK:- Production Configuration Keys
-//let wsRootUrl: String = "https://hdwebapi.hidoctor.me/"
-let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
+let wsRootUrl: String = "https://hdwebapius.hidoctor.me/"
+//let wsRootUrl: String = "https://demowebapi.hidoctor.me/"
 //MARK:- Development QA Configuration Keys
 //let wsRootUrl: String = "https://hdwebapi-qa.hidoctor.me/"
 //let wsRootUrl: String = "https://hdwebapi-dev.hidoctor.me/"
@@ -854,8 +854,8 @@ let retry = "RETRY"
 let defaultBusinessStatusName: String = "Select Business Status"
 let defaultBusineessStatusId: Int = 0
 let defaultBusinessStatusActviveStatus: Int = 1
-let defaultCallObjectiveName: String = "Select Call Objective"
-let defaultCallObjectiveId: Int = 0
+var defaultCallObjectiveName: String = "Select Call Objective"
+var defaultCallObjectiveId: Int = 0
 let defaultCallObjectiveActviveStatus: Int = 1
 let defaultCampaignName: String = "Select Campaign"
 let defaultCampaignId: Int = 0
@@ -1542,6 +1542,7 @@ enum MenuIDs: Int
     case traveltrackingreport = 34
    // case QuickNotes = 35
     case QuickNotes = 36
+    case canEditCustomerLocation = 41
 }
 
 

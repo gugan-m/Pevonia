@@ -44,6 +44,7 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
     @IBOutlet weak var frameView: CornerRadiusWithShadowView!
     @IBOutlet weak var submitbtn: UIButton!
     var IS_VIEW_MODE = false
+    var isBAckSpace = false
     
     //MARK:- Variables
     var toTimePicker = UIDatePicker()
@@ -116,19 +117,7 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         {
             updateViews()
         }
-        let remarks = DBHelper.sharedInstance.getDCRHeaderByDCRDate(dcrActualDate:  convertDateIntoServerStringFormat(date: DCRModel.sharedInstance.dcrDate))
-        if remarks != nil {
-            if remarks!.count > 0 {
-                if remarks![0].Reason!.count > 0 {
-                    if DCRModel.sharedInstance.dcrStatus != DCRStatus.unApproved.rawValue
-                    {
-                      self.leaveReason.text = remarks![0].Reason
-                    }
-                } else {
-                    self.leaveReason.text = EMPTY
-                }
-            }
-        }
+        
         if IS_VIEW_MODE {
             self.scrollView.isUserInteractionEnabled = false
             self.submitbtn.isHidden = true
@@ -149,6 +138,17 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+           if textView.text.count == 1 {
+               textView.text = " • " + textView.text
+           }
+        if isBAckSpace == false {
+            if textView.text.last == "\n" {
+               textView.text =  textView.text + " • "
+            }
+        }
+       }
     
     @IBAction func selectLeaveType(_ sender: AnyObject)
     {
@@ -308,47 +308,53 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
     {
         let charList = ACCEPTABLE_CHARACTERS
         var newLength = textView.text.count
-        
-        if  text != "" && !charList.contains(text.last!)
-        {
-            return false
+
+          if text == "" {
+            isBAckSpace = true
+          } else {
+            isBAckSpace = false
         }
+//         if !charList.contains(text.last!)
+//        {
+//            return true
+//        }
+//
         
-        if (text == UIPasteboard.general.string)
-        {
-            let index = textView.text.index(textView.text.startIndex, offsetBy: tpLeaveReasonLength)
-            textView.text = textView.text.substring(to: index)
-            newLength = textView.text.count
-            self.txtCount.textColor = UIColor.red
-            self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
-        }
-        
-        if newLength > tpLeaveReasonLength-1 && text != ""
-        {
-            let index = textView.text.index(textView.text.startIndex, offsetBy: tpLeaveReasonLength)
-            textView.text = textView.text.substring(to: index)
-            newLength = textView.text.count
-            self.txtCount.textColor = UIColor.red
-            self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
-            return false
-        }
-        
-        if text != ""
-        {
-            newLength += 1
-        }
-        else
-        {
-            newLength -= 1
-        }
-        
-        if newLength < 0
-        {
-            newLength = 0
-        }
-        
-        self.txtCount.textColor = UIColor.darkGray
-        self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
+//        if (text == UIPasteboard.general.string)
+//        {
+//            let index = textView.text.index(textView.text.startIndex, offsetBy: tpLeaveReasonLength)
+//            textView.text = textView.text.substring(to: index)
+//            newLength = textView.text.count
+//            self.txtCount.textColor = UIColor.red
+//            self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
+//        }
+//
+//        if newLength > tpLeaveReasonLength-1 && text != ""
+//        {
+//            let index = textView.text.index(textView.text.startIndex, offsetBy: tpLeaveReasonLength)
+//            textView.text = textView.text.substring(to: index)
+//            newLength = textView.text.count
+//            self.txtCount.textColor = UIColor.red
+//            self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
+//            return false
+//        }
+//
+//        if text != ""
+//        {
+//            newLength += 1
+//        }
+//        else
+//        {
+//            newLength -= 1
+//        }
+//
+//        if newLength < 0
+//        {
+//            newLength = 0
+//        }
+//
+//        self.txtCount.textColor = UIColor.darkGray
+//        self.txtCount.text = "\(newLength)/\(tpLeaveReasonLength)"
         return true
     }
     

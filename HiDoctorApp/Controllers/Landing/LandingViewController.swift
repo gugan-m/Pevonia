@@ -761,9 +761,22 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             removeVersionToastView()
             break
         case 3:
-            setDashboard()
+           // setDashboard()
             /*self.navigateToNextScreen(stoaryBoard: "Dashboard", viewController: "Dashboard")
              //            self.navigateToDashboardView()*/
+            let username = getUserName()
+            let password = getUserPassword()
+            let companyUrl = getCompanyName()
+            let companyName = companyUrl.components(separatedBy: ".")
+            let loginData = String(format: "%@/%@/%@", companyName.first!, username, password).data(using: String.Encoding.utf8)!
+            let base64LoginData = loginData.base64EncodedString()
+            let url = "\(dashboardBaseUrl)" + "\(base64LoginData)"
+            //                let decodedData = Data(base64Encoded: base64LoginData)!
+            //                let decodedString = String(data: decodedData, encoding: .utf8)!
+            //
+            //                print(decodedString)
+            //
+            self.navigateTowebView(siteUrl:url, title: "Dashboard")
             removeVersionToastView()
             
             break
@@ -889,18 +902,18 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
         
         if SwifterSwift().isPhone
         {
-            size = self.collectionView.frame.width/4.0
+            size = self.collectionView.frame.width/5.0
         }
         else
         {
-            if titleList.count == 8
-            {
-                size = self.collectionView.frame.width/4.0
-            }
-            else
-            {
+//            if titleList.count == 8
+//            {
+//               // size = self.collectionView.frame.width/4.0
+//            }
+//            else
+            //{
                 size = self.collectionView.frame.width/5.0
-            }
+           // }
         }
         
         height = collectionView.frame.size.height/2

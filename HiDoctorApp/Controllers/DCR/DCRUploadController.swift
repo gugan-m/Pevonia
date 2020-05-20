@@ -125,6 +125,15 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "uploadDCRCell") as! DCRUploadCell
         let model = uploadDetailList[indexPath.row]
+        if model.flagLabel == "O"{
+            model.flagLabel = "Office"
+        } else if model.flagLabel == "N"{
+            model.flagLabel = "Not Working"
+        } else if model.flagLabel == "F" {
+            model.flagLabel = "Field"
+        } else if model.flagLabel == "P"{
+            model.flagLabel = "Prospecting"
+        }
         let dateLabel = String(format:"%@ (%@)", convertDateIntoString(date: model.dcrDate), model.flagLabel)
         
         cell.dateLabel.text = dateLabel

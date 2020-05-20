@@ -137,7 +137,12 @@ class TPUploadDetailsViewController: UIViewController,UITableViewDataSource,UITa
                 
                 if uploadObj.Activity == 1
                 {
-                    cell.dateLbl.text = "\(convertDateIntoString(date: uploadObj.TP_Date!)) - \(fieldRcpa)"
+                    if uploadObj.TpType != "F" {
+                        cell.dateLbl.text = "\(convertDateIntoString(date: uploadObj.TP_Date!)) - Prospecting"
+                    } else {
+                        cell.dateLbl.text = "\(convertDateIntoString(date: uploadObj.TP_Date!)) - \(fieldRcpa)"
+                    }
+                    
                 }
                 else if uploadObj.Activity == 2
                 {

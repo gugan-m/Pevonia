@@ -106,7 +106,8 @@ class PrepareMyDeviceViewController: UIViewController
     @IBOutlet weak var apiStatusLbl: UILabel!
     @IBOutlet weak var loadingLbl: UILabel!
     @IBOutlet var mainView: UIView!
-    
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var lblpercentage: UILabel!
     var accompanistDataDownloadList : [UserMasterModel] = []
     var isComingFromAccompanistPage : Bool = false
     var isComingFromAppDelegate : Bool = false
@@ -220,6 +221,13 @@ class PrepareMyDeviceViewController: UIViewController
         super.didReceiveMemoryWarning()
         
     }
+    
+    func setProgressBar(value: Float) {
+        self.progressBar.setProgress(value, animated: true)
+        let percent:Int = Int(value * 100)
+        self.lblpercentage.text = String(percent) + " %"
+    }
+    
     
     func showIndicatorView(show:Bool)
     {
@@ -341,6 +349,7 @@ class PrepareMyDeviceViewController: UIViewController
                 
                 let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.UserPrivileges)
                 self.setApiStatusLbl(statusMsg: statusMsg)
+                self.setProgressBar(value: 0.1)
             }
         }
         else
@@ -363,6 +372,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.companyConfiguration)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.12)
         }
     }
     
@@ -380,6 +390,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.userModuleAccess)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.13)
         }
     }
     
@@ -397,6 +408,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.Accompanists)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.14)
         }
     }
     
@@ -414,6 +426,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.WorkCategories)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.15)
         }
     }
     
@@ -431,6 +444,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.Specialties)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.16)
         }
     }
     
@@ -449,6 +463,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.LeaveTypeMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.17)
         }
     }
     
@@ -466,6 +481,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TravelModeMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.18)
         }
     }
     
@@ -483,6 +499,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.ExpenseGroupMapping)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.19)
         }
     }
     
@@ -500,6 +517,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.ProjectActivityMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.20)
         }
     }
     
@@ -517,6 +535,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DetailProdcutMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.21)
         }
     }
     
@@ -536,6 +555,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.UserProductMapping)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.22)
         }
     }
     
@@ -553,6 +573,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.COMPETITORPRODUCT)
             self.setApiStatusLbl(statusMsg: statusMsg)
+                        self.setProgressBar(value: 0.23)
         }
         
         
@@ -570,6 +591,7 @@ class PrepareMyDeviceViewController: UIViewController
             else
             {
                 self.setApiStatusLbl(statusMsg: statusMsg)
+                self.setProgressBar(value: 0.24)
             }
         }
         
@@ -585,6 +607,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRCOMPETITOR)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.25)
         }
     }
     
@@ -598,6 +621,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AttendanceSample)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.26)
         }
     }
     
@@ -617,6 +641,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DFCMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.27)
         }
     }
     
@@ -634,6 +659,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.SFCData)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.28)
         }
     }
     
@@ -651,6 +677,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CustomerData)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.29)
         }
     }
     
@@ -668,6 +695,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CampaignPlannerHeader)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.30)
         }
     }
     
@@ -685,6 +713,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CampaignPlannerSFC)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.31)
         }
     }
     
@@ -702,6 +731,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CampaignPlannerDoctors)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.32)
         }
     }
     
@@ -719,6 +749,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerHeader)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.33)
         }
     }
     
@@ -736,6 +767,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerSFC)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.34)
         }
     }
     
@@ -753,6 +785,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerDoctor)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.35)
         }
     }
     
@@ -770,6 +803,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerAccompanist)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.36)
         }
     }
     
@@ -787,6 +821,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerProduct)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.37)
         }
     }
     
@@ -804,6 +839,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.TourPlannerProduct)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.38)
         }
     }
     
@@ -820,6 +856,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRCalendarDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.39)
         }
     }
     
@@ -837,6 +874,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRLockDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.40)
         }
     }
     
@@ -854,6 +892,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRHeaderDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.41)
         }
     }
     
@@ -871,6 +910,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRTravelledPlacesDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.42)
         }
     }
     
@@ -888,6 +928,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRAccompanistDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.43)
         }
     }
     
@@ -905,6 +946,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRDoctorVisitDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.44)
         }
     }
     
@@ -922,6 +964,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRSampleDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.45)
         }
     }
     
@@ -939,6 +982,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRDetailedProducts)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.46)
         }
     }
     
@@ -956,6 +1000,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistVisitDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.47)
         }
     }
     
@@ -973,6 +1018,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRRCPADetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.48)
         }
     }
     
@@ -990,6 +1036,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRCustomerFollowUpDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.49)
         }
     }
     
@@ -1007,6 +1054,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRAttachmentDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.50)
         }
     }
     
@@ -1024,6 +1072,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRStockistVisitDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.51)
         }
     }
     
@@ -1041,6 +1090,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRExpenseDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.52)
         }
     }
     
@@ -1058,6 +1108,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.HolidayMaster)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.53)
         }
     }
     
@@ -1072,6 +1123,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AttendanceActivities)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.54)
         }
     }
     
@@ -1086,6 +1138,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CompetitorProducts)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.55)
         }
     }
     
@@ -1098,6 +1151,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DoctorAccompanist)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.56)
         }
     }
     
@@ -1112,6 +1166,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.UserTypeMenuAccess)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.57)
         }
         
         BL_PrepareMyDevice.sharedInstance.getbussinessStatusPotential()
@@ -1129,6 +1184,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AssetMasterDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.58)
         }
     }
     
@@ -1142,6 +1198,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AssetsAnalyticsDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.59)
         }
     }
     
@@ -1155,6 +1212,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AssetTagDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.60)
         }
     }
     
@@ -1169,6 +1227,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.AssetProductMapping)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.61)
         }
     }
     
@@ -1183,6 +1242,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DoctorProductMapping)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.62)
         }
     }
     
@@ -1196,6 +1256,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.MCDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.64)
         }
     }
     
@@ -1209,6 +1270,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DivisionMappingDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.65)
         }
     }
     
@@ -1222,6 +1284,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CustomerAddress)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.63)
         }
     }
     
@@ -1235,6 +1298,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CustomerActivity)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.66)
         }
     }
     
@@ -1248,6 +1312,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRMCActivity)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.67)
         }
     }
     
@@ -1261,6 +1326,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CustomerMarketingActivity)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.68)
         }
     }
     
@@ -1274,6 +1340,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRAttendanceMCActivity)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.69)
         }
     }
     
@@ -1287,6 +1354,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.CustomerAttendanceMarketingActivity)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.70)
         }
     }
     
@@ -1297,7 +1365,7 @@ class PrepareMyDeviceViewController: UIViewController
             BL_PrepareMyDevice.sharedInstance.getStoryDetails(masterDataGroupName: masterDataGroupName.prepareMyDevice.rawValue) { (status) in
                 let statusMsg = self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.StoryDetails)
                 self.setApiStatusLbl(statusMsg: statusMsg)
-                
+                self.setProgressBar(value: 0.71)
                 if status == SERVER_SUCCESS_CODE
                 {
                     self.getDCRChemistAccomapanist()
@@ -1339,6 +1407,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistAccompanist)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.72)
         }
     }
     
@@ -1352,6 +1421,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistSamplePromotion)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.73)
         }
     }
     
@@ -1365,6 +1435,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistRCPAOwnProductDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.76)
         }
     }
     
@@ -1378,6 +1449,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistRCPACompetitorProductDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.77)
         }
     }
     
@@ -1391,6 +1463,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistDetailedProductsDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.75)
         }
     }
     
@@ -1404,6 +1477,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistDayFollowups)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.78)
         }
     }
     
@@ -1416,6 +1490,7 @@ class PrepareMyDeviceViewController: UIViewController
             }
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistDayAttachments)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.79)
         }
     }
     
@@ -1429,6 +1504,7 @@ class PrepareMyDeviceViewController: UIViewController
             
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRDoctorVisitOrderDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 0.80)
         }
     }
     
@@ -1437,7 +1513,7 @@ class PrepareMyDeviceViewController: UIViewController
         BL_PrepareMyDevice.sharedInstance.getDCRChemistVisitOrderDetails(masterDataGroupName: masterDataGroupName.prepareMyDevice.rawValue) { (status) in
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.DCRChemistVisitOrderDetails)
             self.setApiStatusLbl(statusMsg: statusMsg)
-            
+            self.setProgressBar(value: 0.9)
             if status == SERVER_SUCCESS_CODE
             {
                 self.getMCDoctorProductMapping(selectedRegionCode: EMPTY)
@@ -1480,7 +1556,7 @@ class PrepareMyDeviceViewController: UIViewController
     
     func setApiStatusLbl(statusMsg : String)
     {
-        self.apiStatusLbl.text = statusMsg
+        self.apiStatusLbl.text = "" //statusMsg
     }
     
     func showNoInternetAlert()
@@ -1697,6 +1773,7 @@ class PrepareMyDeviceViewController: UIViewController
         BL_PrepareMyDevice.sharedInstance.getMCDoctorProductMapping(masterDataGroupName: masterDataGroupName.prepareMyDevice.rawValue, selectedRegionCode: selectedRegionCode) { (status) in
             let statusMsg =  self.getErrorMessageForStatus(statusCode: status, dataName: apiMessageName.MCDoctorProductMapping)
             self.setApiStatusLbl(statusMsg: statusMsg)
+            self.setProgressBar(value: 1.0)
             if status == SERVER_SUCCESS_CODE
             {
                 self.updateMasterDataDownloadedAlert()

@@ -32,6 +32,8 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     var general = UITextField()
     let doctorvisitmodify = DoctorVisitModifyController()
     var IS_VIEW_MODE = false
+    var isBAckSpace = false
+    
     // MARK:- Life Cycle Events
     override func viewDidLoad()
     {
@@ -1546,7 +1548,7 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
             return 80
         } else if indexPath.section == 4 {
             if generalText.count != 0 {
-                return 60
+                return 120
             } else {
                 return 0
             }
@@ -1679,6 +1681,24 @@ extension DCRStepperNewViewController : UITextViewDelegate {
         BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = str
         generalText = str
         return true
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "" {
+                   isBAckSpace = true
+                 } else {
+                   isBAckSpace = false
+               }
+        return true
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.count == 1 {
+            textView.text = " • " + textView.text
+        }
+        if isBAckSpace == false {
+            if textView.text.last == "\n" {
+               textView.text =  textView.text + " • "
+            }
+        }
     }
 }
 

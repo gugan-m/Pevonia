@@ -1207,7 +1207,13 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             
             if (customerAddressList.count > 0)
             {
-                confirmAddressUpdate(indexPath: indexPath, objLocation: customerAddressList.first!)
+                let privValue = getCustomerLocationEditPrivValue()
+                
+                if (privValue == PrivilegeValues.YES.rawValue)
+                {
+                    confirmAddressUpdate(indexPath: indexPath, objLocation: customerAddressList.first!)
+                }
+                
             }
             else
             {
@@ -1224,7 +1230,10 @@ class CustomerTableViewController: UIViewController, UITableViewDelegate, UITabl
             moveToDoctorDetailPage()
         }
     }
-    
+    func getCustomerLocationEditPrivValue() -> String
+    {
+        return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.CAN_EDIT_CUSTOMER_LOCATION)
+    }
     private func convertCustomerAddressModelToGeoLocaitonModel(customerAddressList: [CustomerAddressModel]) -> [GeoLocationModel]
     {
         var lstCustomerLocations: [GeoLocationModel] = []

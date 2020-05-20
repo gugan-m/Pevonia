@@ -35,17 +35,20 @@ class BL_Upload_DCR: NSObject
             uploadModel.statusText = pendingStatus
             uploadModel.flag = model.Flag
             
-            if model.Flag == DCRFlag.fieldRcpa.rawValue
-            {
+            if model.DCR_Type == "F"            {
                 uploadModel.flagLabel = "F"
             }
-            else if model.Flag == DCRFlag.attendance.rawValue
+            else if model.DCR_Type == "A"
             {
                 uploadModel.flagLabel = "O"
             }
-            else if model.Flag == DCRFlag.leave.rawValue
+            else if model.DCR_Type == "L"
             {
                 uploadModel.flagLabel = "N"
+            }
+            else if model.DCR_Type == "P"
+            {
+               uploadModel.flagLabel = "P"
             }
             uploadDetail.append(uploadModel)
         }

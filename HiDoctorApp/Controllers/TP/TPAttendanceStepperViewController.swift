@@ -23,6 +23,7 @@ class TPAttendanceStepperViewController: UIViewController
     var stepperDataList: [DCRStepperModel] = []
     var projectObj : ProjectActivityMaster?
     var IS_VIEW_MODE = false
+    var isBAckSpace = false
     
     override func viewDidLoad()
     {
@@ -594,4 +595,23 @@ extension TPAttendanceStepperViewController : UITextViewDelegate {
                return true
     }
     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+           if text == "" {
+                      isBAckSpace = true
+                    } else {
+                      isBAckSpace = false
+                  }
+           return true
+       }
+       
+       func textViewDidChange(_ textView: UITextView) {
+                 if textView.text.count == 1 {
+                     textView.text = " • " + textView.text
+                 }
+              if isBAckSpace == false {
+                  if textView.text.last == "\n" {
+                     textView.text =  textView.text + " • "
+                  }
+              }
+             }
 }

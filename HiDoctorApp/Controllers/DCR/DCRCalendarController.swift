@@ -2026,6 +2026,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 cell.detailBtn.isUserInteractionEnabled = true
             }
             
+            if detailModel.dcrStatus == DCRStatus.applied.rawValue {
+                          cell.editBtn.isHidden = true
+                       } else {
+                           cell.editBtn.isHidden = false
+                       }
+            
 //            if detailModel.dcrStatus != 3 && detailModel.dcrCode != ""
 //            {
 //                cell.headerView.backgroundColor = CellColor.appliedBgColor.color
@@ -2251,6 +2257,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 cell.detailBtn.isUserInteractionEnabled = true
             }
             
+            if detailModel.dcrStatus == DCRStatus.applied.rawValue {
+                          cell.editBtn.isHidden = true
+                       } else {
+                           cell.editBtn.isHidden = false
+                       }
+            
             if detailModel.dcrStatus == DCRStatus.applied.rawValue
             {
                 let rowHeight = rowHeightArr[indexPath.row] as! CGFloat
@@ -2399,6 +2411,13 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             } else {
                 cell.editBtn.setTitle("EDIT & SUBMIT", for: .normal)
             }
+            
+            if detailModel.dcrStatus == DCRStatus.applied.rawValue {
+               cell.editBtn.isHidden = true
+            } else {
+                cell.editBtn.isHidden = false
+            }
+            
             if (detailModel.dcrStatus == DCRStatus.applied.rawValue  && detailModel.dcrCode != "")
             {
                 cell.detailBtn.isUserInteractionEnabled = false

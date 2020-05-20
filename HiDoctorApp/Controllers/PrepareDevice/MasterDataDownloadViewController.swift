@@ -260,7 +260,7 @@ class MasterDataDownloadViewController: UIViewController,UITableViewDelegate,UIT
     
     func downloadAllMasterData()
     {
-        showCustomActivityIndicatorView(loadingText: "Downloading \(apiStatus.DownloadAllMasterData)...")
+        showCustomActivityIndicatorView (loadingText: "Downloading all master data 1/9")
         BL_MasterDataDownload.sharedInstance.dowloadAllData(masterDataGroupName1: masterDataGroupName.DownloadAllMasterData.rawValue, completion: { (status) in
             if(status == SERVER_SUCCESS_CODE)
             {

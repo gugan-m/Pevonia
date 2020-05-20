@@ -432,11 +432,11 @@ class BL_TPStepper: NSObject
     {
         var errorMessage: String = EMPTY
         
-        errorMessage = doAllAccompanistValidation()
-        if (errorMessage != EMPTY)
-        {
-            return errorMessage
-        }
+//        errorMessage = doAllAccompanistValidation()
+//        if (errorMessage != EMPTY)
+//        {
+//            return errorMessage
+//        }
         
 //        errorMessage = doAllWorkPlaceValidations()
 //        if (errorMessage != EMPTY)
@@ -1141,21 +1141,21 @@ class BL_TPStepper: NSObject
             }
         }
         
-        for objTPDoctor in self.doctorList
-        {
-            if (objTPDoctor.Region_Code != getRegionCode())
-            {
-                let filtered = self.accompanistList.filter{
-                    $0.userObj.Region_Code == objTPDoctor.Region_Code
-                }
-                
-                if (filtered.count == 0)
-                {
-                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your territory or any of the Ride Along territory"
-                    break
-                }
-            }
-        }
+//        for objTPDoctor in self.doctorList
+//        {
+//            if (objTPDoctor.Region_Code != getRegionCode())
+//            {
+//                let filtered = self.accompanistList.filter{
+//                    $0.userObj.Region_Code == objTPDoctor.Region_Code
+//                }
+//
+//                if (filtered.count == 0)
+//                {
+//                    errorMessage = "\(objTPDoctor.Customer_Name!) is invalid \(appDoctor). This \(appDoctor) does not belong to your territory or any of the Ride Along territory"
+//                    break
+//                }
+//            }
+//        }
         
         return errorMessage
     }

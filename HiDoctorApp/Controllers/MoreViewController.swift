@@ -145,7 +145,7 @@ class MoreViewController: UIViewController, UITableViewDelegate, UITableViewData
             dataList.append(moreDescObj)
         }
         
-        if (BL_Geo_Location.sharedInstance.isGeoLocationMandatoryPrivEnabled() && BL_Geo_Location.sharedInstance.doesUserHasLocationEditPermission())
+        if (BL_Geo_Location.sharedInstance.isGeoLocationMandatoryPrivEnabled() && BL_Geo_Location.sharedInstance.canEditCustomerLocation())
         {
             moreDescObj = MoreListDescriptionModel()
             moreHeaderObj.sectionTitle = "Contact"

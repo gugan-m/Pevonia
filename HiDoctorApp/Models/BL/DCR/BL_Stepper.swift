@@ -2181,7 +2181,7 @@ class BL_Stepper: NSObject
         
         if (DCRModel.sharedInstance.dcrFlag == DCRFlag.fieldRcpa.rawValue)
         {
-            if (self.dcrHeaderObj!.Is_TP_Frozen == 1)
+            if self.dcrHeaderObj != nil && (self.dcrHeaderObj!.Is_TP_Frozen == 1)
             {
                 let approvedTPCount = DBHelper.sharedInstance.getApprovedTPCount(tpDate: getDCRDate())
                 

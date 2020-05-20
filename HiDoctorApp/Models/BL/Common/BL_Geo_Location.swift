@@ -198,6 +198,10 @@ class BL_Geo_Location: NSObject
         return PrivilegesAndConfigSettings.sharedInstance.getPrivilegeValue(privilegeName: PrivilegeNames.CAN_EDIT_CUSTOMER_LOCATION)
     }
     
+    func canEditCustomerLocation() -> Bool {
+      return BL_MenuAccess.sharedInstance.isCustomerLocationEditAvailable()
+    }
+    
     func doesUserHasLocationEditPermission() -> Bool
     {
         let privValue = getCustomerLocationEditPrivValue()

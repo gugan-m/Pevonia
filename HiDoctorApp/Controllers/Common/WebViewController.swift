@@ -72,8 +72,17 @@ class WebViewController: UIViewController {
                         //                            req = NSURLRequest(url: urlValue!)
                         //                        }
                       //  if #available(iOS 13.0, *) {
-                           let req = URLRequest(url: checkedUrl)
-                           self.webkit.load(req)
+                        
+                        if encodedUrl.contains("http") {
+                            let req = URLRequest(url: checkedUrl)
+                            self.webkit.load(req)
+                        } else {
+                            let url = URL(fileURLWithPath: encodedUrl)
+                            //let req = URLRequest(url: url)
+                            self.webkit.loadFileURL(url, allowingReadAccessTo: url)
+                        }
+                           
+                           
 //                        } else {
 //                           let req = URLRequest(url: checkedUrl)
 //                            self.webView.loadRequest(req)
@@ -97,7 +106,7 @@ class WebViewController: UIViewController {
                     // if #available(iOS 13.0, *) {
                         showActivityIndicator()
                         let req = URLRequest(url: checkedUrl)
-                        self.webkit.load(req)
+                       self.webkit.load(req)
 //                     } else {
 //                    showActivityIndicator()
 //                    let req = NSURLRequest(url: checkedUrl)
