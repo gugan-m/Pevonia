@@ -61,6 +61,8 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     var isfromProspect: Bool = false
     var isAddDetailProduct = false
     var isEdetailing = false
+    var assetList : [AssetsModel] = []
+    var pobDataList : [DCRDoctorVisitPOBHeaderModel] = []
     
     // Mark outlets
     @IBOutlet weak var headerView: UIView!
@@ -92,11 +94,17 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var txtMeetingObjective: UITextField!
     @IBOutlet weak var cons_RideAlongHeight: NSLayoutConstraint!
     @IBOutlet weak var cons_DetailProductHeight: NSLayoutConstraint!
+    @IBOutlet weak var digitalAssetTblView: UITableView!
+    @IBOutlet weak var digitalAssetHeight: NSLayoutConstraint!
+    @IBOutlet weak var pobTblView: UITableView!
+    @IBOutlet weak var pobHeight: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         self.selectedSampleArr = []
         self.masterSampleArr = []
         self.searchSampleArr = []
+        self.assetList = []
         self.getMeetingObjective()
         self.getSamplesList()
         self.currentLocation = getCurrentLocaiton()
@@ -117,8 +125,12 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         self.txtMeetingObjective.inputView = self.pickerview
         addCustomBackButtonToNavigationBar()
         DCRModel.sharedInstance.customerEntityType = Constants.CustomerEntityType.doctor
-        self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
         
+        if isfromProspect {
+            self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Prospecting)"
+        } else {
+            self.title = convertDateIntoString(date: DCRModel.sharedInstance.dcrDate) + " (Field)"
+        }
         if (isCurrentDate()) && !isfromProspect
         {
             visittime.isEnabled = false
@@ -171,10 +183,52 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
         }
     }
     
+    func isPOBEnabled() -> Bool {
+       let str = BL_DCR_Doctor_Visit.sharedInstance.getDoctorCaptureValue()
+        if str.contains(Constants.ChemistDayCaptureValue.pob) == true {
+            return true
+        } else {
+          return false
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         isAddDetailProduct = false
         self.getAccompanist()
         self.getDetailProducts()
+        self.getAssetList()
+        self.getPOBDetails()
+    }
+    
+    func getPOBDetails() {
+        self.pobDataList = BL_DCR_Doctor_Visit.sharedInstance.getPobDetails()!
+        if isPOBEnabled() == true {
+            if self.pobDataList.count > 0
+            {
+               self.pobHeight.constant = CGFloat(self.pobDataList.count * 60) + 40
+            }
+            else
+            {
+                self.pobHeight.constant = 50
+            }
+            self.pobTblView.reloadData()
+        }
+        else
+        {
+            self.pobHeight.constant = 0
+        }
+    }
+    
+    func getAssetList() {
+      self.assetList = BL_DCR_Doctor_Visit.sharedInstance.getDCRDoctorAssetDetails()
+        if self.assetList.count > 0 {
+            self.digitalAssetTblView.isHidden = false
+            self.digitalAssetHeight.constant = CGFloat((75 * self.assetList.count) + 30 )
+            self.digitalAssetTblView.reloadData()
+        } else {
+            self.digitalAssetTblView.isHidden = true
+            self.digitalAssetHeight.constant = 0
+        }
     }
     
     func getPunchOutTime() -> String {
@@ -201,13 +255,14 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        var intime : String = ""
+         intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
         
         if (isCurrentDate()) && !isfromProspect
         {
             visittime.isEnabled = false
-            var intime : String = ""
-            var outtime = ""
-            intime = stringFromDate(date1: getDateFromString(dateString: punch_start ?? ""))
+                        var outtime = ""
+           
             if getPunchOutTime().count != 0 {
                 let dateFormatter = DateFormatter()
                            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -249,8 +304,11 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                     {
                         let dcrDoctorVisitObj = i
                         self.modifyDoctorVisitObj = dcrDoctorVisitObj
-                        visittime.text = dcrDoctorVisitObj.Visit_Time
-                        
+                        if intime.count == 0 {
+                            visittime.text = dcrDoctorVisitObj.Visit_Time
+                        } else {
+                           self.visittime.text = intime
+                        }
                         
                         if dcrDoctorVisitObj.Call_Objective_Name.count == 0 {
                             if self.meetingObjectiveList.count > 0 {
@@ -1636,6 +1694,55 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
             AlertView.showAlertView(title: alertTitle, message: "You can not upload more than \(maxFileUploadCount) files")
         }
     }
+    
+    func navigateToAddPOB()
+    {
+        BL_POB_Stepper.sharedInstance.orderEntryId = 0
+        BL_POB_Stepper.sharedInstance.dueDate = Date()
+        let sb = UIStoryboard(name: Constants.StoaryBoardNames.POBSb, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.POBStepperVcID) as! POBStepperViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+     func removeSalesDetails(orderEntryID :Int,orderStatus: Int)
+       {
+           if (orderStatus != Constants.OrderStatus.complete && orderStatus != Constants.OrderStatus.inprogress)
+           {
+               BL_POB_Stepper.sharedInstance.deletePOBRemarks(orderEntryId: orderEntryID)
+               BL_POB_Stepper.sharedInstance.deletePOBDetails(orderEntryId: orderEntryID)
+               BL_POB_Stepper.sharedInstance.deletePOBHeader(orderEntryId: orderEntryID)
+           }
+       }
+    
+    @IBAction func act_addPOB(_ sender: UIButton) {
+       navigateToAddPOB()
+    }
+    
+    @IBAction func deletePOB(_ sender: UIButton) {
+        let index = sender.tag
+        let pobObject = self.pobDataList[index]
+        if pobObject.Order_Status == Constants.OrderStatus.complete
+        {
+            AlertView.showAlertView(title: "Order", message: "Order is completed cannot be removed")
+        }
+        if pobObject.Order_Status == Constants.OrderStatus.inprogress
+        {
+            BL_POB_Stepper.sharedInstance.updatePOBHeaderOrderStatus(orderEntryId: pobObject.Order_Entry_Id!, orderStatus: 0)
+        }
+        let alertViewController = UIAlertController(title: nil, message: "Do you want to remove order detail?", preferredStyle: UIAlertControllerStyle.alert)
+        alertViewController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { alertAction in
+            self.removeSalesDetails(orderEntryID :pobObject.Order_Entry_Id,orderStatus: pobObject.Order_Status)
+            self.pobDataList = BL_DCR_Doctor_Visit.sharedInstance.getPobDetails()!
+            self.getPOBDetails()
+            showToastView(toastText: "Order details removed successfully")
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        alertViewController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: { alertAction in
+            alertViewController.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alertViewController, animated: true, completion: nil)
+        
+    }
 }
 //MARK:- Table View Delegate Methods
 
@@ -1663,6 +1770,14 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
         else if tableView == tblSelectedSample
         {
             return selectedSampleArr.count
+        }
+        else if tableView == digitalAssetTblView
+        {
+            return  self.assetList.count
+        }
+        else if tableView == pobTblView
+        {
+            return self.pobDataList.count
         }
         else
         {
@@ -1717,6 +1832,28 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
             cell.lblSampleCount.text = String(Int(cell.Stepper.value))
             return cell
         }
+        else if tableView == digitalAssetTblView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DoctorVisitDigitalAssetCell") as! DoctorVisitDigitalAssetCell
+            let obj = self.assetList[indexPath.row]
+            var assetTypeName = ""
+            if obj.assetType != nil{
+                        assetTypeName = getDocTypeVal(docType: obj.assetType)
+                       }
+            cell.lblAssetName.text = obj.assetsName! + "(\(assetTypeName))"
+            cell.lblAssetDuration.text = viewedDuration + getPlayTime(timeVal: obj.totalPlayedDuration)
+            return cell
+        }
+        else if tableView == pobTblView
+        {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DoctorVisitPOBCell") as! DoctorVisitPOBCell
+            let obj = self.pobDataList[indexPath.row]
+            cell.lblName.text = obj.Stockiest_Name
+            let productsCount = BL_POB_Stepper.sharedInstance.getNoOfProducts(orderEntryId: obj.Order_Entry_Id)
+            let totalAmount = BL_POB_Stepper.sharedInstance.totalAmountcalculation(orderEntryId: obj.Order_Entry_Id)
+            cell.lblPOB.text = "No Of Products: \(productsCount) | POB Amount: \(totalAmount)"
+            cell.btnDelete.tag = indexPath.row
+            return cell
+        }
         else
         {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TpMeetingObjSamplescell") as! TpMeetingObjSamplescell
@@ -1751,6 +1888,14 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
         {
             return 70
         }
+        else if tableView == digitalAssetTblView
+        {
+            return UITableViewAutomaticDimension
+        }
+        else if tableView == pobTblView
+        {
+            return 80
+        }
         else
         {
             return 70
@@ -1776,6 +1921,33 @@ extension DoctorStepperNewController: UITableViewDelegate,UITableViewDataSource 
             let redirectUrl = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: self.attachmentList[indexPath.row].attachmentName!)
             vc.siteURL = redirectUrl
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if tableView == pobTblView
+        {
+            let obj = self.pobDataList[indexPath.row]
+            BL_POB_Stepper.sharedInstance.orderEntryId = obj.Order_Entry_Id
+            if obj.Order_Status == Constants.OrderStatus.complete
+            {
+                let sb = UIStoryboard(name: Constants.StoaryBoardNames.POBSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.POBDetailsVCID) as! POBDetailsViewController
+                if let navigationController = self.navigationController
+                {
+                    //navigationController.popViewController(animated: false)
+                    navigationController.pushViewController(vc, animated: false)
+                }
+            }
+            else
+            {
+                let sb = UIStoryboard(name: Constants.StoaryBoardNames.POBSb, bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerNames.POBStepperVcID) as! POBStepperViewController
+                vc.modify = true
+                if let navigationController = self.navigationController
+                {
+                    //navigationController.popViewController(animated: false)
+                    navigationController.pushViewController(vc, animated: false)
+                }
+            }
+            
         }
     }
 }
@@ -1867,3 +2039,19 @@ class DoctorVisitDetailProductCell: UITableViewCell {
     }
 }
 
+class DoctorVisitDigitalAssetCell: UITableViewCell {
+    @IBOutlet weak var lblAssetName: UILabel!
+    @IBOutlet weak var lblAssetDuration: UILabel!
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
+
+class DoctorVisitPOBCell: UITableViewCell {
+    @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblPOB: UILabel!
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}

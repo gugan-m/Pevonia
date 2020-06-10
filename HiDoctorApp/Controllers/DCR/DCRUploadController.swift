@@ -601,7 +601,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
             BL_Geo_Location.sharedInstance.uploadCustomerAddress(completion: { (status) in
                 BL_DCR_Refresh.sharedInstance.dcrRefreshAPICall(refreshMode: DCRRefreshMode.MERGE_LOCAL_AND_SERVER_DATA, endDate: "")
                 BL_DCR_Refresh.sharedInstance.delegate = self
-                 removeCustomActivityView()
+                 //removeCustomActivityView()
             })
         }
         else
@@ -613,7 +613,7 @@ class DCRUploadController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func getServiceStatus(message: String, statusCode: Int)
     {
-        //removeCustomActivityView()
+        removeCustomActivityView()
         showToastView(toastText: message)
         if statusCode == NO_INTERNET_ERROR_CODE
         {

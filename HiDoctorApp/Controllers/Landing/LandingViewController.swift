@@ -813,8 +813,8 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
             removeVersionToastView()
             break
         case 7:
-            if isManager()
-            {
+//            if isManager()
+//            {
                 let sb = UIStoryboard(name:commonListSb, bundle: nil)
                 let vc = sb.instantiateViewController(withIdentifier: userListVcID) as! UserListViewController
                 vc.navigationScreenName = UserListScreenName.CustomerList.rawValue
@@ -822,14 +822,14 @@ class LandingViewController: UIViewController, UICollectionViewDataSource,UIColl
                 vc.isCustomerMasterEdit = false
                 vc.doctorListPageSoruce = Constants.Doctor_List_Page_Ids.Customer_List
                 self.navigationController?.pushViewController(vc, animated: true)
-            }
-            else
-            {
-                CustomerModel.sharedInstance.regionCode = getRegionCode()
-                CustomerModel.sharedInstance.userCode = getUserCode()
-                CustomerModel.sharedInstance.navTitle = "\(appDoctorPlural) List"
-                setSplitViewRootController(backFromAsset: false, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
-            }
+//            }
+//            else
+//            {
+//                CustomerModel.sharedInstance.regionCode = getRegionCode()
+//                CustomerModel.sharedInstance.userCode = getUserCode()
+//                CustomerModel.sharedInstance.navTitle = "\(appDoctorPlural) List"
+//                setSplitViewRootController(backFromAsset: false, isCustomerMasterEdit: false, customerListPageSouce: Constants.Doctor_List_Page_Ids.Customer_List)
+//            }
             
             break
         case 8:

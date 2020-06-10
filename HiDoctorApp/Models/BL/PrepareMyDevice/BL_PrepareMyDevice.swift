@@ -618,7 +618,7 @@ class BL_PrepareMyDevice: NSObject
         
         insertApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
         
-        WebServiceHelper.sharedInstance.getDCRHeaderDetails { (apiResponseObj) in
+        WebServiceHelper.sharedInstance.getDCRHeaderDetailsV59(jsonString: self.getPostJsonHeaderString()) { (apiResponseObj) in
             let statusCode = apiResponseObj.Status
             
             if (statusCode == SERVER_SUCCESS_CODE)
@@ -684,7 +684,7 @@ class BL_PrepareMyDevice: NSObject
         
         insertApiDownloadDetails(apiName: apiName, masterDataGroupName: masterDataGroupName)
         
-        WebServiceHelper.sharedInstance.getDCRDoctorVisitDetails { (apiResponseObj) in
+        WebServiceHelper.sharedInstance.getDCRDoctorVisitDetailsV59(jsonString: self.getPostJsonString()) { (apiResponseObj) in
             let statusCode = apiResponseObj.Status
             
             if (statusCode == SERVER_SUCCESS_CODE)
@@ -3698,10 +3698,28 @@ class BL_PrepareMyDevice: NSObject
         dcrParameterModelObj.Flag = "F"
         dcrParameterModelObj.StartDate = ""
         dcrParameterModelObj.EndDate = ""
-        dcrParameterModelObj.DCRStatus = "0,3,"
+        dcrParameterModelObj.DCRStatus = "ALL"
         
         //let jsonString = JSONSerializer.toJson(dcrParameterModelObj)
         let jsonString = stringify(json: dcrParameterModelObj)
         return jsonString
     }
+    
+    private func getPostJsonHeaderString() -> String
+    {
+        let dcrParameterModelObj = DCRParameterV59()
+        
+        dcrParameterModelObj.CompanyCode = getCompanyCode()
+        dcrParameterModelObj.UserCode = getUserCode()
+        dcrParameterModelObj.RegionCode = getRegionCode()
+        dcrParameterModelObj.Flag = ""
+        dcrParameterModelObj.StartDate = ""
+        dcrParameterModelObj.EndDate = ""
+        dcrParameterModelObj.DCRStatus = "ALL"
+        
+        //let jsonString = JSONSerializer.toJson(dcrParameterModelObj)
+        let jsonString = stringify(json: dcrParameterModelObj)
+        return jsonString
+    }
+    
 }

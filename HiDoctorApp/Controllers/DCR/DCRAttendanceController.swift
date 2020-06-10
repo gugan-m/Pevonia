@@ -59,6 +59,8 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
     let placeHolderForLeaveType : String = "Select Not Working Type"
     var projectObj : ProjectActivityMaster!
     var activityList : [ProjectActivityMaster] = []
+     var activityattendance : [DCRAttendanceActivityModel] = []
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -104,7 +106,11 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         //fromDateLbl.isEnabled = false
         leaveReason.delegate = self
         
-       
+        let dcrActivityList : [DCRAttendanceActivityModel]?  = getDCRActivityDetails()
+        if dcrActivityList != nil
+        {
+            self.activityattendance = dcrActivityList!
+        }
         if DCRModel.sharedInstance.dcrStatus == DCRStatus.unApproved.rawValue
         {
             
@@ -128,6 +134,12 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
         
         
     }
+    
+    func getDCRActivityDetails() -> [DCRAttendanceActivityModel]?
+    {
+        return DBHelper.sharedInstance.getDCRAttendanceActivities(dcrId: DCRModel.sharedInstance.dcrId)
+    }
+    
     func donePicker() {
 
         pickerViewtext.resignFirstResponder()
@@ -481,8 +493,16 @@ class DCRAttendanceController:UIViewController,UITextViewDelegate,leaveEntryList
                  {
                     // fromDateLbl.text = stringDateFormat(date1: startDate)
                      //fromDateLbl.isEnabled = false
+                    if self.activityattendance.count > 0 {
+                        let remarks = self.activityattendance[0].Remarks!
+                        if remarks.count > 0 {
+                          leaveReason.text = remarks
+                        } else {
+                           leaveReason.text = EMPTY
+                        }
+                    }
                      txtCount.text = "\0/\(tpLeaveReasonLength)"
-                     leaveReason.text = EMPTY
+                     
                   //   selectLeaveType.text = placeHolderForLeaveType
                  }
     }

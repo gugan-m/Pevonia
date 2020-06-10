@@ -264,7 +264,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                     let month: String = String(tempmonth.suffix(2))
                     let day: String = String(tempmonth.prefix(2))
                     
-                    let taskdate = year + "-" + month + "-" + day
+                    let taskdate = month + "-" + day + "-" + year
                     //self.due = getDateFromString(dateString: taskdate)
                     let postData: [String : Any] = ["Company_Code": getCompanyCode(), "Company_Id": getCompanyId() as Int, "Title": self.titletext.text!, "Notes_or_Task_Of": EMPTY, "Region_Code": getRegionCode(), "Region_Name": getRegionName(), "User_Code": getUserCode(), "IsNotePinned": 0, "IsNotePublic": 0, "Created_By": getUserCode(), "Created_DateTime": dateselected ,"lstTasks": leaveData, "lstTaskTags":doctortag, "lstAttachments":attachment,"Task_Actual_Date":dateselected,"Task_Due_Date":taskdate, "Task_HeaderId":noteid]
                     
@@ -354,7 +354,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
                     let tempmonth: String = String(temp.prefix(5))
                     let month: String = String(tempmonth.suffix(2))
                     let day: String = String(tempmonth.prefix(2))
-                    var taskdate = year + "-" + month + "-" + day
+                    var taskdate =  month + "-" + day + "-" + year
                     if(year.contains("-"))
                     {
                         taskdate = getCurrentDate()
@@ -400,12 +400,12 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         //statuslabel.isEnabled = false
         self.addTimePicker()
         duedatelabel.inputView = toTimePicker
-        duedatelabel.text = dateselected
+       // duedatelabel.text = dateselected
         let year: String = String(dateselected.prefix(4))
         let tempmonth: String = String(dateselected.suffix(5))
         let month: String = String(tempmonth.prefix(2))
         let date: String = String(tempmonth.suffix(2))
-        duedatelabel.text = date + "/" + month + "/" + year
+      //  duedatelabel.text = date + "/" + month + "/" + year
         scrollView.addSubview(content)
         self.view.addSubview(scrollView)
         self.tableView.delegate = self
@@ -425,6 +425,8 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         pickerdone()
         //collectionView.heightAnchor.constraint(equalToConstant: 0.0)
         self.tableView.reloadData()
+        duedateview.isHidden = false
+        duedateview.isUserInteractionEnabled = true
         if(iseditnotes && !isedittask )
         {
             self.scrollView.alpha = 0.35
@@ -501,7 +503,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
             statusview.isHidden = false
             status.isHidden = false
             statusview.isUserInteractionEnabled = false
-            duedateview.isUserInteractionEnabled = false
+            duedateview.isUserInteractionEnabled = true
             statuslabel.text = model.value(forKey:"Task_Status") as! String
             if(model.value(forKey: "lstTaskTags") != nil)
             {

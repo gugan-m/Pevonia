@@ -1851,7 +1851,7 @@ class BL_DCR_Refresh: NSObject
         {
             dcrParameterModelObj.StartDate = ""
             dcrParameterModelObj.EndDate = ""
-            dcrParameterModelObj.DCRStatus = "0,3,"
+            dcrParameterModelObj.DCRStatus = "ALL"
         }
         
         //let jsonString = JSONSerializer.toJson(dcrParameterModelObj)

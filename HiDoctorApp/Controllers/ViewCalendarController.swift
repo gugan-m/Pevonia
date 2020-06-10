@@ -186,7 +186,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         //getcalender(year: String(getCurrentDate().prefix(4)))
         addNavigationBarBut()
       //  calendarView.collectionView.reloadData()
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+      //  UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         
         //CalendarView.loadEvents()
         hidePlanningPopup()
@@ -204,7 +204,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         super.viewWillAppear(animated)
         getcalender(year: String(getCurrentDate().prefix(4)))
         calendarView.collectionView.reloadData()
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+       // UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         self.showpickerbtn.isHidden = true
         self.datelabel.text = BL_DCRCalendar.sharedInstance.convertDateIntoDCRDisplayformat(date: getDateFromString(dateString: getCurrentDate()) )
         self.emptyview.isHidden = false
@@ -301,7 +301,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         //getcalender(year: String(self.date.suffix(4)))
         // getcalender(year: String(self.date.suffix(4)))
         calendarView.collectionView.reloadData()
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+       // UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
     }
     
     // MARK : KDCalendarDataSource
@@ -355,7 +355,11 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
                 emptyview.isHidden = true
             }
         }
-         showPlanningPopup()
+        
+        if draftview.isHidden == true {
+          showPlanningPopup()
+        }
+         
         //getcalender(year: String(self.date.prefix(4)))
     }
     

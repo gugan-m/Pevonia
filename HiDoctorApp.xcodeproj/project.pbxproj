@@ -4523,10 +4523,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HiDoctorApp/HiDOCTOR.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Swaas Systems Private Limited (35HT8SAUJ7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Swaas Systems Private Limited (35HT8SAUJ7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4535,11 +4535,11 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.46;
+				MARKETING_VERSION = 2.47;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = pevo_Appstore;
+				PROVISIONING_PROFILE_SPECIFIER = DevPevonia;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/HiDoctorApp-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -4553,10 +4553,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HiDoctorApp/HiDOCTOR.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: Swaas Systems Private Limited (35HT8SAUJ7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Swaas Systems Private Limited (35HT8SAUJ7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vijay Prasad (5BU7BYZS8Z)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35HT8SAUJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4565,11 +4565,11 @@
 				INFOPLIST_FILE = HiDoctorApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.46;
+				MARKETING_VERSION = 2.47;
 				PRODUCT_BUNDLE_IDENTIFIER = com.swaas.PevoniaIntl;
 				PRODUCT_NAME = HiDOCTOR;
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = pevo_Appstore;
+				PROVISIONING_PROFILE_SPECIFIER = DevPevonia;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/HiDoctorApp-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;

@@ -47,14 +47,11 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         }
         workCategory = BL_WorkPlace.sharedInstance.getWorkCategoriesList()
         self.pickerview.delegate = self
-       if IS_VIEW_MODE == true {
-            self.tableView.isUserInteractionEnabled = false
+        if IS_VIEW_MODE == true {
             self.submitButton.isHidden = true
         } else {
-            self.tableView.isUserInteractionEnabled = true
             self.submitButton.isHidden = false
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -63,8 +60,8 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         BL_Stepper.sharedInstance.generateDataArray()
         if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name != nil {
             if BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name?.count == 0 {
-//                selectedWorkPlace = workCategory[0].Category_Name
-//                selectedWorkCategoryID =  workCategory[0].Category_Id
+                //                selectedWorkPlace = workCategory[0].Category_Name
+                //                selectedWorkCategoryID =  workCategory[0].Category_Id
             } else {
                 selectedWorkPlace = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Name ?? ""
                 selectedWorkCategoryID = BL_Stepper.sharedInstance.dcrHeaderObj?.Category_Id ?? 0
@@ -295,21 +292,21 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
     //    }
     //
     private func updategeneralremarks()
-        {
-            
-            if (generalText.count > 0)
-            {
-                BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = generalText
-                _ = BL_Stepper.sharedInstance.updateDCRGeneralRemarks(remarksTxt: generalText , dcrId : BL_Stepper.sharedInstance.dcrId)
-                showToast(message: "Updated remarks succesfully")
-            }
-            else
-            {
-                showToast(message: "Please enter remarks")
-            }
-        }
+    {
         
-
+        if (generalText.count > 0)
+        {
+            BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks = generalText
+            _ = BL_Stepper.sharedInstance.updateDCRGeneralRemarks(remarksTxt: generalText , dcrId : BL_Stepper.sharedInstance.dcrId)
+            showToast(message: "Updated remarks succesfully")
+        }
+        else
+        {
+            showToast(message: "Please enter remarks")
+        }
+    }
+    
+    
     
     private func navigateToAddDoctorAccompanist()
     {
@@ -1268,10 +1265,10 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
             vc.flexiSpecialityName = model.Speciality_Name
             if (isProspect)
             {
-              vc.isfromProspect = true
+                vc.isfromProspect = true
             } else
             {
-              vc.isfromProspect = false
+                vc.isfromProspect = false
             }
             BL_DoctorList.sharedInstance.regionCode = EMPTY
             BL_DoctorList.sharedInstance.customerCode = EMPTY
@@ -1332,7 +1329,17 @@ class DCRStepperNewViewController: UIViewController {//,SelectedAccompanistPopUp
         
     }
     
-    
+    func getProspectingList(ContactName:String) -> AddProspectModel{
+        var dict : AddProspectModel?
+        if let arr = DBHelper.sharedInstance.getProspect(){
+            for val in arr {
+                if val.Contact_Name == ContactName {
+                    dict = val
+                }
+            }
+        }
+        return dict!
+    }
     
     
     
@@ -1348,44 +1355,97 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
         {
             let MeetingObjCell = tableView.dequeueReusableCell(withIdentifier: TPField_MeetingObjectiveCell) as! TPFieldMeetingObjectiveCell
             let doctorObj = BL_Stepper.sharedInstance.doctorList[indexPath.row]
-            MeetingObjCell.txtContactName.text = doctorObj.Doctor_Name
-            
-            if doctorObj.Visit_Mode.count != 0 || doctorObj.Visit_Time?.count != 0 {
-                MeetingObjCell.txtContactName.textColor = self.visitedContactColor
-            } else {
-                MeetingObjCell.txtContactName.textColor = UIColor.black
-            }
-            
-            var line2Text: String = ""
-            
-            if doctorObj.Hospital_Name! != ""{
-                line2Text = doctorObj.Hospital_Name! + " | "
-            } else {
-                line2Text = doctorObj.Hospital_Name!
-            }
-            
-//            if doctorObj.Speciality_Name! != ""{
-//                line2Text = (doctorObj.Speciality_Name)! + " | "
-//            }
-//            
-//            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
-//            {
-//                line2Text = doctorObj.Category_Name! + " | "
-//            }
-            
-            if (checkNullAndNilValueForString(stringData: doctorObj.Doctor_Region_Name) != "")
-            {
-                if (line2Text != "")
-                {
-                    line2Text = line2Text + doctorObj.Doctor_Region_Name!
+            if isProspect{
+                let prospectObj = getProspectingList(ContactName: doctorObj.Doctor_Name)
+                
+                MeetingObjCell.txtContactName.text = doctorObj.Doctor_Name
+                
+                if doctorObj.Visit_Mode.count != 0 || doctorObj.Visit_Time?.count != 0 {
+                    MeetingObjCell.txtContactName.textColor = self.visitedContactColor
+                } else {
+                    MeetingObjCell.txtContactName.textColor = UIColor.black
                 }
-                else
-                {
-                    line2Text = doctorObj.Doctor_Region_Name!
+                
+                var line2Text: String = ""
+                
+                if prospectObj.Title != ""{
+                    line2Text = prospectObj.Title! + " | "
+                } else {
+                    line2Text = prospectObj.Title!
                 }
+                
+                //            if doctorObj.Speciality_Name! != ""{
+                //                line2Text = (doctorObj.Speciality_Name)! + " | "
+                //            }
+                //
+                //            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                //            {
+                //                line2Text = doctorObj.Category_Name! + " | "
+                //            }
+                
+                if (checkNullAndNilValueForString(stringData: prospectObj.State) != "")
+                {
+                    if (line2Text != "")
+                    {
+                        line2Text = line2Text + prospectObj.State!
+                    }
+                    else
+                    {
+                        line2Text = prospectObj.State!
+                    }
+                }
+                MeetingObjCell.txtContactDetails.text = line2Text
+                MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
+                
+                
+                
+            } else {
+                
+                MeetingObjCell.txtContactName.text = doctorObj.Doctor_Name
+                
+                if doctorObj.Visit_Mode.count != 0 || doctorObj.Visit_Time?.count != 0 {
+                    MeetingObjCell.txtContactName.textColor = self.visitedContactColor
+                } else {
+                    MeetingObjCell.txtContactName.textColor = UIColor.black
+                }
+                
+                var line2Text: String = ""
+                
+                if doctorObj.Hospital_Name! != ""{
+                    line2Text = doctorObj.Hospital_Name! + " | "
+                } else {
+                    line2Text = doctorObj.Hospital_Name!
+                }
+                
+                //            if doctorObj.Speciality_Name! != ""{
+                //                line2Text = (doctorObj.Speciality_Name)! + " | "
+                //            }
+                //
+                //            if (checkNullAndNilValueForString(stringData: doctorObj.Category_Name) != "")
+                //            {
+                //                line2Text = doctorObj.Category_Name! + " | "
+                //            }
+                
+                if (checkNullAndNilValueForString(stringData: doctorObj.Doctor_Region_Name) != "")
+                {
+                    if (line2Text != "")
+                    {
+                        line2Text = line2Text + doctorObj.Doctor_Region_Name!
+                    }
+                    else
+                    {
+                        line2Text = doctorObj.Doctor_Region_Name!
+                    }
+                }
+                MeetingObjCell.txtContactDetails.text = line2Text
+                MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
             }
-            MeetingObjCell.txtContactDetails.text = line2Text
-            MeetingObjCell.btnRemoveDoctor.tag = indexPath.row
+            if IS_VIEW_MODE == true {
+                MeetingObjCell.isUserInteractionEnabled = false
+            } else {
+                MeetingObjCell.isUserInteractionEnabled = true
+            }
+            
             return MeetingObjCell
         }
         else if indexPath.section == 0
@@ -1393,32 +1453,49 @@ extension DCRStepperNewViewController : UITableViewDelegate,UITableViewDataSourc
             let RideAlongCell = tableView.dequeueReusableCell(withIdentifier: TPField_RideAlongcell) as! TPFieldRideAlongCell
             RideAlongCell.lblAccompanist.text = BL_Stepper.sharedInstance.accompanistList[indexPath.row].Acc_User_Name
             RideAlongCell.btnRemoveRideAlong.tag = indexPath.row
+            if IS_VIEW_MODE == true {
+                RideAlongCell.isUserInteractionEnabled = false
+            } else {
+                RideAlongCell.isUserInteractionEnabled = true
+            }
             return RideAlongCell
         }
         else if indexPath.section == 2
         {
             let WorkCaregoryCell = tableView.dequeueReusableCell(withIdentifier: TPField_WorkCategoryCell) as! TPFieldWorkCategoryCell
             if selectedWorkPlace.count == 0 {
-              //  WorkCaregoryCell.txtWorkCategory.text = self.workCategory[0].Category_Name
+                //  WorkCaregoryCell.txtWorkCategory.text = self.workCategory[0].Category_Name
             } else {
                 WorkCaregoryCell.txtWorkCategory.text = self.selectedWorkPlace
             }
             WorkCaregoryCell.txtWorkCategory.inputView = self.pickerview
+            if IS_VIEW_MODE == true {
+                WorkCaregoryCell.isUserInteractionEnabled = false
+            } else {
+                WorkCaregoryCell.isUserInteractionEnabled = true
+            }
             return WorkCaregoryCell
         }
         else if indexPath.section == 3
         {
             let remarksCell = tableView.dequeueReusableCell(withIdentifier: TPRemarkCell) as! TPFieldRemarksCell
             
-            if (BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks != nil )
+            
+           let dcrobj = DBHelper.sharedInstance.getDCRHeaderByDCRId(dcrId: DCRModel.sharedInstance.dcrId)
+            
+            if (dcrobj!.DCR_General_Remarks != nil )
             {
-                
-                remarksCell.txtViewRemarks.text = BL_Stepper.sharedInstance.dcrHeaderObj?.DCR_General_Remarks
+                remarksCell.txtViewRemarks.text = dcrobj!.DCR_General_Remarks
             }
             remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 40
             remarksCell.txtViewRemarks.delegate = self
             //remarksCell.consTextViewHeight.constant = remarksCell.txtViewRemarks.contentSize.height + 20
             self.generalText = remarksCell.txtViewRemarks.text
+            if IS_VIEW_MODE == true {
+                remarksCell.isUserInteractionEnabled = false
+            } else {
+                remarksCell.isUserInteractionEnabled = true
+            }
             return remarksCell
         }
         else
@@ -1684,10 +1761,10 @@ extension DCRStepperNewViewController : UITextViewDelegate {
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "" {
-                   isBAckSpace = true
-                 } else {
-                   isBAckSpace = false
-               }
+            isBAckSpace = true
+        } else {
+            isBAckSpace = false
+        }
         return true
     }
     func textViewDidChange(_ textView: UITextView) {
@@ -1696,7 +1773,7 @@ extension DCRStepperNewViewController : UITextViewDelegate {
         }
         if isBAckSpace == false {
             if textView.text.last == "\n" {
-               textView.text =  textView.text + " • "
+                textView.text =  textView.text + " • "
             }
         }
     }

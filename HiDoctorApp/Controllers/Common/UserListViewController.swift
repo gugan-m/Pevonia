@@ -877,10 +877,10 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         else if navigationScreenName == UserListScreenName.CustomerList.rawValue
         {
-            let accompanistList =  BL_DoctorList.sharedInstance.getAllChildUser()
+            let accompanistList =  BL_DCR_Accompanist.sharedInstance.getAccompanistMasterLists()
             if accompanistList != nil
             {
-                userWrapperList  = convertToUserMasterModel(accompanistList:accompanistList!)
+                userWrapperList  = convertToUserMasterModel(accompanistList:accompanistList)
             }
             setUserObjectToList()
         }

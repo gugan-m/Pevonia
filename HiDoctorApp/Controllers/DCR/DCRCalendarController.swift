@@ -1621,7 +1621,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 }
                 else if detailModel.dcrStatus == DCRStatus.approved.rawValue
                                {
-                                 rowHeightArr.replaceObject(at: sender.tag, with: defaultRowHeight + rowEditBtnHeight)
+                                 rowHeightArr.replaceObject(at: sender.tag, with: defaultRowHeight + rowEditBtnHeight - 20)
                                }
                 else
                 {
@@ -2021,13 +2021,17 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
             if (detailModel.dcrStatus == DCRStatus.approved.rawValue && detailModel.dcrCode != "") 
             {
-                cell.detailBtn.isUserInteractionEnabled = false
+                 if detailModel.dcrType == "P" {
+                    cell.detailBtn.isUserInteractionEnabled = true
+                 } else {
+                    cell.detailBtn.isUserInteractionEnabled = true
+                }
             } else {
                 cell.detailBtn.isUserInteractionEnabled = true
             }
             
             if detailModel.dcrStatus == DCRStatus.applied.rawValue {
-                          cell.editBtn.isHidden = true
+                          cell.editBtn.isHidden = false
                        } else {
                            cell.editBtn.isHidden = false
                        }
@@ -2258,7 +2262,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
             
             if detailModel.dcrStatus == DCRStatus.applied.rawValue {
-                          cell.editBtn.isHidden = true
+                          cell.editBtn.isHidden = false
                        } else {
                            cell.editBtn.isHidden = false
                        }
@@ -2413,7 +2417,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
             
             if detailModel.dcrStatus == DCRStatus.applied.rawValue {
-               cell.editBtn.isHidden = true
+               cell.editBtn.isHidden = false
             } else {
                 cell.editBtn.isHidden = false
             }
