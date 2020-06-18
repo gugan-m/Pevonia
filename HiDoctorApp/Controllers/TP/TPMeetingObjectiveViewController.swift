@@ -62,7 +62,14 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
             setDoneButton()
             self.scrollView.isUserInteractionEnabled = true
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadAttachment(_:)), name: NSNotification.Name(rawValue:"AttachmentViewRefresh"), object: nil)
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func loadAttachment(_ notification: NSNotification)
+    {
+        self.attachmentList = Bl_Attachment.sharedInstance.getTPAttachment(tp_entryId: TPModel.sharedInstance.tpEntryId, doctor_Code: objDoctor!.Customer_Code)!
+        self.tblAttachments.reloadData()
     }
     
     func setDoneButton() {
@@ -180,7 +187,11 @@ class TPMeetingObjectiveViewController: UIViewController ,UINavigationController
     }
 
     @IBAction func act_AddAttachment(_ sender: UIButton) {
-        self.show_AddActionSheet()
+        Attachment.sharedInstance.showAttachmentActionSheet(viewController: self)
+        Attachment.sharedInstance.isFromTP = true
+        Attachment.sharedInstance.tpDoctor_Regioncode = objDoctor!.Region_Code
+        Attachment.sharedInstance.tpDoctor_code = objDoctor!.Customer_Code
+        //self.show_AddActionSheet()
     }
     
     func show_AddActionSheet() {
@@ -476,6 +487,7 @@ extension TPMeetingObjectiveViewController: UITableViewDelegate,UITableViewDataS
             vc.webViewTitle = self.attachmentList[indexPath.row].attachmentName
             let redirectUrl = Bl_Attachment.sharedInstance.getAttachmentFileURL(fileName: self.attachmentList[indexPath.row].attachmentName!)
             vc.siteURL = redirectUrl
+            vc.isOffline = true
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

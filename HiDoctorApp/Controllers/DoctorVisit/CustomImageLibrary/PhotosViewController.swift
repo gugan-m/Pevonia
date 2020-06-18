@@ -26,9 +26,11 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
     var isfromLeave = false
     var isFromEditDoctor = false
     var isFromNotes = false
+    var isFromTP = false
     var selectedImages = [String]()
     var maxFileUploadCountValue = Int()
-    
+    var tpDoctor_Regioncode = ""
+     var tpDoctor_code: String = ""
     var leaveTypeName : String = ""
     var startDate : Date = Date()
     var endDate : Date = Date()
@@ -190,6 +192,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
             else if (isFromNotes)
             {
                 fileArrayCount = 0
+            }
+            else if (isFromTP)
+            {
+                fileArrayCount = Bl_Attachment.sharedInstance.getTPAttachmentCount()
             }
             else
             {
@@ -379,6 +385,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
                                                             
                                                             DBHelper.sharedInstance.insertNotesAttachmentDetail(dcrAttachmentModel: note!)
                                                         }
+                                                        else if (self.isFromTP)
+                                                        {
+                                                            Bl_Attachment.sharedInstance.insertTPAttachment(attachmentName: fileName, doctor_Id: 0, doctor_Code:  self.tpDoctor_code, doctor_Regioncode: self.tpDoctor_Regioncode)
+                                                        }
                                                         else
                                                         {
                                                             // Save the attachment in the DB
@@ -503,10 +513,15 @@ class PhotosViewController: UIViewController, UICollectionViewDelegateFlowLayout
                     addLeaveAttachmentController()
                     popPhotoAlbumControllers()
                 }
-                    
+                else if isFromTP
+                {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AttachmentViewRefresh"), object: nil)
+                        popPhotoAlbumControllers()
+                }
                 else
                 {
-                addAttachmentController()
+                //addAttachmentController()
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AttachmentViewRefresh"), object: nil)
                 popPhotoAlbumControllers()
                 }
             }

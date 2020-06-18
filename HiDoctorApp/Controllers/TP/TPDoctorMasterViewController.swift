@@ -130,7 +130,7 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
         if selectedIndex == 0
         {
             if regionCode.count != 0 {
-                self.navigationItem.rightBarButtonItems = [refreshBtn]
+               // self.navigationItem.rightBarButtonItems = [refreshBtn]
                 if let list = BL_TP_Doctor_Visit.sharedInstance.getTPDoctorMasterList()
                     
                 {
@@ -138,7 +138,8 @@ class TPDoctorMasterViewController: UIViewController , UITableViewDelegate, UITa
                     self.refreshLabelHeightConst.constant = 16
                 }
             } else {
-                self.navigationItem.rightBarButtonItems = [refreshBtn]
+                
+               // self.navigationItem.rightBarButtonItems = [refreshBtn]
                 if let list = BL_TP_Doctor_Visit.sharedInstance.getTPDoctorMasterList()
                     
                 {

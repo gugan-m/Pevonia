@@ -29,8 +29,10 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
     var isFromtask = false
     let iCloudObserver = "iCloudObserver"
     let iCloudObserver1 = "iCloudObserverForDoctor"
+    var isFromTP = false
     var cancel : UIBarButtonItem!
-    
+    var tpDoctor_Regioncode: String = ""
+    var tpDoctor_code: String = ""
     var leaveTypeName : String = ""
     var startDate : Date = Date()
     var endDate : Date = Date()
@@ -60,7 +62,8 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
         {
             let documentLibrary = UIAlertAction(title: "Document", style: .default, handler: {
                 (alert: UIAlertAction) -> Void in
-                self.showiCloudActionSheet()
+                //self.showiCloudActionSheet()
+                self.uploadFilesFromiCloud()
             })
             actionSheetController.addAction(documentLibrary)
         }
@@ -200,6 +203,10 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
         {
             fileCount = 0
         }
+        else if (self.isFromTP)
+        {
+            fileCount = Bl_Attachment.sharedInstance.getTPAttachmentCount()
+        }
         else
         {
             fileCount = Bl_Attachment.sharedInstance.getAttachmentCount()
@@ -267,6 +274,10 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
                                     notes.append(note!)
                                     DBHelper.sharedInstance.insertNotesAttachmentDetail(dcrAttachmentModel: note!)
                                 }
+                                else if (self.isFromTP)
+                                {
+                                    Bl_Attachment.sharedInstance.insertTPAttachment(attachmentName: fileName, doctor_Id: 0, doctor_Code: self.tpDoctor_code, doctor_Regioncode: self.tpDoctor_Regioncode)
+                                }
                                 else
                                 {
                                     Bl_Attachment.sharedInstance.insertAttachment(attachmentName: fileName, attachmentSize: fileSize)
@@ -300,9 +311,14 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
             picker.dismiss(animated: false)
             //etVC.navigationController?.popViewController( animated: false)
         }
+         else if (self.isFromTP)
+            {
+               picker.dismiss(animated: false)
+            }
         else
         {
-            navigateToAttachmentList()
+            picker.dismiss(animated: false)
+            //navigateToAttachmentList()
         }
     }
     
@@ -361,7 +377,9 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
         vc.isfromLeave = self.isfromLeave
         vc.isFromNotes = self.isFromtask
         vc.isFromEditDoctor = self.isFromEditDoctor
-        
+        vc.isFromTP = self.isFromTP
+        vc.tpDoctor_Regioncode = self.tpDoctor_Regioncode
+        vc.tpDoctor_code = self.tpDoctor_code
         let transition = CATransition()
         transition.duration = 0.3
         transition.type = kCATransitionMoveIn
@@ -435,6 +453,10 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
         {
             fileCount = 0
         }
+        else if (self.isFromTP)
+        {
+           fileCount = Bl_Attachment.sharedInstance.getTPAttachmentCount()
+        }
         else
         {
            fileCount = Bl_Attachment.sharedInstance.getAttachmentCount()
@@ -499,6 +521,10 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
                                 notes.append(note!)
                                 DBHelper.sharedInstance.insertNotesAttachmentDetail(dcrAttachmentModel: note!)
                             }
+                            else if (self.isFromTP)
+                            {
+                                Bl_Attachment.sharedInstance.insertTPAttachment(attachmentName: modifiedFileName, doctor_Id: 0, doctor_Code:   self.tpDoctor_code, doctor_Regioncode: self.tpDoctor_Regioncode)
+                            }
                             else
                             {
                                 Bl_Attachment.sharedInstance.insertAttachment(attachmentName: modifiedFileName, attachmentSize: fileSize)
@@ -538,10 +564,15 @@ class Attachment: NSObject, UIImagePickerControllerDelegate, UINavigationControl
         {
             controller.dismiss(animated: true)
         }
-            
+        else if (self.isFromTP)
+            {
+                controller.dismiss(animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AttachmentViewRefresh"), object: nil)
+            }
         else
         {
-            navigateToAttachmentList()
+            //navigateToAttachmentList()
+            controller.dismiss(animated: true)
              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AttachmentViewRefresh"), object: nil)
         }
     }

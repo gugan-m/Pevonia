@@ -21,6 +21,7 @@ class WebViewController: UIViewController {
     var isFromKennect : Bool = false
    // var webView: UIWebView!
     var webkit : WKWebView!
+    var isOffline = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,11 @@ class WebViewController: UIViewController {
         addCustomBackButtonToNavigationBar()
         addRightBarButtonItem()
         removeVersionToastView()
-        loadSite()
+        if isOffline == true {
+          loadofflineSite()
+        } else {
+           loadSite()
+        }
         
         if siteURL == dashboardWebLink{
             UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
@@ -54,6 +59,70 @@ class WebViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func loadofflineSite()
+        {
+            if let encodedUrl = siteURL.addingPercentEncoding(withAllowedCharacters: getCharacterSet() as CharacterSet)
+            {
+                if localURL == false
+                {
+                        if let checkedUrl = URL(string: encodedUrl)
+                        {
+                            showActivityIndicator()
+                           // var req = NSURLRequest(url: checkedUrl)
+                            //                        if isFromKennect
+                            //                        {
+                            //                           let urlValue =  URL(string:siteURL)
+                            //                            req = NSURLRequest(url: urlValue!)
+                            //                        }
+                          //  if #available(iOS 13.0, *) {
+                            
+                            if encodedUrl.contains("http") {
+                                let req = URLRequest(url: checkedUrl)
+                                self.webkit.load(req)
+                            } else {
+                                let url = URL(fileURLWithPath: encodedUrl)
+                                //let req = URLRequest(url: url)
+                                self.webkit.loadFileURL(url, allowingReadAccessTo: url)
+                            }
+                               
+                               
+    //                        } else {
+    //                           let req = URLRequest(url: checkedUrl)
+    //                            self.webView.loadRequest(req)
+    //                        }
+                            
+                        }
+                        else
+                        {
+                            setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+                        }
+                   
+                }
+                else
+                {
+                    if let checkedUrl = URL(string: encodedUrl)
+                    {
+                        // if #available(iOS 13.0, *) {
+                            showActivityIndicator()
+                            let req = URLRequest(url: checkedUrl)
+                           self.webkit.load(req)
+    //                     } else {
+    //                    showActivityIndicator()
+    //                    let req = NSURLRequest(url: checkedUrl)
+    //                    self.webView.loadRequest(req as URLRequest)
+    //                }
+                    }
+                    else
+                    {
+                        setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+                    }
+                }
+            }
+            else
+            {
+                setMainViewVisibility(isEmpty: true, text: webTryAgainMsg)
+            }
+        }
     func loadSite()
     {
         if let encodedUrl = siteURL.addingPercentEncoding(withAllowedCharacters: getCharacterSet() as CharacterSet)

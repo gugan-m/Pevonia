@@ -500,7 +500,8 @@ class BL_PrepareMyDeviceAccompanist: NSObject
             regionCodes = regionCodes.substring(to: regionCodes.index(before: regionCodes.endIndex))
         }
         
-        deleteCustomerMasterData(regionCodes: regionCodes)
+        //deleteCustomerMasterData(regionCodes: regionCodes)
+        executeQuery(query: "DELETE FROM \(MST_CUSTOMER_MASTER)")
         
         if (apiResponseObj.list != nil && apiResponseObj.list.count > 0)
         {

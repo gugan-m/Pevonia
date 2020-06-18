@@ -1240,9 +1240,11 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                    regionArr.append(item.userObj.Region_Code)
                }
                print(regionArr)
-               let regionCodeArr =  Array(Set(regionArr))
+               var regionCodeArr =  Array(Set(regionArr))
                print(regionCodeArr)
-               
+            if regionCodeArr.count == 0 {
+                regionCodeArr = [getRegionCode()]
+            }
                if (isFromDCR && regionCodeArr.count == 0)
                {
                    let sb = UIStoryboard(name: doctorMasterSb, bundle: nil)
@@ -1255,17 +1257,17 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                        navigationController.pushViewController(vc, animated: false)
                    }
                }
-               if filteredArr.count == 0 && !isFromDCR{
-                   
-                   if (!isFromDVR)
-                       {
-                   let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
-                               let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
-                               vc.regionCode = getRegionCode()
-                               self.navigationController?.pushViewController(vc, animated: true)
-                       }
-                   
-               } else {
+//               if filteredArr.count == 0 && !isFromDCR{
+//
+//                   if (!isFromDVR)
+//                       {
+//                   let sb = UIStoryboard(name: TPStepperSb, bundle: nil)
+//                               let vc = sb.instantiateViewController(withIdentifier: TPDoctorMasterVCID) as! TPDoctorMasterViewController
+//                               vc.regionCode = getRegionCode()
+//                               self.navigationController?.pushViewController(vc, animated: true)
+//                       }
+//
+//               } else {
                    showLoader()
                    if(!isFromDVR)
                    {
@@ -1384,7 +1386,7 @@ class UserListViewController: UIViewController,UITableViewDelegate,UITableViewDa
                          self.hideLoader()
                      }
                    }
-               }
+               
                
                
            }

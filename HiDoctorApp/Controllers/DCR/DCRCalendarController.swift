@@ -367,6 +367,7 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                     let tpModelListA = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 2, status: TPStatus.approved.rawValue)
                     let tpModelListL = DBHelper.sharedInstance.getTpDataforDCRDate(date: selectedDate, activity: 3, status: TPStatus.approved.rawValue)
                     
+                    
                     if titles as! String == DCRActivityName.fieldRcpa.rawValue || title == "Field_RCPA"
                     {
                         
@@ -431,7 +432,12 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
                 })
                 
                 dcrCategoryMenu.addAction(cancelAction)
-                
+                if  isedetailing_avilable() {
+                    Radiobtnfeild.isSelected = true
+                   // Radiobtnprospect.isEnabled = false
+                    //Radiobtnoffice.isEnabled = false
+                   // Radiobtnnotworking.isEnabled = false
+                }
                 
                 if SwifterSwift().isPhone
                 {
@@ -449,6 +455,22 @@ class DCRCalendarController: UIViewController, JTAppleCalendarViewDelegate, JTAp
             }
         }
     }
+    
+    func isedetailing_avilable() -> Bool {
+        let assetlist = DBHelper.sharedInstance.getAssetAnayticsByDate(dcrDate: getCurrentDate())  //getAssetAnayticsByDate
+        let date1 = getStringFromDate(date: selectedDate)
+        if date1.prefix(10) == getCurrentDate() {
+            if assetlist.count != 0 {
+                return true
+            } else {
+                return false
+            }
+        } else {
+           return false
+        }
+    }
+    
+    
     @IBAction func addAction(_ sender: AnyObject)
     {
         

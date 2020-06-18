@@ -181,7 +181,18 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
                 }
             }
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.iCloudObserverAction(_:)), name: NSNotification.Name(rawValue:"AttachmentViewRefresh"), object: nil)
     }
+    
+    @objc func iCloudObserverAction(_ notification: NSNotification)
+       {
+           let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
+           if attachmentArr != nil
+           {
+               attachmentList = attachmentArr!
+           }
+        self.tblAttachments.reloadData()
+       }
     
     func isPOBEnabled() -> Bool {
        let str = BL_DCR_Doctor_Visit.sharedInstance.getDoctorCaptureValue()
@@ -1571,7 +1582,8 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     
     // Mark: - Attachment
     @IBAction func act_AddAttachment(_ sender: UIButton) {
-        self.show_AddActionSheet()
+        Attachment.sharedInstance.showAttachmentActionSheet(viewController: self)
+       // self.show_AddActionSheet()
     }
     
     func show_AddActionSheet() {
@@ -1579,12 +1591,13 @@ class DoctorStepperNewController : UIViewController, UINavigationControllerDeleg
     }
     
     @IBAction func removeAttachment(_ sender: UIButton) {
-        let attachment_Name = self.attachmentList[sender.tag].attachmentName
-        let alertController = UIAlertController(title: "\(attachment_Name!)", message: "Will be removed from this plan", preferredStyle: .alert)
+        let model = self.attachmentList[sender.tag]
+        let alertController = UIAlertController(title: "\(model.attachmentName!)", message: "Will be removed from this plan", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default) {
             UIAlertAction in
             let filename = self.attachmentList[sender.tag].attachmentName ?? ""
-            Bl_Attachment.sharedInstance.deleteAttachmentFile(fileName: filename)
+            Bl_Attachment.sharedInstance.deleteAttachmentFile(fileName: model.attachmentName!)
+            Bl_Attachment.sharedInstance.deleteAttachment(id: model.attachmentId, fileName: model.attachmentName!)
             let attachmentArr = Bl_Attachment.sharedInstance.getDCRAttachment(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
             if attachmentArr != nil
             {

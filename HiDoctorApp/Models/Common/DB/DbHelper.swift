@@ -5322,6 +5322,19 @@ class DBHelper: NSObject
         })
     }
     // executeQuery(query: "DELETE FROM \(TRAN_DCR_DOCTOR_VISIT_POB_DETAILS) WHERE Order_Entry_Id = \(orderEntryId)")
+    
+    
+    func getTPAttachmentCountPerDoctor(TP_Id: Int, TP_Entry_Id: Int) -> Int
+    {
+        var count: Int = 0
+        
+        try? dbPool.read { db in
+            count = try Int.fetchOne(db, "SELECT COUNT(*) FROM \(TRAN_TP_DOCTOR_VISIT_ATTACHMENT) WHERE TP_Id = ? AND TP_Entry_Id = ?", arguments: [TP_Id, TP_Entry_Id])!
+        }
+        
+        return count
+    }
+    
     func getAttachmentCountPerDoctor(dcrId: Int, doctorVisitId: Int) -> Int
     {
         var count: Int = 0

@@ -125,6 +125,11 @@ class Bl_Attachment: NSObject
         return DBHelper.sharedInstance.getAttachmentCountPerDoctor(dcrId: DCRModel.sharedInstance.dcrId, doctorVisitId: DCRModel.sharedInstance.doctorVisitId)
     }
     
+    func getTPAttachmentCount() -> Int
+    {
+        return DBHelper.sharedInstance.getTPAttachmentCountPerDoctor(TP_Id: TPModel.sharedInstance.tpId, TP_Entry_Id: TPModel.sharedInstance.tpEntryId)
+    }
+    
     func getChemistAttachmentCount() -> Int
     {
         return DBHelper.sharedInstance.getAttachmentCountPerChemist(dcrId: DCRModel.sharedInstance.dcrId, chemistVisitId: ChemistDay.sharedInstance.chemistVisitId)

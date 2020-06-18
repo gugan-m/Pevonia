@@ -1135,7 +1135,7 @@ class NotesTaskViewController: UIViewController, UITextFieldDelegate, UIPickerVi
         }
         else
         {
-            self.nodoctors.isHidden = false
+            self.nodoctors.isHidden = true
         }
     }
     func getAttachmentType(filePath: String) -> String

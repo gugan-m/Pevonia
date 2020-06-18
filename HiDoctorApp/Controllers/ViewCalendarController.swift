@@ -14,7 +14,7 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
     @IBOutlet weak var draftview: UIButton!
     var date: String = getCurrentDate()
     var datelist: [String] = []
-    
+    var isfirst = true
     @IBAction func onclickshow() {
         if datePicker.isHidden == true
         {
@@ -212,8 +212,10 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
     }
     
     func SetTile(date: Date) {
-        let month = Calendar.current.dateComponents([.month], from: date).month!
-                let monthName = DateFormatter().shortMonthSymbols[(month-1) % 12]
+       let date1 =  getStringFromDate(date: date)
+        let dateAlone = date1.split(separator: "-")
+       let month =  Int(dateAlone[1])
+        let monthName = DateFormatter().shortMonthSymbols[(month!) % 12]
                 let year = Calendar.current.component(.year, from: date)
         //       monthLabel.text = monthName + " " + String(year)
                 self.navigationItem.title = monthName + " " + String(year)
@@ -359,14 +361,16 @@ class ViewCalendarController: UIViewController, CalendarViewDataSource, Calendar
         if draftview.isHidden == true {
           showPlanningPopup()
         }
-         
         //getcalender(year: String(self.date.prefix(4)))
     }
     
     //    func calendar
     
     func calendar(_ calendar: CalendarView, didScrollToMonth date : Date) {
-        self.SetTile(date: date)
+        if !isfirst {
+          self.SetTile(date: date)
+        }
+        isfirst = false
         self.datePicker.setDate(date, animated: true)
     }
     
